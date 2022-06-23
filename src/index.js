@@ -1,7 +1,8 @@
 import 'core-js';
-import renderDonorsChart from './charts/donors';
-import renderFundingChannelsChart from './charts/funding-channels';
-import renderRecipientChart from './charts/recipients';
+import renderDonorsChart from './charts/gha/donors';
+import renderFundingChannelsChart from './charts/gha/funding-channels';
+import renderRecipientChart from './charts/gha/recipients';
+import renderPeopleAffectedByCrisisMap from './charts/gha/people-affected-by-crisis';
 import './styles/styles.css';
 
 /**
@@ -11,4 +12,5 @@ window.addEventListener('load', () => {
   renderDonorsChart();
   renderFundingChannelsChart();
   renderRecipientChart();
+  renderPeopleAffectedByCrisisMap();
 });
