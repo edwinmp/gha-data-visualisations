@@ -84,6 +84,9 @@ const renderPeopleAffectedByCrisisMap = () => {
                 visualMap: {
                   type: 'piecewise',
                   calculable: true,
+                  left: 'center',
+                  padding: 100,
+                  top: 'top',
                   pieces: [
                     {
                       min: 5, max: 5, label: '5 - Very High', color: '#6a033b',
@@ -108,7 +111,7 @@ const renderPeopleAffectedByCrisisMap = () => {
                   {
                     name: variable,
                     type: 'map',
-                    roam: true,
+                    roam: 'move',
                     map: 'WORLD',
                     emphasis: {
                       label: {
