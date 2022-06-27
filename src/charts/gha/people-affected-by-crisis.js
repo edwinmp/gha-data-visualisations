@@ -1,6 +1,7 @@
 import fetchCSVData from '../../utils/data';
 
-const MAP_FILE_PATH = 'src/charts/data/world_map.geo.json';
+const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
+const CSV_PATH = 'public/assets/data/GHA/2021/map_data_long.csv';
 
 const matchCountryNames = (csvData, worldData) => {
   const matchedData = csvData.map((stream) => {
@@ -55,8 +56,7 @@ const renderPeopleAffectedByCrisisMap = () => {
            *
            * const chart = window.echarts.init(chartNode);
            */
-          const csv = 'src/charts/data/map_data_long.csv';
-          fetchCSVData(csv).then((data) => {
+          fetchCSVData(CSV_PATH).then((data) => {
             // create UI elements
             const variable = 'Severity_score';
 
