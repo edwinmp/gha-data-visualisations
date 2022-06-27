@@ -53,7 +53,7 @@ export const legendSelection = (chart, params) => {
         name: key,
       });
     });
-  } else {
+  } else if (!obj[params.name]) { // If user has unselected an item
     // Re-select what the user unselected
     chart.dispatchAction({
       type: 'legendSelect',
