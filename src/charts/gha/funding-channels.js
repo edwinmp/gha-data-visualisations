@@ -104,10 +104,11 @@ const renderFundingChannelsChart = () => {
           fetchCSVData(csv).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
-            const donors = [...new Set(data.map((d) => d.Donor))];
-            const years = [...new Set(data.map((d) => d.Year))];
-            const channels = [...new Set(data.map((d) => d['Delivery Channel']))];
+            const donors = Array.from(new Set(data.map((d) => d.Donor)));
+            const years = Array.from(new Set(data.map((d) => d.Year)));
+            const channels = Array.from(new Set(data.map((d) => d['Delivery Channel'])));
             const channelSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
+            console.log(data, donors, years, channels);
             // create UI elements
             const countryFilter = addFilter({
               wrapper: filterWrapper,

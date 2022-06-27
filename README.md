@@ -18,3 +18,9 @@ Build files are copied into the `dist` folder. It is from these files that the c
 
 To update the assets, copy the contents of the relevant files from the dist folder (`app.*.js`, `app.*.css`, `runtime.*.js`) into their 
 respective destinations in the assets folder
+
+### Copy Bundled Assets
+
+        gulp
+
+This copies the required assets from the generated dist folder to the assets folder
