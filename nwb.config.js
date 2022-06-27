@@ -23,6 +23,7 @@ module.exports = {
       externals: {
         d3: 'd3',
       },
+      devtool: process.env.NODE_ENV === 'production' ? 'none' : 'source-map',
     },
   },
 };
