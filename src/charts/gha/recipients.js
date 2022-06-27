@@ -1,5 +1,5 @@
 import deepMerge from 'deepmerge';
-import defaultOptions, { colorways } from '../echarts';
+import defaultOptions, { colorways, legendSelection } from '../echarts';
 import fetchCSVData from '../../utils/data';
 import { addFilter, addFilterWrapper } from '../../widgets/filters';
 // import d3 from 'd3'; // eslint-disable-line import/no-unresolved
@@ -104,6 +104,9 @@ const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   };
   defaultOptions.toolbox.feature.saveAsImage.name = 'recipients';
   chart.setOption(deepMerge(option, defaultOptions), { replaceMerge: ['series'] });
+  chart.on('legendselectchanged', (params) => {
+    legendSelection(chart, params);
+  });
 
   return chart;
 };

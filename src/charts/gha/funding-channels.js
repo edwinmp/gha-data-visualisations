@@ -1,5 +1,5 @@
 import deepMerge from 'deepmerge';
-import defaultOptions, { colorways } from '../echarts';
+import defaultOptions, { colorways, legendSelection } from '../echarts';
 import fetchCSVData from '../../utils/data';
 import { addFilter, addFilterWrapper } from '../../widgets/filters';
 import PillWidget from '../../widgets/pills';
@@ -75,6 +75,9 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
   };
   defaultOptions.toolbox.feature.saveAsImage.name = 'funding-channels';
   chart.setOption(deepMerge(option, defaultOptions), { replaceMerge: ['series'] });
+  chart.on('legendselectchanged', (params) => {
+    legendSelection(chart, params);
+  });
 
   return chart;
 };
