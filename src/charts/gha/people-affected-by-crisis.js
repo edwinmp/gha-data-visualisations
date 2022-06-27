@@ -106,6 +106,7 @@ const renderPeopleAffectedByCrisisMap = () => {
                   ],
                   selectedMode: false,
                   orient: 'horizontal',
+                  inverse: true,
                 },
                 series: [
                   {
