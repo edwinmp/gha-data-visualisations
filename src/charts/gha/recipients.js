@@ -44,14 +44,14 @@ const processOrgTypeData = (data, recipient, orgType) => {
 const getRecipientDonors = (data, recipient) => {
   const preApprovedDonors = ['All other donors'];
   const recipientData = data.filter((d) => d['Destination country'].trim() === recipient);
-  const donors = [...new Set(recipientData.map((d) => d['Donor organisation']))].filter((d) => !preApprovedDonors.includes(d)).slice(0, 5);
+  const donors = Array.from(new Set(recipientData.map((d) => d['Donor organisation']))).filter((d) => !preApprovedDonors.includes(d)).slice(0, 5);
 
   return donors.concat(preApprovedDonors);
 };
 
 const getRecipientOrgType = (data, recipient) => {
   const recipientData = data.filter((d) => d['Destination Country'].trim() === recipient);
-  const orgTypes = [...new Set(recipientData.map((d) => d['Recipient Org Type']))];
+  const orgTypes = Array.from(new Set(recipientData.map((d) => d['Recipient Org Type'])));
 
   return orgTypes;
 };
@@ -132,8 +132,8 @@ const renderRecipientChart = () => {
           const orgTypeData = await fetchCSVData('https://raw.githubusercontent.com/devinit/di-chart-boilerplate/gha/2021/charts/public/assets/data/GHA/2021/recipients-by-org-type.csv');
           const filterWrapper = addFilterWrapper(chartNode);
           // extract unique values
-          const recipients = [...new Set(donorData.map((d) => d['Destination country']))];
-          const years = [...new Set(donorData.map((d) => d.Year))];
+          const recipients = Array.from(new Set(donorData.map((d) => d['Destination country'])));
+          const years = Array.from(new Set(donorData.map((d) => d.Year)));
           const initialDonors = getRecipientDonors(donorData, '10 largest recipients');
           // create UI elements
           const [countryFilterA, countryFilterAWrapper] = addFilter({
@@ -144,7 +144,7 @@ const renderRecipientChart = () => {
             defaultOption: '10 largest recipients',
           }, true);
           // in case the recipients are different, we create another dropdown with the org type data
-          const orgTypeRecipients = [...new Set(orgTypeData.map((d) => d['Destination Country']))];
+          const orgTypeRecipients = Array.from(new Set(orgTypeData.map((d) => d['Destination Country'])));
           const [countryFilterB, countryFilterBWrapper] = addFilter({
             wrapper: filterWrapper,
             options: orgTypeRecipients.sort(),
