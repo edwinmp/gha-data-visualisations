@@ -172,7 +172,7 @@ const renderPeopleAffectedByCrisisMap = () => {
             });
             const recurrentCrisisClassFilter = addFilter({
               wrapper: filterWrapper,
-              options: [],
+              options: ['Recurrent', 'Protracted'],
               className: 'recurrent-crisis-class-filter',
               label: '<b>Select recurrent crisis class</b>',
               defaultOption: '',
@@ -205,14 +205,16 @@ const renderPeopleAffectedByCrisisMap = () => {
                   (crisis) => crisis.label === crisisType,
                 ).name;
                 const filteredGroupedData = groupedData.filter(
-                  (dataLine) => dataLine[actualCrisisName] === 1,
+                  (dataLine) => Number(dataLine[actualCrisisName]) === 1,
                 );
                 renderChart(chart, variable, filteredGroupedData);
               });
               recurrentCrisisClassFilter.addEventListener('change', (event) => {
                 const { value } = event.currentTarget;
                 crisisClass = value;
-                console.log(crisisClass);
+                const filteredGroupedData = groupedData.filter((dataStream) => dataStream['Protracted/Recurrent_crisis'] === crisisClass);
+                console.log(filteredGroupedData);
+                renderChart(chart, variable, filteredGroupedData);
               });
             });
           });
