@@ -1,4 +1,5 @@
 import fetchCSVData from '../../utils/data';
+import { addFilter, addFilterWrapper } from '../../widgets/filters';
 
 const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
 const CSV_PATH = 'public/assets/data/GHA/2021/map_data_long.csv';
@@ -59,8 +60,16 @@ const renderPeopleAffectedByCrisisMap = () => {
           fetchCSVData(CSV_PATH).then((data) => {
             // create UI elements
             const variable = 'Severity_score';
-
             const chart = window.echarts.init(chartNode);
+            const filterWrapper = addFilterWrapper(chartNode);
+
+            const dimensionsFilter = addFilter({
+              wrapper: filterWrapper,
+              options: ['Severity_score', 'Climate_vulnerability', 'Covid_vaccination_rate', 'People_in_need'],
+              className: 'dimension-filter',
+              label: '<b>Select dimension</b>',
+              defaultOption: 'Severity_score',
+            });
 
             dichart.showLoading();
             window.$.getJSON(MAP_FILE_PATH, (worldJson) => {
@@ -69,6 +78,7 @@ const renderPeopleAffectedByCrisisMap = () => {
                 ...new Set(procesedCountryNameData.map((stream) => stream.Country_name)),
               ];
               const groupedData = processedData(countries, procesedCountryNameData);
+
               dichart.hideLoading();
               window.echarts.registerMap('WORLD', worldJson);
               const option = {
@@ -125,6 +135,13 @@ const renderPeopleAffectedByCrisisMap = () => {
                 ],
               };
               chart.setOption(option);
+            });
+
+            /**
+              * Event Listeners/Handlers
+              * */
+            dimensionsFilter.addEventListener('change', (event) => {
+              console.log(event);
             });
           });
         });
