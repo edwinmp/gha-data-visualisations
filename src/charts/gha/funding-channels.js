@@ -108,7 +108,6 @@ const renderFundingChannelsChart = () => {
             const years = Array.from(new Set(data.map((d) => d.Year)));
             const channels = Array.from(new Set(data.map((d) => d['Delivery Channel'])));
             const channelSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
-            console.log(data, donors, years, channels);
             // create UI elements
             const countryFilter = addFilter({
               wrapper: filterWrapper,
