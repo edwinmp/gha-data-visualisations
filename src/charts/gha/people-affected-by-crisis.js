@@ -146,6 +146,7 @@ const renderPeopleAffectedByCrisisMap = () => {
           fetchCSVData(CSV_PATH).then((data) => {
             // create UI elements
             let variable = 'Severity_score';
+            let crisisType;
             const chart = window.echarts.init(chartNode);
             const filterWrapper = addFilterWrapper(chartNode);
 
@@ -155,6 +156,13 @@ const renderPeopleAffectedByCrisisMap = () => {
               className: 'dimension-filter',
               label: '<b>Select dimension</b>',
               defaultOption: 'Severity_score',
+            });
+            const crisisTypeFilter = addFilter({
+              wrapper: filterWrapper,
+              options: ['Natural', 'Displacement', 'Conflict'],
+              className: 'crisis-filter',
+              label: '<b>Select crisis type</b>',
+              defaultOption: '',
             });
 
             dichart.showLoading();
@@ -176,6 +184,11 @@ const renderPeopleAffectedByCrisisMap = () => {
                 const { value } = event.currentTarget;
                 variable = value;
                 renderChart(chart, variable, groupedData);
+              });
+              crisisTypeFilter.addEventListener('change', (event) => {
+                const { value } = event.currentTarget;
+                crisisType = value;
+                console.log(crisisType);
               });
             });
           });
