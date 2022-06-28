@@ -3,25 +3,24 @@ import defaultOptions, { colorways, legendSelection } from '../echarts';
 import fetchCSVData from '../../utils/data';
 import { addFilter, addFilterWrapper } from '../../widgets/filters';
 import PillWidget from '../../widgets/pills';
-// import d3 from 'd3'; // eslint-disable-line import/no-unresolved
-
-// Your Code Goes Here i.e. functions
-
-// const nf = new Intl.NumberFormat();
 
 let dataType = 'Volumes';
 
-const cleanValue = (value = '') => (value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null);
+const cleanValue = (value = '') =>
+  value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
 
-const cleanData = (data) => data.map((d) => {
-  const clean = { ...d };
-  clean.value = cleanValue(clean.Value);
+const cleanData = (data) =>
+  data.map((d) => {
+    const clean = { ...d };
+    clean.value = cleanValue(clean.Value);
 
-  return clean;
-});
+    return clean;
+  });
 
 const processData = (data, years, donor, channel, valueType = 'Proportion') => {
-  const filteredData = data.filter((d) => d.Donor.trim() === donor && d['IHA type'] === channel && d['Value type'] === valueType);
+  const filteredData = data.filter(
+    (d) => d.Donor.trim() === donor && d['IHA type'] === channel && d['Value type'] === valueType
+  );
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year));
 
   return sortedData;
@@ -29,7 +28,10 @@ const processData = (data, years, donor, channel, valueType = 'Proportion') => {
 
 const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
   const formatter = new Intl.NumberFormat('en-US', {
-    style, currency: 'USD', signDisplay, maximumFractionDigits: 0,
+    style,
+    currency: 'USD',
+    signDisplay,
+    maximumFractionDigits: 0,
   });
 
   return formatter.format(value);
@@ -79,21 +81,35 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
     yAxis: getYaxisValue(),
     series: channels.map((channel) => ({
       name: channel,
-      data: processData(data, years, 'All donors', channel, dataType === 'Proportions' ? 'Proportion' : 'Absolute').map((d) => ({
-        value: d && Number(dataType === 'Proportions' ? (d.value * 100) : d.value),
-        emphasis: {
-          focus: 'self',
-        },
-      })),
+      data: processData(data, years, 'All donors', channel, dataType === 'Proportions' ? 'Proportion' : 'Volume').map(
+        (d) => ({
+          value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
+          emphasis: {
+            focus: 'self',
+          },
+        })
+      ),
       type: 'bar',
       stack: 'channels',
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
-          const item = data.find((d) => d['IHA type'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name && d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Absolute'));
-          const updatedOrgType = channel.includes('Multilateral HA') ? channel.replace('Multilateral HA', 'Multilateral Humanitarian Assistance') : channel;
+          const item = data.find(
+            (d) =>
+              d['IHA type'] === channel &&
+              d.Donor === 'All donors' &&
+              `${d.Year}` === params.name &&
+              d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Volume')
+          );
+          const updatedOrgType = channel.includes('Multilateral HA')
+            ? channel.replace('Multilateral HA', 'Multilateral Humanitarian Assistance')
+            : channel;
 
-          return `All donors, ${params.name} <br />${updatedOrgType}: <strong>${dataType === 'Proportions' ? `${params.value.toFixed(2)}%` : `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`} </strong>`;
+          return `All donors, ${params.name} <br />${updatedOrgType}: <strong>${
+            dataType === 'Proportions'
+              ? `${params.value.toFixed(2)}%`
+              : `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
+          } </strong>`;
         },
       },
       cursor: 'auto',
@@ -125,7 +141,8 @@ const renderDonorsChart = () => {
            *
            * const chart = window.echarts.init(chartNode);
            */
-          const csv = 'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/donor_interactive_data_long.csv';
+          const csv =
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/donor_interactive_data_long.csv';
           fetchCSVData(csv).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
@@ -134,12 +151,17 @@ const renderDonorsChart = () => {
             const channels = Array.from(new Set(data.map((d) => d['IHA type'])));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
             // create UI elements
-            const countryFilter = addFilter({
-              wrapper: filterWrapper,
-              options: donors.sort(),
-              className: 'country-filter',
-              label: '<b>Select donors</b>',
-            }, false, 'donorSelectError', donorSelectErrorMessage);
+            const countryFilter = addFilter(
+              {
+                wrapper: filterWrapper,
+                options: donors.sort(),
+                className: 'country-filter',
+                label: '<b>Select donors</b>',
+              },
+              false,
+              'donorSelectError',
+              donorSelectErrorMessage
+            );
 
             const contextFilter = addFilter({
               wrapper: filterWrapper,
@@ -160,58 +182,76 @@ const renderDonorsChart = () => {
             const updateChartForDonorSeries = (updatedData, activeDonors) => {
               const cleanedData = cleanData(updatedData);
               const series = activeDonors
-                .map((donor) => channels.map((channel, index) => ({
-                  name: channel,
-                  data: processData(cleanedData, years, donor, channel, dataType === 'Proportions' ? 'Proportion' : 'Absolute').map(
-                    (d) => ({
-                      value: d && Number(dataType === 'Proportions' ? (d.value * 100) : d.value),
+                .map((donor) =>
+                  channels.map((channel, index) => ({
+                    name: channel,
+                    data: processData(
+                      cleanedData,
+                      years,
+                      donor,
+                      channel,
+                      dataType === 'Proportions' ? 'Proportion' : 'Volume'
+                    ).map((d) => ({
+                      value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
                       emphasis: {
                         focus: 'self',
                       },
-                    }),
-                  ),
-                  type: 'bar',
-                  stack: donor,
-                  tooltip: {
-                    trigger: 'item',
-                    formatter: (params) => {
-                      const item = cleanedData.find((d) => d['IHA type'] === channel && d.Donor === donor && `${d.Year}` === params.name && d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Absolute'));
-                      const value = dataType !== 'Proportions' ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
-                        : `${params.value.toFixed(2)}${dataType === 'Proportions' ? '%' : ''}`;
+                    })),
+                    type: 'bar',
+                    stack: donor,
+                    tooltip: {
+                      trigger: 'item',
+                      formatter: (params) => {
+                        const item = cleanedData.find(
+                          (d) =>
+                            d['IHA type'] === channel &&
+                            d.Donor === donor &&
+                            `${d.Year}` === params.name &&
+                            d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Volume')
+                        );
+                        const value =
+                          dataType !== 'Proportions'
+                            ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
+                            : `${params.value.toFixed(2)}${dataType === 'Proportions' ? '%' : ''}`;
 
-                      return `${donor}, ${params.name} <br />${channel}: <strong>${value}</strong>`;
+                        return `${donor}, ${params.name} <br />${channel}: <strong>${value}</strong>`;
+                      },
                     },
-                  },
-                  label: {
-                    // only show single label that overlaps the stack
-                    show: index === 0 && activeDonors.length > 1,
-                    position: 'insideBottom',
-                    distance: 15,
-                    align: 'left',
-                    verticalAlign: 'middle',
-                    rotate: 90,
-                    formatter: () => `${donor}`,
-                    fontSize: 16,
-                  },
-                  cursor: 'auto',
-                })))
+                    label: {
+                      // only show single label that overlaps the stack
+                      show: index === 0 && activeDonors.length > 1,
+                      position: 'insideBottom',
+                      distance: 15,
+                      align: 'left',
+                      verticalAlign: 'middle',
+                      rotate: 90,
+                      formatter: () => `${donor}`,
+                      fontSize: 16,
+                    },
+                    cursor: 'auto',
+                  }))
+                )
                 .reduce((final, cur) => final.concat(cur), []);
-              chart.setOption({
-                yAxis: getYaxisValue(),
-                series,
-              }, { replaceMerge: ['series'] });
+              chart.setOption(
+                {
+                  yAxis: getYaxisValue(),
+                  series,
+                },
+                { replaceMerge: ['series'] }
+              );
             };
 
             const onAdd = (value) => {
               // filter data to return only the selected items
-              const filteredData = value !== 'All donors' ? data.filter((d) => pillWidget.pillNames.includes(d.Donor)) : data;
+              const filteredData =
+                value !== 'All donors' ? data.filter((d) => pillWidget.pillNames.includes(d.Donor)) : data;
               const selectedDonors = pillWidget.pillNames.length ? pillWidget.pillNames : donors;
               updateChartForDonorSeries(filteredData, selectedDonors);
             };
 
             /**
-              * Event Listeners/Handlers
-              * */
+             * Event Listeners/Handlers
+             * */
             countryFilter.addEventListener('change', (event) => {
               const { value } = event.currentTarget;
               const error = document.getElementById('donorSelectError');

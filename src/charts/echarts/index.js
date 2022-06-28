@@ -28,16 +28,18 @@ export const colorways = {
 export const mixedColourWay = () => {
   const themes = Object.keys(colorways).filter((key) => key !== 'rainbow');
 
-  return colorways.rainbow.reduce((colours, hex, index) => [hex].concat(
-    themes.reduce((_themed, theme) => {
-      if (colorways[theme].length > index) {
-        return _themed.concat(colorways[theme][index]);
-      }
+  return colorways.rainbow.reduce((colours, hex, index) =>
+    [hex].concat(
+      themes.reduce((_themed, theme) => {
+        if (colorways[theme].length > index) {
+          return _themed.concat(colorways[theme][index]);
+        }
 
-      return _themed;
-    }, colours),
-    [],
-  ));
+        return _themed;
+      }, colours),
+      []
+    )
+  );
 };
 
 export const legendSelection = (chart, params) => {
@@ -47,13 +49,14 @@ export const legendSelection = (chart, params) => {
 
   if (selectAll === 0) {
     // select all on second click
-    Object.keys(obj).map((key) => {
+    Object.keys(obj).forEach((key) => {
       chart.dispatchAction({
         type: 'legendSelect',
         name: key,
       });
     });
-  } else if (!obj[params.name]) { // If user has unselected an item
+  } else if (!obj[params.name]) {
+    // If user has unselected an item
     // Re-select what the user unselected
     chart.dispatchAction({
       type: 'legendSelect',
@@ -61,8 +64,8 @@ export const legendSelection = (chart, params) => {
     });
 
     // Deselect everything else
-    Object.keys(obj).map((key) => {
-      if (obj.hasOwnProperty(key) && key !== params.name) {
+    Object.keys(obj).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(obj, key) && key !== params.name) {
         chart.dispatchAction({
           type: 'legendUnSelect',
           name: key,

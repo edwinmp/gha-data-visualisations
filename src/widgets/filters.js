@@ -16,9 +16,12 @@ export const createOption = (selectElement, option, selected = false) => {
   selectElement.appendChild(optionElement);
 };
 
-export const addFilter = ({
-  wrapper, options, allItemsLabel, className, label, defaultOption = '*',
-}, returnWrapper = false, errorID, errorMessage) => {
+export const addFilter = (
+  { wrapper, options, allItemsLabel, className, label, defaultOption = '*' },
+  returnWrapper = false,
+  errorID,
+  errorMessage
+) => {
   const selectElement = document.createElement('select');
   selectElement.classList.add(...['data-selector', 'js-plotly-chart-data-selector'].concat(className));
   if (allItemsLabel) {
