@@ -11,16 +11,16 @@ import PillWidget from '../../widgets/pills';
 
 let dataType = 'Volumes';
 
-const cleanValue = (value) => (value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null);
+const cleanValue = (value = '') => (value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null);
 
 const cleanData = (data) => data.map((d) => {
   const clean = { ...d };
-  clean.value = cleanValue(d.Value);
+  clean.value = cleanValue(clean.Value);
 
   return clean;
 });
 
-const processData = (data, years, donor, channel, valueType = 'Proportional') => {
+const processData = (data, years, donor, channel, valueType = 'Proportion') => {
   const filteredData = data.filter((d) => d.Donor.trim() === donor && d['IHA type'] === channel && d['Value type'] === valueType);
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year));
 
@@ -79,7 +79,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
     yAxis: getYaxisValue(),
     series: channels.map((channel) => ({
       name: channel,
-      data: processData(data, years, 'All donors', channel, dataType === 'Proportions' ? 'Proportional' : 'Absolute').map((d) => ({
+      data: processData(data, years, 'All donors', channel, dataType === 'Proportions' ? 'Proportion' : 'Absolute').map((d) => ({
         value: d && Number(dataType === 'Proportions' ? (d.value * 100) : d.value),
         emphasis: {
           focus: 'self',
@@ -90,7 +90,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
-          const item = data.find((d) => d['IHA type'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name && d['Value type'] === (dataType === 'Proportions' ? 'Proportional' : 'Absolute'));
+          const item = data.find((d) => d['IHA type'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name && d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Absolute'));
           const updatedOrgType = channel.includes('Multilateral HA') ? channel.replace('Multilateral HA', 'Multilateral Humanitarian Assistance') : channel;
 
           return `All donors, ${params.name} <br />${updatedOrgType}: <strong>${dataType === 'Proportions' ? `${params.value.toFixed(2)}%` : `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`} </strong>`;
@@ -125,7 +125,7 @@ const renderDonorsChart = () => {
            *
            * const chart = window.echarts.init(chartNode);
            */
-          const csv = 'https://raw.githubusercontent.com/devinit/di-chart-boilerplate/gha/2021/charts/public/assets/data/GHA/2021/interactivity-donors.csv';
+          const csv = 'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/donor_interactive_data_long.csv';
           fetchCSVData(csv).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
@@ -162,7 +162,7 @@ const renderDonorsChart = () => {
               const series = activeDonors
                 .map((donor) => channels.map((channel, index) => ({
                   name: channel,
-                  data: processData(cleanedData, years, donor, channel, dataType === 'Proportions' ? 'Proportional' : 'Absolute').map(
+                  data: processData(cleanedData, years, donor, channel, dataType === 'Proportions' ? 'Proportion' : 'Absolute').map(
                     (d) => ({
                       value: d && Number(dataType === 'Proportions' ? (d.value * 100) : d.value),
                       emphasis: {
@@ -175,7 +175,7 @@ const renderDonorsChart = () => {
                   tooltip: {
                     trigger: 'item',
                     formatter: (params) => {
-                      const item = cleanedData.find((d) => d['IHA type'] === channel && d.Donor === donor && `${d.Year}` === params.name && d['Value type'] === (dataType === 'Proportions' ? 'Proportional' : 'Absolute'));
+                      const item = cleanedData.find((d) => d['IHA type'] === channel && d.Donor === donor && `${d.Year}` === params.name && d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Absolute'));
                       const value = dataType !== 'Proportions' ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
                         : `${params.value.toFixed(2)}${dataType === 'Proportions' ? '%' : ''}`;
 
