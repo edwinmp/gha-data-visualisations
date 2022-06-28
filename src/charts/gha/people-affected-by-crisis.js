@@ -49,7 +49,7 @@ const processedData = (countries, processedCountryData) => {
   return data;
 };
 
-const getVisualmap = (type) => {
+const getVisualmap = (type, variable) => {
   if (type === 'piecewise') {
     return {
       type,
@@ -80,6 +80,8 @@ const getVisualmap = (type) => {
     };
   }
 
+  const maximumValue = variable === 'COVID_vaccination_rate' ? 100 : 25;
+
   return {
     type,
     calculable: true,
@@ -89,6 +91,8 @@ const getVisualmap = (type) => {
     selectedMode: false,
     orient: 'horizontal',
     inverse: true,
+    min: 0,
+    max: maximumValue,
   };
 };
 
@@ -103,7 +107,8 @@ const renderChart = (chart, variable, groupedData) => {
       },
     },
     tooltip: {},
-    visualMap: getVisualmap(dimensions.find((dimension) => dimension.name === variable).type),
+    visualMap: getVisualmap(dimensions.find((dimension) => dimension.name === variable)
+      .type, variable),
     series: [
       {
         name: variable,
