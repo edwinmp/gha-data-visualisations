@@ -141,7 +141,8 @@ const renderPeopleAffectedByCrisisMap = () => {
               * Event Listeners/Handlers
               * */
             dimensionsFilter.addEventListener('change', (event) => {
-              console.log(event);
+              const { value } = event.currentTarget;
+              console.log(value);
             });
           });
         });
