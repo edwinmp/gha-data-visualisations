@@ -9,6 +9,11 @@ const dimensions = [
   { name: 'COVID_vaccination_rate', type: 'continuous' },
   { name: 'People_in_need_(millions)', type: 'continuous' },
 ];
+const crisisTypes = [
+  { label: 'Natural', name: 'Physical_disaster_marker' },
+  { label: 'Displacement', name: 'Displacement_marker' },
+  { label: 'Conflict', name: 'Conflict_marker' },
+];
 
 const matchCountryNames = (csvData, worldData) => {
   const matchedData = csvData.map((stream) => {
@@ -159,7 +164,7 @@ const renderPeopleAffectedByCrisisMap = () => {
             });
             const crisisTypeFilter = addFilter({
               wrapper: filterWrapper,
-              options: ['Natural', 'Displacement', 'Conflict'],
+              options: crisisTypes.map((crisis) => crisis.label),
               className: 'crisis-filter',
               label: '<b>Select crisis type</b>',
               defaultOption: '',
@@ -188,7 +193,13 @@ const renderPeopleAffectedByCrisisMap = () => {
               crisisTypeFilter.addEventListener('change', (event) => {
                 const { value } = event.currentTarget;
                 crisisType = value;
-                console.log(crisisType);
+                const actualCrisisName = crisisTypes.find(
+                  (crisis) => crisis.label === crisisType,
+                ).name;
+                const filteredGroupedData = groupedData.filter(
+                  (dataLine) => dataLine[actualCrisisName] === 1,
+                );
+                renderChart(chart, variable, filteredGroupedData);
               });
             });
           });
