@@ -59,7 +59,7 @@ const getRecipientOrgType = (data, recipient) => {
 
 const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   const option = {
-    color: colorways.orange,
+    color: colorways.bluebell,
     legend: {
       show: true,
       top: 'top',

@@ -35,7 +35,7 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.orange,
+    color: colorways.bluebell,
     legend: {
       show: true,
       top: 'top',

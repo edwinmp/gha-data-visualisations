@@ -64,7 +64,7 @@ const getYaxisValue = () => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.orange,
+    color: colorways.bluebell,
     legend: {
       show: true,
       top: 'top',
