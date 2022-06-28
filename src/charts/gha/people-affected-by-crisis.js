@@ -152,6 +152,7 @@ const renderPeopleAffectedByCrisisMap = () => {
             // create UI elements
             let variable = 'Severity_score';
             let crisisType;
+            let crisisClass;
             const chart = window.echarts.init(chartNode);
             const filterWrapper = addFilterWrapper(chartNode);
 
@@ -167,6 +168,13 @@ const renderPeopleAffectedByCrisisMap = () => {
               options: crisisTypes.map((crisis) => crisis.label),
               className: 'crisis-filter',
               label: '<b>Select crisis type</b>',
+              defaultOption: '',
+            });
+            const recurrentCrisisClassFilter = addFilter({
+              wrapper: filterWrapper,
+              options: [],
+              className: 'recurrent-crisis-class-filter',
+              label: '<b>Select recurrent crisis class</b>',
               defaultOption: '',
             });
 
@@ -200,6 +208,11 @@ const renderPeopleAffectedByCrisisMap = () => {
                   (dataLine) => dataLine[actualCrisisName] === 1,
                 );
                 renderChart(chart, variable, filteredGroupedData);
+              });
+              recurrentCrisisClassFilter.addEventListener('change', (event) => {
+                const { value } = event.currentTarget;
+                crisisClass = value;
+                console.log(crisisClass);
               });
             });
           });
