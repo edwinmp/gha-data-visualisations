@@ -213,7 +213,6 @@ const renderPeopleAffectedByCrisisMap = () => {
                 const { value } = event.currentTarget;
                 crisisClass = value;
                 const filteredGroupedData = groupedData.filter((dataStream) => dataStream['Protracted/Recurrent_crisis'] === crisisClass);
-                console.log(filteredGroupedData);
                 renderChart(chart, variable, filteredGroupedData);
               });
             });
