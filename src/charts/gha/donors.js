@@ -22,6 +22,9 @@ const cleanData = (data) =>
     return clean;
   });
 
+const filterChannels = (channels) =>
+  channels.filter((c) => (dataType === '%GNI' ? c === 'Total HA' : c !== 'Total HA'));
+
 const processData = (data, years, donor, channel, valueType = 'Proportion') => {
   const filteredData = data.filter(
     (d) => d.Donor.trim() === donor && d['IHA type'] === channel && d['Value type'] === valueType
@@ -84,7 +87,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
       data: years,
     },
     yAxis: getYaxisValue(),
-    series: channels.map((channel) => ({
+    series: filterChannels(channels).map((channel) => ({
       name: channel,
       data: processData(data, years, 'All donors', channel, dataTypeMapping[dataType]).map((d) => ({
         value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
@@ -186,7 +189,7 @@ const renderDonorsChart = () => {
               const cleanedData = cleanData(updatedData);
               const series = activeDonors
                 .map((donor) =>
-                  channels.map((channel, index) => ({
+                  filterChannels(channels).map((channel, index) => ({
                     name: channel,
                     data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
                       value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
