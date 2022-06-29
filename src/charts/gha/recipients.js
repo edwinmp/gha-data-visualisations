@@ -144,7 +144,8 @@ const renderRecipientChart = () => {
             new Set(donorData.filter((d) => d['Top 10 recipient'] === 'Yes').map((d) => d['Destination Country']))
           );
           const years = Array.from(new Set(donorData.map((d) => d.Year)));
-          const initialDonors = getRecipientDonors(donorData, '10 largest recipients');
+          const defaultRecipient = 'Afghanistan'; // used to be '10 largest recipients'
+          const initialDonors = getRecipientDonors(donorData, defaultRecipient);
           // create UI elements
           const [countryFilterA, countryFilterAWrapper] = addFilter(
             {
@@ -152,7 +153,7 @@ const renderRecipientChart = () => {
               options: recipients.sort(),
               className: 'country-filter',
               label: '<b>Select recipient</b>',
-              defaultOption: '10 largest recipients',
+              defaultOption: defaultRecipient,
             },
             true
           );
@@ -179,7 +180,7 @@ const renderRecipientChart = () => {
           });
           // defaults to donor breakdown
           const chart = window.echarts.init(chartNode);
-          renderDefaultChart(chart, cleanData(donorData, 'USD deflated millions'), '10 largest recipients', {
+          renderDefaultChart(chart, cleanData(donorData, 'USD deflated millions'), defaultRecipient, {
             years,
             channels: initialDonors,
           });
@@ -279,7 +280,7 @@ const renderRecipientChart = () => {
                   : orgTypeData;
               updateChartByOrgType(filteredData, value);
             } else {
-              countryFilterA.value = '10 largest recipients'; // reset country filter selected value
+              countryFilterA.value = defaultRecipient; // reset country filter selected value
               renderDefaultChart(chart, cleanData(donorData, 'USD deflated millions'), countryFilterA.value, {
                 years,
                 channels: initialDonors,
