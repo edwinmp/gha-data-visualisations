@@ -101,6 +101,10 @@ const getVisualmap = (type, variable) => {
   };
 };
 
+const getMoreCountryData = (data, country) => data.find(
+  (countryData) => countryData.name === country,
+);
+
 const renderChart = (chart, variable, groupedData) => {
   const option = {
     title: {
@@ -111,9 +115,21 @@ const renderChart = (chart, variable, groupedData) => {
         fontSize: 20,
       },
     },
-    tooltip: {},
-    visualMap: getVisualmap(dimensions.find((dimension) => dimension.name === variable)
-      .type, variable),
+    tooltip: {
+      trigger: 'item',
+      formatter: (obj) => {
+        const countryName = obj.name;
+        const allCountryData = getMoreCountryData(groupedData, countryName);
+
+        return `<h3> ${countryName} </h3> <br>
+          ${obj.seriesName}:  ${obj.value}
+          <br> People in need(millions): ${allCountryData['People_in_need_(millions)']}`;
+      },
+    },
+    visualMap: getVisualmap(
+      dimensions.find((dimension) => dimension.name === variable).type,
+      variable,
+    ),
     series: [
       {
         name: variable,
