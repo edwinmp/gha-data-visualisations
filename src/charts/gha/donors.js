@@ -153,6 +153,9 @@ const renderDonorsChart = () => {
             if (pillWidget.pills.length) {
               chartNode.parentElement.insertBefore(pillWidget.widget, chartNode);
             }
+            const element = document.querySelector('.data-selector');
+
+            const choices = new window.Choices(element); // eslint-disable-line no-unused-vars
 
             const updateChartForDonorSeries = (updatedData, activeDonors) => {
               const cleanedData = cleanData(updatedData);
