@@ -4,7 +4,7 @@ import fetchCSVData from '../../utils/data';
 import { addFilter, addFilterWrapper } from '../../widgets/filters';
 import PillWidget from '../../widgets/pills';
 
-const cleanValue = (value) =>
+const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
 
 const cleanData = (data) =>
@@ -16,7 +16,7 @@ const cleanData = (data) =>
   });
 
 const processData = (data, years, donor, channel) => {
-  const filteredData = data.filter((d) => d.Donor.trim() === donor && d['Delivery Channel'] === channel);
+  const filteredData = data.filter((d) => d.Donor.trim() === donor && d['Delivery channel'] === channel);
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year));
 
   return sortedData;
@@ -68,13 +68,13 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
         trigger: 'item',
         formatter: (params) => {
           const item = data.find(
-            (d) => d['Delivery Channel'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name
+            (d) => d['Delivery channel'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name
           );
 
           return `All donors, ${params.name} <br />${channel}: <strong>${Number(params.value, 10).toFixed(
             2
           )}%</strong> (US$${toDollars(
-            cleanValue(item['US$ millions, constant 2019 prices']),
+            cleanValue(item['US$ millions, constant 2020 prices']),
             'decimal',
             'never'
           )} million)`;
@@ -111,13 +111,13 @@ const renderFundingChannelsChart = () => {
            */
           // const csv = '/public/assets/data/GHA/2021/funding-channels-interactive-data.csv';
           const csv =
-            'https://raw.githubusercontent.com/devinit/di-chart-boilerplate/gha/2021/charts/public/assets/data/GHA/2021/funding-channels-interactive-data.csv';
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/funding-channels-interactive-data.csv';
           fetchCSVData(csv).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
             const years = Array.from(new Set(data.map((d) => d.Year)));
-            const channels = Array.from(new Set(data.map((d) => d['Delivery Channel'])));
+            const channels = Array.from(new Set(data.map((d) => d['Delivery channel'])));
             const channelSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
             // create UI elements
             const countryFilter = addFilter(
@@ -158,11 +158,11 @@ const renderFundingChannelsChart = () => {
                       trigger: 'item',
                       formatter: (params) => {
                         const item = cleanedData.find(
-                          (d) => d['Delivery Channel'] === channel && d.Donor === donor && `${d.Year}` === params.name
+                          (d) => d['Delivery channel'] === channel && d.Donor === donor && `${d.Year}` === params.name
                         );
                         const value = item
                           ? `<strong>${(item.value * 100).toFixed(2)}%</strong> (US$${toDollars(
-                              cleanValue(item['US$ millions, constant 2019 prices']),
+                              cleanValue(item['US$ millions, constant 2020 prices']),
                               'decimal',
                               'never'
                             )} million)`
