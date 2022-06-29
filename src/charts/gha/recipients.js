@@ -25,17 +25,19 @@ const processData = (data, years, recipient, donor) => {
   return sortedData;
 };
 
-const processOrgTypeData = (data, recipient, orgType) => {
+const processOrgTypeData = (data, orgType, years) => {
   const properties = ['Destination Country', 'Recipient Org Type'];
-  const filteredData = data.find((d) => d[properties[0]].trim() === recipient && d[properties[1]] === orgType);
-  const sortedData = Object.keys(filteredData)
-    .filter((d) => !properties.includes(d))
-    .map((year) => ({
-      value: cleanValue(filteredData[year]) || null,
+  const filteredData = data.filter((d) => d[properties[1]] === orgType);
+  const sortedData = years.map((year) => {
+    const yearData = filteredData.find((d) => d.Year === year);
+
+    return {
+      value: yearData ? cleanValue(yearData.value) || null : null,
       emphasis: {
         focus: 'self',
       },
-    }));
+    };
+  });
 
   return sortedData;
 };
@@ -216,7 +218,7 @@ const renderRecipientChart = () => {
             const series = orgTypes
               .map((orgType) => ({
                 name: orgType,
-                data: processOrgTypeData(updatedData, recipient, orgType),
+                data: processOrgTypeData(updatedData, orgType, years),
                 type: 'bar',
                 stack: recipient,
                 cursor: 'auto',
