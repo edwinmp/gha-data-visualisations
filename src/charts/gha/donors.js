@@ -25,6 +25,8 @@ const cleanData = (data) =>
 const filterChannels = (channels) =>
   channels.filter((c) => (dataType === '%GNI' ? c === 'Total HA' : c !== 'Total HA'));
 
+const getSeriesType = () => (dataType === '%GNI' ? 'line' : 'bar');
+
 const processData = (data, years, donor, channel, valueType = 'Proportion') => {
   const filteredData = data.filter(
     (d) => d.Donor.trim() === donor && d['IHA type'] === channel && d['Value type'] === valueType
@@ -95,7 +97,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
           focus: 'self',
         },
       })),
-      type: 'bar',
+      type: getSeriesType(),
       stack: 'channels',
       tooltip: {
         trigger: 'item',
@@ -187,6 +189,7 @@ const renderDonorsChart = () => {
 
             const updateChartForDonorSeries = (updatedData, activeDonors) => {
               const cleanedData = cleanData(updatedData);
+              const type = getSeriesType();
               const series = activeDonors
                 .map((donor) =>
                   filterChannels(channels).map((channel, index) => ({
@@ -197,7 +200,7 @@ const renderDonorsChart = () => {
                         focus: 'self',
                       },
                     })),
-                    type: 'bar',
+                    type,
                     stack: donor,
                     tooltip: {
                       trigger: 'item',
@@ -219,7 +222,7 @@ const renderDonorsChart = () => {
                     },
                     label: {
                       // only show single label that overlaps the stack
-                      show: index === 0 && activeDonors.length > 1,
+                      show: type === 'bar' ? index === 0 && activeDonors.length > 1 : false,
                       position: 'insideBottom',
                       distance: 15,
                       align: 'left',
