@@ -125,7 +125,7 @@ const renderFundingChannelsChart = () => {
                 wrapper: filterWrapper,
                 options: donors.sort(),
                 className: 'country-filter',
-                label: '<b>Select donors</b>',
+                label: '<b>Select up to 2 donors</b>',
               },
               false,
               'channelSelectError',
