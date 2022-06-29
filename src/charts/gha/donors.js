@@ -5,6 +5,11 @@ import { addFilter, addFilterWrapper } from '../../widgets/filters';
 import PillWidget from '../../widgets/pills';
 
 let dataType = 'Volumes';
+const dataTypeMapping = {
+  Proportions: 'Proportion',
+  Volumes: 'Volume',
+  '%GNI': '%GNI',
+};
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
@@ -81,14 +86,12 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
     yAxis: getYaxisValue(),
     series: channels.map((channel) => ({
       name: channel,
-      data: processData(data, years, 'All donors', channel, dataType === 'Proportions' ? 'Proportion' : 'Volume').map(
-        (d) => ({
-          value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
-          emphasis: {
-            focus: 'self',
-          },
-        })
-      ),
+      data: processData(data, years, 'All donors', channel, dataTypeMapping[dataType]).map((d) => ({
+        value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
+        emphasis: {
+          focus: 'self',
+        },
+      })),
       type: 'bar',
       stack: 'channels',
       tooltip: {
@@ -99,7 +102,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
               d['IHA type'] === channel &&
               d.Donor === 'All donors' &&
               `${d.Year}` === params.name &&
-              d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Volume')
+              d['Value type'] === dataTypeMapping[dataType]
           );
           const updatedOrgType = channel.includes('Multilateral HA')
             ? channel.replace('Multilateral HA', 'Multilateral Humanitarian Assistance')
@@ -165,7 +168,7 @@ const renderDonorsChart = () => {
 
             const contextFilter = addFilter({
               wrapper: filterWrapper,
-              options: ['Volumes', 'Proportions'],
+              options: ['Volumes', 'Proportions', '%GNI'],
               className: 'data-filter',
               label: '<b>Display data as</b>',
             });
@@ -185,13 +188,7 @@ const renderDonorsChart = () => {
                 .map((donor) =>
                   channels.map((channel, index) => ({
                     name: channel,
-                    data: processData(
-                      cleanedData,
-                      years,
-                      donor,
-                      channel,
-                      dataType === 'Proportions' ? 'Proportion' : 'Volume'
-                    ).map((d) => ({
+                    data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
                       value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
                       emphasis: {
                         focus: 'self',
@@ -207,7 +204,7 @@ const renderDonorsChart = () => {
                             d['IHA type'] === channel &&
                             d.Donor === donor &&
                             `${d.Year}` === params.name &&
-                            d['Value type'] === (dataType === 'Proportions' ? 'Proportion' : 'Volume')
+                            d['Value type'] === dataTypeMapping[dataType]
                         );
                         const value =
                           dataType !== 'Proportions'
