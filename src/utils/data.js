@@ -5,6 +5,7 @@ const fetchCSVData = (url) =>
     parse(url, {
       download: true,
       header: true,
+      skipEmptyLines: true,
       complete: ({ data }) => resolve(data),
     });
   });
