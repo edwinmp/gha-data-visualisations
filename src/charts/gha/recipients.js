@@ -18,7 +18,7 @@ const cleanData = (data, field = 'Value') =>
 
 const processData = (data, years, recipient, donor) => {
   const filteredData = data.filter(
-    (d) => d['Destination country'].trim() === recipient && d['Donor organisation'] === donor
+    (d) => d['Destination Country'].trim() === recipient && d['Donor organisation'] === donor
   );
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year) || null);
 
@@ -42,7 +42,7 @@ const processOrgTypeData = (data, recipient, orgType) => {
 
 const getRecipientDonors = (data, recipient) => {
   const preApprovedDonors = ['All other donors'];
-  const recipientData = data.filter((d) => d['Destination country'].trim() === recipient);
+  const recipientData = data.filter((d) => d['Destination Country'].trim() === recipient);
   const donors = Array.from(new Set(recipientData.map((d) => d['Donor organisation'])))
     .filter((d) => !preApprovedDonors.includes(d))
     .slice(0, 5);
@@ -133,14 +133,16 @@ const renderRecipientChart = () => {
            * const chart = window.echarts.init(chartNode);
            */
           const donorData = await fetchCSVData(
-            'https://raw.githubusercontent.com/devinit/di-chart-boilerplate/gha/2021/charts/public/assets/data/GHA/2021/recipients-by-donor.csv'
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/recipients-by-donor.csv'
           );
           const orgTypeData = await fetchCSVData(
-            'https://raw.githubusercontent.com/devinit/di-chart-boilerplate/gha/2021/charts/public/assets/data/GHA/2021/recipients-by-org-type.csv'
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/recipients-by-org-type.csv'
           );
           const filterWrapper = addFilterWrapper(chartNode);
           // extract unique values
-          const recipients = Array.from(new Set(donorData.map((d) => d['Destination country'])));
+          const recipients = Array.from(
+            new Set(donorData.filter((d) => d['Top 10 recipient'] === 'Yes').map((d) => d['Destination Country']))
+          );
           const years = Array.from(new Set(donorData.map((d) => d.Year)));
           const initialDonors = getRecipientDonors(donorData, '10 largest recipients');
           // create UI elements
@@ -155,7 +157,9 @@ const renderRecipientChart = () => {
             true
           );
           // in case the recipients are different, we create another dropdown with the org type data
-          const orgTypeRecipients = Array.from(new Set(orgTypeData.map((d) => d['Destination Country'])));
+          const orgTypeRecipients = Array.from(
+            new Set(orgTypeData.filter((d) => d['Top 10 recipient'] === 'Yes').map((d) => d['Destination Country']))
+          );
           const [countryFilterB, countryFilterBWrapper] = addFilter(
             {
               wrapper: filterWrapper,
@@ -235,7 +239,7 @@ const renderRecipientChart = () => {
             if (value !== '10 largest recipients') {
               const filteredData =
                 value !== '10 largest recipients'
-                  ? donorData.filter((d) => d['Destination country'] === value)
+                  ? donorData.filter((d) => d['Destination Country'] === value)
                   : donorData;
               updateChartByDonor(filteredData, value);
             } else {
