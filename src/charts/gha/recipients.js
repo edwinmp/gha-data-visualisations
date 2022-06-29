@@ -135,10 +135,10 @@ const renderRecipientChart = () => {
            * const chart = window.echarts.init(chartNode);
            */
           const donorData = await fetchCSVData(
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/recipients-by-donor.csv'
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-donor.csv'
           );
           const orgTypeData = await fetchCSVData(
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/recipients-by-org-type.csv'
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-org-type.csv'
           );
           const filterWrapper = addFilterWrapper(chartNode);
           // extract unique values

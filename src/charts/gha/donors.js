@@ -150,7 +150,7 @@ const renderDonorsChart = () => {
            * const chart = window.echarts.init(chartNode);
            */
           const csv =
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/donor_interactive_data_long.csv';
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/donor_interactive_data_long.csv';
           fetchCSVData(csv).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
