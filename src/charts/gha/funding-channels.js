@@ -3,21 +3,20 @@ import defaultOptions, { colorways, legendSelection } from '../echarts';
 import fetchCSVData from '../../utils/data';
 import { addFilter, addFilterWrapper } from '../../widgets/filters';
 import PillWidget from '../../widgets/pills';
-// import d3 from 'd3'; // eslint-disable-line import/no-unresolved
 
-// Your Code Goes Here i.e. functions
+const cleanValue = (value = '') =>
+  value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
 
-const cleanValue = (value) => (value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null);
+const cleanData = (data) =>
+  data.map((d) => {
+    const clean = { ...d };
+    clean.value = cleanValue(d.Proportions);
 
-const cleanData = (data) => data.map((d) => {
-  const clean = { ...d };
-  clean.value = cleanValue(d.Proportions);
-
-  return clean;
-});
+    return clean;
+  });
 
 const processData = (data, years, donor, channel) => {
-  const filteredData = data.filter((d) => d.Donor.trim() === donor && d['Delivery Channel'] === channel);
+  const filteredData = data.filter((d) => d.Donor.trim() === donor && d['Delivery channel'] === channel);
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year));
 
   return sortedData;
@@ -25,7 +24,10 @@ const processData = (data, years, donor, channel) => {
 
 const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
   const formatter = new Intl.NumberFormat('en-US', {
-    style, currency: 'USD', signDisplay, maximumFractionDigits: 0,
+    style,
+    currency: 'USD',
+    signDisplay,
+    maximumFractionDigits: 0,
   });
 
   return formatter.format(value);
@@ -33,7 +35,7 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.orange,
+    color: colorways.bluebell,
     legend: {
       show: true,
       top: 'top',
@@ -65,9 +67,17 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
-          const item = data.find((d) => d['Delivery Channel'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name);
+          const item = data.find(
+            (d) => d['Delivery channel'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name
+          );
 
-          return `All donors, ${params.name} <br />${channel}: <strong>${Number(params.value, 10).toFixed(2)}%</strong> (US$${toDollars(cleanValue(item['US$ millions, constant 2019 prices']), 'decimal', 'never')} million)`;
+          return `All donors, ${params.name} <br />${channel}: <strong>${Number(params.value, 10).toFixed(
+            2
+          )}%</strong> (US$${toDollars(
+            cleanValue(item['US$ millions, constant 2020 prices']),
+            'decimal',
+            'never'
+          )} million)`;
         },
       },
       cursor: 'auto',
@@ -100,22 +110,27 @@ const renderFundingChannelsChart = () => {
            * const chart = window.echarts.init(chartNode);
            */
           // const csv = '/public/assets/data/GHA/2021/funding-channels-interactive-data.csv';
-          const csv = 'https://raw.githubusercontent.com/devinit/di-chart-boilerplate/gha/2021/charts/public/assets/data/GHA/2021/funding-channels-interactive-data.csv';
+          const csv =
+            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/update/data/public/assets/data/funding-channels-interactive-data.csv';
           fetchCSVData(csv).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
             const years = Array.from(new Set(data.map((d) => d.Year)));
-            const channels = Array.from(new Set(data.map((d) => d['Delivery Channel'])));
+            const channels = Array.from(new Set(data.map((d) => d['Delivery channel'])));
             const channelSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
-            console.log(data, donors, years, channels);
             // create UI elements
-            const countryFilter = addFilter({
-              wrapper: filterWrapper,
-              options: donors.sort(),
-              className: 'country-filter',
-              label: '<b>Select donors</b>',
-            }, false, 'channelSelectError', channelSelectErrorMessage);
+            const countryFilter = addFilter(
+              {
+                wrapper: filterWrapper,
+                options: donors.sort(),
+                className: 'country-filter',
+                label: '<b>Select up to 2 donors</b>',
+              },
+              false,
+              'channelSelectError',
+              channelSelectErrorMessage
+            );
             const chart = window.echarts.init(chartNode);
             renderDefaultChart(chart, cleanData(data), { years, channels });
 
@@ -128,56 +143,63 @@ const renderFundingChannelsChart = () => {
             const updateChartForDonorSeries = (updatedData, activeDonors) => {
               const cleanedData = cleanData(updatedData);
               const series = activeDonors
-                .map((donor) => channels.map((channel, index) => ({
-                  name: channel,
-                  data: processData(cleanedData, years, donor, channel).map(
-                    (d) => ({
+                .map((donor) =>
+                  channels.map((channel, index) => ({
+                    name: channel,
+                    data: processData(cleanedData, years, donor, channel).map((d) => ({
                       value: d && Number(d.value * 100).toFixed(2),
                       emphasis: {
                         focus: 'self',
                       },
-                    }),
-                  ),
-                  type: 'bar',
-                  stack: donor,
-                  tooltip: {
-                    trigger: 'item',
-                    formatter: (params) => {
-                      const item = cleanedData.find((d) => d['Delivery Channel'] === channel && d.Donor === donor && `${d.Year}` === params.name);
-                      const value = item
-                        ? `<strong>${(item.value * 100).toFixed(2)}%</strong> (US$${toDollars(cleanValue(item['US$ millions, constant 2019 prices']), 'decimal', 'never')} million)`
-                        : `<strong>${(item.value * 100).toFixed(2)}%</strong>`;
+                    })),
+                    type: 'bar',
+                    stack: donor,
+                    tooltip: {
+                      trigger: 'item',
+                      formatter: (params) => {
+                        const item = cleanedData.find(
+                          (d) => d['Delivery channel'] === channel && d.Donor === donor && `${d.Year}` === params.name
+                        );
+                        const value = item
+                          ? `<strong>${(item.value * 100).toFixed(2)}%</strong> (US$${toDollars(
+                              cleanValue(item['US$ millions, constant 2020 prices']),
+                              'decimal',
+                              'never'
+                            )} million)`
+                          : `<strong>${(item.value * 100).toFixed(2)}%</strong>`;
 
-                      return `${donor}, ${params.name} <br />${channel}: ${value}`;
+                        return `${donor}, ${params.name} <br />${channel}: ${value}`;
+                      },
                     },
-                  },
-                  label: {
-                    // only show single label that overlaps the stack
-                    show: index === 0 && activeDonors.length > 1,
-                    position: 'insideBottom',
-                    distance: 15,
-                    align: 'left',
-                    verticalAlign: 'middle',
-                    rotate: 90,
-                    formatter: () => `${donor}`,
-                    fontSize: 16,
-                  },
-                  cursor: 'auto',
-                })))
+                    label: {
+                      // only show single label that overlaps the stack
+                      show: index === 0 && activeDonors.length > 1,
+                      position: 'insideBottom',
+                      distance: 15,
+                      align: 'left',
+                      verticalAlign: 'middle',
+                      rotate: 90,
+                      formatter: () => `${donor}`,
+                      fontSize: 16,
+                    },
+                    cursor: 'auto',
+                  }))
+                )
                 .reduce((final, cur) => final.concat(cur), []);
               chart.setOption({ series }, { replaceMerge: ['series'] });
             };
 
             const onAdd = (value) => {
               // filter data to return only the selected items
-              const filteredData = value !== 'All donors' ? data.filter((d) => pillWidget.pillNames.includes(d.Donor)) : data;
+              const filteredData =
+                value !== 'All donors' ? data.filter((d) => pillWidget.pillNames.includes(d.Donor)) : data;
               const selectedDonors = pillWidget.pillNames.length ? pillWidget.pillNames : donors;
               updateChartForDonorSeries(filteredData, selectedDonors);
             };
 
             /**
-              * Event Listeners/Handlers
-              * */
+             * Event Listeners/Handlers
+             * */
             countryFilter.addEventListener('change', (event) => {
               const { value } = event.currentTarget;
               const error = document.getElementById('channelSelectError');
