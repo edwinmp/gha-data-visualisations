@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ChartFilters from './ChartFilters';
 import Select from './Select';
@@ -40,6 +42,9 @@ const RecipientChartFilters = (props) => {
         }))}
         defaultValue={[{ value: props.defaultBreakdown, label: props.defaultBreakdown }]}
         onChange={onSelectBreakdown}
+        css={{
+          width: '250px',
+        }}
       />
     </ChartFilters>
   );

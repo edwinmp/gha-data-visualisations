@@ -8,7 +8,7 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
   const [values, setValues] = useState(defaultValue);
   useEffect(() => {
     if (props.onChange) props.onChange(values);
-    onError(); // reset error message
+    if (onError) onError(); // reset error message
   }, [values]);
 
   const onChange = (_values) => {
