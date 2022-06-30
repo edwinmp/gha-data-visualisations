@@ -173,15 +173,16 @@ const renderDonorsChart = () => {
               const series = activeDonors
                 .map((donor) =>
                   filterChannels(channels).map((channel, index) => ({
-                    name: channel,
+                    name: dataType !== '%GNI' ? channel : donor, // GNI only has one channel, so the donors are the series
                     data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
-                      value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
+                      value: d && Number(dataType !== 'Volumes' ? d.value * 100 : d.value), // all other data types are %ages
                       emphasis: {
                         focus: 'self',
                       },
                     })),
                     type,
-                    stack: donor,
+                    stack: dataType !== '%GNI' ? donor : '%GNI', // GNI is a line chart
+                    symbol: 'circle',
                     tooltip: {
                       trigger: 'item',
                       formatter: (params) => {
@@ -193,9 +194,9 @@ const renderDonorsChart = () => {
                             d['Value type'] === dataTypeMapping[dataType]
                         );
                         const value =
-                          dataType !== 'Proportions'
+                          dataType === 'Volumes'
                             ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
-                            : `${params.value.toFixed(2)}${dataType === 'Proportions' ? '%' : ''}`;
+                            : `${params.value.toFixed(2)}%`;
 
                         return `${donor}, ${params.name} <br />${channel}: <strong>${value}</strong>`;
                       },
@@ -242,7 +243,7 @@ const renderDonorsChart = () => {
 
             const onSelectDataType = (value) => {
               dataType = value.value || dataType;
-              if (selectedDonors.length > 1) {
+              if (selectedDonors.length) {
                 const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
                 updateChartForDonorSeries(filteredData, selectedDonors);
               } else {
@@ -263,7 +264,7 @@ const renderDonorsChart = () => {
                 />
                 <Select
                   label="Display data as"
-                  options={['Volumes', 'Proportions'].map((item) => ({ value: item, label: item }))}
+                  options={['Volumes', 'Proportions', '%GNI'].map((item) => ({ value: item, label: item }))}
                   defaultValue={[{ value: 'Volumes', label: 'Volumes' }]}
                   onChange={onSelectDataType}
                   css={{ minWidth: '150px' }}
