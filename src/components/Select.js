@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import ReactSelect from 'react-select';
+/** @jsx jsx */
+import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import ReactSelect from 'react-select';
 
 const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {
   const [values, setValues] = useState(defaultValue);
@@ -45,7 +47,7 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
       <label>
         <b>{label}</b>
       </label>
-      <ReactSelect {...props} value={values} onChange={onChange} />
+      <ReactSelect {...props} value={values} onChange={onChange} css={{ marginRight: '10px' }} />
     </div>
   );
 };
