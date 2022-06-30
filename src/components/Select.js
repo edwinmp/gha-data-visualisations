@@ -3,7 +3,7 @@ import ReactSelect from 'react-select';
 import PropTypes from 'prop-types';
 
 const Select = ({ label, onError, maxSelectedOptions, ...props }) => {
-  const [values, setValues] = useState([]);
+  const [values, setValues] = useState(props.defaultValue);
   const onChange = (_values) => {
     if (maxSelectedOptions && _values.length > maxSelectedOptions) {
       if (onError) {
@@ -35,6 +35,7 @@ Select.propTypes = {
   maxSelectedOptions: PropTypes.number,
   onChange: PropTypes.func,
   onError: PropTypes.func,
+  defaultValue: PropTypes.array,
 };
 
 Select.defaultProps = { maxSelectedOptions: 2 };
