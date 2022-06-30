@@ -52,12 +52,12 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
 };
 
 const getYaxisValue = () => {
-  if (dataType === 'Proportions') {
+  if (dataType !== 'Volumes') {
     return {
       type: 'value',
       axisLabel: { formatter: '{value}%' },
       name: '',
-      max: 100,
+      max: dataType === 'Proportions' ? 100 : null,
     };
   }
 
@@ -181,7 +181,7 @@ const renderDonorsChart = () => {
                       },
                     })),
                     type,
-                    stack: dataType !== '%GNI' ? donor : '%GNI', // GNI is a line chart
+                    stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
                     symbol: 'circle',
                     tooltip: {
                       trigger: 'item',
