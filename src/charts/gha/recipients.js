@@ -46,8 +46,18 @@ const processOrgTypeData = (data, orgType, years) => {
 };
 
 const getRecipientDonors = (data, recipient) => {
-  const preApprovedDonors = ['All other donors'];
+  const preApprovedDonors = [
+    'United States',
+    'EU institutions',
+    'Germany',
+    'United Kingdom',
+    'Saudi Arabia',
+    'All other donors',
+  ];
   const recipientData = data.filter((d) => d['Destination Country'].trim() === recipient);
+  if (preApprovedDonors.length >= 5) {
+    return preApprovedDonors;
+  }
   const donors = Array.from(new Set(recipientData.map((d) => d['Donor organisation'])))
     .filter((d) => !preApprovedDonors.includes(d))
     .slice(0, 5);
