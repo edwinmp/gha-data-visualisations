@@ -1,8 +1,11 @@
 import deepMerge from 'deepmerge';
-import defaultOptions, { colorways, legendSelection } from '../echarts';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import ChartFilters from '../../components/ChartFilters';
+import Select from '../../components/Select';
 import fetchCSVData from '../../utils/data';
-import { addFilter, addFilterWrapper } from '../../widgets/filters';
-import PillWidget from '../../widgets/pills';
+import { addFilterWrapper } from '../../widgets/filters';
+import defaultOptions, { colorways, legendSelection } from '../echarts';
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
@@ -118,27 +121,12 @@ const renderFundingChannelsChart = () => {
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
             const years = Array.from(new Set(data.map((d) => d.Year)));
             const channels = Array.from(new Set(data.map((d) => d['Delivery channel'])));
-            const channelSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
+            const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
+
             // create UI elements
-            const countryFilter = addFilter(
-              {
-                wrapper: filterWrapper,
-                options: donors.sort(),
-                className: 'country-filter',
-                label: '<b>Select up to 2 donors</b>',
-              },
-              false,
-              'channelSelectError',
-              channelSelectErrorMessage
-            );
+
             const chart = window.echarts.init(chartNode);
             renderDefaultChart(chart, cleanData(data), { years, channels });
-
-            // initialise pill widget for the multi-select option
-            const pillWidget = new PillWidget({ wrapper: filterWrapper });
-            if (pillWidget.pills.length) {
-              chartNode.parentElement.insertBefore(pillWidget.widget, chartNode);
-            }
 
             const updateChartForDonorSeries = (updatedData, activeDonors) => {
               const cleanedData = cleanData(updatedData);
@@ -189,50 +177,35 @@ const renderFundingChannelsChart = () => {
               chart.setOption({ series }, { replaceMerge: ['series'] });
             };
 
-            const onAdd = (value) => {
+            let selectedDonors = [];
+
+            const onSelectDonor = (values) => {
+              const isAllDonors = values.find((item) => item.value === 'All donors');
+
+              if (!values.length || isAllDonors) {
+                renderDefaultChart(chart, cleanData(data), { years, channels });
+
+                return;
+              }
               // filter data to return only the selected items
-              const filteredData =
-                value !== 'All donors' ? data.filter((d) => pillWidget.pillNames.includes(d.Donor)) : data;
-              const selectedDonors = pillWidget.pillNames.length ? pillWidget.pillNames : donors;
+              const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
+              selectedDonors = values.map((item) => item.value);
               updateChartForDonorSeries(filteredData, selectedDonors);
             };
 
-            /**
-             * Event Listeners/Handlers
-             * */
-            countryFilter.addEventListener('change', (event) => {
-              const { value } = event.currentTarget;
-              const error = document.getElementById('channelSelectError');
-              if (value !== 'All donors') {
-                // if it's the first pill, append pill widget
-                if (!pillWidget.pillNames.length) {
-                  chartNode.parentElement.insertBefore(pillWidget.widget, chartNode);
-                }
-                if (pillWidget.pillNames.length >= 2) {
-                  error.style.display = 'block';
-                } else {
-                  pillWidget.add(value);
-                  error.style.display = 'none';
-                }
-              } else {
-                pillWidget.removeAll();
-              }
-            });
-
-            pillWidget.onAdd(onAdd);
-
-            pillWidget.onRemove(() => {
-              const hasPills = !!pillWidget.pillNames.length;
-              const error = document.getElementById('channelSelectError');
-              if (hasPills) {
-                const filteredData = data.filter((d) => pillWidget.pillNames.includes(d.Donor));
-                updateChartForDonorSeries(filteredData, pillWidget.pillNames);
-                error.style.display = 'none';
-              } else {
-                countryFilter.value = 'All donors'; // reset country filter selected value
-                renderDefaultChart(chart, cleanData(data), { years, channels });
-              }
-            });
+            const root = createRoot(filterWrapper);
+            root.render(
+              <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
+                <Select
+                  label="Select up to 2 donors"
+                  options={donors.map((donor) => ({ value: donor, label: donor }))}
+                  defaultValue={[{ value: 'All donors', label: 'All donors' }]}
+                  isMulti
+                  onChange={onSelectDonor}
+                  singleSelectOptions={[{ value: 'All donors', label: 'All donors' }]}
+                />
+              </ChartFilters>
+            );
 
             dichart.hideLoading();
           });

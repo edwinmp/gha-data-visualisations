@@ -1,6 +1,13 @@
+import { parse } from 'papaparse';
+
 const fetchCSVData = (url) =>
   new Promise((resolve) => {
-    window.d3.csv(url, (data) => resolve(data));
+    parse(url, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: ({ data }) => resolve(data),
+    });
   });
 
 export default fetchCSVData;
