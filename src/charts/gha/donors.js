@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/react';
 import deepMerge from 'deepmerge';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Select from '../../components/Select';
 import ChartFilters from '../../components/ChartFilters';
@@ -265,6 +266,7 @@ const renderDonorsChart = () => {
                   options={['Volumes', 'Proportions'].map((item) => ({ value: item, label: item }))}
                   defaultValue={[{ value: 'Volumes', label: 'Volumes' }]}
                   onChange={onSelectDataType}
+                  css={{ minWidth: '150px' }}
                 />
               </ChartFilters>
             );
