@@ -270,6 +270,7 @@ const renderDonorsChart = () => {
                   defaultValue={[{ value: 'All donors', label: 'All donors' }]}
                   isMulti
                   onChange={onAdd}
+                  singleSelectOptions={[{ value: 'All donors', label: 'All donors' }]}
                 />
               </ChartFilters>
             );

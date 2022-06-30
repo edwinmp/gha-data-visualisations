@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
 import PropTypes from 'prop-types';
 
-const Select = ({ label, onError, maxSelectedOptions, ...props }) => {
-  const [values, setValues] = useState(props.defaultValue);
+const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {
+  const [values, setValues] = useState(defaultValue);
+  useEffect(() => {
+    if (props.onChange) props.onChange(values);
+    onError(); // reset error message
+  }, [values]);
+
   const onChange = (_values) => {
+    if (!_values.length) {
+      setValues(defaultValue);
+
+      return;
+    }
+
+    // handle options that should not be compared
+    const singleSelectOptionIndex = _values.findIndex((item) =>
+      singleSelectOptions.find((option) => option.value === item.value)
+    );
+    if (props.isMulti && _values.length > 1 && singleSelectOptionIndex !== -1) {
+      setValues(singleSelectOptionIndex === 0 ? _values.slice(1) : [_values[singleSelectOptionIndex]]);
+
+      return;
+    }
+
     if (maxSelectedOptions && _values.length > maxSelectedOptions) {
       if (onError) {
         onError({
@@ -12,11 +33,11 @@ const Select = ({ label, onError, maxSelectedOptions, ...props }) => {
           message: `Only up to ${maxSelectedOptions} selections allowed`,
         });
       }
-    } else {
-      setValues(_values);
-      if (props.onChange) props.onChange(_values);
-      onError(); // reset error message
+
+      return;
     }
+
+    setValues(_values);
   };
 
   return (
@@ -36,6 +57,8 @@ Select.propTypes = {
   onChange: PropTypes.func,
   onError: PropTypes.func,
   defaultValue: PropTypes.array,
+  singleSelectOptions: PropTypes.array,
+  isMulti: PropTypes.bool,
 };
 
 Select.defaultProps = { maxSelectedOptions: 2 };
