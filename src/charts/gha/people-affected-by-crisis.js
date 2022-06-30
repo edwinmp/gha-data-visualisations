@@ -148,6 +148,13 @@ const renderChart = (chart, variable, groupedData) => {
   };
 
   chart.setOption(option);
+  chart.on('click', (params) => {
+    const countryInfo = groupedData.find((data) => data.name === params.data.name);
+    const countryDataElement = document.getElementById('country-data-tooltip');
+    countryDataElement.innerHTML = 'Done';
+    countryDataElement.style.display = 'block';
+    console.log(countryInfo);
+  });
 };
 
 const renderPeopleAffectedByCrisisMap = () => {
@@ -172,6 +179,10 @@ const renderPeopleAffectedByCrisisMap = () => {
             const chart = window.echarts.init(chartNode);
             const filterWrapper = addFilterWrapper(chartNode);
 
+            const countryDataElement = document.createElement('div');
+            countryDataElement.style.display = 'none';
+            countryDataElement.setAttribute('id', 'country-data-tooltip');
+            chartNode.parentElement.insertBefore(countryDataElement, chartNode);
             const dimensionsFilter = addFilter({
               wrapper: filterWrapper,
               options: dimensions.map((dimension) => dimension.name),
