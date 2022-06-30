@@ -181,7 +181,7 @@ const renderDonorsChart = () => {
                       },
                     })),
                     type,
-                    stack: dataType !== '%GNI' ? donor : '%GNI', // GNI is a line chart
+                    stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
                     symbol: 'circle',
                     tooltip: {
                       trigger: 'item',
