@@ -26,4 +26,7 @@ module.exports = {
       devtool: process.env.NODE_ENV === 'production' ? 'none' : 'source-map',
     },
   },
+  babel: {
+    presets: ['@babel/preset-react'],
+  },
 };
