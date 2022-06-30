@@ -43,7 +43,7 @@ const RecipientChartFilters = (props) => {
         defaultValue={[{ value: props.defaultBreakdown, label: props.defaultBreakdown }]}
         onChange={onSelectBreakdown}
         css={{
-          width: '250px',
+          minWidth: '300px',
         }}
       />
     </ChartFilters>

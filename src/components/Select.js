@@ -4,6 +4,20 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
 
+const selectStyles = {
+  control: (styles) => ({
+    ...styles,
+    borderColor: '#ddd',
+    borderRadius: 'none',
+    boxShadow: 'none',
+    ':hover': { borderColor: '#8f1b13' },
+    ':active': { borderColor: '#8f1b13' },
+  }),
+  option: (styles) => ({ ...styles, fontSize: '14px' }),
+  singleValue: (styles) => ({ ...styles, fontSize: '14px' }),
+  multiValue: (styles) => ({ ...styles, fontSize: '14px' }),
+};
+
 const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {
   const [values, setValues] = useState(defaultValue);
   useEffect(() => {
@@ -53,7 +67,7 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
       <label>
         <b>{label}</b>
       </label>
-      <ReactSelect {...props} value={values} onChange={onChange} css={{ marginRight: '10px' }} />
+      <ReactSelect {...props} value={values} onChange={onChange} css={{ marginRight: '10px' }} styles={selectStyles} />
     </div>
   );
 };
