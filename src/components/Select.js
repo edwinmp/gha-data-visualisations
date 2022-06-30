@@ -16,6 +16,8 @@ const selectStyles = {
   option: (styles) => ({ ...styles, fontSize: '14px' }),
   singleValue: (styles) => ({ ...styles, fontSize: '14px' }),
   multiValue: (styles) => ({ ...styles, fontSize: '14px' }),
+  multiValueLabel: (base, state) => (!state.data.isCloseable ? { ...base, paddingRight: 6 } : base),
+  multiValueRemove: (base, state) => (!state.data.isCloseable ? { ...base, display: 'none' } : base),
 };
 
 const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {
@@ -67,7 +69,14 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
       <label>
         <b>{label}</b>
       </label>
-      <ReactSelect {...props} value={values} onChange={onChange} css={{ marginRight: '10px' }} styles={selectStyles} />
+      <ReactSelect
+        {...props}
+        value={values}
+        onChange={onChange}
+        css={{ marginRight: '10px' }}
+        styles={selectStyles}
+        isClearable={values.length > 1}
+      />
     </div>
   );
 };
