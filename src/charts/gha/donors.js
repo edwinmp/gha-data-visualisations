@@ -247,24 +247,32 @@ const renderDonorsChart = () => {
               );
             };
 
+            const onAdd = (values) => {
+              const isAllDonors = values.find((item) => item.value === 'All donors');
+
+              if (!values.length || isAllDonors) {
+                renderDefaultChart(chart, cleanData(data), { years, channels });
+
+                return;
+              }
+              // filter data to return only the selected items
+              const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
+              const selectedDonors = values.map((item) => item.value);
+              updateChartForDonorSeries(filteredData, selectedDonors);
+            };
+
             const root = createRoot(filterWrapper);
             root.render(
               <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
                 <Select
                   label="Select up to 2 donors"
                   options={donors.map((donor) => ({ value: donor, label: donor }))}
+                  defaultValue={[{ value: 'All donors', label: 'All donors' }]}
                   isMulti
+                  onChange={onAdd}
                 />
               </ChartFilters>
             );
-
-            // const onAdd = (value) => {
-            //   // filter data to return only the selected items
-            //   const filteredData =
-            //     value !== 'All donors' ? data.filter((d) => pillWidget.pillNames.includes(d.Donor)) : data;
-            //   const selectedDonors = pillWidget.pillNames.length ? pillWidget.pillNames : donors;
-            //   updateChartForDonorSeries(filteredData, selectedDonors);
-            // };
 
             /**
              * Event Listeners/Handlers
