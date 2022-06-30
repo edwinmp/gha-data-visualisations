@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import Select from './Select';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -27,7 +26,7 @@ const ChartFilters = (props) => {
   return (
     <div>
       {React.Children.map(props.children, (child) =>
-        React.isValidElement(child) && child.type === Select ? React.cloneElement(child, { onError }) : child
+        React.isValidElement(child) ? React.cloneElement(child, { onError }) : child
       )}
       {errorMessage ? <ErrorMessage className="data-selector--wrapper">{errorMessage}</ErrorMessage> : null}
     </div>

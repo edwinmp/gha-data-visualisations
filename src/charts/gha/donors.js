@@ -251,16 +251,19 @@ const renderDonorsChart = () => {
               }
             };
 
+            const defaultDonor = 'All donors';
+
             const root = createRoot(filterWrapper);
             root.render(
               <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
                 <Select
                   label="Select up to 2 donors"
-                  options={donors.map((donor) => ({ value: donor, label: donor }))}
-                  defaultValue={[{ value: 'All donors', label: 'All donors' }]}
+                  options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
+                  defaultValue={[{ value: defaultDonor, label: defaultDonor }]}
                   isMulti
                   onChange={onSelectDonor}
-                  singleSelectOptions={[{ value: 'All donors', label: 'All donors' }]}
+                  singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
+                  css={{ minWidth: '200px' }}
                 />
                 <Select
                   label="Display data as"
