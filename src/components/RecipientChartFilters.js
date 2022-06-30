@@ -33,6 +33,9 @@ const RecipientChartFilters = (props) => {
         options={recipients.sort().map((item) => ({ value: item, label: item }))}
         defaultValue={[{ value: props.defaultRecipient, label: props.defaultRecipient }]}
         onChange={onSelectRecipient}
+        css={{
+          minWidth: '150px',
+        }}
       />
       <Select
         label="Choose breakdown"
