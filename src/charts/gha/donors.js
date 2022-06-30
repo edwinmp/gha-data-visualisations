@@ -7,7 +7,7 @@ import fetchCSVData from '../../utils/data';
 import { addFilterWrapper } from '../../widgets/filters';
 import defaultOptions, { colorways, legendSelection } from '../echarts';
 
-const dataType = 'Volumes';
+let dataType = 'Volumes';
 const dataTypeMapping = {
   Proportions: 'Proportion',
   Volumes: 'Volume',
@@ -162,33 +162,9 @@ const renderDonorsChart = () => {
             const channels = Array.from(new Set(data.map((d) => d['IHA type'])));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
             // create UI elements
-            // const countryFilter = addFilter(
-            //   {
-            //     wrapper: filterWrapper,
-            //     options: donors.sort(),
-            //     className: 'country-filter',
-            //     label: '<b>Select up to 2 donors</b>',
-            //   },
-            //   false,
-            //   'donorSelectError',
-            //   donorSelectErrorMessage
-            // );
-
-            // const contextFilter = addFilter({
-            //   wrapper: filterWrapper,
-            //   options: ['Volumes', 'Proportions', '%GNI'],
-            //   className: 'data-filter',
-            //   label: '<b>Display data as</b>',
-            // });
 
             const chart = window.echarts.init(chartNode);
             renderDefaultChart(chart, cleanData(data), { years, channels });
-
-            // initialise pill widget for the multi-select option
-            // const pillWidget = new PillWidget({ wrapper: filterWrapper });
-            // if (pillWidget.pills.length) {
-            //   chartNode.parentElement.insertBefore(pillWidget.widget, chartNode);
-            // }
 
             const updateChartForDonorSeries = (updatedData, activeDonors) => {
               const cleanedData = cleanData(updatedData);
@@ -247,7 +223,9 @@ const renderDonorsChart = () => {
               );
             };
 
-            const onAdd = (values) => {
+            let selectedDonors = [];
+
+            const onSelectDonor = (values) => {
               const isAllDonors = values.find((item) => item.value === 'All donors');
 
               if (!values.length || isAllDonors) {
@@ -257,8 +235,18 @@ const renderDonorsChart = () => {
               }
               // filter data to return only the selected items
               const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
-              const selectedDonors = values.map((item) => item.value);
+              selectedDonors = values.map((item) => item.value);
               updateChartForDonorSeries(filteredData, selectedDonors);
+            };
+
+            const onSelectDataType = (value) => {
+              dataType = value.value || dataType;
+              if (selectedDonors.length > 1) {
+                const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
+                updateChartForDonorSeries(filteredData, selectedDonors);
+              } else {
+                renderDefaultChart(chart, cleanData(data), { years, channels });
+              }
             };
 
             const root = createRoot(filterWrapper);
@@ -269,60 +257,17 @@ const renderDonorsChart = () => {
                   options={donors.map((donor) => ({ value: donor, label: donor }))}
                   defaultValue={[{ value: 'All donors', label: 'All donors' }]}
                   isMulti
-                  onChange={onAdd}
+                  onChange={onSelectDonor}
                   singleSelectOptions={[{ value: 'All donors', label: 'All donors' }]}
+                />
+                <Select
+                  label="Display data as"
+                  options={['Volumes', 'Proportions'].map((item) => ({ value: item, label: item }))}
+                  defaultValue={[{ value: 'Volumes', label: 'Volumes' }]}
+                  onChange={onSelectDataType}
                 />
               </ChartFilters>
             );
-
-            /**
-             * Event Listeners/Handlers
-             * */
-            // countryFilter.addEventListener('change', (event) => {
-            //   const { value } = event.currentTarget;
-            //   const error = document.getElementById('donorSelectError');
-            //   if (value !== 'All donors') {
-            //     // if it's the first pill, append pill widget
-            //     if (!pillWidget.pillNames.length) {
-            //       chartNode.parentElement.insertBefore(pillWidget.widget, chartNode);
-            //     }
-            //     if (pillWidget.pillNames.length >= 2) {
-            //       error.style.display = 'block';
-            //     } else {
-            //       pillWidget.add(value);
-            //       error.style.display = 'none';
-            //     }
-            //   } else {
-            //     pillWidget.removeAll();
-            //   }
-            // });
-
-            // contextFilter.addEventListener('change', (event) => {
-            //   const { value } = event.currentTarget;
-            //   dataType = value;
-            //   if (pillWidget.pillNames.length > 1) {
-            //     const filteredData = data.filter((d) => pillWidget.pillNames.includes(d.Donor));
-            //     updateChartForDonorSeries(filteredData, pillWidget.pillNames);
-            //   } else {
-            //     renderDefaultChart(chart, cleanData(data), { years, channels });
-            //   }
-            // });
-
-            // pillWidget.onAdd(onAdd);
-
-            // pillWidget.onRemove(() => {
-            //   const error = document.getElementById('donorSelectError');
-            //   const hasPills = !!pillWidget.pillNames.length;
-            //   if (hasPills) {
-            //     const filteredData = data.filter((d) => pillWidget.pillNames.includes(d.Donor));
-            //     updateChartForDonorSeries(filteredData, pillWidget.pillNames);
-            //     countryFilter.disabled = false; // enable to select more donors
-            //     error.style.display = 'none';
-            //   } else {
-            //     countryFilter.value = 'All donors'; // reset country filter selected value
-            //     renderDefaultChart(chart, cleanData(data), { years, channels });
-            //   }
-            // });
 
             dichart.hideLoading();
           });

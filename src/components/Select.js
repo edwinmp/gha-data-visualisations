@@ -12,6 +12,12 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
   }, [values]);
 
   const onChange = (_values) => {
+    if (!props.isMulti) {
+      setValues(_values);
+
+      return;
+    }
+
     if (!_values.length) {
       setValues(defaultValue);
 
