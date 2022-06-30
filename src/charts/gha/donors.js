@@ -52,12 +52,12 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
 };
 
 const getYaxisValue = () => {
-  if (dataType === 'Proportions') {
+  if (dataType !== 'Volumes') {
     return {
       type: 'value',
       axisLabel: { formatter: '{value}%' },
       name: '',
-      max: 100,
+      max: dataType === 'Proportions' ? 100 : null,
     };
   }
 
