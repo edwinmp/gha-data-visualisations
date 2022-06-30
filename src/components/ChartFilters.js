@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 
-const ChartFilters = (props) => <div>{props.children}</div>;
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 11px;
+  position: relative;
+  padding: 5px 5px 5px 0px;
+  display: block;
+`;
+
+const ChartFilters = (props) => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const onError = (error) => {
+    if (!error) {
+      setErrorMessage('');
+
+      return;
+    }
+    if (error.type === 'maxSelectedOptions') {
+      setErrorMessage(props.selectErrorMessage);
+    }
+  };
+
+  return (
+    <div>
+      {React.cloneElement(props.children, { onError })}
+      {errorMessage ? <ErrorMessage className="data-selector--wrapper">{errorMessage}</ErrorMessage> : null}
+    </div>
+  );
+};
 
 ChartFilters.propTypes = {
   selectErrorMessage: PropTypes.string,
