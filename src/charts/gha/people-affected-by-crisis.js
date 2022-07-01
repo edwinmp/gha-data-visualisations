@@ -155,9 +155,9 @@ const renderChart = (chart, variable, groupedData) => {
   chart.setOption(option);
   chart.on('click', (params) => {
     const isIncluded = countries.find((country) => country === params.name);
+    const countryDataElement = document.getElementById('country-data-tooltip');
     if (isIncluded) {
       const countryInfo = groupedData.find((data) => data.name === params.data.name);
-      const countryDataElement = document.getElementById('country-data-tooltip');
       const countryInfoValuePairs = Object.entries(countryInfo);
       countryDataElement.innerHTML = countryInfoValuePairs.map((info) => `${info[0]}: ${info[1]}<br/>`);
       countryDataElement.style.display = 'inline-block';
@@ -166,9 +166,9 @@ const renderChart = (chart, variable, groupedData) => {
       countryDataElement.style.borderStyle = 'solid';
       countryDataElement.style.borderWidth = '1px';
       countryDataElement.style.width = 'fit-content';
+      countryDataElement.style.height = 'fit-content';
     }
     if (!params.data) {
-      const countryDataElement = document.getElementById('country-data-tooltip');
       countryDataElement.style.display = 'none';
     }
   });
@@ -221,6 +221,12 @@ const renderPeopleAffectedByCrisisMap = () => {
               label: '<b>Select recurrent crisis class</b>',
               defaultOption: '',
             });
+
+            const mapWrapper = document.createElement('div');
+            mapWrapper.style.display = 'flex';
+            chartNode.parentElement.insertBefore(mapWrapper, chartNode);
+            mapWrapper.appendChild(chartNode);
+            mapWrapper.appendChild(countryDataElement);
 
             dichart.showLoading();
             window.$.getJSON(MAP_FILE_PATH, (worldJson) => {
