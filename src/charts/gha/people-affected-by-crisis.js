@@ -159,14 +159,16 @@ const renderChart = (chart, variable, groupedData) => {
     if (isIncluded) {
       const countryInfo = groupedData.find((data) => data.name === params.data.name);
       const countryInfoValuePairs = Object.entries(countryInfo);
-      countryDataElement.innerHTML = countryInfoValuePairs.map((info) => `${info[0]}: ${info[1]}<br/>`);
+      countryDataElement.innerHTML = countryInfoValuePairs.map((info) => `${info[0]}: ${info[1]}<br/>`).join('');
       countryDataElement.style.display = 'inline-block';
       countryDataElement.style.fontFamily = 'Geomanist Regular,sans-serif';
       countryDataElement.style.padding = '10px';
       countryDataElement.style.borderStyle = 'solid';
       countryDataElement.style.borderWidth = '1px';
-      countryDataElement.style.width = 'fit-content';
+      countryDataElement.style.width = '20%';
       countryDataElement.style.height = 'fit-content';
+      countryDataElement.style.marginTop = '20%';
+      countryDataElement.style.wordBreak = 'break-all';
     }
     if (!params.data) {
       countryDataElement.style.display = 'none';
