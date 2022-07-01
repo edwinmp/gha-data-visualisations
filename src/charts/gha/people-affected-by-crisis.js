@@ -3,6 +3,7 @@ import { addFilter, addFilterWrapper } from '../../widgets/filters';
 
 const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
 const CSV_PATH = 'public/assets/data/GHA/2021/map_data_long.csv';
+let countries;
 const dimensions = [
   { name: 'Severity_score', type: 'piecewise' },
   { name: 'Climate_vulnerability', type: 'piecewise' },
@@ -36,10 +37,10 @@ const getVariableSpecificData = (dataArray, variableName) => (
     value: values[variableName],
   })));
 
-const processedData = (countries, processedCountryData) => {
+const processedData = (countryNames, processedCountryData) => {
   const data = [];
   // eslint-disable-next-line array-callback-return
-  countries.map((country) => {
+  countryNames.map((country) => {
     const countryData = {};
     countryData.name = country;
     // eslint-disable-next-line array-callback-return
@@ -120,10 +121,14 @@ const renderChart = (chart, variable, groupedData) => {
       formatter: (obj) => {
         const countryName = obj.name;
         const allCountryData = getMoreCountryData(groupedData, countryName);
-
-        return `<h3> ${countryName} </h3> <br>
+        const isIncluded = countries.find((country) => country === countryName);
+        if (isIncluded) {
+          return `<h3> ${countryName} </h3> <br>
           ${obj.seriesName}:  ${obj.value}
           <br> People in need(millions): ${allCountryData['People_in_need_(millions)']}`;
+        }
+
+        return '';
       },
     },
     visualMap: getVisualmap(
@@ -149,11 +154,23 @@ const renderChart = (chart, variable, groupedData) => {
 
   chart.setOption(option);
   chart.on('click', (params) => {
-    const countryInfo = groupedData.find((data) => data.name === params.data.name);
-    const countryDataElement = document.getElementById('country-data-tooltip');
-    countryDataElement.innerHTML = 'Done';
-    countryDataElement.style.display = 'block';
-    console.log(countryInfo);
+    const isIncluded = countries.find((country) => country === params.name);
+    if (isIncluded) {
+      const countryInfo = groupedData.find((data) => data.name === params.data.name);
+      const countryDataElement = document.getElementById('country-data-tooltip');
+      const countryInfoValuePairs = Object.entries(countryInfo);
+      countryDataElement.innerHTML = countryInfoValuePairs.map((info) => `${info[0]}: ${info[1]}<br/>`);
+      countryDataElement.style.display = 'inline-block';
+      countryDataElement.style.fontFamily = 'Geomanist Regular,sans-serif';
+      countryDataElement.style.padding = '10px';
+      countryDataElement.style.borderStyle = 'solid';
+      countryDataElement.style.borderWidth = '1px';
+      countryDataElement.style.width = 'fit-content';
+    }
+    if (!params.data) {
+      const countryDataElement = document.getElementById('country-data-tooltip');
+      countryDataElement.style.display = 'none';
+    }
   });
 };
 
@@ -208,7 +225,7 @@ const renderPeopleAffectedByCrisisMap = () => {
             dichart.showLoading();
             window.$.getJSON(MAP_FILE_PATH, (worldJson) => {
               const procesedCountryNameData = matchCountryNames(data, worldJson);
-              const countries = [
+              countries = [
                 ...new Set(procesedCountryNameData.map((stream) => stream.Country_name)),
               ];
               const groupedData = processedData(countries, procesedCountryNameData);
