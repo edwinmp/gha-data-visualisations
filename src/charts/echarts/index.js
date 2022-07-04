@@ -143,4 +143,14 @@ const defaultOptions = {
   },
 };
 
+export const handleResize = (chart, chartNode) => {
+  window.addEventListener(
+    'resize',
+    () => {
+      chart.resize({ width: `${chartNode.clientWidth}px`, height: `${chartNode.clientHeight}px` });
+    },
+    true
+  );
+};
+
 export default defaultOptions;
