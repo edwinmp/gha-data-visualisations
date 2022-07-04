@@ -136,6 +136,64 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
   return chart;
 };
 
+const updateChart = (chart, data, { donors, channels, years }) => {
+  const cleanedData = cleanData(data);
+  const type = getSeriesType();
+  const series = donors
+    .map((donor) =>
+      filterChannels(channels).map((channel, index) => ({
+        name: dataType !== '%GNI' ? channel : donor, // GNI only has one channel, so the donors are the series
+        data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
+          value: d && Number(dataType !== 'Volumes' ? d.value * 100 : d.value), // all other data types are %ages
+          emphasis: {
+            focus: 'self',
+          },
+        })),
+        type,
+        stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
+        symbol: 'circle',
+        tooltip: {
+          trigger: 'item',
+          formatter: (params) => {
+            const item = cleanedData.find(
+              (d) =>
+                d['IHA type'] === channel &&
+                d.Donor === donor &&
+                `${d.Year}` === params.name &&
+                d['Value type'] === dataTypeMapping[dataType]
+            );
+            const value =
+              dataType === 'Volumes'
+                ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
+                : `${params.value.toFixed(2)}%`;
+
+            return `${donor}, ${params.name} <br />${channel}: <strong>${value}</strong>`;
+          },
+        },
+        label: {
+          // only show single label that overlaps the stack
+          show: type === 'bar' ? index === 0 && donors.length > 1 : false,
+          position: 'insideBottom',
+          distance: 15,
+          align: 'left',
+          verticalAlign: 'middle',
+          rotate: 90,
+          formatter: () => `${donor}`,
+          fontSize: 16,
+        },
+        cursor: 'auto',
+      }))
+    )
+    .reduce((final, cur) => final.concat(cur), []);
+  chart.setOption(
+    {
+      yAxis: getYaxisValue(),
+      series,
+    },
+    { replaceMerge: ['series'] }
+  );
+};
+
 /**
  * Run your code after the page has loaded
  */
@@ -167,64 +225,6 @@ const renderDonorsChart = () => {
             const chart = window.echarts.init(chartNode);
             renderDefaultChart(chart, cleanData(data), { years, channels });
 
-            const updateChartForDonorSeries = (updatedData, activeDonors) => {
-              const cleanedData = cleanData(updatedData);
-              const type = getSeriesType();
-              const series = activeDonors
-                .map((donor) =>
-                  filterChannels(channels).map((channel, index) => ({
-                    name: dataType !== '%GNI' ? channel : donor, // GNI only has one channel, so the donors are the series
-                    data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
-                      value: d && Number(dataType !== 'Volumes' ? d.value * 100 : d.value), // all other data types are %ages
-                      emphasis: {
-                        focus: 'self',
-                      },
-                    })),
-                    type,
-                    stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
-                    symbol: 'circle',
-                    tooltip: {
-                      trigger: 'item',
-                      formatter: (params) => {
-                        const item = cleanedData.find(
-                          (d) =>
-                            d['IHA type'] === channel &&
-                            d.Donor === donor &&
-                            `${d.Year}` === params.name &&
-                            d['Value type'] === dataTypeMapping[dataType]
-                        );
-                        const value =
-                          dataType === 'Volumes'
-                            ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
-                            : `${params.value.toFixed(2)}%`;
-
-                        return `${donor}, ${params.name} <br />${channel}: <strong>${value}</strong>`;
-                      },
-                    },
-                    label: {
-                      // only show single label that overlaps the stack
-                      show: type === 'bar' ? index === 0 && activeDonors.length > 1 : false,
-                      position: 'insideBottom',
-                      distance: 15,
-                      align: 'left',
-                      verticalAlign: 'middle',
-                      rotate: 90,
-                      formatter: () => `${donor}`,
-                      fontSize: 16,
-                    },
-                    cursor: 'auto',
-                  }))
-                )
-                .reduce((final, cur) => final.concat(cur), []);
-              chart.setOption(
-                {
-                  yAxis: getYaxisValue(),
-                  series,
-                },
-                { replaceMerge: ['series'] }
-              );
-            };
-
             let selectedDonors = [];
 
             const onSelectDonor = (values) => {
@@ -238,14 +238,14 @@ const renderDonorsChart = () => {
               // filter data to return only the selected items
               const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
               selectedDonors = values.map((item) => item.value);
-              updateChartForDonorSeries(filteredData, selectedDonors);
+              updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
             };
 
             const onSelectDataType = (value) => {
               dataType = value.value || dataType;
               if (selectedDonors.length) {
                 const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
-                updateChartForDonorSeries(filteredData, selectedDonors);
+                updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
               } else {
                 renderDefaultChart(chart, cleanData(data), { years, channels });
               }
