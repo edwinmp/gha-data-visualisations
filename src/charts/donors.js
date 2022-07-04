@@ -6,7 +6,7 @@ import Select from '../components/Select';
 import ChartFilters from '../components/ChartFilters';
 import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, legendSelection } from './echarts';
+import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
@@ -227,6 +227,7 @@ const renderDonorsChart = () => {
 
             let selectedDonors = [];
 
+            // add dropdown event listeners
             const onSelectDonor = (values) => {
               const isAllDonors = values.find((item) => item.value === 'All donors');
 
@@ -253,6 +254,7 @@ const renderDonorsChart = () => {
 
             const defaultDonor = 'All donors';
 
+            // add dropdowns
             const root = createRoot(filterWrapper);
             root.render(
               <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
@@ -276,6 +278,9 @@ const renderDonorsChart = () => {
             );
 
             dichart.hideLoading();
+
+            // add responsiveness
+            handleResize(chart, chartNode);
           });
         });
       },
