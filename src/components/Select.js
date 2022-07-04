@@ -21,7 +21,7 @@ const selectStyles = {
   input: (styles) => ({ ...styles, fontSize: '14px' }),
 };
 
-const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {
+const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, classPrefix, ...props }) => {
   const [values, setValues] = useState(defaultValue);
   useEffect(() => {
     if (props.onChange) props.onChange(values);
@@ -77,6 +77,7 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
         css={{ marginRight: '10px' }}
         styles={selectStyles}
         isClearable={values.length > 1}
+        classNamePrefix={classPrefix}
       />
     </div>
   );
@@ -91,6 +92,7 @@ Select.propTypes = {
   defaultValue: PropTypes.array,
   singleSelectOptions: PropTypes.array,
   isMulti: PropTypes.bool,
+  classPrefix: PropTypes.string,
 };
 
 Select.defaultProps = { maxSelectedOptions: 2 };
