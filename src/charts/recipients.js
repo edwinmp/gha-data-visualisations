@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import RecipientChartFilters from '../components/RecipientChartFilters';
 import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, legendSelection } from './echarts';
+import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
 
 const nf = new Intl.NumberFormat();
 
@@ -274,6 +274,8 @@ const renderRecipientChart = () => {
               defaultRecipient={defaultRecipient}
             />
           );
+
+          handleResize(chart, chartNode);
 
           dichart.hideLoading();
         });
