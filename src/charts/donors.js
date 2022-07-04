@@ -10,8 +10,8 @@ import defaultOptions, { colorways, legendSelection } from './echarts';
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
-  Proportions: 'Proportion',
-  Volumes: 'Volume',
+  Proportions: 'Proportional',
+  Volumes: 'Absolute',
   '%GNI': '%GNI',
 };
 
