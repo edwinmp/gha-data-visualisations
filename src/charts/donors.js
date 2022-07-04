@@ -2,11 +2,11 @@
 import { jsx } from '@emotion/react';
 import deepMerge from 'deepmerge';
 import { createRoot } from 'react-dom/client';
-import Select from '../../components/Select';
-import ChartFilters from '../../components/ChartFilters';
-import fetchCSVData from '../../utils/data';
-import { addFilterWrapper } from '../../widgets/filters';
-import defaultOptions, { colorways, legendSelection } from '../echarts';
+import Select from '../components/Select';
+import ChartFilters from '../components/ChartFilters';
+import fetchCSVData from '../utils/data';
+import { addFilterWrapper } from '../widgets/filters';
+import defaultOptions, { colorways, legendSelection } from './echarts';
 
 let dataType = 'Volumes';
 const dataTypeMapping = {

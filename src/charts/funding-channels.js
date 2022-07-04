@@ -1,11 +1,11 @@
 import deepMerge from 'deepmerge';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import ChartFilters from '../../components/ChartFilters';
-import Select from '../../components/Select';
-import fetchCSVData from '../../utils/data';
-import { addFilterWrapper } from '../../widgets/filters';
-import defaultOptions, { colorways, legendSelection } from '../echarts';
+import ChartFilters from '../components/ChartFilters';
+import Select from '../components/Select';
+import fetchCSVData from '../utils/data';
+import { addFilterWrapper } from '../widgets/filters';
+import defaultOptions, { colorways, legendSelection } from './echarts';
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
