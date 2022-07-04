@@ -130,6 +130,52 @@ const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   return chart;
 };
 
+const updateChartByDonors = (chart, updatedData, { recipient, years }) => {
+  const cleanedData = cleanData(updatedData, 'USD deflated millions');
+  const donors = getRecipientDonors(updatedData, recipient);
+  const series = donors
+    .map((donor) => ({
+      name: donor,
+      data: processData(cleanedData, years, recipient, donor).map((d) => ({
+        value: d && Number(d.value).toFixed(2),
+        emphasis: {
+          focus: 'self',
+        },
+      })),
+      type: 'bar',
+      stack: recipient,
+      cursor: 'auto',
+      tooltip: {
+        trigger: 'item',
+        formatter: (params) =>
+          `${donor}, ${params.name} <br/>${recipient}: <strong>US$${nf.format(
+            Math.round(params.value)
+          )} million</strong>`,
+      },
+    }))
+    .reduce((final, cur) => final.concat(cur), []);
+  chart.setOption({ series }, { replaceMerge: ['series'] });
+};
+
+const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
+  const orgTypes = getRecipientOrgType(updatedData, recipient);
+  const series = orgTypes
+    .map((orgType) => ({
+      name: orgType,
+      data: processOrgTypeData(updatedData, orgType, years),
+      type: 'bar',
+      stack: recipient,
+      cursor: 'auto',
+      tooltip: {
+        trigger: 'item',
+        formatter: (params) =>
+          `${params.name} <br/>${orgType}: <strong>US$${nf.format(Math.round(params.value))} million</strong>`,
+      },
+    }))
+    .reduce((final, cur) => final.concat(cur), []);
+  chart.setOption({ series }, { replaceMerge: ['series'] });
+};
+
 /**
  * Run your code after the page has loaded
  */
@@ -176,59 +222,13 @@ const renderRecipientChart = () => {
 
           let selectedRecipient = defaultRecipient;
 
-          const updateChartByDonor = (updatedData, recipient) => {
-            const cleanedData = cleanData(updatedData, 'USD deflated millions');
-            const donors = getRecipientDonors(updatedData, recipient);
-            const series = donors
-              .map((donor) => ({
-                name: donor,
-                data: processData(cleanedData, years, recipient, donor).map((d) => ({
-                  value: d && Number(d.value).toFixed(2),
-                  emphasis: {
-                    focus: 'self',
-                  },
-                })),
-                type: 'bar',
-                stack: recipient,
-                cursor: 'auto',
-                tooltip: {
-                  trigger: 'item',
-                  formatter: (params) =>
-                    `${donor}, ${params.name} <br/>${recipient}: <strong>US$${nf.format(
-                      Math.round(params.value)
-                    )} million</strong>`,
-                },
-              }))
-              .reduce((final, cur) => final.concat(cur), []);
-            chart.setOption({ series }, { replaceMerge: ['series'] });
-          };
-          const updateChartByOrgType = (updatedData, recipient) => {
-            const orgTypes = getRecipientOrgType(updatedData, recipient);
-            const series = orgTypes
-              .map((orgType) => ({
-                name: orgType,
-                data: processOrgTypeData(updatedData, orgType, years),
-                type: 'bar',
-                stack: recipient,
-                cursor: 'auto',
-                tooltip: {
-                  trigger: 'item',
-                  formatter: (params) =>
-                    `${params.name} <br/>${orgType}: <strong>US$${nf.format(
-                      Math.round(params.value)
-                    )} million</strong>`,
-                },
-              }))
-              .reduce((final, cur) => final.concat(cur), []);
-            chart.setOption({ series }, { replaceMerge: ['series'] });
-          };
-
+          // add dropdown event handlers
           const onSelectRecipient = (value, breakdown = defaultBreakdown) => {
             selectedRecipient = value || defaultRecipient;
             if (breakdown === 'By donor') {
               if (selectedRecipient !== '10 largest recipients') {
                 const filteredData = donorData.filter((d) => d['Destination Country'] === selectedRecipient);
-                updateChartByDonor(filteredData, selectedRecipient);
+                updateChartByDonors(chart, filteredData, { recipient: selectedRecipient, years });
               } else {
                 selectedRecipient = '10 largest recipients'; // reset country filter selected value
                 renderDefaultChart(chart, cleanData(donorData, 'USD deflated millions'), '10 largest recipients', {
@@ -238,8 +238,9 @@ const renderRecipientChart = () => {
               }
             } else {
               updateChartByOrgType(
+                chart,
                 orgTypeData.filter((d) => d['Destination Country'] === value),
-                value
+                { recipient: value, years }
               );
             }
           };
@@ -248,7 +249,7 @@ const renderRecipientChart = () => {
             if (value === 'By donor') {
               if (recipient !== '10 largest recipients') {
                 const filteredData = donorData.filter((d) => d['Destination Country'] === recipient);
-                updateChartByDonor(filteredData, recipient);
+                updateChartByDonors(chart, filteredData, { recipient, years });
               } else {
                 renderDefaultChart(chart, cleanData(donorData, 'USD deflated millions'), '10 largest recipients', {
                   years,
@@ -257,12 +258,14 @@ const renderRecipientChart = () => {
               }
             } else {
               updateChartByOrgType(
+                chart,
                 orgTypeData.filter((d) => d['Destination Country'] === recipient),
-                recipient
+                { recipient, years }
               );
             }
           };
 
+          // create dropdowns
           const root = createRoot(filterWrapper);
           root.render(
             <RecipientChartFilters
@@ -275,9 +278,10 @@ const renderRecipientChart = () => {
             />
           );
 
-          handleResize(chart, chartNode);
-
           dichart.hideLoading();
+
+          // add responsiveness
+          handleResize(chart, chartNode);
         });
       },
     },
