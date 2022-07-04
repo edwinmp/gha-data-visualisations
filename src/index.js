@@ -1,7 +1,7 @@
 import 'core-js';
-import renderDonorsChart from './charts/gha/donors';
-import renderFundingChannelsChart from './charts/gha/funding-channels';
-import renderRecipientChart from './charts/gha/recipients';
+import renderDonorsChart from './charts/donors';
+import renderFundingChannelsChart from './charts/funding-channels';
+import renderRecipientChart from './charts/recipients';
 import './styles/styles.css';
 
 /**
