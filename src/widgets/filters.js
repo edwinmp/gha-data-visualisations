@@ -18,7 +18,7 @@ export const createOption = (selectElement, option, selected = false) => {
 
 export const addFilter = (
   { wrapper, options, allItemsLabel, className, label, defaultOption = '*' },
-  returnWrapper = false,
+  returnWrapper,
   errorID,
   errorMessage
 ) => {
