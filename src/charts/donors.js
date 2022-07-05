@@ -6,7 +6,7 @@ import Select from '../components/Select';
 import ChartFilters from '../components/ChartFilters';
 import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
+import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
@@ -49,18 +49,6 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
   });
 
   return formatter.format(value);
-};
-
-const getYAxisNamePositionFromSeries = (series) => {
-  const max = Math.max(...series.reduce((allData, { data }) => allData.concat(data.map((item) => item.value)), []));
-  if (max < 100) {
-    return 'near';
-  }
-  if (max < 1000) {
-    return 'middle';
-  }
-
-  return 'far';
 };
 
 const getYaxisValue = (namePosition = 'far') => {

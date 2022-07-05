@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import RecipientChartFilters from '../components/RecipientChartFilters';
 import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
+import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const nf = new Intl.NumberFormat();
 
@@ -72,6 +72,26 @@ const getRecipientOrgType = (data, recipient) => {
   return orgTypes;
 };
 
+const getYaxisValue = (namePosition = 'far') => {
+  const paddingMapping = {
+    near: [-35, 0, 0, 0],
+    middle: [-45, 0, 0, 0],
+    far: [-54, 0, 0, 0],
+  };
+
+  return {
+    type: 'value',
+    nameRotate: 90,
+    name: 'US$ millions',
+    nameLocation: 'end',
+    nameTextStyle: {
+      verticalAlign: 'top',
+      align: 'right',
+      padding: paddingMapping[namePosition],
+    },
+  };
+};
+
 const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   const option = {
     color: colorways.bluebell,
@@ -88,17 +108,6 @@ const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
       type: 'category',
       data: years,
       position: 'bottom',
-    },
-    yAxis: {
-      type: 'value',
-      nameRotate: 90,
-      name: 'US$ millions',
-      nameLocation: 'middle',
-      nameTextStyle: {
-        verticalAlign: 'top',
-        align: 'right',
-        padding: [-60, 0, 0, 0],
-      },
     },
     series: channels.map((channel) => ({
       name: channel,
@@ -121,6 +130,7 @@ const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
       animation: false,
     })),
   };
+  option.yAxis = getYaxisValue(getYAxisNamePositionFromSeries(option.series));
   defaultOptions.toolbox.feature.saveAsImage.name = 'recipients';
   chart.setOption(deepMerge(option, defaultOptions), { replaceMerge: ['series'] });
   chart.on('legendselectchanged', (params) => {
@@ -154,7 +164,10 @@ const updateChartByDonors = (chart, updatedData, { recipient, years }) => {
       },
     }))
     .reduce((final, cur) => final.concat(cur), []);
-  chart.setOption({ series }, { replaceMerge: ['series'] });
+  chart.setOption(
+    { yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)), series },
+    { replaceMerge: ['series'] }
+  );
 };
 
 const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
@@ -173,7 +186,10 @@ const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
       },
     }))
     .reduce((final, cur) => final.concat(cur), []);
-  chart.setOption({ series }, { replaceMerge: ['series'] });
+  chart.setOption(
+    { yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)), series },
+    { replaceMerge: ['series'] }
+  );
 };
 
 /**
