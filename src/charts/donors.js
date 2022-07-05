@@ -152,6 +152,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
         type,
         stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
         symbol: 'circle',
+        symbolSize: 10,
         tooltip: {
           trigger: 'item',
           formatter: (params) => {
