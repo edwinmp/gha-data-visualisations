@@ -170,8 +170,21 @@ const updateChartByDonors = (chart, updatedData, { recipient, years }) => {
   );
 };
 
+const sortOrgTypes = (orgTypes) => {
+  const trailingOrgTypes = ['Not reported', 'Other'];
+  const sortedOrgTypes = orgTypes.filter((type) => !trailingOrgTypes.includes(type));
+
+  trailingOrgTypes.forEach((type) => {
+    if (orgTypes.includes(type)) {
+      sortedOrgTypes.push(type);
+    }
+  });
+
+  return sortedOrgTypes;
+};
+
 const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
-  const orgTypes = getRecipientOrgType(updatedData, recipient);
+  const orgTypes = sortOrgTypes(getRecipientOrgType(updatedData, recipient));
   const series = orgTypes
     .map((orgType) => ({
       name: orgType,
