@@ -51,7 +51,25 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
   return formatter.format(value);
 };
 
-const getYaxisValue = () => {
+const getYAxisNamePositionFromSeries = (series) => {
+  const max = Math.max(...series.reduce((allData, { data }) => allData.concat(data.map((item) => item.value)), []));
+  if (max < 100) {
+    return 'near';
+  }
+  if (max < 1000) {
+    return 'middle';
+  }
+
+  return 'far';
+};
+
+const getYaxisValue = (namePosition = 'far') => {
+  const paddingMapping = {
+    near: [-35, 0, 0, 0],
+    middle: [-45, 0, 0, 0],
+    far: [-60, 0, 0, 0],
+  };
+
   if (dataType !== 'Volumes') {
     return {
       type: 'value',
@@ -70,7 +88,7 @@ const getYaxisValue = () => {
     nameTextStyle: {
       verticalAlign: 'top',
       align: 'right',
-      padding: [-58, 0, 0, 0],
+      padding: paddingMapping[namePosition],
     },
     max: null,
   };
@@ -127,6 +145,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
       cursor: 'auto',
     })),
   };
+  option.yAxis = getYaxisValue(getYAxisNamePositionFromSeries(option.series));
   defaultOptions.toolbox.feature.saveAsImage.name = 'donors';
   chart.setOption(deepMerge(option, defaultOptions), { replaceMerge: ['series'] });
   chart.on('legendselectchanged', (params) => {
@@ -188,7 +207,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
     .reduce((final, cur) => final.concat(cur), []);
   chart.setOption(
     {
-      yAxis: getYaxisValue(),
+      yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)),
       series,
     },
     { replaceMerge: ['series'] }
