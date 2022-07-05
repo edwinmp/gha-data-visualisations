@@ -36,6 +36,19 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
   return formatter.format(value);
 };
 
+const sortOrgTypes = (orgTypes) => {
+  const trailingOrgTypes = ['Not reported', 'Other'];
+  const sortedOrgTypes = orgTypes.filter((type) => !trailingOrgTypes.includes(type));
+
+  trailingOrgTypes.forEach((type) => {
+    if (orgTypes.includes(type)) {
+      sortedOrgTypes.push(type);
+    }
+  });
+
+  return sortedOrgTypes;
+};
+
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
     color: colorways.bluebell,
@@ -162,7 +175,7 @@ const renderFundingChannelsChart = () => {
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
             const years = Array.from(new Set(data.map((d) => d.Year)));
-            const channels = Array.from(new Set(data.map((d) => d['Delivery channel'])));
+            const channels = sortOrgTypes(Array.from(new Set(data.map((d) => d['Delivery channel']))));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
 
             // create UI elements
