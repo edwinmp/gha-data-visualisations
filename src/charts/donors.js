@@ -6,7 +6,7 @@ import Select from '../components/Select';
 import ChartFilters from '../components/ChartFilters';
 import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
+import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
@@ -51,7 +51,13 @@ const toDollars = (value, style = 'currency', signDisplay = 'auto') => {
   return formatter.format(value);
 };
 
-const getYaxisValue = () => {
+const getYaxisValue = (namePosition = 'far') => {
+  const paddingMapping = {
+    near: [-35, 0, 0, 0],
+    middle: [-45, 0, 0, 0],
+    far: [-60, 0, 0, 0],
+  };
+
   if (dataType !== 'Volumes') {
     return {
       type: 'value',
@@ -70,7 +76,7 @@ const getYaxisValue = () => {
     nameTextStyle: {
       verticalAlign: 'top',
       align: 'right',
-      padding: [-58, 0, 0, 0],
+      padding: paddingMapping[namePosition],
     },
     max: null,
   };
@@ -127,6 +133,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
       cursor: 'auto',
     })),
   };
+  option.yAxis = getYaxisValue(getYAxisNamePositionFromSeries(option.series));
   defaultOptions.toolbox.feature.saveAsImage.name = 'donors';
   chart.setOption(deepMerge(option, defaultOptions), { replaceMerge: ['series'] });
   chart.on('legendselectchanged', (params) => {
@@ -152,6 +159,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
         type,
         stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
         symbol: 'circle',
+        symbolSize: 10,
         tooltip: {
           trigger: 'item',
           formatter: (params) => {
@@ -187,7 +195,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
     .reduce((final, cur) => final.concat(cur), []);
   chart.setOption(
     {
-      yAxis: getYaxisValue(),
+      yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)),
       series,
     },
     { replaceMerge: ['series'] }
@@ -259,7 +267,7 @@ const renderDonorsChart = () => {
             root.render(
               <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
                 <Select
-                  label="Select up to 2 donors"
+                  label="Select up to two donors"
                   options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
                   defaultValue={[{ value: defaultDonor, label: defaultDonor }]}
                   isMulti

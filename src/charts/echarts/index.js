@@ -153,4 +153,17 @@ export const handleResize = (chart, chartNode) => {
   );
 };
 
+export const getYAxisNamePositionFromSeries = (series) => {
+  const isStack = series.some((item) => item.stack);
+  const max = Math.max(...series.reduce((allData, { data }) => allData.concat(data.map((item) => item.value)), []));
+  if (isStack ? max * series.length < 100 : max < 100) {
+    return 'near';
+  }
+  if (isStack ? max * series.length < 1000 : max < 1000) {
+    return 'middle';
+  }
+
+  return 'far';
+};
+
 export default defaultOptions;

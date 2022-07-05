@@ -18,6 +18,7 @@ const selectStyles = {
   multiValue: (styles) => ({ ...styles, fontSize: '14px' }),
   multiValueLabel: (base, state) => (!state.data.isCloseable ? { ...base, paddingRight: 6 } : base),
   multiValueRemove: (base, state) => (!state.data.isCloseable ? { ...base, display: 'none' } : base),
+  input: (styles) => ({ ...styles, fontSize: '14px' }),
 };
 
 const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {

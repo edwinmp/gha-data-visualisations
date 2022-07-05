@@ -194,7 +194,7 @@ const renderFundingChannelsChart = () => {
             root.render(
               <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
                 <Select
-                  label="Select up to 2 donors"
+                  label="Select up to two donors"
                   options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
                   defaultValue={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
                   isMulti

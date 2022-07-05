@@ -1,10 +1,10 @@
 {
   "name": "gha-data-visualisations",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A Starting Point for Creating DI's D3 Charts",
   "private": true,
   "scripts": {
-    "build": "nwb build-web-app && gulp",
+    "build": "nwb build-web-app",
     "clean": "nwb clean-app",
     "start": "nwb serve-web-app --reload",
     "test": "nwb test",
