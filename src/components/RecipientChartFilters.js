@@ -29,7 +29,7 @@ const RecipientChartFilters = (props) => {
   return (
     <ChartFilters>
       <Select
-        classPrefix="recipient-chart-select"
+        classNamePrefix="recipient-chart-select"
         label="Select recipient"
         options={recipients.sort().map((item) => ({ value: item, label: item }))}
         defaultValue={[{ value: props.defaultRecipient, label: props.defaultRecipient }]}
@@ -39,7 +39,7 @@ const RecipientChartFilters = (props) => {
         }}
       />
       <Select
-        classPrefix="recipient-chart-breakdown"
+        classNamePrefix="recipient-chart-breakdown"
         label="Choose breakdown"
         options={['By donor', 'By type of organisation receiving funding'].map((item) => ({
           value: item,

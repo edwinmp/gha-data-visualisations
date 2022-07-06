@@ -274,7 +274,7 @@ const renderDonorsChart = () => {
                   onChange={onSelectDonor}
                   singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
                   css={{ minWidth: '200px' }}
-                  classPrefix="donors-select"
+                  classNamePrefix="donors-select"
                 />
                 <Select
                   label="Display data as"
@@ -282,7 +282,7 @@ const renderDonorsChart = () => {
                   defaultValue={[{ value: 'Volumes', label: 'Volumes' }]}
                   onChange={onSelectDataType}
                   css={{ minWidth: '150px' }}
-                  classPrefix="donors-display-data-as"
+                  classNamePrefix="donors-display-data-as"
                 />
               </ChartFilters>
             );
