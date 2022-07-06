@@ -214,6 +214,7 @@ const renderFundingChannelsChart = () => {
                   onChange={onSelectDonor}
                   singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
                   css={{ minWidth: '200px' }}
+                  classNamePrefix="channels-chart-select"
                 />
               </ChartFilters>
             );
