@@ -19,6 +19,7 @@ const selectStyles = {
   multiValueLabel: (base, state) => (!state.data.isCloseable ? { ...base, paddingRight: 6 } : base),
   multiValueRemove: (base, state) => (!state.data.isCloseable ? { ...base, display: 'none' } : base),
   input: (styles) => ({ ...styles, fontSize: '14px' }),
+  indicatorsContainer: (styles) => ({ ...styles, pointerEvents: 'none' }), // activates select to mobile touch events
 };
 
 const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelectOptions, ...props }) => {
