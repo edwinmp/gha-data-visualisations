@@ -77,7 +77,7 @@ const Select = ({ label, onError, maxSelectedOptions, defaultValue, singleSelect
         onChange={onChange}
         css={{ marginRight: '10px' }}
         styles={selectStyles}
-        isClearable={values.length > 1}
+        isClearable={props.isClearable !== 'undefined' ? props.isClearable : values.length > 1}
       />
     </div>
   );
@@ -92,6 +92,7 @@ Select.propTypes = {
   defaultValue: PropTypes.array,
   singleSelectOptions: PropTypes.array,
   isMulti: PropTypes.bool,
+  isClearable: PropTypes.bool,
 };
 
 Select.defaultProps = { maxSelectedOptions: 2 };
