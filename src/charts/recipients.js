@@ -6,6 +6,11 @@ import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
+const DONOR_DATA_URL =
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-donor.csv';
+const ORG_TYPE_DATA_URL =
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-org-type.csv';
+
 const nf = new Intl.NumberFormat();
 
 const cleanValue = (value) =>
@@ -222,12 +227,8 @@ const renderRecipientChart = () => {
            *
            * const chart = window.echarts.init(chartNode);
            */
-          const donorData = await fetchCSVData(
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-donor.csv'
-          );
-          const orgTypeData = await fetchCSVData(
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-org-type.csv'
-          );
+          const donorData = await fetchCSVData(DONOR_DATA_URL);
+          const orgTypeData = await fetchCSVData(ORG_TYPE_DATA_URL);
           const filterWrapper = addFilterWrapper(chartNode);
           // extract unique values
           const recipients = Array.from(

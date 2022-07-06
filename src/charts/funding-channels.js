@@ -7,6 +7,9 @@ import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
 
+const DATA_URL =
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/funding-channels-interactive-data.csv';
+
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
 
@@ -168,9 +171,7 @@ const renderFundingChannelsChart = () => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
-          const csv =
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/funding-channels-interactive-data.csv';
-          fetchCSVData(csv).then((data) => {
+          fetchCSVData(DATA_URL).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
@@ -215,6 +216,7 @@ const renderFundingChannelsChart = () => {
                   singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
                   css={{ minWidth: '200px' }}
                   classNamePrefix="channels-chart-select"
+                  isClearable={false}
                 />
               </ChartFilters>
             );

@@ -8,9 +8,12 @@ import fetchCSVData from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
+const DATA_URL =
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/donor_interactive_data_long.csv';
+
 let dataType = 'Volumes';
 const dataTypeMapping = {
-  Proportions: 'Proportional',
+  Proportions: 'Proportions',
   Volumes: 'Absolute',
   '%GNI': '%GNI',
 };
@@ -219,13 +222,11 @@ const renderDonorsChart = () => {
            *
            * const chart = window.echarts.init(chartNode);
            */
-          const csv =
-            'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/donor_interactive_data_long.csv';
-          fetchCSVData(csv).then((data) => {
+          fetchCSVData(DATA_URL).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
-            const years = Array.from(new Set(data.map((d) => d.Year)));
+            const years = Array.from(new Set(data.map((d) => d.Year))).sort();
             const channels = Array.from(new Set(data.map((d) => d['IHA type'])));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
             // create UI elements
@@ -275,6 +276,7 @@ const renderDonorsChart = () => {
                   singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
                   css={{ minWidth: '200px' }}
                   classNamePrefix="donors-select"
+                  isClearable={false}
                 />
                 <Select
                   label="Display data as"
