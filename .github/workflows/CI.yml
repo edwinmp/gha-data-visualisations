@@ -13,7 +13,7 @@ on:
 concurrency: CI
 
 jobs:
-  test-typescript:
+  test-javascript:
     name: 'Test JavaScript'
     runs-on: ubuntu-latest
     strategy:
@@ -44,7 +44,7 @@ jobs:
 
   automerge:
     name: Auto Merge Dependabot
-    needs: [test-typescript,test-python]
+    needs: [test-javascript]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
