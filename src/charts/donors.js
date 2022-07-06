@@ -93,7 +93,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
         fontSize: '1.3rem',
       },
     },
-    grid: { bottom: '10%' },
+    grid: { bottom: '10%', top: '20%' },
     xAxis: {
       type: 'category',
       data: years,
