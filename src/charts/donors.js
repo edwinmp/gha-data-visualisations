@@ -9,7 +9,7 @@ import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/donor_interactive_data_long.csv';
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/fix/chart_and_csv_updates/public/assets/data/donor_interactive_data_long.csv';
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
