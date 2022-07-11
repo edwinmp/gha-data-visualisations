@@ -1,4 +1,4 @@
-# DI Chart Boilerplate
+# GHA Data Visualisations
 
 A starting point for creating a chart (D3, Plotly, ECharts)
 
