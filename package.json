@@ -1,6 +1,6 @@
 {
   "name": "gha-data-visualisations",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "description": "A Starting Point for Creating DI's D3 Charts",
   "private": true,
   "scripts": {
