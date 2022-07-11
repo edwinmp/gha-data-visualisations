@@ -2,14 +2,12 @@ import deepMerge from 'deepmerge';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import RecipientChartFilters from '../components/RecipientChartFilters';
-import fetchCSVData from '../utils/data';
+import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
-const DONOR_DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-donor.csv';
-const ORG_TYPE_DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-org-type.csv';
+const DONOR_DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/recipients-by-donor.csv`;
+const ORG_TYPE_DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/recipients-by-org-type.csv`;
 
 const nf = new Intl.NumberFormat();
 
