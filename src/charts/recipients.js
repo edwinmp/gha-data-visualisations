@@ -7,9 +7,9 @@ import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const DONOR_DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/fix/chart_and_csv_updates/public/assets/data/recipients-by-donor.csv';
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-donor.csv';
 const ORG_TYPE_DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/fix/chart_and_csv_updates/public/assets/data/recipients-by-org-type.csv';
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/recipients-by-org-type.csv';
 
 const nf = new Intl.NumberFormat();
 

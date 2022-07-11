@@ -8,7 +8,7 @@ import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
 
 const DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/fix/chart_and_csv_updates/public/assets/data/funding-channels-interactive-data.csv';
+  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/funding-channels-interactive-data.csv';
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
