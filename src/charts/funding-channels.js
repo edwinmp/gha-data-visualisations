@@ -3,12 +3,11 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import ChartFilters from '../components/ChartFilters';
 import Select from '../components/Select';
-import fetchCSVData from '../utils/data';
+import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
 
-const DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/funding-channels-interactive-data.csv';
+const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/funding-channels-interactive-data.csv`;
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;

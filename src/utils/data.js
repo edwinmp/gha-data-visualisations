@@ -1,5 +1,7 @@
 import { parse } from 'papaparse';
 
+export const ACTIVE_BRANCH = 'main';
+
 const fetchCSVData = (url) =>
   new Promise((resolve) => {
     parse(url, {

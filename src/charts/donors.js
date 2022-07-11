@@ -4,12 +4,11 @@ import deepMerge from 'deepmerge';
 import { createRoot } from 'react-dom/client';
 import Select from '../components/Select';
 import ChartFilters from '../components/ChartFilters';
-import fetchCSVData from '../utils/data';
+import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
-const DATA_URL =
-  'https://raw.githubusercontent.com/devinit/gha-data-visualisations/main/public/assets/data/donor_interactive_data_long.csv';
+const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/donor_interactive_data_long.csv`;
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
