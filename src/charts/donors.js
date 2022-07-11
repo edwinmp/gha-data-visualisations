@@ -224,7 +224,7 @@ const renderDonorsChart = () => {
           fetchCSVData(DATA_URL).then((data) => {
             const filterWrapper = addFilterWrapper(chartNode);
             // extract unique values
-            const donors = Array.from(new Set(data.map((d) => d.Donor)));
+            const donors = Array.from(new Set(data.map((d) => d.Donor))).sort();
             const years = Array.from(new Set(data.map((d) => d.Year))).sort();
             const channels = Array.from(new Set(data.map((d) => d['IHA type'])));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
