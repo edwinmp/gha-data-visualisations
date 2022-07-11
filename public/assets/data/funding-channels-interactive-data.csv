@@ -1,11 +1,11 @@
 Donor,Delivery channel,Year,"US$ millions, constant 2020 prices",Proportions
-All donors,Multilateral organisations,2012,7209.613022,0.587606098
-All donors,NGOs,2012,2019.777441,0.164618203
-All donors,RCRC,2012,1126.780831,0.091836176
-All donors,Public sector,2012,225.8185263,0.018404919
-All donors,Pooled fund,2012,806.1666307,0.065705112
-All donors,Other,2012,126.3238159,0.010295788
-All donors,Not reported,2012,754.9857035,0.061533705
+All donors,Multilateral organisations,2012,6684.934519,0.576539825
+All donors,NGOs,2012,1936.639254,0.167024771
+All donors,RCRC,2012,1125.687166,0.097084493
+All donors,Public sector,2012,223.0887217,0.019240208
+All donors,Pooled fund,2012,800.9813035,0.069080351
+All donors,Other,2012,85.59738642,0.007382316
+All donors,Not reported,2012,737.9940353,0.063648036
 Australia,Multilateral organisations,2012,135.4646046,0.666138495
 Australia,NGOs,2012,5.897762492,0.029001868
 Australia,RCRC,2012,29.62652353,0.145686527
@@ -58,7 +58,7 @@ Czech Republic,Not reported,2012,0,0
 Denmark,Multilateral organisations,2012,57.46672833,0.333411929
 Denmark,NGOs,2012,48.75870878,0.282889519
 Denmark,RCRC,2012,18.73545771,0.108699856
-Denmark,Public sector,2012,0.01201512,6.97E-05
+Denmark,Public sector,2012,0.01201512,6.97096E-05
 Denmark,Pooled fund,2012,46.9982212,0.272675477
 Denmark,Other,2012,0,0
 Denmark,Not reported,2012,0.38841388,0.00225351
@@ -223,13 +223,13 @@ Romania,Public sector,2012,0.072757051,0.163510277
 Romania,Pooled fund,2012,0.159621809,0.358725458
 Romania,Other,2012,0,0
 Romania,Not reported,2012,0,0
-Saudi Arabia,Multilateral organisations,2012,51.19874681,0.14383326
-Saudi Arabia,NGOs,2012,5.289269597,0.014859209
+Saudi Arabia,Multilateral organisations,2012,51.19874681,0.143901369
+Saudi Arabia,NGOs,2012,5.289269597,0.014866245
 Saudi Arabia,RCRC,2012,0,0
-Saudi Arabia,Public sector,2012,78.40959353,0.220277022
+Saudi Arabia,Public sector,2012,78.24111695,0.219907802
 Saudi Arabia,Pooled fund,2012,0,0
-Saudi Arabia,Other,2012,1.035716684,0.002909651
-Saudi Arabia,Not reported,2012,220.0256965,0.618120857
+Saudi Arabia,Other,2012,1.035716684,0.002911029
+Saudi Arabia,Not reported,2012,220.0256965,0.618413554
 Slovak Republic,Multilateral organisations,2012,0.042449103,0.153435598
 Slovak Republic,NGOs,2012,0,0
 Slovak Republic,RCRC,2012,0,0
@@ -293,19 +293,19 @@ US,Public sector,2012,0,0
 US,Pooled fund,2012,5.682348393,0.001280461
 US,Other,2012,21.40318233,0.004822995
 US,Not reported,2012,280.8353339,0.063283463
-All donors,Multilateral organisations,2013,7852.314817,0.590022934
-All donors,NGOs,2013,2651.152536,0.199207601
-All donors,RCRC,2013,1088.654632,0.081801509
-All donors,Public sector,2013,140.2866738,0.010541141
-All donors,Pooled fund,2013,758.2377275,0.056973983
-All donors,Other,2013,89.02705323,0.006689493
-All donors,Not reported,2013,728.8174171,0.054763341
+All donors,Multilateral organisations,2013,7271.494709,0.587443276
+All donors,NGOs,2013,2403.24805,0.194151542
+All donors,RCRC,2013,1077.631225,0.087058747
+All donors,Public sector,2013,139.5881419,0.011276927
+All donors,Pooled fund,2013,756.2258967,0.061093329
+All donors,Other,2013,75.21805779,0.006076652
+All donors,Not reported,2013,654.8013297,0.052899528
 Australia,Multilateral organisations,2013,112.960267,0.541850112
 Australia,NGOs,2013,27.55975049,0.132199173
 Australia,RCRC,2013,42.2562234,0.202695514
 Australia,Public sector,2013,2.130280483,0.010218573
 Australia,Pooled fund,2013,23.06659564,0.110646316
-Australia,Other,2013,0.005338628,2.56E-05
+Australia,Other,2013,0.005338628,2.56084E-05
 Australia,Not reported,2013,0.492973184,0.002364704
 Austria,Multilateral organisations,2013,10.39033193,0.605210455
 Austria,NGOs,2013,3.285457197,0.19136954
@@ -587,13 +587,13 @@ US,Public sector,2013,0.670146206,0.000175106
 US,Pooled fund,2013,4.467641375,0.001167372
 US,Other,2013,17.9618517,0.004693341
 US,Not reported,2013,134.9340548,0.035257584
-All donors,Multilateral organisations,2014,12322.44362,0.530652855
-All donors,NGOs,2014,4970.393701,0.214044689
-All donors,RCRC,2014,1701.442415,0.073270798
-All donors,Public sector,2014,1286.979344,0.055422389
-All donors,Pooled fund,2014,1033.27768,0.044496998
-All donors,Other,2014,169.6709713,0.007306699
-All donors,Not reported,2014,1737.081859,0.074805572
+All donors,Multilateral organisations,2014,11360.70347,0.539093185
+All donors,NGOs,2014,3922.402363,0.186127592
+All donors,RCRC,2014,1647.479574,0.078176938
+All donors,Public sector,2014,1266.090215,0.060079079
+All donors,Pooled fund,2014,1030.648915,0.048906814
+All donors,Other,2014,153.8927165,0.007302586
+All donors,Not reported,2014,1692.511346,0.080313806
 Australia,Multilateral organisations,2014,106.6641705,0.467990495
 Australia,NGOs,2014,23.45140662,0.102893365
 Australia,RCRC,2014,41.80072826,0.183401263
@@ -684,7 +684,7 @@ Germany,RCRC,2014,111.118028,0.089943844
 Germany,Public sector,2014,204.4665655,0.165504277
 Germany,Pooled fund,2014,68.23697453,0.055234024
 Germany,Other,2014,3.199737176,0.002590009
-Germany,Not reported,2014,0.068624587,5.55E-05
+Germany,Not reported,2014,0.068624587,5.55478E-05
 Greece,Multilateral organisations,2014,1.150268117,0.766814354
 Greece,NGOs,2014,0,0
 Greece,RCRC,2014,0,0
@@ -758,7 +758,7 @@ Lithuania,Not reported,2014,0.011645031,0.039792434
 Luxembourg,Multilateral organisations,2014,31.8540123,0.478603985
 Luxembourg,NGOs,2014,10.55572589,0.158598937
 Luxembourg,RCRC,2014,10.33379195,0.155264397
-Luxembourg,Public sector,2014,0.004345681,6.53E-05
+Luxembourg,Public sector,2014,0.004345681,6.52935E-05
 Luxembourg,Pooled fund,2014,6.057304838,0.09101052
 Luxembourg,Other,2014,1.222839134,0.01837306
 Luxembourg,Not reported,2014,6.528075182,0.098083807
@@ -881,13 +881,13 @@ US,Public sector,2014,536.555278,0.061483432
 US,Pooled fund,2014,4.385654576,0.000502549
 US,Other,2014,70.65343794,0.00809612
 US,Not reported,2014,977.6146173,0.112024062
-All donors,Multilateral organisations,2015,10772.84423,0.521032267
-All donors,NGOs,2015,3875.218448,0.187426255
-All donors,RCRC,2015,2256.235257,0.109123584
-All donors,Public sector,2015,1033.464108,0.049983842
-All donors,Pooled fund,2015,1003.677617,0.048543209
-All donors,Other,2015,174.0466761,0.008417827
-All donors,Not reported,2015,1560.477354,0.075473017
+All donors,Multilateral organisations,2015,9859.437419,0.513270947
+All donors,NGOs,2015,3482.74904,0.1813079
+All donors,RCRC,2015,2208.944778,0.114995119
+All donors,Public sector,2015,1031.894633,0.053719245
+All donors,Pooled fund,2015,1003.490727,0.052240571
+All donors,Other,2015,166.200565,0.00865221
+All donors,Not reported,2015,1456.31362,0.075814008
 Australia,Multilateral organisations,2015,95.26270838,0.560573994
 Australia,NGOs,2015,16.16422283,0.095118469
 Australia,RCRC,2015,18.06127575,0.106281688
@@ -1164,7 +1164,7 @@ UAE,Not reported,2015,47.75441231,0.068325072
 UK,Multilateral organisations,2015,736.4331659,0.462355631
 UK,NGOs,2015,218.9778188,0.137481081
 UK,RCRC,2015,82.92954671,0.052065747
-UK,Public sector,2015,0.074434957,4.67E-05
+UK,Public sector,2015,0.074434957,4.67326E-05
 UK,Pooled fund,2015,309.033582,0.194020888
 UK,Other,2015,3.036129189,0.001906176
 UK,Not reported,2015,242.300435,0.152123744
@@ -1175,19 +1175,19 @@ US,Public sector,2015,714.6379028,0.100800644
 US,Pooled fund,2015,3.256675027,0.000459358
 US,Other,2015,38.23807396,0.005393532
 US,Not reported,2015,662.0769872,0.093386856
-All donors,Multilateral organisations,2016,13549.15518,0.572775299
-All donors,NGOs,2016,4721.078383,0.19957828
-All donors,RCRC,2016,2021.666806,0.085463691
-All donors,Public sector,2016,913.1067162,0.03860056
-All donors,Pooled fund,2016,1220.969747,0.051615123
-All donors,Other,2016,140.0364069,0.005919882
-All donors,Not reported,2016,1089.258199,0.046047166
+All donors,Multilateral organisations,2016,12800.64109,0.571257134
+All donors,NGOs,2016,4353.643135,0.194291027
+All donors,RCRC,2016,2006.348546,0.089537775
+All donors,Public sector,2016,913.0639519,0.040747514
+All donors,Pooled fund,2016,1220.969747,0.054488496
+All donors,Other,2016,93.41926769,0.004169043
+All donors,Not reported,2016,1019.758888,0.045509013
 Australia,Multilateral organisations,2016,114.9382594,0.546895946
 Australia,NGOs,2016,18.54610779,0.088245561
 Australia,RCRC,2016,37.00438299,0.176073199
 Australia,Public sector,2016,5.365549193,0.025530203
 Australia,Pooled fund,2016,23.37559561,0.111225092
-Australia,Other,2016,0.002892215,1.38E-05
+Australia,Other,2016,0.002892215,1.37617E-05
 Australia,Not reported,2016,10.93198033,0.052016237
 Austria,Multilateral organisations,2016,14.89579208,0.550722953
 Austria,NGOs,2016,2.389958477,0.088360859
@@ -1245,12 +1245,12 @@ Estonia,Public sector,2016,0.267477312,0.056276582
 Estonia,Pooled fund,2016,0.125527566,0.026410698
 Estonia,Other,2016,0,0
 Estonia,Not reported,2016,0.172467192,0.036286682
-EU institutions,Multilateral organisations,2016,1610.034002,0.541942119
-EU institutions,NGOs,2016,1104.07501,0.371634853
-EU institutions,RCRC,2016,239.5972699,0.080649137
+EU institutions,Multilateral organisations,2016,1603.793683,0.541502484
+EU institutions,NGOs,2016,1101.203227,0.371808599
+EU institutions,RCRC,2016,239.5972699,0.080897261
 EU institutions,Public sector,2016,0,0
 EU institutions,Pooled fund,2016,0,0
-EU institutions,Other,2016,17.15342,0.005773891
+EU institutions,Other,2016,17.15342,0.005791655
 EU institutions,Not reported,2016,0,0
 Finland,Multilateral organisations,2016,96.43327625,0.745671629
 Finland,NGOs,2016,8.101351085,0.062643808
@@ -1273,13 +1273,13 @@ Germany,Public sector,2016,403.636983,0.134430884
 Germany,Pooled fund,2016,137.3730143,0.045751942
 Germany,Other,2016,2.343366481,0.000780456
 Germany,Not reported,2016,50.16851139,0.016708571
-Greece,Multilateral organisations,2016,0,
-Greece,NGOs,2016,0,
-Greece,RCRC,2016,0,
-Greece,Public sector,2016,0,
-Greece,Pooled fund,2016,0,
-Greece,Other,2016,0,
-Greece,Not reported,2016,0,
+Greece,Multilateral organisations,2016,0,0
+Greece,NGOs,2016,0,0
+Greece,RCRC,2016,0,0
+Greece,Public sector,2016,0,0
+Greece,Pooled fund,2016,0,0
+Greece,Other,2016,0,0
+Greece,Not reported,2016,0,0
 Hungary,Multilateral organisations,2016,0.246993166,0.191398888
 Hungary,NGOs,2016,0,0
 Hungary,RCRC,2016,0.161526894,0.125169731
@@ -1453,7 +1453,7 @@ UAE,NGOs,2016,0.499782566,0.000698879
 UAE,RCRC,2016,366.1206508,0.511970664
 UAE,Public sector,2016,43.32932129,0.060590249
 UAE,Pooled fund,2016,0.999565133,0.001397758
-UAE,Other,2016,0.022402254,3.13E-05
+UAE,Other,2016,0.022402254,3.13265E-05
 UAE,Not reported,2016,219.463471,0.306890253
 UK,Multilateral organisations,2016,965.9921548,0.477880428
 UK,NGOs,2016,359.8237661,0.178006348
@@ -1465,17 +1465,17 @@ UK,Not reported,2016,145.800982,0.072128366
 US,Multilateral organisations,2016,4820.233561,0.66466401
 US,NGOs,2016,1521.972529,0.209865425
 US,RCRC,2016,451.1925779,0.062215132
-US,Public sector,2016,0.086627257,1.19E-05
+US,Public sector,2016,0.086627257,1.19451E-05
 US,Pooled fund,2016,15.79946007,0.002178594
 US,Other,2016,21.29741207,0.002936709
 US,Not reported,2016,421.5534841,0.058128185
-All donors,Multilateral organisations,2017,13265.42983,0.588707481
-All donors,NGOs,2017,3886.030118,0.172458415
-All donors,RCRC,2017,1662.447235,0.073777868
-All donors,Public sector,2017,847.3256755,0.037603528
-All donors,Pooled fund,2017,1387.510019,0.061576409
-All donors,Other,2017,294.9449045,0.013089382
-All donors,Not reported,2017,1189.455161,0.052786918
+All donors,Multilateral organisations,2017,12434.28016,0.582335025
+All donors,NGOs,2017,3687.603518,0.172701649
+All donors,RCRC,2017,1640.652662,0.076836736
+All donors,Public sector,2017,734.890749,0.034417161
+All donors,Pooled fund,2017,1386.176563,0.06491885
+All donors,Other,2017,291.297567,0.013642348
+All donors,Not reported,2017,1177.549921,0.055148232
 Australia,Multilateral organisations,2017,128.561719,0.549746396
 Australia,NGOs,2017,21.82788232,0.093338824
 Australia,RCRC,2017,39.63076612,0.169466238
@@ -1511,13 +1511,13 @@ Canada,Public sector,2017,0.24651509,0.000368136
 Canada,Pooled fund,2017,30.46481403,0.045494988
 Canada,Other,2017,2.437590825,0.003640205
 Canada,Not reported,2017,0.37676507,0.000562647
-Croatia,Multilateral organisations,2017,0,
-Croatia,NGOs,2017,0,
-Croatia,RCRC,2017,0,
-Croatia,Public sector,2017,0,
-Croatia,Pooled fund,2017,0,
-Croatia,Other,2017,0,
-Croatia,Not reported,2017,0,
+Croatia,Multilateral organisations,2017,0,0
+Croatia,NGOs,2017,0,0
+Croatia,RCRC,2017,0,0
+Croatia,Public sector,2017,0,0
+Croatia,Pooled fund,2017,0,0
+Croatia,Other,2017,0,0
+Croatia,Not reported,2017,0,0
 Czech Republic,Multilateral organisations,2017,3.695358392,0.498128503
 Czech Republic,NGOs,2017,3.24894989,0.437953338
 Czech Republic,RCRC,2017,0.388019096,0.052304364
@@ -1539,13 +1539,13 @@ Estonia,Public sector,2017,0,0
 Estonia,Pooled fund,2017,0.11489061,0.022534616
 Estonia,Other,2017,0.026640517,0.005225264
 Estonia,Not reported,2017,0.205465123,0.040299879
-EU institutions,Multilateral organisations,2017,1847.161545,0.580994252
-EU institutions,NGOs,2017,1011.337027,0.318099411
-EU institutions,RCRC,2017,226.3475731,0.071193902
+EU institutions,Multilateral organisations,2017,1847.161545,0.582979283
+EU institutions,NGOs,2017,1000.511544,0.315769622
+EU institutions,RCRC,2017,226.3475731,0.071437144
 EU institutions,Public sector,2017,0,0
 EU institutions,Pooled fund,2017,0,0
-EU institutions,Other,2017,43.964137,0.013828195
-EU institutions,Not reported,2017,50.50094063,0.015884239
+EU institutions,Other,2017,43.964137,0.013875441
+EU institutions,Not reported,2017,50.50094063,0.01593851
 Finland,Multilateral organisations,2017,71.10601533,0.682832212
 Finland,NGOs,2017,7.989342831,0.076721788
 Finland,RCRC,2017,17.08061674,0.164025438
@@ -1623,13 +1623,13 @@ Kuwait,Public sector,2017,52.00271579,0.327537747
 Kuwait,Pooled fund,2017,0.945503923,0.005955232
 Kuwait,Other,2017,0,0
 Kuwait,Not reported,2017,15.60081474,0.098261324
-Latvia,Multilateral organisations,2017,0,
-Latvia,NGOs,2017,0,
-Latvia,RCRC,2017,0,
-Latvia,Public sector,2017,0,
-Latvia,Pooled fund,2017,0,
-Latvia,Other,2017,0,
-Latvia,Not reported,2017,0,
+Latvia,Multilateral organisations,2017,0,0
+Latvia,NGOs,2017,0,0
+Latvia,RCRC,2017,0,0
+Latvia,Public sector,2017,0,0
+Latvia,Pooled fund,2017,0,0
+Latvia,Other,2017,0,0
+Latvia,Not reported,2017,0,0
 Lithuania,Multilateral organisations,2017,0.220809786,0.586436182
 Lithuania,NGOs,2017,0,0
 Lithuania,RCRC,2017,0.059525874,0.158091391
@@ -1693,13 +1693,13 @@ Romania,Public sector,2017,0,0
 Romania,Pooled fund,2017,0,0
 Romania,Other,2017,0,0
 Romania,Not reported,2017,0,0
-Saudi Arabia,Multilateral organisations,2017,141.0524266,0.277648769
-Saudi Arabia,NGOs,2017,88.6013797,0.174403693
-Saudi Arabia,RCRC,2017,0.372246186,0.000732732
-Saudi Arabia,Public sector,2017,254.8214942,0.501592748
-Saudi Arabia,Pooled fund,2017,0.154752664,0.000304616
-Saudi Arabia,Other,2017,5.089323022,0.010017866
-Saudi Arabia,Not reported,2017,17.93305549,0.035299576
+Saudi Arabia,Multilateral organisations,2017,141.0524266,0.28409495
+Saudi Arabia,NGOs,2017,88.6013797,0.178452829
+Saudi Arabia,RCRC,2017,0.372246186,0.000749744
+Saudi Arabia,Public sector,2017,254.8214942,0.513238243
+Saudi Arabia,Pooled fund,2017,0.154752664,0.000311689
+Saudi Arabia,Other,2017,5.089323022,0.010250451
+Saudi Arabia,Not reported,2017,6.405857586,0.012902095
 Slovak Republic,Multilateral organisations,2017,0.693749342,0.701988314
 Slovak Republic,NGOs,2017,0.22941697,0.232141527
 Slovak Republic,RCRC,2017,0,0
@@ -1759,17 +1759,17 @@ UK,Not reported,2017,179.1134225,0.086552034
 US,Multilateral organisations,2017,4719.303969,0.688008265
 US,NGOs,2017,1004.883702,0.146497936
 US,RCRC,2017,172.061851,0.025084202
-US,Public sector,2017,0.050947358,7.43E-06
+US,Public sector,2017,0.050947358,7.42741E-06
 US,Pooled fund,2017,41.66329834,0.006073924
 US,Other,2017,95.47600895,0.013919062
 US,Not reported,2017,825.9312675,0.120409184
-All donors,Multilateral organisations,2018,13560.61921,0.557199112
-All donors,NGOs,2018,3723.055398,0.152978498
-All donors,RCRC,2018,2487.680381,0.102217552
-All donors,Public sector,2018,1234.972941,0.050744425
-All donors,Pooled fund,2018,1467.24183,0.060288238
-All donors,Other,2018,102.9741015,0.004231155
-All donors,Not reported,2018,1760.571775,0.07234102
+All donors,Multilateral organisations,2018,13186.90451,0.554356357
+All donors,NGOs,2018,3584.291895,0.150677894
+All donors,RCRC,2018,2481.390366,0.104313679
+All donors,Public sector,2018,1219.562454,0.051268453
+All donors,Pooled fund,2018,1465.869424,0.061622804
+All donors,Other,2018,102.2454409,0.004298235
+All donors,Not reported,2018,1747.511296,0.073462578
 Australia,Multilateral organisations,2018,128.8058593,0.539741965
 Australia,NGOs,2018,22.20751826,0.093057331
 Australia,RCRC,2018,40.38066545,0.169209226
@@ -1805,13 +1805,13 @@ Canada,Public sector,2018,0,0
 Canada,Pooled fund,2018,37.15848545,0.055193089
 Canada,Other,2018,0,0
 Canada,Not reported,2018,39.08156084,0.058049515
-Croatia,Multilateral organisations,2018,0,
-Croatia,NGOs,2018,0,
-Croatia,RCRC,2018,0,
-Croatia,Public sector,2018,0,
-Croatia,Pooled fund,2018,0,
-Croatia,Other,2018,0,
-Croatia,Not reported,2018,0,
+Croatia,Multilateral organisations,2018,0,0
+Croatia,NGOs,2018,0,0
+Croatia,RCRC,2018,0,0
+Croatia,Public sector,2018,0,0
+Croatia,Pooled fund,2018,0,0
+Croatia,Other,2018,0,0
+Croatia,Not reported,2018,0,0
 Czech Republic,Multilateral organisations,2018,1.415329733,0.79259488
 Czech Republic,NGOs,2018,0,0
 Czech Republic,RCRC,2018,0.192491074,0.107796393
@@ -1833,13 +1833,13 @@ Estonia,Public sector,2018,0,0
 Estonia,Pooled fund,2018,0.117115763,0.030845794
 Estonia,Other,2018,0,0
 Estonia,Not reported,2018,0.250494953,0.065975027
-EU institutions,Multilateral organisations,2018,2078.245955,0.643854644
-EU institutions,NGOs,2018,857.6079545,0.265692741
-EU institutions,RCRC,2018,192.5512918,0.059653692
-EU institutions,Public sector,2018,0.887088498,0.000274826
+EU institutions,Multilateral organisations,2018,2078.245955,0.646102677
+EU institutions,NGOs,2018,846.3771656,0.263128891
+EU institutions,RCRC,2018,192.5512918,0.059861974
+EU institutions,Public sector,2018,0.887088498,0.000275786
 EU institutions,Pooled fund,2018,0,0
-EU institutions,Other,2018,0.706514081,0.000218883
-EU institutions,Not reported,2018,97.81973382,0.030305215
+EU institutions,Other,2018,0.706514081,0.000219647
+EU institutions,Not reported,2018,97.81973382,0.030411026
 Finland,Multilateral organisations,2018,53.77183278,0.590098338
 Finland,NGOs,2018,7.950494931,0.087249655
 Finland,RCRC,2018,20.83636246,0.228660662
@@ -1861,20 +1861,20 @@ Germany,Public sector,2018,280.8039633,0.114088489
 Germany,Pooled fund,2018,288.2766612,0.117124589
 Germany,Other,2018,2.980259998,0.001210857
 Germany,Not reported,2018,1.291022424,0.000524532
-Greece,Multilateral organisations,2018,0,
-Greece,NGOs,2018,0,
-Greece,RCRC,2018,0,
-Greece,Public sector,2018,0,
-Greece,Pooled fund,2018,0,
-Greece,Other,2018,0,
-Greece,Not reported,2018,0,
-Hungary,Multilateral organisations,2018,0,
-Hungary,NGOs,2018,0,
-Hungary,RCRC,2018,0,
-Hungary,Public sector,2018,0,
-Hungary,Pooled fund,2018,0,
-Hungary,Other,2018,0,
-Hungary,Not reported,2018,0,
+Greece,Multilateral organisations,2018,0,0
+Greece,NGOs,2018,0,0
+Greece,RCRC,2018,0,0
+Greece,Public sector,2018,0,0
+Greece,Pooled fund,2018,0,0
+Greece,Other,2018,0,0
+Greece,Not reported,2018,0,0
+Hungary,Multilateral organisations,2018,0,0
+Hungary,NGOs,2018,0,0
+Hungary,RCRC,2018,0,0
+Hungary,Public sector,2018,0,0
+Hungary,Pooled fund,2018,0,0
+Hungary,Other,2018,0,0
+Hungary,Not reported,2018,0,0
 Iceland,Multilateral organisations,2018,2.834036159,0.686857693
 Iceland,NGOs,2018,0,0
 Iceland,RCRC,2018,0,0
@@ -1910,13 +1910,13 @@ Korea,Public sector,2018,0,0
 Korea,Pooled fund,2018,6.837567954,0.107075677
 Korea,Other,2018,0,0
 Korea,Not reported,2018,0,0
-Kuwait,Multilateral organisations,2018,271.1519989,0.67022453
-Kuwait,NGOs,2018,7.585419322,0.018749388
-Kuwait,RCRC,2018,35.26971535,0.087178514
-Kuwait,Public sector,2018,71.89067428,0.177696988
-Kuwait,Pooled fund,2018,5.666676678,0.014006704
+Kuwait,Multilateral organisations,2018,259.7826732,0.686773616
+Kuwait,NGOs,2018,4.911669822,0.01298472
+Kuwait,RCRC,2018,34.59969426,0.091469369
+Kuwait,Public sector,2018,71.89067428,0.190053546
+Kuwait,Pooled fund,2018,5.666676678,0.014980691
 Kuwait,Other,2018,0,0
-Kuwait,Not reported,2018,13.00441233,0.032143876
+Kuwait,Not reported,2018,1.413977921,0.003738058
 Latvia,Multilateral organisations,2018,0.050563834,1
 Latvia,NGOs,2018,0,0
 Latvia,RCRC,2018,0,0
@@ -2053,17 +2053,17 @@ UK,Not reported,2018,334.946102,0.165612716
 US,Multilateral organisations,2018,4837.10296,0.652168323
 US,NGOs,2018,1255.299976,0.169247355
 US,RCRC,2018,187.0062818,0.025213351
-US,Public sector,2018,0.137452023,1.85E-05
+US,Public sector,2018,0.137452023,1.85321E-05
 US,Pooled fund,2018,35.02539771,0.004722342
 US,Other,2018,41.27256267,0.005564624
 US,Not reported,2018,1061.110147,0.143065473
-All donors,Multilateral organisations,2019,14423.90917,0.581225125
-All donors,NGOs,2019,3626.816334,0.14614601
-All donors,RCRC,2019,2056.175022,0.082855526
-All donors,Public sector,2019,819.0907937,0.033006042
-All donors,Pooled fund,2019,1435.043156,0.057826428
-All donors,Other,2019,118.7897916,0.004786748
-All donors,Not reported,2019,2336.565356,0.094154121
+All donors,Multilateral organisations,2019,13486.40533,0.569692689
+All donors,NGOs,2019,3496.762217,0.147710218
+All donors,RCRC,2019,2046.37107,0.0864428
+All donors,Public sector,2019,817.3368446,0.03452594
+All donors,Pooled fund,2019,1383.843193,0.0584563
+All donors,Other,2019,114.9632461,0.004856277
+All donors,Not reported,2019,2327.4415,0.098315776
 Australia,Multilateral organisations,2019,203.2959452,0.656058137
 Australia,NGOs,2019,33.53173863,0.108210569
 Australia,RCRC,2019,39.02167728,0.125927199
@@ -2127,13 +2127,13 @@ Estonia,Public sector,2019,0,0
 Estonia,Pooled fund,2019,0.173050109,0.047684382
 Estonia,Other,2019,0,0
 Estonia,Not reported,2019,0.323619143,0.089174049
-EU institutions,Multilateral organisations,2019,1316.127078,0.424959742
-EU institutions,NGOs,2019,818.6124043,0.264318942
-EU institutions,RCRC,2019,729.6391818,0.235590684
-EU institutions,Public sector,2019,14.12520834,0.00456084
+EU institutions,Multilateral organisations,2019,1316.127078,0.426991922
+EU institutions,NGOs,2019,803.8725765,0.260800877
+EU institutions,RCRC,2019,729.6391818,0.236717291
+EU institutions,Public sector,2019,14.12520834,0.00458265
 EU institutions,Pooled fund,2019,0,0
 EU institutions,Other,2019,0,0
-EU institutions,Not reported,2019,218.5590903,0.070569792
+EU institutions,Not reported,2019,218.5590903,0.070907261
 Finland,Multilateral organisations,2019,54.09760214,0.581785095
 Finland,NGOs,2019,8.448016789,0.090853015
 Finland,RCRC,2019,21.10818578,0.227005031
@@ -2155,20 +2155,20 @@ Germany,Public sector,2019,293.5813371,0.10781112
 Germany,Pooled fund,2019,273.2293568,0.100337315
 Germany,Other,2019,0.740614672,0.000271974
 Germany,Not reported,2019,3.435496852,0.001261609
-Greece,Multilateral organisations,2019,0,
-Greece,NGOs,2019,0,
-Greece,RCRC,2019,0,
-Greece,Public sector,2019,0,
-Greece,Pooled fund,2019,0,
-Greece,Other,2019,0,
-Greece,Not reported,2019,0,
-Hungary,Multilateral organisations,2019,0,
-Hungary,NGOs,2019,0,
-Hungary,RCRC,2019,0,
-Hungary,Public sector,2019,0,
-Hungary,Pooled fund,2019,0,
-Hungary,Other,2019,0,
-Hungary,Not reported,2019,0,
+Greece,Multilateral organisations,2019,0,0
+Greece,NGOs,2019,0,0
+Greece,RCRC,2019,0,0
+Greece,Public sector,2019,0,0
+Greece,Pooled fund,2019,0,0
+Greece,Other,2019,0,0
+Greece,Not reported,2019,0,0
+Hungary,Multilateral organisations,2019,0,0
+Hungary,NGOs,2019,0,0
+Hungary,RCRC,2019,0,0
+Hungary,Public sector,2019,0,0
+Hungary,Pooled fund,2019,0,0
+Hungary,Other,2019,0,0
+Hungary,Not reported,2019,0,0
 Iceland,Multilateral organisations,2019,3.314337434,0.81222373
 Iceland,NGOs,2019,0,0
 Iceland,RCRC,2019,0,0
@@ -2204,13 +2204,13 @@ Korea,Public sector,2019,0,0
 Korea,Pooled fund,2019,12.8071147,0.148669788
 Korea,Other,2019,0,0
 Korea,Not reported,2019,0,0
-Kuwait,Multilateral organisations,2019,115.5798939,0.502617867
-Kuwait,NGOs,2019,9.199319695,0.04000473
-Kuwait,RCRC,2019,31.58980994,0.137373399
-Kuwait,Public sector,2019,71.01265356,0.308810012
-Kuwait,Pooled fund,2019,2.560552412,0.011134976
+Kuwait,Multilateral organisations,2019,115.5798939,0.505620573
+Kuwait,NGOs,2019,9.199319695,0.040243723
+Kuwait,RCRC,2019,31.58980994,0.138194086
+Kuwait,Public sector,2019,69.6470256,0.304680752
+Kuwait,Pooled fund,2019,2.560552412,0.011201498
 Kuwait,Other,2019,0,0
-Kuwait,Not reported,2019,0.013570928,5.90E-05
+Kuwait,Not reported,2019,0.013570928,5.93679E-05
 Latvia,Multilateral organisations,2019,0.011219949,1
 Latvia,NGOs,2019,0,0
 Latvia,RCRC,2019,0,0
@@ -2281,13 +2281,13 @@ Romania,Public sector,2019,0,0
 Romania,Pooled fund,2019,0,0
 Romania,Other,2019,0,0
 Romania,Not reported,2019,0,0
-Saudi Arabia,Multilateral organisations,2019,523.24547,0.381461759
-Saudi Arabia,NGOs,2019,67.64752582,0.04931709
-Saudi Arabia,RCRC,2019,0.6714983,0.000489543
-Saudi Arabia,Public sector,2019,288.832175,0.210567383
-Saudi Arabia,Pooled fund,2019,0.138108698,0.000100685
-Saudi Arabia,Other,2019,29.67325311,0.021632698
-Saudi Arabia,Not reported,2019,461.4772241,0.336430841
+Saudi Arabia,Multilateral organisations,2019,523.24547,0.382367417
+Saudi Arabia,NGOs,2019,64.39861354,0.047059999
+Saudi Arabia,RCRC,2019,0.6714983,0.000490705
+Saudi Arabia,Public sector,2019,288.832175,0.211067308
+Saudi Arabia,Pooled fund,2019,0.138108698,0.000100924
+Saudi Arabia,Other,2019,29.67325311,0.021684058
+Saudi Arabia,Not reported,2019,461.4772241,0.337229588
 Slovak Republic,Multilateral organisations,2019,0.317044747,1
 Slovak Republic,NGOs,2019,0,0
 Slovak Republic,RCRC,2019,0,0
@@ -2351,13 +2351,13 @@ US,Public sector,2019,0,0
 US,Pooled fund,2019,31.62673874,0.003662711
 US,Other,2019,46.58844001,0.005395435
 US,Not reported,2019,1435.325495,0.1662259
-All donors,Multilateral organisations,2020,16936.13475,0.605796721
-All donors,NGOs,2020,5528.931534,0.197767002
-All donors,RCRC,2020,2038.270212,0.072907864
-All donors,Public sector,2020,1195.178877,0.042750926
-All donors,Pooled fund,2020,1463.040092,0.052332182
-All donors,Other,2020,136.158431,0.004870316
-All donors,Not reported,2020,659.0811269,0.023574989
+All donors,Multilateral organisations,2020,15922.29252,0.597869358
+All donors,NGOs,2020,5277.469119,0.198164747
+All donors,RCRC,2020,2037.520969,0.076507284
+All donors,Public sector,2020,1194.478877,0.044851727
+All donors,Pooled fund,2020,1405.119267,0.052761105
+All donors,Other,2020,135.763431,0.005097808
+All donors,Not reported,2020,659.0811269,0.02474797
 Australia,Multilateral organisations,2020,165.343764,0.623924103
 Australia,NGOs,2020,32.77353333,0.123670811
 Australia,RCRC,2020,35.472441,0.133855129
@@ -2421,13 +2421,13 @@ Estonia,Public sector,2020,0.000487,0.000169061
 Estonia,Pooled fund,2020,0.508374,0.176480758
 Estonia,Other,2020,0,0
 Estonia,Not reported,2020,0.083069,0.028837195
-EU institutions,Multilateral organisations,2020,1389.274575,0.435669743
-EU institutions,NGOs,2020,895.5783281,0.280849004
-EU institutions,RCRC,2020,621.2397007,0.194817746
-EU institutions,Public sector,2020,3.0199225,0.000947033
-EU institutions,Pooled fund,2020,3.3015,0.001035334
-EU institutions,Other,2020,3.901895,0.001223615
-EU institutions,Not reported,2020,272.5090915,0.085457524
+EU institutions,Multilateral organisations,2020,1386.904907,0.43857704
+EU institutions,NGOs,2020,871.4064141,0.275562401
+EU institutions,RCRC,2020,621.2397007,0.196452884
+EU institutions,Public sector,2020,3.0199225,0.000954982
+EU institutions,Pooled fund,2020,3.3015,0.001044024
+EU institutions,Other,2020,3.901895,0.001233885
+EU institutions,Not reported,2020,272.5090915,0.086174784
 Finland,Multilateral organisations,2020,85.569558,0.632241046
 Finland,NGOs,2020,11.70216,0.086462827
 Finland,RCRC,2020,21.557137,0.159277518
@@ -2575,12 +2575,12 @@ Romania,Public sector,2020,0,0
 Romania,Pooled fund,2020,0,0
 Romania,Other,2020,0,0
 Romania,Not reported,2020,0,0
-Saudi Arabia,Multilateral organisations,2020,595.17254,0.667414471
-Saudi Arabia,NGOs,2020,98.517878,0.110475959
-Saudi Arabia,RCRC,2020,2.318731,0.002600178
-Saudi Arabia,Public sector,2020,162.820506,0.182583628
-Saudi Arabia,Pooled fund,2020,0.15,0.000168207
-Saudi Arabia,Other,2020,32.778864,0.036757556
+Saudi Arabia,Multilateral organisations,2020,593.490474,0.666785951
+Saudi Arabia,NGOs,2020,98.517878,0.110684737
+Saudi Arabia,RCRC,2020,2.318731,0.002605092
+Saudi Arabia,Public sector,2020,162.820506,0.182928675
+Saudi Arabia,Pooled fund,2020,0.15,0.000168525
+Saudi Arabia,Other,2020,32.778864,0.036827021
 Saudi Arabia,Not reported,2020,0,0
 Slovak Republic,Multilateral organisations,2020,0.293912,0.563395185
 Slovak Republic,NGOs,2020,0.227768,0.436604815
@@ -2645,13 +2645,13 @@ US,Public sector,2020,3.7942,0.00041078
 US,Pooled fund,2020,0,0
 US,Other,2020,39.84064,0.00431336
 US,Not reported,2020,219.267415,0.023739059
-All donors,Multilateral organisations,2021,14486.8993,0.543335654
-All donors,NGOs,2021,5152.733273,0.19325486
-All donors,RCRC,2021,1380.556832,0.051778212
-All donors,Public sector,2021,913.9234572,0.034276983
-All donors,Pooled fund,2021,1951.004869,0.073173043
-All donors,Other,2021,1214.613772,0.045554466
-All donors,Not reported,2021,1563.159466,0.058626781
+All donors,Multilateral organisations,2021,13920.19923,0.535502985
+All donors,NGOs,2021,5056.368312,0.194515918
+All donors,RCRC,2021,1380.513089,0.053107637
+All donors,Public sector,2021,912.7815653,0.035114243
+All donors,Pooled fund,2021,1947.332989,0.07491291
+All donors,Other,2021,1214.270229,0.046712358
+All donors,Not reported,2021,1563.159466,0.06013395
 Australia,Multilateral organisations,2021,150.4654648,0.61896254
 Australia,NGOs,2021,17.7172275,0.072882506
 Australia,RCRC,2021,36.1907532,0.14887616
@@ -2715,13 +2715,13 @@ Estonia,Public sector,2021,0,0
 Estonia,Pooled fund,2021,0.111235193,0.0302485
 Estonia,Other,2021,0,0
 Estonia,Not reported,2021,0,0
-EU institutions,Multilateral organisations,2021,1133.29198,0.375212644
-EU institutions,NGOs,2021,736.4639534,0.243830003
-EU institutions,RCRC,2021,169.3578828,0.056071357
-EU institutions,Public sector,2021,3.147211252,0.001041985
-EU institutions,Pooled fund,2021,4.495968812,0.001488535
-EU institutions,Other,2021,244.8927642,0.081079601
-EU institutions,Not reported,2021,728.7494669,0.241275875
+EU institutions,Multilateral organisations,2021,1132.543863,0.376194253
+EU institutions,NGOs,2021,727.3422518,0.241599451
+EU institutions,RCRC,2021,169.3578828,0.056255183
+EU institutions,Public sector,2021,3.147211252,0.001045401
+EU institutions,Pooled fund,2021,4.495968812,0.001493415
+EU institutions,Other,2021,244.8927642,0.081345415
+EU institutions,Not reported,2021,728.7494669,0.242066882
 Finland,Multilateral organisations,2021,66.61598321,0.690629396
 Finland,NGOs,2021,10.75711127,0.111522444
 Finland,RCRC,2021,14.91411139,0.154619406
@@ -2750,13 +2750,13 @@ Greece,Public sector,2021,0,0
 Greece,Pooled fund,2021,0.069219812,0.286236906
 Greece,Other,2021,0,0
 Greece,Not reported,2021,0,0
-Hungary,Multilateral organisations,2021,0,
-Hungary,NGOs,2021,0,
-Hungary,RCRC,2021,0,
-Hungary,Public sector,2021,0,
-Hungary,Pooled fund,2021,0,
-Hungary,Other,2021,0,
-Hungary,Not reported,2021,0,
+Hungary,Multilateral organisations,2021,0,0
+Hungary,NGOs,2021,0,0
+Hungary,RCRC,2021,0,0
+Hungary,Public sector,2021,0,0
+Hungary,Pooled fund,2021,0,0
+Hungary,Other,2021,0,0
+Hungary,Not reported,2021,0,0
 Iceland,Multilateral organisations,2021,2.932044551,0.676510486
 Iceland,NGOs,2021,0,0
 Iceland,RCRC,2021,0,0
@@ -2935,7 +2935,7 @@ UK,Not reported,2021,0,0
 US,Multilateral organisations,2021,6406.948165,0.608756424
 US,NGOs,2021,2597.675172,0.246818205
 US,RCRC,2021,167.1786151,0.015884482
-US,Public sector,2021,0.482609832,4.59E-05
+US,Public sector,2021,0.482609832,4.58552E-05
 US,Pooled fund,2021,22.97329359,0.002182808
 US,Other,2021,641.7586252,0.06097672
 US,Not reported,2021,687.6332997,0.065335504

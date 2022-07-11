@@ -156,7 +156,12 @@ export const handleResize = (chart, chartNode) => {
 export const getYAxisNamePositionFromSeries = (series) => {
   const isStack = series.some((item) => item.stack);
   const seriesCount = Array.from(new Set(series.map((d) => d.name))).length;
-  const max = Math.max(...series.reduce((allData, { data }) => allData.concat(data.map((item) => item.value)), []));
+  const max = Math.max(
+    ...series.reduce((allData, { data }) => allData.concat(data.map((item) => item.value || 0)), [])
+  );
+  if (max === 0) {
+    return 'blank';
+  }
   if (isStack ? max * seriesCount < 100 : max < 100) {
     return 'near';
   }
