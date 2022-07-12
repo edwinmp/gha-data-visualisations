@@ -95,6 +95,6 @@ Select.propTypes = {
   isClearable: PropTypes.bool,
 };
 
-Select.defaultProps = { maxSelectedOptions: 2 };
+Select.defaultProps = { maxSelectedOptions: 2, singleSelectOptions: [] };
 
 export default Select;

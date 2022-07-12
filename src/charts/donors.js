@@ -2,8 +2,7 @@
 import { jsx } from '@emotion/react';
 import deepMerge from 'deepmerge';
 import { createRoot } from 'react-dom/client';
-import Select from '../components/Select';
-import ChartFilters from '../components/ChartFilters';
+import DonorChartFilters from '../components/DonorChartFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
@@ -153,7 +152,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
       filterChannels(channels).map((channel, index) => ({
         name: dataType !== '%GNI' ? channel : donor, // GNI only has one channel, so the donors are the series
         data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
-          value: d && Number(dataType !== 'Volumes' ? d.value * 100 : d.value), // all other data types are %ages
+          value: d && typeof d.value === 'number' ? Number(dataType !== 'Volumes' ? d.value * 100 : d.value) : null, // all other data types are %ages
           emphasis: {
             focus: 'self',
           },
@@ -162,6 +161,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
         stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
         symbol: 'circle',
         symbolSize: 10,
+        connectNulls: type === 'line' ? false : undefined,
         tooltip: {
           trigger: 'item',
           formatter: (params) => {
@@ -237,9 +237,7 @@ const renderDonorsChart = () => {
 
             // add dropdown event listeners
             const onSelectDonor = (values) => {
-              const isAllDonors = values.find((item) => item.value === 'All donors');
-
-              if (!values.length || isAllDonors) {
+              if (!values.length) {
                 renderDefaultChart(chart, cleanData(data), { years, channels });
 
                 return;
@@ -251,7 +249,7 @@ const renderDonorsChart = () => {
             };
 
             const onSelectDataType = (value) => {
-              dataType = value.value || dataType;
+              dataType = value || dataType;
               if (selectedDonors.length) {
                 const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
                 updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
@@ -265,27 +263,15 @@ const renderDonorsChart = () => {
             // add dropdowns
             const root = createRoot(filterWrapper);
             root.render(
-              <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
-                <Select
-                  label="Select up to two donors"
-                  options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
-                  defaultValue={[{ value: defaultDonor, label: defaultDonor }]}
-                  isMulti
-                  onChange={onSelectDonor}
-                  singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
-                  css={{ minWidth: '200px' }}
-                  classNamePrefix="donors-select"
-                  isClearable={false}
-                />
-                <Select
-                  label="Display data as"
-                  options={['Volumes', 'Proportions', '%GNI'].map((item) => ({ value: item, label: item }))}
-                  defaultValue={[{ value: 'Volumes', label: 'Volumes' }]}
-                  onChange={onSelectDataType}
-                  css={{ minWidth: '150px' }}
-                  classNamePrefix="donors-display-data-as"
-                />
-              </ChartFilters>
+              <DonorChartFilters
+                selectErrorMessage={donorSelectErrorMessage}
+                donors={donors}
+                onSelectDataType={onSelectDataType}
+                onSelectDonor={onSelectDonor}
+                defaultDonor={defaultDonor}
+                defaultDataType="Volumes"
+                donorSelectErrorMessage={donorSelectErrorMessage}
+              />
             );
 
             dichart.hideLoading();

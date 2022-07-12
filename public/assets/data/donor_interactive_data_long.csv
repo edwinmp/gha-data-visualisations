@@ -29,16 +29,6 @@ Year,IHA type,Value type,Donor,Value
 2019,Total HA,%GNI,Belgium,0.00057118
 2020,Total HA,%GNI,Belgium,0.00073225
 2021,Total HA,%GNI,Belgium,0.00087459
-2012,Total HA,%GNI,Bulgaria,0.00009484
-2013,Total HA,%GNI,Bulgaria,0.00010155
-2014,Total HA,%GNI,Bulgaria,0.00013087
-2015,Total HA,%GNI,Bulgaria,0.00010594
-2016,Total HA,%GNI,Bulgaria,0.00013518
-2017,Total HA,%GNI,Bulgaria,0.00017635
-2018,Total HA,%GNI,Bulgaria,0.00011386
-2019,Total HA,%GNI,Bulgaria,0.00010782
-2020,Total HA,%GNI,Bulgaria,0.00018451
-2021,Total HA,%GNI,Bulgaria,0.00023032
 2012,Total HA,%GNI,Canada,0.00030118
 2013,Total HA,%GNI,Canada,0.00036693
 2014,Total HA,%GNI,Canada,0.0004106
@@ -49,16 +39,6 @@ Year,IHA type,Value type,Donor,Value
 2019,Total HA,%GNI,Canada,0.00038239
 2020,Total HA,%GNI,Canada,0.00041467
 2021,Total HA,%GNI,Canada,0.00043986
-2012,Total HA,%GNI,Croatia,0
-2013,Total HA,%GNI,Croatia,0.00003949
-2014,Total HA,%GNI,Croatia,0.00015178
-2015,Total HA,%GNI,Croatia,0.00006849
-2016,Total HA,%GNI,Croatia,0.00010289
-2017,Total HA,%GNI,Croatia,0.00016467
-2018,Total HA,%GNI,Croatia,0.00017139
-2019,Total HA,%GNI,Croatia,0.00013052
-2020,Total HA,%GNI,Croatia,0.000185
-2021,Total HA,%GNI,Croatia,0.00043713
 2012,Total HA,%GNI,Czech Republic,0.00012229
 2013,Total HA,%GNI,Czech Republic,0.00012461
 2014,Total HA,%GNI,Czech Republic,0.00015256
@@ -79,16 +59,6 @@ Year,IHA type,Value type,Donor,Value
 2019,Total HA,%GNI,Denmark,0.00157683
 2020,Total HA,%GNI,Denmark,0.00145888
 2021,Total HA,%GNI,Denmark,0.00093537
-2012,Total HA,%GNI,Estonia,0.00007703
-2013,Total HA,%GNI,Estonia,0.00022588
-2014,Total HA,%GNI,Estonia,0.00027156
-2015,Total HA,%GNI,Estonia,0.00025485
-2016,Total HA,%GNI,Estonia,0.00032078
-2017,Total HA,%GNI,Estonia,0.00025642
-2018,Total HA,%GNI,Estonia,0.00022987
-2019,Total HA,%GNI,Estonia,0.00025077
-2020,Total HA,%GNI,Estonia,0.00033109
-2021,Total HA,%GNI,Estonia,0.00026868
 2012,Total HA,%GNI,EU institutions,
 2013,Total HA,%GNI,EU institutions,
 2014,Total HA,%GNI,EU institutions,
@@ -199,36 +169,6 @@ Year,IHA type,Value type,Donor,Value
 2019,Total HA,%GNI,Korea,0.0000868
 2020,Total HA,%GNI,Korea,0.00009257
 2021,Total HA,%GNI,Korea,0.00007533
-2012,Total HA,%GNI,Kuwait,
-2013,Total HA,%GNI,Kuwait,
-2014,Total HA,%GNI,Kuwait,
-2015,Total HA,%GNI,Kuwait,
-2016,Total HA,%GNI,Kuwait,0.00000626
-2017,Total HA,%GNI,Kuwait,0.00007351
-2018,Total HA,%GNI,Kuwait,0
-2019,Total HA,%GNI,Kuwait,0
-2020,Total HA,%GNI,Kuwait,0.00026958
-2021,Total HA,%GNI,Kuwait,
-2012,Total HA,%GNI,Latvia,0.00008659
-2013,Total HA,%GNI,Latvia,0.00009212
-2014,Total HA,%GNI,Latvia,0.00011293
-2015,Total HA,%GNI,Latvia,0.00009661
-2016,Total HA,%GNI,Latvia,0.00018536
-2017,Total HA,%GNI,Latvia,0.00018441
-2018,Total HA,%GNI,Latvia,0.00013789
-2019,Total HA,%GNI,Latvia,0.00014221
-2020,Total HA,%GNI,Latvia,0.00017107
-2021,Total HA,%GNI,Latvia,0.00016576
-2012,Total HA,%GNI,Lithuania,0.00009364
-2013,Total HA,%GNI,Lithuania,0.00009901
-2014,Total HA,%GNI,Lithuania,0.00014256
-2015,Total HA,%GNI,Lithuania,0.00015377
-2016,Total HA,%GNI,Lithuania,0.0002596
-2017,Total HA,%GNI,Lithuania,0.00015081
-2018,Total HA,%GNI,Lithuania,0.00016154
-2019,Total HA,%GNI,Lithuania,0.00016754
-2020,Total HA,%GNI,Lithuania,0.00019604
-2021,Total HA,%GNI,Lithuania,0.00023425
 2012,Total HA,%GNI,Luxembourg,0.00153638
 2013,Total HA,%GNI,Luxembourg,0.00165338
 2014,Total HA,%GNI,Luxembourg,0.00174559
@@ -289,26 +229,6 @@ Year,IHA type,Value type,Donor,Value
 2019,Total HA,%GNI,Portugal,0.00016917
 2020,Total HA,%GNI,Portugal,0.00019208
 2021,Total HA,%GNI,Portugal,0.00019808
-2012,Total HA,%GNI,Qatar,
-2013,Total HA,%GNI,Qatar,
-2014,Total HA,%GNI,Qatar,
-2015,Total HA,%GNI,Qatar,
-2016,Total HA,%GNI,Qatar,
-2017,Total HA,%GNI,Qatar,
-2018,Total HA,%GNI,Qatar,
-2019,Total HA,%GNI,Qatar,0.0007236
-2020,Total HA,%GNI,Qatar,0.00181477
-2021,Total HA,%GNI,Qatar,
-2012,Total HA,%GNI,Romania,0.00009075
-2013,Total HA,%GNI,Romania,0.00009142
-2014,Total HA,%GNI,Romania,0.00011511
-2015,Total HA,%GNI,Romania,0.00009257
-2016,Total HA,%GNI,Romania,0.0001817
-2017,Total HA,%GNI,Romania,0.00015646
-2018,Total HA,%GNI,Romania,0.0001373
-2019,Total HA,%GNI,Romania,0.00013851
-2020,Total HA,%GNI,Romania,0.00015508
-2021,Total HA,%GNI,Romania,0.00019662
 2012,Total HA,%GNI,Saudi Arabia,
 2013,Total HA,%GNI,Saudi Arabia,
 2014,Total HA,%GNI,Saudi Arabia,
@@ -369,16 +289,6 @@ Year,IHA type,Value type,Donor,Value
 2019,Total HA,%GNI,Switzerland,0.00057918
 2020,Total HA,%GNI,Switzerland,0.00093741
 2021,Total HA,%GNI,Switzerland,0.00070228
-2012,Total HA,%GNI,Turkey,0.00132977
-2013,Total HA,%GNI,Turkey,0.00198987
-2014,Total HA,%GNI,Turkey,0.00302233
-2015,Total HA,%GNI,Turkey,0.00349807
-2016,Total HA,%GNI,Turkey,0.00683723
-2017,Total HA,%GNI,Turkey,0.00855306
-2018,Total HA,%GNI,Turkey,0.00939257
-2019,Total HA,%GNI,Turkey,0.01006814
-2020,Total HA,%GNI,Turkey,0.01023595
-2021,Total HA,%GNI,Turkey,0.00858543
 2012,Total HA,%GNI,UAE,0.00000552
 2013,Total HA,%GNI,UAE,0.00023732
 2014,Total HA,%GNI,UAE,0.00146435
