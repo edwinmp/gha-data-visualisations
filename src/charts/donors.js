@@ -237,9 +237,7 @@ const renderDonorsChart = () => {
 
             // add dropdown event listeners
             const onSelectDonor = (values) => {
-              const isAllDonors = values.find((item) => item.value === 'All donors');
-
-              if (!values.length || isAllDonors) {
+              if (!values.length) {
                 renderDefaultChart(chart, cleanData(data), { years, channels });
 
                 return;

@@ -22,11 +22,10 @@ const DonorChartFilters = ({ defaultDonor, onSelectDonor, ...props }) => {
     <ChartFilters selectErrorMessage={props.donorSelectErrorMessage}>
       <Select
         label="Select up to two donors"
-        options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
-        defaultValue={[{ value: defaultDonor, label: defaultDonor }]}
+        options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: true }))}
+        defaultValue={[{ value: defaultDonor, label: defaultDonor, isCloseable: true }]}
         isMulti
         onChange={onSelectDonor}
-        singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
         css={{ minWidth: '200px' }}
         classNamePrefix="donors-select"
         isClearable={false}
