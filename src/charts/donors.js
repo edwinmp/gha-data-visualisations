@@ -153,7 +153,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
       filterChannels(channels).map((channel, index) => ({
         name: dataType !== '%GNI' ? channel : donor, // GNI only has one channel, so the donors are the series
         data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
-          value: d && Number(dataType !== 'Volumes' ? d.value * 100 : d.value), // all other data types are %ages
+          value: d && typeof d.value === 'number' ? Number(dataType !== 'Volumes' ? d.value * 100 : d.value) : null, // all other data types are %ages
           emphasis: {
             focus: 'self',
           },
@@ -162,6 +162,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
         stack: dataType !== '%GNI' ? donor : undefined, // GNI line chart should not stack
         symbol: 'circle',
         symbolSize: 10,
+        connectNulls: type === 'line' ? false : undefined,
         tooltip: {
           trigger: 'item',
           formatter: (params) => {
