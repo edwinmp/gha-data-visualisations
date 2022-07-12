@@ -2,8 +2,7 @@
 import { jsx } from '@emotion/react';
 import deepMerge from 'deepmerge';
 import { createRoot } from 'react-dom/client';
-import Select from '../components/Select';
-import ChartFilters from '../components/ChartFilters';
+import DonorChartFilters from '../components/DonorChartFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
@@ -252,7 +251,7 @@ const renderDonorsChart = () => {
             };
 
             const onSelectDataType = (value) => {
-              dataType = value.value || dataType;
+              dataType = value || dataType;
               if (selectedDonors.length) {
                 const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
                 updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
@@ -266,27 +265,15 @@ const renderDonorsChart = () => {
             // add dropdowns
             const root = createRoot(filterWrapper);
             root.render(
-              <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
-                <Select
-                  label="Select up to two donors"
-                  options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
-                  defaultValue={[{ value: defaultDonor, label: defaultDonor }]}
-                  isMulti
-                  onChange={onSelectDonor}
-                  singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
-                  css={{ minWidth: '200px' }}
-                  classNamePrefix="donors-select"
-                  isClearable={false}
-                />
-                <Select
-                  label="Display data as"
-                  options={['Volumes', 'Proportions', '%GNI'].map((item) => ({ value: item, label: item }))}
-                  defaultValue={[{ value: 'Volumes', label: 'Volumes' }]}
-                  onChange={onSelectDataType}
-                  css={{ minWidth: '150px' }}
-                  classNamePrefix="donors-display-data-as"
-                />
-              </ChartFilters>
+              <DonorChartFilters
+                selectErrorMessage={donorSelectErrorMessage}
+                donors={donors}
+                onSelectDataType={onSelectDataType}
+                onSelectDonor={onSelectDonor}
+                defaultDonor={defaultDonor}
+                defaultDataType="Volumes"
+                donorSelectErrorMessage={donorSelectErrorMessage}
+              />
             );
 
             dichart.hideLoading();
