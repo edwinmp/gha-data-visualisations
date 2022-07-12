@@ -187,9 +187,7 @@ const renderFundingChannelsChart = () => {
 
             // add dropdown event handlers
             const onSelectDonor = (values) => {
-              const isAllDonors = values.find((item) => item.value === 'All donors');
-
-              if (!values.length || isAllDonors) {
+              if (!values.length) {
                 renderDefaultChart(chart, cleanData(data), { years, channels });
 
                 return;
@@ -208,11 +206,11 @@ const renderFundingChannelsChart = () => {
               <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
                 <Select
                   label="Select up to two donors"
-                  options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: donor !== defaultDonor }))}
-                  defaultValue={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
+                  options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: true }))}
+                  defaultValue={[{ value: defaultDonor, label: defaultDonor, isCloseable: true }]}
                   isMulti
                   onChange={onSelectDonor}
-                  singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
+                  // singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
                   css={{ minWidth: '200px' }}
                   classNamePrefix="channels-chart-select"
                   isClearable={false}
