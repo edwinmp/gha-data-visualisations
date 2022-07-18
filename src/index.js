@@ -4,6 +4,10 @@ import renderFundingChannelsChart from './charts/gha/funding-channels';
 import renderRecipientChart from './charts/gha/recipients';
 import renderPeopleAffectedByCrisisMap from './charts/gha/people-affected-by-crisis';
 import './styles/styles.css';
+import renderPeopleAffectedByCrisisLeaflet from './charts/gha/leaflet-map';
+// import d3 from 'd3'; // eslint-disable-line import/no-unresolved
+
+// Your Code Goes Here i.e. functions
 
 /**
  * Run your code after the page has loaded
@@ -13,4 +17,5 @@ window.addEventListener('load', () => {
   renderFundingChannelsChart();
   renderRecipientChart();
   renderPeopleAffectedByCrisisMap();
+  renderPeopleAffectedByCrisisLeaflet();
 });
