@@ -1,5 +1,5 @@
-import L from 'leaflet';
-import 'leaflet-css';
+// import 'leaflet-css';
+// import * as L from 'leaflet';
 import fetchCSVData from '../utils/data';
 
 const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
@@ -68,7 +68,12 @@ const getColor = (score) => {
 };
 
 function renderPeopleAffectedByCrisisLeaflet() {
-  const map = L.map('map').setView([14, -0.01], 2);
+  const map = window.L.map('map').setView([14, -0.01], 2);
+  // window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //   maxZoom: 19,
+  //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  // }).addTo(map);
+  let geojsonLayer;
   const variable = 'Severity_score';
   fetch(MAP_FILE_PATH)
     .then((response) => response.json())
@@ -87,13 +92,41 @@ function renderPeopleAffectedByCrisisLeaflet() {
           fillOpacity: 1,
         });
 
-        L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
+        function highlightFeature(e) {
+          const layer = e.target;
+
+          layer.setStyle({
+            // weight: 5,
+            fillColor: 'yellow',
+            dashArray: '',
+            fillOpacity: 0.7,
+          });
+
+          if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
+            layer.bringToFront();
+          }
+        }
+
+        function resetHighlight(e) {
+          geojsonLayer.resetStyle(e.target);
+        }
+
+        function onEachFeature(feature, layer) {
+          if (feature.properties[variable]) {
+            layer.on({
+              mouseover: highlightFeature,
+              mouseout: resetHighlight,
+            });
+          }
+        }
+
+        geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
           style,
-          centre: [14, -0.01],
-          zoom: 2,
+          onEachFeature,
           maxZoom: 3,
           minZoom: 2,
         }).addTo(map);
+        // geojsonLayer.addTo(map);
       });
     })
     .catch((error) => console.log(error));
