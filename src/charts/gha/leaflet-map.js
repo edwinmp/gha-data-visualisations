@@ -51,8 +51,26 @@ const dataInjectedGeoJson = (jsonData, groupedData) => jsonData.map((feature) =>
   return feature;
 });
 
-const renderPeopleAffectedByCrisisLeaflet = () => {
+const getColor = (score) => {
+  switch (score) {
+    case '5':
+      return '#7F1850';
+    case '4':
+      return '#AD1156';
+    case '3':
+      return '#D64279';
+    case '2':
+      return '#E4819B';
+    case '1':
+      return '#F6B9C2';
+    default:
+      return '#E6E1E5';
+  }
+};
+
+function renderPeopleAffectedByCrisisLeaflet() {
   const map = window.L.map('map').setView([14, -0.01], 2);
+  const variable = 'Severity_score';
   fetch(MAP_FILE_PATH)
     .then((response) => response.json())
     .then((jsonData) => {
@@ -63,11 +81,25 @@ const renderPeopleAffectedByCrisisLeaflet = () => {
           ...new Set(processedCountryNameData.map((stream) => stream.Country_name)),
         ];
         const groupedData = processedData(countries, processedCountryNameData);
-        console.log(dataInjectedGeoJson(geojsonData, groupedData));
+
+        const style = (feature) => ({
+          fillColor: getColor(feature.properties[variable]),
+          weight: 1,
+          opacity: 1,
+          color: 'white',
+          fillOpacity: 1,
+        });
+
+        window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
+          style,
+          centre: [14, -0.01],
+          zoom: 2,
+          maxZoom: 3,
+          minZoom: 2,
+        }).addTo(map);
       });
-      window.L.geoJSON(geojsonData).addTo(map);
     })
     .catch((error) => console.log(error));
-};
+}
 
 export default renderPeopleAffectedByCrisisLeaflet;
