@@ -1,3 +1,5 @@
+import L from 'leaflet';
+import 'leaflet-css';
 import fetchCSVData from '../../utils/data';
 
 const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
@@ -69,7 +71,7 @@ const getColor = (score) => {
 };
 
 function renderPeopleAffectedByCrisisLeaflet() {
-  const map = window.L.map('map').setView([14, -0.01], 2);
+  const map = L.map('map').setView([14, -0.01], 2);
   const variable = 'Severity_score';
   fetch(MAP_FILE_PATH)
     .then((response) => response.json())
@@ -90,7 +92,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
           fillOpacity: 1,
         });
 
-        window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
+        L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
           style,
           centre: [14, -0.01],
           zoom: 2,
