@@ -20,3 +20,7 @@
 .display-none {
   display: none;
 }
+
+#map {
+  background: white;
+}
