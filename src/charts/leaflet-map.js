@@ -1,7 +1,7 @@
-import fetchCSVData from '../utils/data';
+import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 
-const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
-const CSV_PATH = 'public/assets/data/GHA/2021/map_data_long.csv';
+const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
+const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
 const matchCountryNames = (csvData, worldData) => {
   const matchedData = csvData.map((stream) => {
     const countryObject = worldData.find((feature) => feature.properties.iso_a3 === stream.Country_ID);
@@ -80,10 +80,6 @@ function highlightFeature(e) {
 
 function renderPeopleAffectedByCrisisLeaflet() {
   const map = window.L.map('map').setView([20, -0.09], 2);
-  // window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //   maxZoom: 19,
-  //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  // }).addTo(map);
   let geojsonLayer;
   const legend = window.L.control({ position: 'topright' });
 
