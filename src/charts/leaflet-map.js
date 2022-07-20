@@ -74,6 +74,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
   //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   // }).addTo(map);
   let geojsonLayer;
+
   const variable = 'Severity_score';
   fetch(MAP_FILE_PATH)
     .then((response) => response.json())
@@ -96,15 +97,13 @@ function renderPeopleAffectedByCrisisLeaflet() {
           const layer = e.target;
 
           layer.setStyle({
-            // weight: 5,
             fillColor: 'yellow',
-            dashArray: '',
-            fillOpacity: 0.7,
           });
 
           if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
             layer.bringToFront();
           }
+          layer.bindPopup(layer.feature.properties.name).openPopup();
         }
 
         function resetHighlight(e) {
@@ -126,7 +125,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
           maxZoom: 3,
           minZoom: 2,
         }).addTo(map);
-        // geojsonLayer.addTo(map);
       });
     })
     .catch((error) => console.log(error));
