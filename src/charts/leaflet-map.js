@@ -1,5 +1,3 @@
-// import 'leaflet-css';
-// import * as L from 'leaflet';
 import fetchCSVData from '../utils/data';
 
 const MAP_FILE_PATH = 'public/assets/data/GHA/2021/world_map.geo.json';
@@ -67,13 +65,47 @@ const getColor = (score) => {
   }
 };
 
+function highlightFeature(e) {
+  const layer = e.target;
+
+  layer.setStyle({
+    fillColor: 'yellow',
+  });
+
+  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
+    layer.bringToFront();
+  }
+  layer.bindPopup(layer.feature.properties.name).openPopup();
+}
+
 function renderPeopleAffectedByCrisisLeaflet() {
-  const map = window.L.map('map').setView([14, -0.01], 2);
+  const map = window.L.map('map').setView([20, -0.09], 2);
   // window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   //   maxZoom: 19,
   //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   // }).addTo(map);
   let geojsonLayer;
+  const legend = window.L.control({ position: 'topright' });
+
+  legend.onAdd = () => {
+    const div = window.L.DomUtil.create('div', 'info legend');
+    const legendData = [
+      { score: '5', label: '5 - Very High' },
+      { score: '4', label: '4 - High' },
+      { score: '3', label: '3 - Medium' },
+      { score: '2', label: '2 - Low' },
+      { score: '1', label: '1 - Very Low' },
+    ];
+
+    const legendContent = legendData
+      .map((data) => `<i style="background:${getColor(data.score)}"></i><label>${data.label}</label>`)
+      .join('');
+    div.innerHTML = legendContent;
+
+    return div;
+  };
+
+  legend.addTo(map);
 
   const variable = 'Severity_score';
   fetch(MAP_FILE_PATH)
@@ -92,19 +124,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
           color: 'white',
           fillOpacity: 1,
         });
-
-        function highlightFeature(e) {
-          const layer = e.target;
-
-          layer.setStyle({
-            fillColor: 'yellow',
-          });
-
-          if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
-            layer.bringToFront();
-          }
-          layer.bindPopup(layer.feature.properties.name).openPopup();
-        }
 
         function resetHighlight(e) {
           geojsonLayer.resetStyle(e.target);

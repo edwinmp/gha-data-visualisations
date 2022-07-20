@@ -24,3 +24,25 @@
 #map {
   background: white;
 }
+
+.legend {
+  color: #555;
+  display: flex;
+  width: fit-content;
+  font-family: 'Geomanist Regular,sans-serif'
+}
+
+.legend i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 8px;
+  opacity: 1;
+}
+
+.legend label {
+  margin-right: 8px;
+  text-align: center;
+  font-size: 13;
+}
