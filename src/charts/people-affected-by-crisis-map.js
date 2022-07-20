@@ -76,6 +76,7 @@ const highlightFeature = (e) => {
   if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
     layer.bringToFront();
   }
+  // Bind popup to layer
   layer.bindPopup(layer.feature.properties.name).openPopup();
 };
 
@@ -126,6 +127,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
         const resetHighlight = (e) => {
           geojsonLayer.resetStyle(e.target);
+          e.target.closePopup();
         };
 
         const onEachFeature = (feature, layer) => {
