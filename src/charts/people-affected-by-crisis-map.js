@@ -5,13 +5,13 @@ const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisati
 
 const matchCountryNames = (csvData, worldData) => {
   const matchedData = csvData.map((stream) => {
-    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === stream.Country_ID);
+    const streamCopy = { ...stream };
+    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy.Country_ID);
     if (countryObject) {
-      // eslint-disable-next-line no-param-reassign
-      stream.Country_name = countryObject.properties.name;
+      streamCopy.Country_name = countryObject.properties.name;
     }
 
-    return stream;
+    return streamCopy;
   });
 
   return matchedData;
@@ -19,12 +19,10 @@ const matchCountryNames = (csvData, worldData) => {
 
 const processedData = (countries, processedCountryData) => {
   const data = [];
-  // eslint-disable-next-line array-callback-return
-  countries.map((country) => {
+  countries.forEach((country) => {
     const countryData = {};
     countryData.name = country;
-    // eslint-disable-next-line array-callback-return
-    processedCountryData.map((stream) => {
+    processedCountryData.forEach((stream) => {
       if (stream.Country_name === country) {
         countryData[stream.variable] = stream.value;
       }
@@ -37,16 +35,16 @@ const processedData = (countries, processedCountryData) => {
 
 const dataInjectedGeoJson = (jsonData, groupedData) =>
   jsonData.map((feature) => {
+    const featureCopy = { ...feature };
     const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.name);
     if (matchingCountryData) {
-      // eslint-disable-next-line no-param-reassign
-      feature.properties = {
+      featureCopy.properties = {
         ...feature.properties,
         ...matchingCountryData,
       };
     }
 
-    return feature;
+    return featureCopy;
   });
 
 const getColor = (score) => {
