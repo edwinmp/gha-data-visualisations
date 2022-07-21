@@ -1,8 +1,10 @@
 .dicharts--boilerplate-chart,
 .dicharts--gha-donors,
-.dicharts--gha-recipients {
+.dicharts--gha-recipients,
+.dicharts--gha-people-affected-by-crisis-leaflet {
   width: 100%;
   min-height: 450px;
+  background: white;
 }
 
 .spotlight-banner.data-selector--wrapper {
@@ -18,5 +20,49 @@
 }
 
 .display-none {
+  display: none;
+}
+
+.legend {
+  color: #555;
+  display: flex;
+  width: fit-content;
+  font-family: "Geomanist Regular", sans-serif;
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+  border-radius: 5px;
+}
+
+.legend span {
+  display: inline-flex;
+}
+
+.legend i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 8px;
+  opacity: 1;
+}
+
+.legend label {
+  margin-right: 8px;
+  text-align: center;
+  font-size: 13px;
+  padding: 2px;
+}
+
+.leaflet-popup-content {
+  min-width: 80px !important;
+  text-align: center;
+  font-size: 15px;
+  font-family: "Geomanist Regular", sans-serif;
+}
+
+.leaflet-popup-close-button {
   display: none;
 }
