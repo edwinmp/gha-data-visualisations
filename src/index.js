@@ -2,6 +2,7 @@ import 'core-js';
 import renderDonorsChart from './charts/donors';
 import renderFundingChannelsChart from './charts/funding-channels';
 import renderRecipientChart from './charts/recipients';
+import renderPeopleAffectedByCrisisLeaflet from './charts/people-affected-by-crisis-map';
 import './styles/styles.css';
 
 /**
@@ -11,4 +12,5 @@ window.addEventListener('load', () => {
   renderDonorsChart();
   renderFundingChannelsChart();
   renderRecipientChart();
+  renderPeopleAffectedByCrisisLeaflet();
 });
