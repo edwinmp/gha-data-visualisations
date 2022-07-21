@@ -79,7 +79,7 @@ const highlightFeature = (e) => {
 };
 
 const onLegendAdd = () => {
-  const div = window.L.DomUtil.create('div', 'info legend');
+  const div = window.L.DomUtil.create('div', 'legend');
   const legendData = [
     { score: '5', label: '5 - Very High' },
     { score: '4', label: '4 - High' },
@@ -89,7 +89,7 @@ const onLegendAdd = () => {
   ];
 
   const legendContent = legendData
-    .map((data) => `<i style="background:${getColor(data.score)}"></i><label>${data.label}</label>`)
+    .map((data) => `<span><i style="background:${getColor(data.score)}"></i><label>${data.label}</label></span>`)
     .join('');
   div.innerHTML = legendContent;
 
@@ -112,7 +112,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
           legend.onAdd = onLegendAdd;
           legend.addTo(map);
           dichart.showLoading();
-          fetch(MAP_FILE_PATH)
+          window
+            .fetch(MAP_FILE_PATH)
             .then((response) => response.json())
             .then((jsonData) => {
               const geojsonData = jsonData.features;
