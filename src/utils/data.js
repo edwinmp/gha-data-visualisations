@@ -1,6 +1,6 @@
 import { parse } from 'papaparse';
 
-export const ACTIVE_BRANCH = 'feature/interactive-map-default-view';
+export const ACTIVE_BRANCH = 'main';
 
 const fetchCSVData = (url) =>
   new Promise((resolve) => {
