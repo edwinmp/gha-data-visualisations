@@ -111,7 +111,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
           const legend = window.L.control({ position: 'topright' });
           legend.onAdd = onLegendAdd;
           legend.addTo(map);
+
           dichart.showLoading();
+
           window
             .fetch(MAP_FILE_PATH)
             .then((response) => response.json())

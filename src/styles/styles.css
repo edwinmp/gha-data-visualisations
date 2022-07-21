@@ -27,7 +27,7 @@
   color: #555;
   display: flex;
   width: fit-content;
-  font-family: 'Geomanist Regular,sans-serif';
+  font-family: "Geomanist Regular", sans-serif;
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
   background: white;
@@ -54,4 +54,15 @@
   text-align: center;
   font-size: 13px;
   padding: 2px;
+}
+
+.leaflet-popup-content {
+  min-width: 80px !important;
+  text-align: center;
+  font-size: 15px;
+  font-family: "Geomanist Regular", sans-serif;
+}
+
+.leaflet-popup-close-button {
+  display: none;
 }
