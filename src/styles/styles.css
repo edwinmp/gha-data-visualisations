@@ -4,6 +4,7 @@
 .dicharts--gha-people-affected-by-crisis-leaflet {
   width: 100%;
   min-height: 450px;
+  background: white;
 }
 
 .spotlight-banner.data-selector--wrapper {
@@ -20,10 +21,6 @@
 
 .display-none {
   display: none;
-}
-
-.dicharts--gha-people-affected-by-crisis-leaflet {
-  background: white;
 }
 
 .legend {
