@@ -39,7 +39,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
-    "core-js": "^3.23.5",
+    "core-js": "^3.24.0",
     "deepmerge": "^4.2.2",
     "papaparse": "^5.3.2",
     "prop-types": "^15.8.1",
