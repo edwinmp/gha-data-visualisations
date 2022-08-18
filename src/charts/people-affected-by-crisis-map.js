@@ -59,6 +59,8 @@ const getColor = (score) => {
       return '#E4819B';
     case '1':
       return '#F6B9C2';
+    case '':
+      return 'black';
     default:
       return '#E6E1E5';
   }
@@ -76,7 +78,11 @@ const highlightFeature = (e, variable) => {
   }
   // Bind popup to layer
   layer
-    .bindPopup(`<div>${layer.feature.properties.name}<br>${variable}: ${layer.feature.properties[variable]}</div>`)
+    .bindPopup(
+      layer.feature.properties[variable]
+        ? `<div>${layer.feature.properties.name}<br>${variable}: ${layer.feature.properties[variable]}</div>`
+        : layer.feature.properties.name
+    )
     .openPopup();
 };
 
@@ -88,6 +94,7 @@ const onLegendAdd = () => {
     { score: '3', label: '3 - Medium' },
     { score: '2', label: '2 - Low' },
     { score: '1', label: '1 - Very Low' },
+    { score: '', label: 'Not assessed' },
   ];
 
   const legendContent = legendData
@@ -140,7 +147,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 };
 
                 const onEachFeature = (feature, layer) => {
-                  if (feature.properties[variable]) {
+                  if (feature.properties[variable] || feature.properties[variable] === '') {
                     layer.on({
                       mouseover: (e) => highlightFeature(e, variable),
                       mouseout: resetHighlight,
