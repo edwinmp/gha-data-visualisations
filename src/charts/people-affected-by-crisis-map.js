@@ -64,7 +64,7 @@ const getColor = (score) => {
   }
 };
 
-const highlightFeature = (e) => {
+const highlightFeature = (e, variable) => {
   const layer = e.target;
 
   layer.setStyle({
@@ -75,7 +75,9 @@ const highlightFeature = (e) => {
     layer.bringToFront();
   }
   // Bind popup to layer
-  layer.bindPopup(layer.feature.properties.name).openPopup();
+  layer
+    .bindPopup(`<div>${layer.feature.properties.name}<br>${variable}: ${layer.feature.properties[variable]}</div>`)
+    .openPopup();
 };
 
 const onLegendAdd = () => {
@@ -140,7 +142,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const onEachFeature = (feature, layer) => {
                   if (feature.properties[variable]) {
                     layer.on({
-                      mouseover: highlightFeature,
+                      mouseover: (e) => highlightFeature(e, variable),
                       mouseout: resetHighlight,
                     });
                   }
