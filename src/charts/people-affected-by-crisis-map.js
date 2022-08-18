@@ -1,5 +1,11 @@
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import climateVulnerability from '../../public/assets/svg/icons/Climate-vulnerability-icon.svg';
+import covidVaccination from '../../public/assets/svg/icons/Covid-vaccination-icon.svg';
+import crisisDuration from '../../public/assets/svg/icons/Crisis-duration-icon.svg';
+import crisisType from '../../public/assets/svg/icons/Crisis-type-icon.svg';
+import peopleInNeed from '../../public/assets/svg/icons/People-in-need-icon.svg';
+import responsePlan from '../../public/assets/svg/icons/Response-plan-icon.svg';
+import crisisSeverity from '../../public/assets/svg/icons/Crisis-severity-icon.svg';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
@@ -107,6 +113,83 @@ const onLegendAdd = () => {
   return div;
 };
 
+const getCrisisType = (data) => {
+  const finalValue = [];
+  if (Number(data.Conflict_marker) > 0) {
+    finalValue.concat('Conflict');
+  }
+  if (Number(data.Displacement_marker) > 0) {
+    finalValue.concat('Displacement');
+  }
+  if (Number(data.Physical_disaster_marker) > 0) {
+    finalValue.concat('Natural hazard');
+  }
+
+  return finalValue.join(', ');
+};
+const getSeverity = (score) => {
+  switch (score) {
+    case '5':
+      return 'Very high';
+    case '4':
+      return 'High';
+    case '3':
+      return 'Medium';
+    case '2':
+      return 'Low';
+    case '1':
+      return 'Very Low';
+    case '':
+      return 'Not assessed';
+    default:
+      return '';
+  }
+};
+
+const getCrisisDuration = (data) => `${data['Protracted/Recurrent_crisis']}, ${data.Years_of_consecutive_crisis}`;
+const getCountryResponsePlan = (requirement, coverage) => {
+  if (requirement) {
+    const fundInDollars = (Number(coverage) / 100) * Number(requirement);
+
+    return `${coverage}% funded[US$${fundInDollars}  of ${requirement}]`;
+  }
+
+  return 'Not assessed';
+};
+const getRegionalResponsePlan = (requirement, funds) =>
+  requirement
+    ? `${(Number(funds) / Number(requirement)) * 100}% funded[US$${funds} of ${requirement}]`
+    : 'Not assessed';
+
+const dataBoxContent = (data) => [
+  { value: data['People_in_need_(millions)'], label: 'People in need', icon: peopleInNeed },
+  { value: getCrisisType(data), label: 'Crisis type', icon: crisisType },
+  { value: getSeverity(data.Severity_score), label: 'Severity of crisis', icon: crisisSeverity },
+  { value: getCrisisDuration(data), label: 'Crisis duration', icon: crisisDuration },
+  {
+    value: `${data.COVID_vaccination_rate}% of the population vaccinated`,
+    label: 'Covid vaccinations',
+    icon: covidVaccination,
+  },
+  { value: getSeverity(data.Climate_vulnerability), label: 'Climate vulnerability', icon: climateVulnerability },
+  {
+    value: getCountryResponsePlan(
+      data['Country_response_plan_requirements_(US$,_million)'],
+      data['Country_response_plan_coverage_(%)']
+    ),
+    label: 'Country response plan',
+    icon: responsePlan,
+  },
+  {
+    value: getRegionalResponsePlan(
+      data['Regional_response_plan_requirements_(US$,_million)'],
+      data['Regional_response_plan_funding_(US$,_million)']
+    ),
+    label: 'Regional response plan',
+    icon: responsePlan,
+  },
+];
+
 function renderPeopleAffectedByCrisisLeaflet() {
   window.DICharts.handler.addChart({
     className: 'dicharts--gha-people-affected-by-crisis-leaflet',
@@ -134,8 +217,10 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           dataBox.update = function (props) {
             this.div.innerHTML = props
-              ? `${props.name} <br><span><img src=${climateVulnerability} height=20 width=20 ></img> Why doesn't this show</span>`
-              : 'well';
+              ? `${props.name} <br> ${dataBoxContent(props).map(
+                  (item) => `<span><img src=${item.icon} height=20 width=20 ></img> ${item.label} ${item.value} </span>`
+                )}`
+              : '';
           };
           dataBox.addTo(map);
 
