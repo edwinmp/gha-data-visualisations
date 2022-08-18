@@ -149,7 +149,7 @@ const getSeverity = (score) => {
 const getCrisisDuration = (data) => `${data['Protracted/Recurrent_crisis']}, ${data.Years_of_consecutive_crisis}`;
 const getCountryResponsePlan = (requirement, coverage) => {
   if (requirement) {
-    const fundInDollars = (Number(coverage) / 100) * Number(requirement);
+    const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
 
     return `${coverage}% funded[US$${fundInDollars}  of ${requirement}]`;
   }
@@ -158,7 +158,7 @@ const getCountryResponsePlan = (requirement, coverage) => {
 };
 const getRegionalResponsePlan = (requirement, funds) =>
   requirement
-    ? `${(Number(funds) / Number(requirement)) * 100}% funded[US$${funds} of ${requirement}]`
+    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of ${requirement}]`
     : 'Not assessed';
 
 const dataBoxContent = (data) => [
