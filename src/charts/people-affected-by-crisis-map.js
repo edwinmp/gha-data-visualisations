@@ -1,4 +1,5 @@
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
+import climateVulnerability from '../../public/assets/svg/icons/Climate-vulnerability-icon.svg';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
@@ -122,6 +123,27 @@ function renderPeopleAffectedByCrisisLeaflet() {
           legend.onAdd = onLegendAdd;
           legend.addTo(map);
 
+          // data box
+          const dataBox = window.L.control({ position: 'bottomright' });
+          dataBox.onAdd = function () {
+            this.div = window.L.DomUtil.create('div', 'data'); // create a div with a class "info"
+            this.update();
+
+            return this.div;
+          };
+
+          dataBox.update = function (props) {
+            this.div.innerHTML = props
+              ? `${props.name} <br><span><img src=${climateVulnerability} height=20 width=20 ></img> Why doesn't this show</span>`
+              : 'well';
+          };
+          dataBox.addTo(map);
+
+          const handleClick = (e) => {
+            const layer = e.target;
+            dataBox.update(layer.feature.properties);
+          };
+
           dichart.showLoading();
 
           window
@@ -152,6 +174,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     layer.on({
                       mouseover: (e) => highlightFeature(e, variable),
                       mouseout: resetHighlight,
+                      click: handleClick,
                     });
                   }
                 };
