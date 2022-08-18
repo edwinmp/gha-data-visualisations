@@ -217,10 +217,12 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           dataBox.update = function (props) {
             this.div.innerHTML = props
-              ? `${props.name} <br> ${dataBoxContent(props).map(
-                  (item) =>
-                    `<span><img src=${item.icon} height=20 width=20 ></img> ${item.label}: ${item.value} </span>`
-                )}`
+              ? `${props.name} <br> ${dataBoxContent(props)
+                  .map(
+                    (item) =>
+                      `<span><img src=${item.icon} height=20 width=20 ></img> ${item.label}: ${item.value} </span>`
+                  )
+                  .join('')}`
               : '';
           };
           dataBox.addTo(map);
