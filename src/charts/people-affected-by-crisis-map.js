@@ -71,6 +71,7 @@ const highlightFeature = (e, variable) => {
 
   layer.setStyle({
     fillColor: 'yellow',
+    color: 'black',
   });
 
   if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
