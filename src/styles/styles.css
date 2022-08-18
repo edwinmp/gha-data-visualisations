@@ -81,5 +81,10 @@
 }
 
 .data span {
-  margin: 0;
+  display: flex;
+}
+
+.data span p {
+  padding-left: 2px;
+  padding-top: 3px;
 }

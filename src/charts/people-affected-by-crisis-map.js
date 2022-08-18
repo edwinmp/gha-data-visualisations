@@ -220,7 +220,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
               ? `${props.name} <br> ${dataBoxContent(props)
                   .map(
                     (item) =>
-                      `<span><img src=${item.icon} height=20 width=20 ></img> ${item.label}: ${item.value} </span>`
+                      `<span><img src=${item.icon} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
                   )
                   .join('')}`
               : '';
