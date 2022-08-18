@@ -116,13 +116,13 @@ const onLegendAdd = () => {
 const getCrisisType = (data) => {
   const finalValue = [];
   if (Number(data.Conflict_marker) > 0) {
-    finalValue.concat('Conflict');
+    finalValue.push('Conflict');
   }
   if (Number(data.Displacement_marker) > 0) {
-    finalValue.concat('Displacement');
+    finalValue.push('Displacement');
   }
   if (Number(data.Physical_disaster_marker) > 0) {
-    finalValue.concat('Natural hazard');
+    finalValue.push('Natural hazard');
   }
 
   return finalValue.join(', ');
@@ -146,7 +146,7 @@ const getSeverity = (score) => {
   }
 };
 
-const getCrisisDuration = (data) => `${data['Protracted/Recurrent_crisis']}, ${data.Years_of_consecutive_crisis}`;
+const getCrisisDuration = (data) => `${data['Protracted/Recurrent_crisis']}, ${data.Years_of_consecutive_crisis} years`;
 const getCountryResponsePlan = (requirement, coverage) => {
   if (requirement) {
     const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
@@ -218,7 +218,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
           dataBox.update = function (props) {
             this.div.innerHTML = props
               ? `${props.name} <br> ${dataBoxContent(props).map(
-                  (item) => `<span><img src=${item.icon} height=20 width=20 ></img> ${item.label} ${item.value} </span>`
+                  (item) =>
+                    `<span><img src=${item.icon} height=20 width=20 ></img> ${item.label}: ${item.value} </span>`
                 )}`
               : '';
           };
