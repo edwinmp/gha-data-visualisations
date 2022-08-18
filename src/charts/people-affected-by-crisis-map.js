@@ -225,9 +225,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
                   .join('')}`
               : '';
           };
-          dataBox.addTo(map);
 
           const handleClick = (e) => {
+            dataBox.addTo(map);
             const layer = e.target;
             dataBox.update(layer.feature.properties);
           };
