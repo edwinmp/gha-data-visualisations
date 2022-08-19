@@ -5,6 +5,7 @@ import crisisType from '../../public/assets/svg/icons/Crisis-type-icon.svg';
 import peopleInNeed from '../../public/assets/svg/icons/People-in-need-icon.svg';
 import responsePlan from '../../public/assets/svg/icons/Response-plan-icon.svg';
 import crisisSeverity from '../../public/assets/svg/icons/Crisis-severity-icon.svg';
+import closeIcon from '../../public/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 
 const getCrisisType = (data) => {
   const finalValue = [];
@@ -167,4 +168,72 @@ const getColor = (score) => {
   }
 };
 
-export { dataBoxContent, highlightFeature, matchCountryNames, processedData, dataInjectedGeoJson, getColor };
+const onLegendAdd = () => {
+  const div = window.L.DomUtil.create('div', 'legend');
+  const legendData = [
+    { score: '5', label: '5 - Very High' },
+    { score: '4', label: '4 - High' },
+    { score: '3', label: '3 - Medium' },
+    { score: '2', label: '2 - Low' },
+    { score: '1', label: '1 - Very Low' },
+    { score: '', label: 'Not assessed' },
+  ];
+
+  const legendContent = legendData
+    .map((data) => `<span><i style="background:${getColor(data.score)}"></i><label>${data.label}</label></span>`)
+    .join('');
+  div.innerHTML = legendContent;
+
+  return div;
+};
+
+const onCloseDatabox = (e, databoxElement) => {
+  e.stopPropagation();
+  databoxElement.update();
+};
+
+const handleClickFeature = (e, mapInstance, databoxInstance) => {
+  databoxInstance.addTo(mapInstance);
+  const layer = e.target;
+  databoxInstance.update(layer.feature.properties);
+};
+
+// data box
+const dataBox = window.L.control({ position: 'bottomright' });
+dataBox.onAdd = function () {
+  this.div = window.L.DomUtil.create('div', 'databox'); // create a div with a class "databox"
+  this.update();
+
+  return this.div;
+};
+
+dataBox.update = function (props) {
+  this.div.innerHTML = props
+    ? `<div>${
+        props.name
+      } <button id=closeDatabox><img src=${closeIcon} height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+        props
+      )
+        .map(
+          (item) => `<span><img src=${item.icon} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
+        )
+        .join('')}`
+    : '';
+  const closeButton = document.getElementById('closeDatabox');
+  if (closeButton) {
+    closeButton.addEventListener('click', (e) => onCloseDatabox(e, dataBox));
+  }
+};
+
+export {
+  dataBoxContent,
+  highlightFeature,
+  matchCountryNames,
+  processedData,
+  dataInjectedGeoJson,
+  getColor,
+  onLegendAdd,
+  onCloseDatabox,
+  handleClickFeature,
+  dataBox,
+};
