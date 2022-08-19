@@ -209,21 +209,31 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // data box
           const dataBox = window.L.control({ position: 'bottomright' });
           dataBox.onAdd = function () {
-            this.div = window.L.DomUtil.create('div', 'data'); // create a div with a class "info"
+            this.div = window.L.DomUtil.create('div', 'databox'); // create a div with a class "databox"
+            // this.div.setAttribute('data-id', 'databox');
             this.update();
 
             return this.div;
           };
 
+          function onClose(e) {
+            e.stopPropagation();
+            dataBox.update();
+          }
+
           dataBox.update = function (props) {
             this.div.innerHTML = props
-              ? `${props.name} <br> ${dataBoxContent(props)
+              ? `<div>${props.name} <button id=closeDatabox >close</button></div> <br> ${dataBoxContent(props)
                   .map(
                     (item) =>
                       `<span><img src=${item.icon} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
                   )
                   .join('')}`
               : '';
+            const closeButton = document.getElementById('closeDatabox');
+            if (closeButton) {
+              closeButton.addEventListener('click', (e) => onClose(e));
+            }
           };
 
           const handleClick = (e) => {

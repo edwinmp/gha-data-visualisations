@@ -67,7 +67,7 @@
   display: none;
 }
 
-.data {
+.databox {
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -80,11 +80,18 @@
   border-radius: 5px;
 }
 
-.data span {
+.databox span {
   display: flex;
 }
 
-.data span p {
+.databox span p {
   padding-left: 2px;
   padding-top: 3px;
+}
+
+.databox button {
+  border: solid 1px grey;
+  border-radius: 4px;
+  position: relative;
+  left: 270px;
 }
