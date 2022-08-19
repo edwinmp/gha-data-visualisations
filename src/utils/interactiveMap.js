@@ -190,6 +190,8 @@ const onLegendAdd = () => {
 const onCloseDatabox = (e, databoxElement) => {
   e.stopPropagation();
   databoxElement.update();
+  const databoxContainer = document.querySelector('[data-id="databoxContainer"]');
+  databoxContainer.style.display = 'none';
 };
 
 const handleClickFeature = (e, mapInstance, databoxInstance) => {
@@ -202,6 +204,7 @@ const handleClickFeature = (e, mapInstance, databoxInstance) => {
 const dataBox = window.L.control({ position: 'bottomright' });
 dataBox.onAdd = function () {
   this.div = window.L.DomUtil.create('div', 'databox'); // create a div with a class "databox"
+  this.div.setAttribute('data-id', 'databoxContainer');
   this.update();
 
   return this.div;
