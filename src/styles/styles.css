@@ -90,8 +90,6 @@
 }
 
 .databox button {
-  border: solid 1px grey;
-  border-radius: 4px;
   position: absolute;
   right: 5px;
 }

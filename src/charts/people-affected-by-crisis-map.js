@@ -6,6 +6,7 @@ import crisisType from '../../public/assets/svg/icons/Crisis-type-icon.svg';
 import peopleInNeed from '../../public/assets/svg/icons/People-in-need-icon.svg';
 import responsePlan from '../../public/assets/svg/icons/Response-plan-icon.svg';
 import crisisSeverity from '../../public/assets/svg/icons/Crisis-severity-icon.svg';
+import closeIcon from '../../public/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
@@ -223,7 +224,11 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           dataBox.update = function (props) {
             this.div.innerHTML = props
-              ? `<div>${props.name} <button id=closeDatabox >close</button></div> <br> ${dataBoxContent(props)
+              ? `<div>${
+                  props.name
+                } <button id=closeDatabox><img src=${closeIcon} height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+                  props
+                )
                   .map(
                     (item) =>
                       `<span><img src=${item.icon} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
