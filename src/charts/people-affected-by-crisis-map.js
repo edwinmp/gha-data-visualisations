@@ -14,56 +14,40 @@ import { addFilter, addFilterWrapper } from '../widgets/filters';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
 
-const renderMap = (dimensionVariable, mapInstance, colorFunction, chartInstance) => {
+const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processed) => {
   let geojsonLayer;
-  window
-    .fetch(MAP_FILE_PATH)
-    .then((response) => response.json())
-    .then((jsonData) => {
-      const geojsonData = jsonData.features;
-      fetchCSVData(CSV_PATH).then((data) => {
-        const processedCountryNameData = matchCountryNames(data, geojsonData);
-        const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
-        const groupedData = processedData(countries, processedCountryNameData);
+  const style = (feature) => ({
+    [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
+      feature.properties[dimensionVariable]
+    ),
+    weight: 1,
+    opacity: 1,
+    color: 'white',
+    fillOpacity: 1,
+  });
 
-        const style = (feature) => ({
-          [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
-            feature.properties[dimensionVariable]
-          ),
-          weight: 1,
-          opacity: 1,
-          color: 'white',
-          fillOpacity: 1,
-        });
+  const resetHighlight = (e) => {
+    geojsonLayer.resetStyle(e.target);
+    e.target.closePopup();
+  };
 
-        const resetHighlight = (e) => {
-          geojsonLayer.resetStyle(e.target);
-          e.target.closePopup();
-        };
-
-        const onEachFeature = (feature, layer) => {
-          if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
-            layer.on({
-              mouseover: (e) => highlightFeature(e, dimensionVariable),
-              mouseout: resetHighlight,
-              click: (e) => handleClickFeature(e, mapInstance, dataBox),
-            });
-          }
-        };
-
-        // Add geojson layer to the map
-        geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
-          style,
-          onEachFeature,
-          maxZoom: 3,
-          minZoom: 2,
-        }).addTo(mapInstance);
-        chartInstance.hideLoading();
-
-        // return geojsonLayer;
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
+      layer.on({
+        mouseover: (e) => highlightFeature(e, dimensionVariable),
+        mouseout: resetHighlight,
+        click: (e) => handleClickFeature(e, mapInstance, dataBox),
       });
-    })
-    .catch((error) => console.log(error));
+    }
+  };
+
+  // Add geojson layer to the map
+  geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
+    style,
+    onEachFeature,
+    maxZoom: 3,
+    minZoom: 2,
+  }).addTo(mapInstance);
 };
 
 function renderPeopleAffectedByCrisisLeaflet() {
@@ -94,10 +78,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
             label: 'Select a dimension',
           });
 
-          dimensionFilter.addEventListener('change', (event) => {
-            variable = filterOptions.find((option) => option.label === event.target.value).name;
-          });
-
           // Legend
           const legend = window.L.control({ position: 'topright' });
           legend.onAdd = onLegendAdd;
@@ -126,7 +106,28 @@ function renderPeopleAffectedByCrisisLeaflet() {
           };
 
           dichart.showLoading();
-          renderMap(variable, map, getColor, dichart);
+          window
+            .fetch(MAP_FILE_PATH)
+            .then((response) => response.json())
+            .then((jsonData) => {
+              const geojsonData = jsonData.features;
+              fetchCSVData(CSV_PATH).then((data) => {
+                const processedCountryNameData = matchCountryNames(data, geojsonData);
+                const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
+                const groupedData = processedData(countries, processedCountryNameData);
+
+                dimensionFilter.addEventListener('change', (event) => {
+                  variable = filterOptions.find((option) => option.label === event.target.value).name;
+                  renderMap(variable, map, getColor, geojsonData, groupedData);
+                });
+                renderMap(variable, map, getColor, geojsonData, groupedData);
+                dichart.hideLoading();
+
+                // return geojsonLayer;
+              });
+            })
+            .catch((error) => console.log(error));
+          // renderMap(variable, map, getColor, dichart);
         });
       },
     },
