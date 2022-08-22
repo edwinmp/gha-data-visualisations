@@ -9,6 +9,7 @@ import {
   handleClickFeature,
   dataBox,
 } from '../utils/interactiveMap';
+import { addFilter, addFilterWrapper } from '../widgets/filters';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
@@ -62,6 +63,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+                const filterWrapper = addFilterWrapper(chartNode);
                 const filterOptions = [
                   { name: 'Severity_score', label: 'Severity score' },
                   { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
@@ -69,6 +71,16 @@ function renderPeopleAffectedByCrisisLeaflet() {
                   { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
                   { name: 'People_in_need_(millions)', label: 'People in need' },
                 ];
+
+                const dimensionFilter = addFilter({
+                  wrapper: filterWrapper,
+                  options: filterOptions.map((d) => d.label),
+                  defaultOption: 'Severity score',
+                  className: 'map-filter',
+                  label: 'Select a dimension',
+                });
+
+                console.log(dimensionFilter);
 
                 const style = (feature) => ({
                   [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
