@@ -149,7 +149,7 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
     return featureCopy;
   });
 
-const getColor = (score) => {
+const getLegendColor = (score) => {
   switch (score) {
     case '5':
       return '#7F1850';
@@ -162,7 +162,7 @@ const getColor = (score) => {
     case '1':
       return '#F6B9C2';
     case '':
-      return 'black';
+      return 'repeating-linear-gradient(45deg, grey 0, grey 3px, transparent 3px, transparent 6px)';
     default:
       return '#E6E1E5';
   }
@@ -180,7 +180,7 @@ const onLegendAdd = () => {
   ];
 
   const legendContent = legendData
-    .map((data) => `<span><i style="background:${getColor(data.score)}"></i><label>${data.label}</label></span>`)
+    .map((data) => `<span><i style="background:${getLegendColor(data.score)}"></i><label>${data.label}</label></span>`)
     .join('');
   div.innerHTML = legendContent;
 
@@ -234,7 +234,6 @@ export {
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  getColor,
   onLegendAdd,
   onCloseDatabox,
   handleClickFeature,

@@ -4,7 +4,6 @@ import {
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  getColor,
   onLegendAdd,
   handleClickFeature,
   dataBox,
@@ -29,6 +28,28 @@ function renderPeopleAffectedByCrisisLeaflet() {
           legend.onAdd = onLegendAdd;
           legend.addTo(map);
 
+          const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
+          stripes.addTo(map);
+
+          const getColor = (score) => {
+            switch (score) {
+              case '5':
+                return '#7F1850';
+              case '4':
+                return '#AD1156';
+              case '3':
+                return '#D64279';
+              case '2':
+                return '#E4819B';
+              case '1':
+                return '#F6B9C2';
+              case '':
+                return stripes;
+              default:
+                return '#E6E1E5';
+            }
+          };
+
           dichart.showLoading();
 
           window
@@ -42,7 +63,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const groupedData = processedData(countries, processedCountryNameData);
 
                 const style = (feature) => ({
-                  fillColor: getColor(feature.properties[variable]),
+                  [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
+                    feature.properties[variable]
+                  ),
                   weight: 1,
                   opacity: 1,
                   color: 'white',
