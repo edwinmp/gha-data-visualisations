@@ -14,6 +14,58 @@ import { addFilter, addFilterWrapper } from '../widgets/filters';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
 
+const renderMap = (dimensionVariable, mapInstance, colorFunction, chartInstance) => {
+  let geojsonLayer;
+  window
+    .fetch(MAP_FILE_PATH)
+    .then((response) => response.json())
+    .then((jsonData) => {
+      const geojsonData = jsonData.features;
+      fetchCSVData(CSV_PATH).then((data) => {
+        const processedCountryNameData = matchCountryNames(data, geojsonData);
+        const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
+        const groupedData = processedData(countries, processedCountryNameData);
+
+        const style = (feature) => ({
+          [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
+            feature.properties[dimensionVariable]
+          ),
+          weight: 1,
+          opacity: 1,
+          color: 'white',
+          fillOpacity: 1,
+        });
+
+        const resetHighlight = (e) => {
+          geojsonLayer.resetStyle(e.target);
+          e.target.closePopup();
+        };
+
+        const onEachFeature = (feature, layer) => {
+          if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
+            layer.on({
+              mouseover: (e) => highlightFeature(e, dimensionVariable),
+              mouseout: resetHighlight,
+              click: (e) => handleClickFeature(e, mapInstance, dataBox),
+            });
+          }
+        };
+
+        // Add geojson layer to the map
+        geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
+          style,
+          onEachFeature,
+          maxZoom: 3,
+          minZoom: 2,
+        }).addTo(mapInstance);
+        chartInstance.hideLoading();
+
+        // return geojsonLayer;
+      });
+    })
+    .catch((error) => console.log(error));
+};
+
 function renderPeopleAffectedByCrisisLeaflet() {
   window.DICharts.handler.addChart({
     className: 'dicharts--gha-people-affected-by-crisis-leaflet',
@@ -23,7 +75,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
           const map = window.L.map(chartNode).setView([20, -0.09], 2);
           let variable = 'Severity_score';
-          let geojsonLayer;
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
@@ -75,53 +126,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
           };
 
           dichart.showLoading();
-
-          window
-            .fetch(MAP_FILE_PATH)
-            .then((response) => response.json())
-            .then((jsonData) => {
-              const geojsonData = jsonData.features;
-              fetchCSVData(CSV_PATH).then((data) => {
-                const processedCountryNameData = matchCountryNames(data, geojsonData);
-                const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
-                const groupedData = processedData(countries, processedCountryNameData);
-
-                const style = (feature) => ({
-                  [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
-                    feature.properties[variable]
-                  ),
-                  weight: 1,
-                  opacity: 1,
-                  color: 'white',
-                  fillOpacity: 1,
-                });
-
-                const resetHighlight = (e) => {
-                  geojsonLayer.resetStyle(e.target);
-                  e.target.closePopup();
-                };
-
-                const onEachFeature = (feature, layer) => {
-                  if (feature.properties[variable] || feature.properties[variable] === '') {
-                    layer.on({
-                      mouseover: (e) => highlightFeature(e, variable, filterOptions),
-                      mouseout: resetHighlight,
-                      click: (e) => handleClickFeature(e, map, dataBox),
-                    });
-                  }
-                };
-
-                // Add geojson layer to the map
-                geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
-                  style,
-                  onEachFeature,
-                  maxZoom: 3,
-                  minZoom: 2,
-                }).addTo(map);
-                dichart.hideLoading();
-              });
-            })
-            .catch((error) => console.log(error));
+          renderMap(variable, map, getColor, dichart);
         });
       },
     },
