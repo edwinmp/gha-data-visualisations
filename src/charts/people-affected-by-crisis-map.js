@@ -22,8 +22,30 @@ function renderPeopleAffectedByCrisisLeaflet() {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
           const map = window.L.map(chartNode).setView([20, -0.09], 2);
-          const variable = 'Severity_score';
+          let variable = 'Severity_score';
           let geojsonLayer;
+
+          // Filter
+          const filterWrapper = addFilterWrapper(chartNode);
+          const filterOptions = [
+            { name: 'Severity_score', label: 'Severity score' },
+            { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
+            { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate' },
+            { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
+            { name: 'People_in_need_(millions)', label: 'People in need' },
+          ];
+
+          const dimensionFilter = addFilter({
+            wrapper: filterWrapper,
+            options: filterOptions.map((d) => d.label),
+            defaultOption: 'Severity score',
+            className: 'map-filter',
+            label: 'Select a dimension',
+          });
+
+          dimensionFilter.addEventListener('change', (event) => {
+            variable = filterOptions.find((option) => option.label === event.target.value).name;
+          });
 
           // Legend
           const legend = window.L.control({ position: 'topright' });
@@ -63,24 +85,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
-                const filterWrapper = addFilterWrapper(chartNode);
-                const filterOptions = [
-                  { name: 'Severity_score', label: 'Severity score' },
-                  { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
-                  { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate' },
-                  { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
-                  { name: 'People_in_need_(millions)', label: 'People in need' },
-                ];
-
-                const dimensionFilter = addFilter({
-                  wrapper: filterWrapper,
-                  options: filterOptions.map((d) => d.label),
-                  defaultOption: 'Severity score',
-                  className: 'map-filter',
-                  label: 'Select a dimension',
-                });
-
-                console.log(dimensionFilter);
 
                 const style = (feature) => ({
                   [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
