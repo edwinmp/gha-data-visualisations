@@ -84,7 +84,7 @@ const dataBoxContent = (data) => [
   },
 ];
 
-const highlightFeature = (e, variable) => {
+const highlightFeature = (e, variable, filterOptions) => {
   const layer = e.target;
 
   layer.setStyle({
@@ -99,7 +99,9 @@ const highlightFeature = (e, variable) => {
   layer
     .bindPopup(
       layer.feature.properties[variable]
-        ? `<div>${layer.feature.properties.name}<br>${variable}: ${layer.feature.properties[variable]}</div>`
+        ? `<div>${layer.feature.properties.name}<br>${
+            filterOptions.find((option) => option.name === variable).label
+          }: ${layer.feature.properties[variable]}</div>`
         : layer.feature.properties.name
     )
     .openPopup();

@@ -61,6 +61,13 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+                const filterOptions = [
+                  { name: 'Severity_score', label: 'Severity score' },
+                  { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
+                  { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate' },
+                  { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
+                  { name: 'People_in_need_(millions)', label: 'People in need' },
+                ];
 
                 const style = (feature) => ({
                   [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
@@ -80,7 +87,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const onEachFeature = (feature, layer) => {
                   if (feature.properties[variable] || feature.properties[variable] === '') {
                     layer.on({
-                      mouseover: (e) => highlightFeature(e, variable),
+                      mouseover: (e) => highlightFeature(e, variable, filterOptions),
                       mouseout: resetHighlight,
                       click: (e) => handleClickFeature(e, map, dataBox),
                     });
