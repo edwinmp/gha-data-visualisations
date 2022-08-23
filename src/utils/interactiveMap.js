@@ -1,11 +1,12 @@
-import climateVulnerability from '../../public/assets/svg/icons/Climate-vulnerability-icon.svg';
-import covidVaccination from '../../public/assets/svg/icons/Covid-vaccination-icon.svg';
-import crisisDuration from '../../public/assets/svg/icons/Crisis-duration-icon.svg';
-import crisisType from '../../public/assets/svg/icons/Crisis-type-icon.svg';
-import peopleInNeed from '../../public/assets/svg/icons/People-in-need-icon.svg';
-import responsePlan from '../../public/assets/svg/icons/Response-plan-icon.svg';
-import crisisSeverity from '../../public/assets/svg/icons/Crisis-severity-icon.svg';
 import closeIcon from '../../public/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
+
+const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
+const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
+const crisisDuration = 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg';
+const crisisType = 'https://devinit.org/assets/svg/icons/crisis-type-icon.svg';
+const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
+const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
+const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
 
 const getCrisisType = (data) => {
   const finalValue = [];
