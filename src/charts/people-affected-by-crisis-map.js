@@ -40,7 +40,9 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
 
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `${legendData.find((items) => items.variable === dimensionVariable).max}${legendColors
+        ? `<p style="margin-bottom:0;">${
+            legendData.find((items) => items.variable === dimensionVariable).max
+          }<p>${legendColors
             .map(
               (color) =>
                 `<span>
@@ -108,7 +110,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
-          const map = window.L.map(chartNode).setView([20, -0.09], 2);
+          const map = window.L.map(chartNode, { zoomSnap: 0.5, maxZoom: 3, minZoom: 1 }).setView([20, -0.09], 2);
           let variable = 'Severity_score';
 
           // Filter
