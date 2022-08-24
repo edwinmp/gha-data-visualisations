@@ -44,7 +44,7 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
             .map(
               (color) =>
                 `<span>
-          <i style="background:${color}"></i>
+          <i style="background:${color};border-radius:1px;margin-right:0"></i>
         </span>`
             )
             .join('')}0`
