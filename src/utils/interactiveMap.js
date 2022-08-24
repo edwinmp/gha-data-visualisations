@@ -171,9 +171,12 @@ const getLegendColor = (score) => {
   }
 };
 
-const onLegendAdd = () => {
+const onLegendAdd = function (map, variable) {
   const div = window.L.DomUtil.create('div', 'legend');
-  const legendData = [
+  const covidLegendData = [100, 80, 60, 40, 20, 0];
+  const foodInsecurityData = [26, 21, 16, 11, 6, 0];
+  const peopleInNeedData = [25, 20, 15, 10, 5, 0];
+  const piecewiselegendData = [
     { score: '5', label: '5 - Very High' },
     { score: '4', label: '4 - High' },
     { score: '3', label: '3 - Medium' },
@@ -181,9 +184,19 @@ const onLegendAdd = () => {
     { score: '1', label: '1 - Very Low' },
     { score: '', label: 'Not assessed' },
   ];
+  const legendData = [
+    { variable: 'Severity_score', data: piecewiselegendData },
+    { variable: 'Climate_vulnerability', data: piecewiselegendData },
+    { variable: 'COVID_vaccination_rate', data: covidLegendData },
+    { variable: 'Food_insecure_(millions)', data: foodInsecurityData },
+    { variable: 'People_in_need_(millions)', data: peopleInNeedData },
+  ];
 
   const legendContent = legendData
-    .map((data) => `<span><i style="background:${getLegendColor(data.score)}"></i><label>${data.label}</label></span>`)
+    .find((data) => data.variable === variable)
+    .data.map(
+      (data) => `<span><i style="background:${getLegendColor(data.score)}"></i><label>${data.label}</label></span>`
+    )
     .join('');
   div.innerHTML = legendContent;
 
@@ -241,4 +254,5 @@ export {
   onCloseDatabox,
   handleClickFeature,
   dataBox,
+  getLegendColor,
 };

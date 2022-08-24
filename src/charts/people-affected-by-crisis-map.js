@@ -5,7 +5,7 @@ import {
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  onLegendAdd,
+  getLegendColor,
   handleClickFeature,
   dataBox,
 } from '../utils/interactiveMap';
@@ -14,10 +14,54 @@ import { addFilter, addFilterWrapper } from '../widgets/filters';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
 
-const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processed, filterOptions) => {
+const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processed, filterOptions, legendInstance) => {
   let geojsonLayer;
-  geojsonLayer = window.L.geoJSON();
-  geojsonLayer.resetStyle();
+
+  const legendInstanceCopy = legendInstance;
+  legendInstanceCopy.onAdd = function () {
+    const div = window.L.DomUtil.create('div', 'legend');
+    const piecewiselegendData = [
+      { score: '5', label: '5 - Very High' },
+      { score: '4', label: '4 - High' },
+      { score: '3', label: '3 - Medium' },
+      { score: '2', label: '2 - Low' },
+      { score: '1', label: '1 - Very Low' },
+      { score: '', label: 'Not assessed' },
+    ];
+    const legendData = [
+      { variable: 'Severity_score', data: piecewiselegendData },
+      { variable: 'Climate_vulnerability', data: piecewiselegendData },
+      { variable: 'COVID_vaccination_rate', max: 100 },
+      { variable: 'Food_insecure_(millions)', max: 26 },
+      { variable: 'People_in_need_(millions)', max: 25 },
+    ];
+
+    const legendColors = ['#7F1850', '#AD1156', '#D64279', '#E4819B', '#F6B9C2'];
+
+    const legendContent =
+      dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
+        ? `${legendData.find((items) => items.variable === dimensionVariable).max}${legendColors
+            .map(
+              (color) =>
+                `<span>
+          <i style="background:${color}"></i>
+        </span>`
+            )
+            .join('')}0`
+        : legendData
+            .find((items) => items.variable === dimensionVariable)
+            .data.map(
+              (dataItems) =>
+                `<span><i style="background:${getLegendColor(dataItems.score)}"></i><label>${
+                  dataItems.label
+                }</label></span>`
+            )
+            .join('');
+    div.innerHTML = legendContent;
+
+    return div;
+  };
+  legendInstanceCopy.addTo(mapInstance);
   const style = (feature) => ({
     [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
       feature.properties[dimensionVariable]
@@ -83,8 +127,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           // Legend
           const legend = window.L.control({ position: 'topright' });
-          legend.onAdd = onLegendAdd;
-          legend.addTo(map);
 
           const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
           stripes.addTo(map);
@@ -153,7 +195,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
                       : getColor,
                     geojsonData,
                     groupedData,
-                    filterOptions
+                    filterOptions,
+                    legend
                   );
                 });
                 renderMap(
@@ -162,7 +205,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
                   variable !== 'Severity_score' ? getColorContinous : getColor,
                   geojsonData,
                   groupedData,
-                  filterOptions
+                  filterOptions,
+                  legend
                 );
                 dichart.hideLoading();
               });
