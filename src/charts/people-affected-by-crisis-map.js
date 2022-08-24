@@ -1,3 +1,4 @@
+import 'leaflet.pattern';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
   highlightFeature,
