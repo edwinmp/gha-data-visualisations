@@ -31,25 +31,25 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
-      { variable: 'COVID_vaccination_rate', max: 100 },
-      { variable: 'Food_insecure_(millions)', max: 26 },
-      { variable: 'People_in_need_(millions)', max: 25 },
+      { variable: 'COVID_vaccination_rate', max: '100(%)' },
+      { variable: 'Food_insecure_(millions)', max: '26(m)' },
+      { variable: 'People_in_need_(millions)', max: '25(m)' },
     ];
 
     const legendColors = ['#7F1850', '#AD1156', '#D64279', '#E4819B', '#F6B9C2'];
 
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `<p style="margin-bottom:0;">${
+        ? `<p style="margin-right:1px;margin-top:5px;">${
             legendData.find((items) => items.variable === dimensionVariable).max
           }<p>${legendColors
             .map(
               (color) =>
                 `<span>
-          <i style="background:${color};border-radius:1px;margin-right:0"></i>
+          <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
         </span>`
             )
-            .join('')}0`
+            .join('')} 0`
         : legendData
             .find((items) => items.variable === dimensionVariable)
             .data.map(
@@ -120,26 +120,20 @@ function renderPeopleAffectedByCrisisLeaflet() {
             { name: 'Climate_vulnerability', label: 'Climate vulnerability score', scaleType: 'piecewise' },
             {
               name: 'COVID_vaccination_rate',
-              label: 'COVID vaccinattion rate',
+              label: 'COVID vaccination rate',
               scaleType: 'continous',
-              max: 100,
-              factor: 20,
               values: [100, 80, 60, 40, 20, 0],
             },
             {
               name: 'Food_insecure_(millions)',
               label: 'People facing food insecurity',
               scaleType: 'continous',
-              max: 26,
-              factor: 5,
               values: [26, 21, 16, 11, 6, 0],
             },
             {
               name: 'People_in_need_(millions)',
               label: 'People in need',
               scaleType: 'continous',
-              max: 25,
-              factor: 5,
               values: [25, 20, 15, 10, 5, 0],
             },
           ];
