@@ -14,11 +14,15 @@ import { addFilter, addFilterWrapper } from '../widgets/filters';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
 
-const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processed) => {
+const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processed, filterOptions) => {
   let geojsonLayer;
+  geojsonLayer = window.L.geoJSON();
+  geojsonLayer.resetStyle();
   const style = (feature) => ({
     [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
-      feature.properties[dimensionVariable]
+      dimensionVariable === 'COVID_vaccination_rate'
+        ? Number(feature.properties[dimensionVariable])
+        : feature.properties[dimensionVariable]
     ),
     weight: 1,
     opacity: 1,
@@ -34,7 +38,7 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
   const onEachFeature = (feature, layer) => {
     if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
       layer.on({
-        mouseover: (e) => highlightFeature(e, dimensionVariable),
+        mouseover: (e) => highlightFeature(e, dimensionVariable, filterOptions),
         mouseout: resetHighlight,
         click: (e) => handleClickFeature(e, mapInstance, dataBox),
       });
@@ -42,6 +46,7 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
   };
 
   // Add geojson layer to the map
+
   geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
     style,
     onEachFeature,
@@ -105,6 +110,25 @@ function renderPeopleAffectedByCrisisLeaflet() {
             }
           };
 
+          const getColorContinous = (d) => {
+            switch (true) {
+              case d > 80:
+                return '#800026';
+              case d > 60:
+                return '#BD0026';
+              case d > 40:
+                return '#E31A1C';
+              case d > 20:
+                return '#FC4E2A';
+              case d > 0:
+                return '#FD8D3C';
+              case '':
+                return stripes;
+              default:
+                return '#E6E1E5';
+            }
+          };
+
           dichart.showLoading();
           window
             .fetch(MAP_FILE_PATH)
@@ -115,19 +139,32 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+                console.log(groupedData);
 
                 dimensionFilter.addEventListener('change', (event) => {
                   variable = filterOptions.find((option) => option.label === event.target.value).name;
-                  renderMap(variable, map, getColor, geojsonData, groupedData);
+                  console.log(variable);
+                  renderMap(
+                    variable,
+                    map,
+                    variable !== 'Severity_score' ? getColorContinous : getColor,
+                    geojsonData,
+                    groupedData,
+                    filterOptions
+                  );
                 });
-                renderMap(variable, map, getColor, geojsonData, groupedData);
+                renderMap(
+                  variable,
+                  map,
+                  variable !== 'Severity_score' ? getColorContinous : getColor,
+                  geojsonData,
+                  groupedData,
+                  filterOptions
+                );
                 dichart.hideLoading();
-
-                // return geojsonLayer;
               });
             })
             .catch((error) => console.log(error));
-          // renderMap(variable, map, getColor, dichart);
         });
       },
     },
