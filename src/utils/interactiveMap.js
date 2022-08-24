@@ -1,5 +1,4 @@
-import closeIcon from '../../public/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-
+const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
 const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
 const crisisDuration = 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg';
