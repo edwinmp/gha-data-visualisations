@@ -66,11 +66,11 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
-            { name: 'Severity_score', label: 'Severity score' },
-            { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
-            { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate' },
-            { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
-            { name: 'People_in_need_(millions)', label: 'People in need' },
+            { name: 'Severity_score', label: 'Severity score', scaleType: 'piecewise' },
+            { name: 'Climate_vulnerability', label: 'Climate vulnerability score', scaleType: 'piecewise' },
+            { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate', scaleType: 'continous' },
+            { name: 'Food_insecure_(millions)', label: 'People facing food insecurity', scaleType: 'continous' },
+            { name: 'People_in_need_(millions)', label: 'People in need', scaleType: 'continous' },
           ];
 
           const dimensionFilter = addFilter({
@@ -141,15 +141,16 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
-                console.log(groupedData);
 
                 dimensionFilter.addEventListener('change', (event) => {
                   variable = filterOptions.find((option) => option.label === event.target.value).name;
-                  console.log(variable);
+
                   renderMap(
                     variable,
                     map,
-                    variable !== 'Severity_score' ? getColorContinous : getColor,
+                    filterOptions.find((option) => option.name === variable).scaleType === 'continous'
+                      ? getColorContinous
+                      : getColor,
                     geojsonData,
                     groupedData,
                     filterOptions
