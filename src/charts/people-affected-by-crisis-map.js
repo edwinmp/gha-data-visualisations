@@ -20,9 +20,7 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
   geojsonLayer.resetStyle();
   const style = (feature) => ({
     [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
-      dimensionVariable === 'COVID_vaccination_rate'
-        ? Number(feature.properties[dimensionVariable])
-        : feature.properties[dimensionVariable]
+      feature.properties[dimensionVariable]
     ),
     weight: 1,
     opacity: 1,
@@ -111,22 +109,26 @@ function renderPeopleAffectedByCrisisLeaflet() {
           };
 
           const getColorContinous = (d) => {
-            switch (true) {
-              case d > 80:
-                return '#800026';
-              case d > 60:
-                return '#BD0026';
-              case d > 40:
-                return '#E31A1C';
-              case d > 20:
-                return '#FC4E2A';
-              case d > 0:
-                return '#FD8D3C';
-              case '':
-                return stripes;
-              default:
-                return '#E6E1E5';
+            if (Number(d) > 80) {
+              return '#800026';
             }
+            if (Number(d) > 60) {
+              return '#BD0026';
+            }
+            if (Number(d) > 40) {
+              return '#E31A1C';
+            }
+            if (Number(d) > 20) {
+              return '#FC4E2A';
+            }
+            if (Number(d) > 0) {
+              return '#FD8D3C';
+            }
+            if (d === '') {
+              return stripes;
+            }
+
+            return '#E6E1E5';
           };
 
           dichart.showLoading();
