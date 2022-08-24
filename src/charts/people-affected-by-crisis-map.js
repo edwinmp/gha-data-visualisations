@@ -63,9 +63,13 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
   };
   legendInstanceCopy.addTo(mapInstance);
   const style = (feature) => ({
-    [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']: colorFunction(
-      feature.properties[dimensionVariable]
-    ),
+    [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']:
+      dimensionVariable === 'Severity_score' && dimensionVariable === 'Climate_vulnerability'
+        ? colorFunction(feature.properties[dimensionVariable])
+        : colorFunction(
+            feature.properties[dimensionVariable],
+            filterOptions.find((opts) => opts.name === dimensionVariable).values
+          ),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -112,9 +116,30 @@ function renderPeopleAffectedByCrisisLeaflet() {
           const filterOptions = [
             { name: 'Severity_score', label: 'Severity score', scaleType: 'piecewise' },
             { name: 'Climate_vulnerability', label: 'Climate vulnerability score', scaleType: 'piecewise' },
-            { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate', scaleType: 'continous' },
-            { name: 'Food_insecure_(millions)', label: 'People facing food insecurity', scaleType: 'continous' },
-            { name: 'People_in_need_(millions)', label: 'People in need', scaleType: 'continous' },
+            {
+              name: 'COVID_vaccination_rate',
+              label: 'COVID vaccinattion rate',
+              scaleType: 'continous',
+              max: 100,
+              factor: 20,
+              values: [100, 80, 60, 40, 20, 0],
+            },
+            {
+              name: 'Food_insecure_(millions)',
+              label: 'People facing food insecurity',
+              scaleType: 'continous',
+              max: 26,
+              factor: 5,
+              values: [26, 21, 16, 11, 6, 0],
+            },
+            {
+              name: 'People_in_need_(millions)',
+              label: 'People in need',
+              scaleType: 'continous',
+              max: 25,
+              factor: 5,
+              values: [25, 20, 15, 10, 5, 0],
+            },
           ];
 
           const dimensionFilter = addFilter({
@@ -150,21 +175,21 @@ function renderPeopleAffectedByCrisisLeaflet() {
             }
           };
 
-          const getColorContinous = (d) => {
-            if (Number(d) > 80) {
-              return '#800026';
+          const getColorContinous = (d, numberRange) => {
+            if (Number(d) > numberRange[1]) {
+              return '#7F1850';
             }
-            if (Number(d) > 60) {
-              return '#BD0026';
+            if (Number(d) > numberRange[2]) {
+              return '#AD1156';
             }
-            if (Number(d) > 40) {
-              return '#E31A1C';
+            if (Number(d) > numberRange[3]) {
+              return '#D64279';
             }
-            if (Number(d) > 20) {
-              return '#FC4E2A';
+            if (Number(d) > numberRange[4]) {
+              return '#E4819B';
             }
-            if (Number(d) > 0) {
-              return '#FD8D3C';
+            if (Number(d) > numberRange[5]) {
+              return '#F6B9C2';
             }
             if (d === '') {
               return stripes;
@@ -202,7 +227,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 renderMap(
                   variable,
                   map,
-                  variable !== 'Severity_score' ? getColorContinous : getColor,
+                  filterOptions.find((option) => option.name === variable).scaleType === 'continous'
+                    ? getColorContinous
+                    : getColor,
                   geojsonData,
                   groupedData,
                   filterOptions,
