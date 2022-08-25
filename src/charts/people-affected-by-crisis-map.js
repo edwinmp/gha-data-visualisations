@@ -172,6 +172,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
           };
 
           const getColorContinous = (d, numberRange) => {
+            if (d === '') {
+              return stripes;
+            }
             if (Number(d) > numberRange[1]) {
               return '#7F1850';
             }
@@ -184,11 +187,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
             if (Number(d) > numberRange[4]) {
               return '#E4819B';
             }
-            if (Number(d) > numberRange[5]) {
+            if (Number(d) >= numberRange[5]) {
               return '#F6B9C2';
-            }
-            if (d === '') {
-              return stripes;
             }
 
             return '#E6E1E5';
