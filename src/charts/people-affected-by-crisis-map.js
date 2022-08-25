@@ -14,7 +14,16 @@ import { addFilter, addFilterWrapper } from '../widgets/filters';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
 
-const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processed, filterOptions, legendInstance) => {
+const renderMap = (
+  dimensionVariable,
+  mapInstance,
+  colorFunction,
+  data,
+  processed,
+  filterOptions,
+  legendInstance,
+  groupInstance
+) => {
   let geojsonLayer;
 
   const legendInstanceCopy = legendInstance;
@@ -66,7 +75,7 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
   legendInstanceCopy.addTo(mapInstance);
   const style = (feature) => ({
     [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']:
-      dimensionVariable === 'Severity_score' && dimensionVariable === 'Climate_vulnerability'
+      filterOptions.find((opts) => opts.name === dimensionVariable).scaleType === 'piecewise'
         ? colorFunction(feature.properties[dimensionVariable])
         : colorFunction(
             feature.properties[dimensionVariable],
@@ -93,14 +102,15 @@ const renderMap = (dimensionVariable, mapInstance, colorFunction, data, processe
     }
   };
 
-  // Add geojson layer to the map
-
-  geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
-    style,
-    onEachFeature,
-    maxZoom: 3,
-    minZoom: 2,
-  }).addTo(mapInstance);
+  function loadLayer() {
+    groupInstance.clearLayers();
+    geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
+      style,
+      onEachFeature,
+    });
+    groupInstance.addLayer(geojsonLayer);
+  }
+  loadLayer();
 };
 
 function renderPeopleAffectedByCrisisLeaflet() {
@@ -110,7 +120,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
-          const map = window.L.map(chartNode, { zoomSnap: 0.5, maxZoom: 3, minZoom: 1 }).setView([20, -0.09], 2);
+          const map = window.L.map(chartNode, { zoomSnap: 0.5, maxZoom: 3, minZoom: 2 }).setView([20, -0.09], 2);
           let variable = 'Severity_score';
 
           // Filter
@@ -204,6 +214,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+                const fg = window.L.featureGroup().addTo(map);
 
                 dimensionFilter.addEventListener('change', (event) => {
                   variable = filterOptions.find((option) => option.label === event.target.value).name;
@@ -217,9 +228,11 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     geojsonData,
                     groupedData,
                     filterOptions,
-                    legend
+                    legend,
+                    fg
                   );
                 });
+
                 renderMap(
                   variable,
                   map,
@@ -229,7 +242,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
                   geojsonData,
                   groupedData,
                   filterOptions,
-                  legend
+                  legend,
+                  fg
                 );
                 dichart.hideLoading();
               });
