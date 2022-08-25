@@ -45,20 +45,20 @@ const renderMap = (
       { variable: 'People_in_need_(millions)', max: '25(m)' },
     ];
 
-    const legendColors = ['#7F1850', '#AD1156', '#D64279', '#E4819B', '#F6B9C2'];
+    const legendColors = ['#F6B9C2', '#E4819B', '#D64279', '#AD1156', '#7F1850'];
 
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `<p style="margin-right:1px;margin-top:5px;">${
-            legendData.find((items) => items.variable === dimensionVariable).max
-          }<p>${legendColors
+        ? `<p style="margin-right:1px;margin-top:5px;">0<p>${legendColors
             .map(
               (color) =>
                 `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
         </span>`
             )
-            .join('')} 0`
+            .join('')} <p style="margin-right:1px;margin-top:5px;">${
+            legendData.find((items) => items.variable === dimensionVariable).max
+          }</p>`
         : legendData
             .find((items) => items.variable === dimensionVariable)
             .data.map(
