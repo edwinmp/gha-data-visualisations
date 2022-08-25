@@ -41,8 +41,8 @@ const renderMap = (
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
       { variable: 'COVID_vaccination_rate', max: '100(%)' },
-      { variable: 'Food_insecure_(millions)', max: '26(m)' },
-      { variable: 'People_in_need_(millions)', max: '25(m)' },
+      { variable: 'Food_insecure_(millions)', max: '26(million)' },
+      { variable: 'People_in_need_(millions)', max: '25(million)' },
     ];
 
     const legendColors = ['#F6B9C2', '#E4819B', '#D64279', '#AD1156', '#7F1850'];
@@ -56,7 +56,7 @@ const renderMap = (
           <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
         </span>`
             )
-            .join('')} <p style="margin-right:1px;margin-top:5px;">${
+            .join('')} <p style="margin-left:1px;margin-top:5px;">${
             legendData.find((items) => items.variable === dimensionVariable).max
           }</p>`
         : legendData
