@@ -1,4 +1,8 @@
+/** @jsx jsx */
 import 'leaflet.pattern';
+import { jsx } from '@emotion/react';
+import { createRoot } from 'react-dom/client';
+import MapFilters from '../components/MapFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
   highlightFeature,
@@ -9,7 +13,7 @@ import {
   handleClickFeature,
   dataBox,
 } from '../utils/interactiveMap';
-import { addFilter, addFilterWrapper } from '../widgets/filters';
+import { addFilterWrapper } from '../widgets/filters';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
@@ -127,7 +131,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
             center: [0, 0],
             zoom: 1,
           });
-          let variable = 'Severity_score';
+          const variable = 'Severity_score';
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
@@ -156,14 +160,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
               unit: 'million',
             },
           ];
-
-          const dimensionFilter = addFilter({
-            wrapper: filterWrapper,
-            options: filterOptions.map((d) => d.label),
-            defaultOption: 'Severity score',
-            className: 'map-filter',
-            label: 'Select a dimension',
-          });
 
           // Legend
           const legend = window.L.control({ position: 'topright' });
@@ -225,13 +221,11 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const groupedData = processedData(countries, processedCountryNameData);
                 const fg = window.L.featureGroup().addTo(map);
 
-                dimensionFilter.addEventListener('change', (event) => {
-                  variable = filterOptions.find((option) => option.label === event.target.value).name;
-
+                const onSelectDimension = (dimension) => {
                   renderMap(
-                    variable,
+                    dimension,
                     map,
-                    filterOptions.find((option) => option.name === variable).scaleType === 'continous'
+                    filterOptions.find((option) => option.name === dimension).scaleType === 'continous'
                       ? getColorContinous
                       : getColor,
                     geojsonData,
@@ -240,7 +234,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     legend,
                     fg
                   );
-                });
+                };
+                const root = createRoot(filterWrapper);
+                root.render(<MapFilters onSelectDimension={onSelectDimension} />);
 
                 renderMap(
                   variable,
