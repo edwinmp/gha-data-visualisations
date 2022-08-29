@@ -1,71 +1,27 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
-const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
-const crisisDuration = 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg';
-const crisisType = 'https://devinit.org/assets/svg/icons/crisis-type-icon.svg';
-const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
+// const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
+// const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
+// const crisisDuration = 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg';
+// const crisisType = 'https://devinit.org/assets/svg/icons/crisis-type-icon.svg';
+// const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
-const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
+// const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
 
-const getCrisisType = (data) => {
-  const finalValue = [];
-  if (Number(data.Conflict_marker) > 0) {
-    finalValue.push('Conflict');
-  }
-  if (Number(data.Displacement_marker) > 0) {
-    finalValue.push('Displacement');
-  }
-  if (Number(data.Physical_disaster_marker) > 0) {
-    finalValue.push('Natural hazard');
-  }
-
-  return finalValue.join(', ');
-};
-const getSeverity = (score) => {
-  switch (score) {
-    case '5':
-      return 'Very high';
-    case '4':
-      return 'High';
-    case '3':
-      return 'Medium';
-    case '2':
-      return 'Low';
-    case '1':
-      return 'Very Low';
-    case '':
-      return 'Not assessed';
-    default:
-      return '';
-  }
-};
-
-const getCrisisDuration = (data) => `${data['Protracted/Recurrent_crisis']}, ${data.Years_of_consecutive_crisis} years`;
 const getCountryResponsePlan = (requirement, coverage) => {
   if (requirement) {
     const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
 
-    return `${coverage}% funded[US$${fundInDollars}  of ${requirement}]`;
+    return `${coverage}% funded[US$${fundInDollars}  of US$${requirement}]`;
   }
 
-  return 'Not assessed';
+  return 'None';
 };
 const getRegionalResponsePlan = (requirement, funds) =>
   requirement
-    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of ${requirement}]`
-    : 'Not assessed';
+    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of US$${requirement}]`
+    : 'None';
 
 const dataBoxContent = (data) => [
-  { value: data['People_in_need_(millions)'], label: 'People in need', icon: peopleInNeed },
-  { value: getCrisisType(data), label: 'Crisis type', icon: crisisType },
-  { value: getSeverity(data.Severity_score), label: 'Severity of crisis', icon: crisisSeverity },
-  { value: getCrisisDuration(data), label: 'Crisis duration', icon: crisisDuration },
-  {
-    value: `${data.COVID_vaccination_rate}% of the population vaccinated`,
-    label: 'Covid vaccinations',
-    icon: covidVaccination,
-  },
-  { value: getSeverity(data.Climate_vulnerability), label: 'Climate vulnerability', icon: climateVulnerability },
   {
     value: getCountryResponsePlan(
       data['Country_response_plan_requirements_(US$,_million)'],
