@@ -132,17 +132,17 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
-            { name: 'Severity_score', label: 'Severity score', scaleType: 'piecewise' },
-            { name: 'Climate_vulnerability', label: 'Climate vulnerability score', scaleType: 'piecewise' },
+            { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise' },
+            { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise' },
             {
               name: 'COVID_vaccination_rate',
-              label: 'COVID vaccination rate',
+              label: 'Covid-19 vaccination rate',
               scaleType: 'continous',
               values: [100, 80, 60, 40, 20, 0],
             },
             {
               name: 'Food_insecure_(millions)',
-              label: 'People facing food insecurity',
+              label: 'Food insecurity',
               scaleType: 'continous',
               values: [26, 21, 16, 11, 6, 0],
             },
