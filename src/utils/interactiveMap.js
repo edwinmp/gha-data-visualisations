@@ -58,7 +58,9 @@ const highlightFeature = (e, variable, filterOptions) => {
       layer.feature.properties[variable]
         ? `<div>${layer.feature.properties.name}<br>${
             filterOptions.find((option) => option.name === variable).label
-          }: ${layer.feature.properties[variable]}</div>`
+          }: ${layer.feature.properties[variable]}${
+            filterOptions.find((option) => option.name === variable).unit
+          }</div>`
         : layer.feature.properties.name
     )
     .openPopup();
