@@ -120,7 +120,13 @@ function renderPeopleAffectedByCrisisLeaflet() {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
-          const map = window.L.map(chartNode, { zoomSnap: 0.5, maxZoom: 3, minZoom: 2 }).setView([20, -0.09], 2);
+          const map = window.L.map(chartNode, {
+            maxZoom: 3,
+            minZoom: 1,
+            crs: window.L.CRS.EPSG4326,
+            center: [0, 0],
+            zoom: 1,
+          });
           let variable = 'Severity_score';
 
           // Filter
