@@ -14,6 +14,7 @@ import {
   dataBox,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
+import MapResetButton from '../components/MapResetButton';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
@@ -163,6 +164,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           // Legend
           const legend = window.L.control({ position: 'topright' });
+          const resetButton = window.L.control({ position: 'bottomleft' });
 
           // const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
           // stripes.addTo(map);
@@ -235,8 +237,26 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     fg
                   );
                 };
+
+                const onReset = () => {
+                  map.setView([0, 0], 1);
+                };
+
+                // Render filter component
                 const root = createRoot(filterWrapper);
                 root.render(<MapFilters onSelectDimension={onSelectDimension} />);
+
+                // Render reset Button
+
+                resetButton.onAdd = function () {
+                  const div = window.L.DomUtil.create('div');
+                  const buttonRoot = createRoot(div);
+                  buttonRoot.render(<MapResetButton onReset={onReset} />);
+
+                  return div;
+                };
+
+                resetButton.addTo(map);
 
                 renderMap(
                   variable,
