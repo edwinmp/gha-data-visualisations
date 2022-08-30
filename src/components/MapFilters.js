@@ -34,7 +34,7 @@ const MapFilters = (props) => {
                   setDimension(option.name);
                 }}
               >
-                <img src={option.icon} alt={option.icon} height="20" width="20" />
+                <img src={option.icon} alt={option.name} height="20" width="20" />
                 <p>{option.label}</p>
               </button>
             </>
