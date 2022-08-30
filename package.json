@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
+    "@emotion/styled": "^11.10.4",
     "core-js": "^3.25.0",
     "deepmerge": "^4.2.2",
     "leaflet.pattern": "^0.1.0",
