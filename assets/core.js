@@ -277,14 +277,14 @@
         t(551),
         t(552);
       let r;
-      const a = t(4);
-      const o = t(80);
+      const a = t(3);
+      const o = t(81);
       const i = t.n(o);
-      const s = t(81);
-      const l = t(130);
+      const l = t(61);
+      const s = t(130);
       const c = t(1);
       const u = t.n(c);
-      const d = t(19);
+      const d = t(17);
       const f = t.n(d);
       const p = t(225);
       const m = t(230).a.div(
@@ -351,12 +351,12 @@
         const r = e.maxSelectedOptions;
         const o = e.defaultValue;
         const i = e.singleSelectOptions;
-        const s = Object(l.a)(e, ['label', 'onError', 'maxSelectedOptions', 'defaultValue', 'singleSelectOptions']);
+        const l = Object(s.a)(e, ['label', 'onError', 'maxSelectedOptions', 'defaultValue', 'singleSelectOptions']);
         const u = Object(c.useState)(o);
         const d = u[0];
         const f = u[1];
         Object(c.useEffect)(() => {
-          s.onChange && s.onChange(d), t && t();
+          l.onChange && l.onChange(d), t && t();
         }, [d]);
 
         return Object(a.c)(
@@ -365,13 +365,13 @@
           Object(a.c)('label', null, Object(a.c)('b', null, n)),
           Object(a.c)(
             h.a,
-            Object(g.a)({}, s, {
+            Object(g.a)({}, l, {
               value: d,
               onChange(e) {
-                if (s.isMulti)
+                if (l.isMulti)
                   if (e.length) {
                     const n = e.findIndex((e) => i.find((n) => n.value === e.value));
-                    s.isMulti && e.length > 1 && n !== -1
+                    l.isMulti && e.length > 1 && n !== -1
                       ? f(n === 0 ? e.slice(1) : [e[n]])
                       : r && e.length > r
                       ? t && t({ type: 'maxSelectedOptions', message: `Only up to ${r} selections allowed` })
@@ -381,7 +381,7 @@
               },
               css: { marginRight: '10px' },
               styles: y,
-              isClearable: s.isClearable !== 'undefined' ? s.isClearable : d.length > 1,
+              isClearable: l.isClearable !== 'undefined' ? l.isClearable : d.length > 1,
             })
           )
         );
@@ -402,13 +402,13 @@
       const x = function (e) {
         const n = e.defaultDonor;
         const t = e.onSelectDonor;
-        const r = Object(l.a)(e, ['defaultDonor', 'onSelectDonor']);
+        const r = Object(s.a)(e, ['defaultDonor', 'onSelectDonor']);
         const a = Object(c.useState)(r.donors);
         const o = a[0];
         const i = a[1];
-        const s = Object(c.useState)(r.defaultDataType);
-        const d = s[0];
-        const f = s[1];
+        const l = Object(c.useState)(r.defaultDataType);
+        const d = l[0];
+        const f = l[1];
         Object(c.useEffect)(() => {
           i(r.donors);
         }, [r.donors]);
@@ -474,15 +474,7 @@
           t
         );
       };
-      const E = function (e, n, t) {
-        void 0 === t && (t = !1);
-        const r = document.createElement('option');
-        (r.value = typeof n === 'string' ? n : n.value),
-          (r.text = typeof n === 'string' ? n : n.label),
-          t && (r.selected = !0),
-          e.appendChild(r);
-      };
-      const _ = {
+      const E = {
         rainbow: [
           '#e84439',
           '#eb642b',
@@ -508,7 +500,7 @@
         leaf: ['#08492f', '#005b3e', '#00694a', '#3b8c62', '#74bf93', '#a2d1b0', '#b1d8bb', '#c5e1cb'],
         orange: ['#973915', '#d85b31', '#eb642b', '#f18e5e', '#f4a57c', '#f6bb9d'],
       };
-      const N = function (e, n) {
+      const _ = function (e, n) {
         const t = n.selected;
         const r = Object.values(t).filter((e) => e).length;
         e.setOption({ animation: !0 }),
@@ -525,7 +517,7 @@
               }));
       };
       const j = {
-        color: _.default.concat(_.rainbow),
+        color: E.default.concat(E.rainbow),
         legend: { left: '10%', top: 10, textStyle: { fontFamily: 'Geomanist Regular,sans-serif' } },
         tooltip: {
           show: !0,
@@ -555,7 +547,7 @@
         },
         grid: { left: '3%', right: '4%', bottom: '3%', containLabel: !0 },
       };
-      const L = function (e, n) {
+      const N = function (e, n) {
         window.addEventListener(
           'resize',
           () => {
@@ -584,10 +576,10 @@
           ? 'middle'
           : 'far';
       };
-      const k = j;
-      let R = 'Volumes';
-      const M = { Proportions: 'Proportions', Volumes: 'Absolute', '%GNI': '%GNI' };
-      const V = function (e) {
+      const R = j;
+      let k = 'Volumes';
+      const F = { Proportions: 'Proportions', Volumes: 'Absolute', '%GNI': '%GNI' };
+      const L = function (e) {
         return (
           void 0 === e && (e = ''),
           e.trim() ? Number(e.replace(',', '').replace(' ', '').replace('%', '').trim()) : null
@@ -597,22 +589,22 @@
         return e.map((e) => {
           const n = { ...e };
 
-          return (n.value = V(n.Value)), n;
+          return (n.value = L(n.Value)), n;
         });
       };
-      const P = function (e) {
-        return e.filter((e) => (R === '%GNI' ? e === 'Total HA' : e !== 'Total HA'));
+      const I = function (e) {
+        return e.filter((e) => (k === '%GNI' ? e === 'Total HA' : e !== 'Total HA'));
       };
-      const I = function () {
-        return R === '%GNI' ? 'line' : 'bar';
+      const M = function () {
+        return k === '%GNI' ? 'line' : 'bar';
       };
-      const F = function (e, n, t, r, a) {
+      const U = function (e, n, t, r, a) {
         void 0 === a && (a = 'Proportion');
         const o = e.filter((e) => e.Donor.trim() === t && e['IHA type'] === r && e['Value type'] === a);
 
         return n.map((e) => o.find((n) => n.Year === e));
       };
-      const U = function (e, n, t) {
+      const V = function (e, n, t) {
         return (
           void 0 === n && (n = 'currency'),
           void 0 === t && (t = 'auto'),
@@ -624,11 +616,11 @@
           }).format(e)
         );
       };
-      const z = function (e) {
+      const P = function (e) {
         void 0 === e && (e = 'far');
 
-        return R !== 'Volumes'
-          ? { type: 'value', axisLabel: { formatter: '{value}%' }, name: '', max: R === 'Proportions' ? 100 : null }
+        return k !== 'Volumes'
+          ? { type: 'value', axisLabel: { formatter: '{value}%' }, name: '', max: k === 'Proportions' ? 100 : null }
           : {
               type: 'value',
               axisLabel: { formatter: '{value}' },
@@ -643,22 +635,22 @@
               max: null,
             };
       };
-      const H = function (e, n, t) {
+      const $ = function (e, n, t) {
         const r = t.years;
         const a = t.channels;
         const o = {
-          color: _.bluebell,
+          color: E.bluebell,
           legend: { show: !0, top: 'top', padding: [20, 10, 5, 10], textStyle: { fontSize: '1.3rem' } },
           grid: { bottom: '10%', top: '20%' },
           xAxis: { type: 'category', data: r },
-          yAxis: z(),
-          series: P(a).map((e) => ({
+          yAxis: P(),
+          series: I(a).map((e) => ({
             name: e,
-            data: F(n, r, 'All donors', e, M[R]).map((e) => ({
-              value: e && Number(R === 'Proportions' ? 100 * e.value : e.value),
+            data: U(n, r, 'All donors', e, F[k]).map((e) => ({
+              value: e && Number(k === 'Proportions' ? 100 * e.value : e.value),
               emphasis: { focus: 'self' },
             })),
-            type: I(),
+            type: M(),
             stack: 'channels',
             tooltip: {
               trigger: 'item',
@@ -668,14 +660,14 @@
                     n['IHA type'] === e &&
                     n.Donor === 'All donors' &&
                     `${n.Year}` === t.name &&
-                    n['Value type'] === M[R]
+                    n['Value type'] === F[k]
                 );
                 const a = e.includes('Multilateral HA')
                   ? e.replace('Multilateral HA', 'Multilateral Humanitarian Assistance')
                   : e;
 
                 return `All donors, ${t.name} <br />${a}: <strong>${
-                  R === 'Proportions' ? `${t.value.toFixed(2)}%` : `US$${U(V(r.Value), 'decimal', 'never')} million`
+                  k === 'Proportions' ? `${t.value.toFixed(2)}%` : `US$${V(L(r.Value), 'decimal', 'never')} million`
                 } </strong>`;
               },
             },
@@ -684,48 +676,48 @@
         };
 
         return (
-          (o.yAxis = z(T(o.series))),
-          (k.toolbox.feature.saveAsImage.name = 'donors'),
-          e.setOption(i()(o, k), { replaceMerge: ['series'] }),
+          (o.yAxis = P(T(o.series))),
+          (R.toolbox.feature.saveAsImage.name = 'donors'),
+          e.setOption(i()(o, R), { replaceMerge: ['series'] }),
           e.on('legendselectchanged', (n) => {
-            N(e, n);
+            _(e, n);
           }),
           e
         );
       };
-      const Y = function (e, n, t) {
+      const z = function (e, n, t) {
         const r = t.donors;
         const a = t.channels;
         const o = t.years;
         const i = B(n);
-        const s = I();
-        const l = r
+        const l = M();
+        const s = r
           .map((e) =>
-            P(a).map((n, t) => ({
-              name: R !== '%GNI' ? n : e,
-              data: F(i, o, e, n, M[R]).map((e) => ({
-                value: e && typeof e.value === 'number' ? Number(R !== 'Volumes' ? 100 * e.value : e.value) : null,
+            I(a).map((n, t) => ({
+              name: k !== '%GNI' ? n : e,
+              data: U(i, o, e, n, F[k]).map((e) => ({
+                value: e && typeof e.value === 'number' ? Number(k !== 'Volumes' ? 100 * e.value : e.value) : null,
                 emphasis: { focus: 'self' },
               })),
-              type: s,
-              stack: R !== '%GNI' ? e : void 0,
+              type: l,
+              stack: k !== '%GNI' ? e : void 0,
               symbol: 'circle',
               symbolSize: 10,
-              connectNulls: s !== 'line' && void 0,
+              connectNulls: l !== 'line' && void 0,
               tooltip: {
                 trigger: 'item',
                 formatter(t) {
                   const r = i.find(
-                    (r) => r['IHA type'] === n && r.Donor === e && `${r.Year}` === t.name && r['Value type'] === M[R]
+                    (r) => r['IHA type'] === n && r.Donor === e && `${r.Year}` === t.name && r['Value type'] === F[k]
                   );
                   const a =
-                    R === 'Volumes' ? `US$${U(V(r.Value), 'decimal', 'never')} million` : `${t.value.toFixed(2)}%`;
+                    k === 'Volumes' ? `US$${V(L(r.Value), 'decimal', 'never')} million` : `${t.value.toFixed(2)}%`;
 
                   return `${e}, ${t.name} <br />${n}: <strong>${a}</strong>`;
                 },
               },
               label: {
-                show: s === 'bar' && t === 0 && r.length > 1,
+                show: l === 'bar' && t === 0 && r.length > 1,
                 position: 'insideBottom',
                 distance: 15,
                 align: 'left',
@@ -740,9 +732,9 @@
             }))
           )
           .reduce((e, n) => e.concat(n), []);
-        e.setOption({ yAxis: z(T(l)), series: l }, { replaceMerge: ['series'] });
+        e.setOption({ yAxis: P(T(s)), series: s }, { replaceMerge: ['series'] });
       };
-      const $ = function () {
+      const G = function () {
         window.DICharts.handler.addChart({
           className: 'dicharts--gha-donors',
           echarts: {
@@ -755,25 +747,25 @@
                   const r = O(e);
                   const o = Array.from(new Set(t.map((e) => e.Donor))).sort();
                   const i = Array.from(new Set(t.map((e) => e.Year))).sort();
-                  const l = Array.from(new Set(t.map((e) => e['IHA type'])));
+                  const s = Array.from(new Set(t.map((e) => e['IHA type'])));
                   const c = window.echarts.init(e);
-                  H(c, B(t), { years: i, channels: l });
+                  $(c, B(t), { years: i, channels: s });
                   let u = [];
-                  Object(s.createRoot)(r).render(
+                  Object(l.createRoot)(r).render(
                     Object(a.c)(C, {
                       selectErrorMessage: 'You can compare two donors. Please remove one before adding another.',
                       donors: o,
                       onSelectDataType(e) {
-                        if (((R = e || R), u.length)) {
+                        if (((k = e || k), u.length)) {
                           const n = t.filter((e) => u.includes(e.Donor));
-                          Y(c, n, { donors: u, channels: l, years: i });
-                        } else H(c, B(t), { years: i, channels: l });
+                          z(c, n, { donors: u, channels: s, years: i });
+                        } else $(c, B(t), { years: i, channels: s });
                       },
                       onSelectDonor(e) {
                         if (e.length) {
                           const n = t.filter((n) => e.find((e) => e.value === n.Donor));
-                          (u = e.map((e) => e.value)), Y(c, n, { donors: u, channels: l, years: i });
-                        } else H(c, B(t), { years: i, channels: l });
+                          (u = e.map((e) => e.value)), z(c, n, { donors: u, channels: s, years: i });
+                        } else $(c, B(t), { years: i, channels: s });
                       },
                       defaultDonor: 'All donors',
                       defaultDataType: 'Volumes',
@@ -781,32 +773,32 @@
                     })
                   ),
                     n.hideLoading(),
-                    L(c, e);
+                    N(c, e);
                 });
               });
             },
           },
         });
       };
-      const G = function (e) {
+      const Y = function (e) {
         return (
           void 0 === e && (e = ''),
           e.trim() ? Number(e.replace(',', '').replace(' ', '').replace('%', '').trim()) : null
         );
       };
-      const W = function (e) {
+      const H = function (e) {
         return e.map((e) => {
           const n = { ...e };
 
-          return (n.value = G(e.Proportions)), n;
+          return (n.value = Y(e.Proportions)), n;
         });
       };
-      const q = function (e, n, t, r) {
+      const W = function (e, n, t, r) {
         const a = e.filter((e) => e.Donor.trim() === t && e['Delivery channel'] === r);
 
         return n.map((e) => a.find((n) => n.Year === e));
       };
-      const J = function (e, n, t) {
+      const q = function (e, n, t) {
         return (
           void 0 === n && (n = 'currency'),
           void 0 === t && (t = 'auto'),
@@ -818,18 +810,18 @@
           }).format(e)
         );
       };
-      const Z = function (e, n, t) {
+      const J = function (e, n, t) {
         const r = t.years;
         const a = t.channels;
         const o = {
-          color: _.bluebell,
+          color: E.bluebell,
           legend: { show: !0, top: 'top', padding: [20, 10, 5, 10], textStyle: { fontSize: '1.3rem' } },
           grid: { bottom: '10%', top: '20%' },
           xAxis: { type: 'category', data: r },
           yAxis: { type: 'value', axisLabel: { formatter: '{value}%' }, max: 100 },
           series: a.map((e) => ({
             name: e,
-            data: q(n, r, 'All donors', e).map((e) => ({
+            data: W(n, r, 'All donors', e).map((e) => ({
               value: e && Number(100 * e.value).toFixed(2),
               emphasis: { focus: 'self' },
             })),
@@ -842,8 +834,8 @@
                   (n) => n['Delivery channel'] === e && n.Donor === 'All donors' && `${n.Year}` === t.name
                 );
 
-                return `All donors, ${t.name} <br />${e}: <strong>${Number(t.value, 10).toFixed(2)}%</strong> (US$${J(
-                  G(r['US$ millions, constant 2020 prices']),
+                return `All donors, ${t.name} <br />${e}: <strong>${Number(t.value, 10).toFixed(2)}%</strong> (US$${q(
+                  Y(r['US$ millions, constant 2020 prices']),
                   'decimal',
                   'never'
                 )} million)`;
@@ -854,15 +846,15 @@
         };
 
         return (
-          (k.toolbox.feature.saveAsImage.name = 'funding-channels'),
-          e.setOption(i()(o, k), { replaceMerge: ['series'] }),
+          (R.toolbox.feature.saveAsImage.name = 'funding-channels'),
+          e.setOption(i()(o, R), { replaceMerge: ['series'] }),
           e.on('legendselectchanged', (n) => {
-            N(e, n);
+            _(e, n);
           }),
           e
         );
       };
-      const K = function () {
+      const Z = function () {
         window.DICharts.handler.addChart({
           className: 'dicharts--boilerplate-chart',
           echarts: {
@@ -876,7 +868,7 @@
                   let a;
                   let o;
                   const i = O(e);
-                  const l = Array.from(new Set(t.map((e) => e.Donor)));
+                  const s = Array.from(new Set(t.map((e) => e.Donor)));
                   const c = Array.from(new Set(t.map((e) => e.Year)));
                   const d =
                     ((r = Array.from(new Set(t.map((e) => e['Delivery channel'])))),
@@ -887,15 +879,15 @@
                     }),
                     o);
                   const f = window.echarts.init(e);
-                  Z(f, W(t), { years: c, channels: d });
+                  J(f, H(t), { years: c, channels: d });
                   let p = [];
-                  Object(s.createRoot)(i).render(
+                  Object(l.createRoot)(i).render(
                     u.a.createElement(
                       v,
                       { selectErrorMessage: 'You can compare two donors. Please remove one before adding another.' },
                       u.a.createElement(S, {
                         label: 'Select up to two donors',
-                        options: l.map((e) => ({ value: e, label: e, isCloseable: !0 })),
+                        options: s.map((e) => ({ value: e, label: e, isCloseable: !0 })),
                         defaultValue: [{ value: 'All donors', label: 'All donors', isCloseable: !0 }],
                         isMulti: !0,
                         onChange(e) {
@@ -906,12 +898,12 @@
                                 const r = t.donors;
                                 const a = t.channels;
                                 const o = t.years;
-                                const i = W(n);
-                                const s = r
+                                const i = H(n);
+                                const l = r
                                   .map((e) =>
                                     a.map((n, t) => ({
                                       name: n,
-                                      data: q(i, o, e, n).map((e) => ({
+                                      data: W(i, o, e, n).map((e) => ({
                                         value: e && Number(100 * e.value).toFixed(2),
                                         emphasis: { focus: 'self' },
                                       })),
@@ -920,14 +912,13 @@
                                       tooltip: {
                                         trigger: 'item',
                                         formatter(t) {
-                                          const r = i.find((r) => {
-                                            return (
+                                          const r = i.find(
+                                            (r) =>
                                               r['Delivery channel'] === n && r.Donor === e && `${r.Year}` === t.name
-                                            );
-                                          });
-                                          let a = r
-                                            ? `<strong>${(100 * r.value).toFixed(2)}%</strong> (US$${J(
-                                                G(r['US$ millions, constant 2020 prices']),
+                                          );
+                                          const a = r
+                                            ? `<strong>${(100 * r.value).toFixed(2)}%</strong> (US$${q(
+                                                Y(r['US$ millions, constant 2020 prices']),
                                                 'decimal',
                                                 'never'
                                               )} million)`
@@ -952,9 +943,9 @@
                                     }))
                                   )
                                   .reduce((e, n) => e.concat(n), []);
-                                e.setOption({ series: s }, { replaceMerge: ['series'] });
+                                e.setOption({ series: l }, { replaceMerge: ['series'] });
                               })(f, n, { donors: p, channels: d, years: c });
-                          } else Z(f, W(t), { years: c, channels: d });
+                          } else J(f, H(t), { years: c, channels: d });
                         },
                         css: { minWidth: '200px' },
                         classNamePrefix: 'channels-chart-select',
@@ -963,26 +954,26 @@
                     )
                   ),
                     n.hideLoading(),
-                    L(f, e);
+                    N(f, e);
                 });
               });
             },
           },
         });
       };
-      const Q = t(164);
-      const X = t.n(Q);
-      const ee = t(228);
-      const ne = function (e) {
+      const K = t(164);
+      const Q = t.n(K);
+      const X = t(228);
+      const ee = function (e) {
         const n = Object(c.useState)(e.donorRecipients);
         const t = n[0];
         const r = n[1];
         const o = Object(c.useState)(e.defaultBreakdown);
         const i = o[0];
-        const s = o[1];
-        const l = Object(c.useState)(e.defaultRecipient);
-        const u = l[0];
-        const d = l[1];
+        const l = o[1];
+        const s = Object(c.useState)(e.defaultRecipient);
+        const u = s[0];
+        const d = s[1];
         Object(c.useEffect)(() => {
           r(i === 'By donor' ? e.donorRecipients : e.orgTypeRecipients),
             e.onSelectBreakdown && e.onSelectBreakdown(i, u);
@@ -1010,13 +1001,13 @@
             options: ['By donor', 'By type of organisation receiving funding'].map((e) => ({ value: e, label: e })),
             defaultValue: [{ value: e.defaultBreakdown, label: e.defaultBreakdown }],
             onChange(n) {
-              s(n.value || e.defaultBreakdown);
+              l(n.value || e.defaultBreakdown);
             },
             css: { minWidth: '300px' },
           })
         );
       };
-      (ne.propTypes = {
+      (ee.propTypes = {
         donorRecipients: f.a.array,
         orgTypeRecipients: f.a.array,
         defaultRecipient: f.a.string,
@@ -1024,35 +1015,35 @@
         onSelectBreakdown: f.a.func,
         onSelectRecipient: f.a.func,
       }),
-        (ne.defaultProps = { defaultBreakdown: 'By donor', defaultRecipient: 'Afghanistan' });
-      const te = ne;
-      const re = new Intl.NumberFormat();
-      const ae = function (e) {
+        (ee.defaultProps = { defaultBreakdown: 'By donor', defaultRecipient: 'Afghanistan' });
+      const ne = ee;
+      const te = new Intl.NumberFormat();
+      const re = function (e) {
         return e.trim() ? Number(e.replace(',', '').replace(' ', '').replace('%', '').trim()).toFixed(2) : null;
       };
-      const oe = function (e, n) {
+      const ae = function (e, n) {
         return (
           void 0 === n && (n = 'Value'),
           e.map((e) => {
             const t = { ...e };
 
-            return (t.value = ae(e[n])), t;
+            return (t.value = re(e[n])), t;
           })
         );
       };
-      const ie = function (e, n, t, r) {
+      const oe = function (e, n, t, r) {
         const a = e.filter((e) => e['Destination Country'].trim() === t && e['Donor organisation'] === r);
 
         return n.map((e) => a.find((n) => n.Year === e) || null);
       };
-      const se = function (e, n, t) {
+      const ie = function (e, n, t) {
         const r = ['Destination Country', 'Recipient Org Type'];
         const a = e.filter((e) => e[r[1]] === n);
 
         return t.map((e) => {
           const n = a.find((n) => n.Year === e);
 
-          return { value: (n && ae(n.value)) || null, emphasis: { focus: 'self' } };
+          return { value: (n && re(n.value)) || null, emphasis: { focus: 'self' } };
         });
       };
       const le = function (e, n) {
@@ -1066,7 +1057,7 @@
               .slice(0, 5)
               .concat(t);
       };
-      const ce = function (e) {
+      const se = function (e) {
         void 0 === e && (e = 'far');
 
         return {
@@ -1081,24 +1072,24 @@
           },
         };
       };
-      const ue = function (e, n, t, r) {
+      const ce = function (e, n, t, r) {
         const a = r.years;
         const o = r.channels;
-        const s = {
-          color: _.bluebell,
+        const l = {
+          color: E.bluebell,
           legend: { show: !0, top: 'top', padding: [20, 10, 5, 10], textStyle: { fontSize: '1.3rem' } },
           grid: { bottom: '10%', top: '20%' },
           xAxis: { type: 'category', data: a, position: 'bottom' },
           series: o.map((e) => ({
             name: e,
-            data: ie(n, a, t, e).map((e) => ({ value: e && Number(e.value).toFixed(2), emphasis: { focus: 'self' } })),
+            data: oe(n, a, t, e).map((e) => ({ value: e && Number(e.value).toFixed(2), emphasis: { focus: 'self' } })),
             type: 'bar',
             stack: 'channels',
             cursor: 'auto',
             tooltip: {
               trigger: 'item',
               formatter(n) {
-                return `${e}, ${n.name} <br />10 largest recipients: <strong>US$${re.format(
+                return `${e}, ${n.name} <br />10 largest recipients: <strong>US$${te.format(
                   Math.round(n.value)
                 )} million</strong>`;
               },
@@ -1108,37 +1099,37 @@
         };
 
         return (
-          (s.yAxis = ce(T(s.series))),
-          (k.toolbox.feature.saveAsImage.name = 'recipients'),
-          e.setOption(i()(s, k), { replaceMerge: ['series'] }),
+          (l.yAxis = se(T(l.series))),
+          (R.toolbox.feature.saveAsImage.name = 'recipients'),
+          e.setOption(i()(l, R), { replaceMerge: ['series'] }),
           e.on('legendselectchanged', (n) => {
-            N(e, n);
+            _(e, n);
           }),
           e
         );
       };
-      const de = function (e, n, t) {
+      const ue = function (e, n, t) {
         const r = t.recipient;
         const a = t.years;
-        const o = oe(n, 'USD deflated millions');
+        const o = ae(n, 'USD deflated millions');
         const i = le(n, r)
           .map((e) => ({
             name: e,
-            data: ie(o, a, r, e).map((e) => ({ value: e && Number(e.value).toFixed(2), emphasis: { focus: 'self' } })),
+            data: oe(o, a, r, e).map((e) => ({ value: e && Number(e.value).toFixed(2), emphasis: { focus: 'self' } })),
             type: 'bar',
             stack: r,
             cursor: 'auto',
             tooltip: {
               trigger: 'item',
               formatter(n) {
-                return `${e}, ${n.name} <br/>${r}: <strong>US$${re.format(Math.round(n.value))} million</strong>`;
+                return `${e}, ${n.name} <br/>${r}: <strong>US$${te.format(Math.round(n.value))} million</strong>`;
               },
             },
           }))
           .reduce((e, n) => e.concat(n), []);
-        e.setOption({ yAxis: ce(T(i)), series: i }, { replaceMerge: ['series'] });
+        e.setOption({ yAxis: se(T(i)), series: i }, { replaceMerge: ['series'] });
       };
-      const fe = function (e, n, t) {
+      const de = function (e, n, t) {
         const r = t.recipient;
         const a = t.years;
         const o = (function (e) {
@@ -1160,21 +1151,21 @@
         )
           .map((e) => ({
             name: e,
-            data: se(n, e, a),
+            data: ie(n, e, a),
             type: 'bar',
             stack: r,
             cursor: 'auto',
             tooltip: {
               trigger: 'item',
               formatter(n) {
-                return `${n.name} <br/>${e}: <strong>US$${re.format(Math.round(n.value))} million</strong>`;
+                return `${n.name} <br/>${e}: <strong>US$${te.format(Math.round(n.value))} million</strong>`;
               },
             },
           }))
           .reduce((e, n) => e.concat(n), []);
-        e.setOption({ yAxis: ce(T(o)), series: o }, { replaceMerge: ['series'] });
+        e.setOption({ yAxis: se(T(o)), series: o }, { replaceMerge: ['series'] });
       };
-      const pe = function () {
+      const fe = function () {
         window.DICharts.handler.addChart({
           className: 'dicharts--gha-recipients',
           echarts: {
@@ -1182,14 +1173,14 @@
               Array.prototype.forEach.call(
                 e,
                 (function () {
-                  const e = Object(ee.a)(
-                    X.a.mark(function e(n) {
+                  const e = Object(X.a)(
+                    Q.a.mark(function e(n) {
                       let t;
                       let r;
                       let a;
                       let o;
                       let i;
-                      let l;
+                      let s;
                       let c;
                       let d;
                       let f;
@@ -1197,7 +1188,7 @@
                       let m;
                       let b;
 
-                      return X.a.wrap((e) => {
+                      return Q.a.wrap((e) => {
                         for (;;)
                           switch ((e.prev = e.next)) {
                             case 0:
@@ -1226,7 +1217,7 @@
                                       .map((e) => e['Destination Country'])
                                   )
                                 )),
-                                (l = Array.from(new Set(r.map((e) => e.Year)))),
+                                (s = Array.from(new Set(r.map((e) => e.Year)))),
                                 'Afghanistan',
                                 'By donor',
                                 (c = le(r, 'Afghanistan')),
@@ -1238,45 +1229,45 @@
                                   )
                                 )),
                                 (f = window.echarts.init(n)),
-                                ue(f, oe(r, 'USD deflated millions'), 'Afghanistan', { years: l, channels: c }),
+                                ce(f, ae(r, 'USD deflated millions'), 'Afghanistan', { years: s, channels: c }),
                                 (p = 'Afghanistan'),
                                 (m = function (e, n) {
                                   if ((void 0 === n && (n = 'By donor'), (p = e || 'Afghanistan'), n === 'By donor'))
                                     if (p !== '10 largest recipients') {
                                       const t = r.filter((e) => e['Destination Country'] === p);
-                                      de(f, t, { recipient: p, years: l });
+                                      ue(f, t, { recipient: p, years: s });
                                     } else
                                       (p = '10 largest recipients'),
-                                        ue(f, oe(r, 'USD deflated millions'), '10 largest recipients', {
-                                          years: l,
+                                        ce(f, ae(r, 'USD deflated millions'), '10 largest recipients', {
+                                          years: s,
                                           channels: c,
                                         });
                                   else
-                                    fe(
+                                    de(
                                       f,
                                       a.filter((n) => n['Destination Country'] === e),
-                                      { recipient: e, years: l }
+                                      { recipient: e, years: s }
                                     );
                                 }),
                                 (b = function (e, n) {
                                   if (e === 'By donor')
                                     if (n !== '10 largest recipients') {
                                       const t = r.filter((e) => e['Destination Country'] === n);
-                                      de(f, t, { recipient: n, years: l });
+                                      ue(f, t, { recipient: n, years: s });
                                     } else
-                                      ue(f, oe(r, 'USD deflated millions'), '10 largest recipients', {
-                                        years: l,
+                                      ce(f, ae(r, 'USD deflated millions'), '10 largest recipients', {
+                                        years: s,
                                         channels: c,
                                       });
                                   else
-                                    fe(
+                                    de(
                                       f,
                                       a.filter((e) => e['Destination Country'] === n),
-                                      { recipient: n, years: l }
+                                      { recipient: n, years: s }
                                     );
                                 }),
-                                Object(s.createRoot)(o).render(
-                                  u.a.createElement(te, {
+                                Object(l.createRoot)(o).render(
+                                  u.a.createElement(ne, {
                                     donorRecipients: i,
                                     orgTypeRecipients: d,
                                     onSelectRecipient: m,
@@ -1286,7 +1277,7 @@
                                   })
                                 ),
                                 t.hideLoading(),
-                                L(f, n);
+                                N(f, n);
                             case 23:
                             case 'end':
                               return e.stop();
@@ -1304,42 +1295,84 @@
           },
         });
       };
-      const me = (t(580), 'https://devinit.org/assets/svg/icons/response-plan-icon.svg');
-      const be = function (e) {
-        const n = [];
+      const pe =
+        (t(580),
+        function (e) {
+          const n = Object(c.useState)('Severity_score');
+          const t = n[0];
+          const r = n[1];
+          Object(c.useEffect)(() => {
+            e.onSelectDimension(t);
+          }, [t]);
+          const a = [
+            {
+              name: 'Severity_score',
+              label: 'Severity of crisis',
+              icon: 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg',
+            },
+            {
+              name: 'Climate_vulnerability',
+              label: 'Climate vulnerability',
+              icon: 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg',
+            },
+            {
+              name: 'COVID_vaccination_rate',
+              label: 'Covid-19 vaccination rate',
+              icon: 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg',
+            },
+            {
+              name: 'Food_insecure_(millions)',
+              label: 'Food insecurity',
+              icon: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg',
+            },
+            {
+              name: 'People_in_need_(millions)',
+              label: 'People in need',
+              icon: 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg',
+            },
+          ];
 
-        return (
-          Number(e.Conflict_marker) > 0 && n.push('Conflict'),
-          Number(e.Displacement_marker) > 0 && n.push('Displacement'),
-          Number(e.Physical_disaster_marker) > 0 && n.push('Natural hazard'),
-          n.join(', ')
-        );
+          return u.a.createElement(
+            'ul',
+            null,
+            a.map((e) =>
+              u.a.createElement(
+                'li',
+                { key: e.name, className: t === e.name ? 'mapFilterItem mapFilterItem-active' : 'mapFilterItem' },
+                e.icon
+                  ? u.a.createElement(
+                      u.a.Fragment,
+                      null,
+                      u.a.createElement(
+                        'button',
+                        {
+                          onClick() {
+                            r(e.name);
+                          },
+                        },
+                        u.a.createElement('img', { src: e.icon, alt: e.name, height: '20', width: '20' }),
+                        u.a.createElement('p', null, e.label)
+                      )
+                    )
+                  : u.a.createElement(
+                      'button',
+                      {
+                        onClick() {
+                          r(e.name);
+                        },
+                      },
+                      u.a.createElement('p', null, e.label)
+                    )
+              )
+            )
+          );
+        });
+      pe.propTypes = { onSelectDimension: f.a.func };
+      const me = pe;
+      const be = function (e, n) {
+        return e ? `${Math.round((Number(n) / Number(e)) * 100)}% funded[US$${n} of US$${e}]` : 'None';
       };
       const ve = function (e) {
-        switch (e) {
-          case '5':
-            return 'Very high';
-          case '4':
-            return 'High';
-          case '3':
-            return 'Medium';
-          case '2':
-            return 'Low';
-          case '1':
-            return 'Very Low';
-          case '':
-            return 'Not assessed';
-          default:
-            return '';
-        }
-      };
-      const ge = function (e) {
-        return `${e['Protracted/Recurrent_crisis']}, ${e.Years_of_consecutive_crisis} years`;
-      };
-      const he = function (e, n) {
-        return e ? `${Math.round((Number(n) / Number(e)) * 100)}% funded[US$${n} of ${e}]` : 'Not assessed';
-      };
-      const ye = function (e) {
         switch (e) {
           case '5':
             return '#7F1850';
@@ -1352,13 +1385,12 @@
           case '1':
             return '#F6B9C2';
           case '':
-            return 'repeating-linear-gradient(45deg, grey 0, grey 3px, transparent 3px, transparent 6px)';
           default:
             return '#E6E1E5';
         }
       };
-      const we = window.L.control({ position: 'bottomright' });
-      (we.onAdd = function () {
+      const ge = window.L.control({ position: 'bottomright' });
+      (ge.onAdd = function () {
         return (
           (this.div = window.L.DomUtil.create('div', 'databox')),
           this.div.setAttribute('data-id', 'databoxContainer'),
@@ -1366,7 +1398,7 @@
           this.div
         );
       }),
-        (we.update = function (e) {
+        (ge.update = function (e) {
           let n;
           let t;
           let r;
@@ -1377,50 +1409,20 @@
                 e),
               [
                 {
-                  value: n['People_in_need_(millions)'],
-                  label: 'People in need',
-                  icon: 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg',
-                },
-                {
-                  value: be(n),
-                  label: 'Crisis type',
-                  icon: 'https://devinit.org/assets/svg/icons/crisis-type-icon.svg',
-                },
-                {
-                  value: ve(n.Severity_score),
-                  label: 'Severity of crisis',
-                  icon: 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg',
-                },
-                {
-                  value: ge(n),
-                  label: 'Crisis duration',
-                  icon: 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg',
-                },
-                {
-                  value: `${n.COVID_vaccination_rate}% of the population vaccinated`,
-                  label: 'Covid vaccinations',
-                  icon: 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg',
-                },
-                {
-                  value: ve(n.Climate_vulnerability),
-                  label: 'Climate vulnerability',
-                  icon: 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg',
-                },
-                {
                   value:
                     ((t = n['Country_response_plan_requirements_(US$,_million)']),
                     (r = n['Country_response_plan_coverage_(%)']),
-                    t ? `${r}% funded[US$${Math.round((Number(r) / 100) * Number(t))}  of ${t}]` : 'Not assessed'),
+                    t ? `${r}% funded[US$${Math.round((Number(r) / 100) * Number(t))}  of US$${t}]` : 'None'),
                   label: 'Country response plan',
-                  icon: me,
+                  icon: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg',
                 },
                 {
-                  value: he(
+                  value: be(
                     n['Regional_response_plan_requirements_(US$,_million)'],
                     n['Regional_response_plan_funding_(US$,_million)']
                   ),
                   label: 'Regional response plan',
-                  icon: me,
+                  icon: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg',
                 },
               ])
                 .map((e) => `<span><img src=${e.icon} height=20 width=20 ></img><p>${e.label}: ${e.value}</p> </span>`)
@@ -1433,11 +1435,11 @@
                 e.stopPropagation(),
                   n.update(),
                   (document.querySelector('[data-id="databoxContainer"]').style.display = 'none');
-              })(e, we)
+              })(e, ge)
             );
         });
-      const Se = function (e, n, t, r, a, o, i, s) {
-        let l;
+      const he = function (e, n, t, r, a, o, i, l) {
+        let s;
         const c = i;
         (c.onAdd = function () {
           const n = window.L.DomUtil.create('div', 'legend');
@@ -1472,7 +1474,7 @@
                   .join('')} <p style="margin-left:1px;margin-top:5px;">${r.find((n) => n.variable === e).max}</p>`
               : r
                   .find((n) => n.variable === e)
-                  .data.map((e) => `<span><i style="background:${ye(e.score)}"></i><label>${e.label}</label></span>`)
+                  .data.map((e) => `<span><i style="background:${ve(e.score)}"></i><label>${e.label}</label></span>`)
                   .join('');
 
           return (n.innerHTML = a), n;
@@ -1480,22 +1482,19 @@
           c.addTo(n);
         let u;
         const d = function (n) {
-          let r;
-
-          return (
-            ((r = {})[n.properties[e] === '' ? 'fillPattern' : 'fillColor'] =
+          return {
+            fillColor:
               o.find((n) => n.name === e).scaleType === 'piecewise'
                 ? t(n.properties[e])
-                : t(n.properties[e], o.find((n) => n.name === e).values)),
-            (r.weight = 1),
-            (r.opacity = 1),
-            (r.color = 'white'),
-            (r.fillOpacity = 1),
-            r
-          );
+                : t(n.properties[e], o.find((n) => n.name === e).values),
+            weight: 1,
+            opacity: 1,
+            color: 'white',
+            fillOpacity: 1,
+          };
         };
         const f = function (e) {
-          l.resetStyle(e.target), e.target.closePopup();
+          s.resetStyle(e.target), e.target.closePopup();
         };
         const p = function (t, r) {
           (t.properties[e] || t.properties[e] === '') &&
@@ -1510,8 +1509,8 @@
                         r.feature.properties[n]
                           ? `<div>${r.feature.properties.name}<br>${t.find((e) => e.name === n).label}: ${
                               r.feature.properties[n]
-                            }</div>`
-                          : r.feature.properties.name
+                            }${t.find((e) => e.name === n).unit}</div>`
+                          : `<div>${r.feature.properties.name}<br> No data</div>`
                       )
                       .openPopup();
                 })(n, e, o);
@@ -1522,12 +1521,12 @@
                   t.addTo(n);
                   const r = e.target;
                   t.update(r.feature.properties);
-                })(e, n, we);
+                })(e, n, ge);
               },
             });
         };
-        s.clearLayers(),
-          (l = window.L.geoJSON(
+        l.clearLayers(),
+          (s = window.L.geoJSON(
             ((u = a),
             r.map((e) => {
               const n = { ...e };
@@ -1537,94 +1536,50 @@
             })),
             { style: d, onEachFeature: p }
           )),
-          s.addLayer(l);
+          l.addLayer(s);
       };
-      const xe = function () {
+      const ye = function () {
         window.DICharts.handler.addChart({
           className: 'dicharts--gha-people-affected-by-crisis-leaflet',
           echarts: {
             onAdd(e) {
               Array.prototype.forEach.call(e, (e) => {
                 const n = new window.DICharts.Chart(e.parentElement);
-                const t = window.L.map(e, { zoomSnap: 0.5, maxZoom: 3, minZoom: 2 }).setView([20, -0.09], 2);
-                let r = 'Severity_score';
-                const a = O(e);
+                const t = window.L.map(e, {
+                  maxZoom: 3,
+                  minZoom: 1,
+                  crs: window.L.CRS.EPSG4326,
+                  center: [0, 0],
+                  zoom: 1,
+                });
+                const r = O(e);
                 const o = [
-                  { name: 'Severity_score', label: 'Severity score', scaleType: 'piecewise' },
-                  { name: 'Climate_vulnerability', label: 'Climate vulnerability score', scaleType: 'piecewise' },
+                  { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
+                  { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise', unit: '' },
                   {
                     name: 'COVID_vaccination_rate',
-                    label: 'COVID vaccination rate',
+                    label: 'Covid-19 vaccination rate',
                     scaleType: 'continous',
                     values: [100, 80, 60, 40, 20, 0],
+                    unit: '%',
                   },
                   {
                     name: 'Food_insecure_(millions)',
-                    label: 'People facing food insecurity',
+                    label: 'Food insecurity',
                     scaleType: 'continous',
                     values: [26, 21, 16, 11, 6, 0],
+                    unit: 'million',
                   },
                   {
                     name: 'People_in_need_(millions)',
                     label: 'People in need',
                     scaleType: 'continous',
                     values: [25, 20, 15, 10, 5, 0],
+                    unit: 'million',
                   },
                 ];
-                const i = (function (e, n, t, r) {
-                  let a;
-                  const o = e.wrapper;
-                  const i = e.options;
-                  const s = e.allItemsLabel;
-                  const l = e.className;
-                  const c = e.label;
-                  const u = e.defaultOption;
-                  const d = void 0 === u ? '*' : u;
-                  const f = document.createElement('select');
-                  if (
-                    ((a = f.classList).add.apply(a, ['data-selector', 'js-plotly-chart-data-selector'].concat(l)),
-                    s && E(f, { label: s, value: '*' }, d === '*'),
-                    i.forEach((e) => E(f, e, e === d)),
-                    f.classList.add('data-selector--active'),
-                    c)
-                  ) {
-                    const p = document.createElement('label');
-                    p.innerHTML = c;
-                    const m = document.createElement('div');
-                    if (
-                      (m.classList.add('labelled-data-selector--wrapper'),
-                      m.appendChild(p),
-                      m.appendChild(f),
-                      o.appendChild(m),
-                      t && r)
-                    ) {
-                      const b = document.createElement('div');
-                      b.classList.add('data-selector--wrapper'),
-                        (b.innerHTML = r),
-                        (b.style.color = 'red'),
-                        (b.style.fontSize = '11px'),
-                        (b.style.position = 'relative'),
-                        (b.style.padding = '5px'),
-                        (b.style.paddingLeft = '20px'),
-                        (b.style.display = 'none'),
-                        b.setAttribute('id', t),
-                        o.insertAdjacentElement('afterend', b);
-                    }
-                    if (n) return [f, m];
-                  } else o.appendChild(f);
-
-                  return f;
-                })({
-                  wrapper: a,
-                  options: o.map((e) => e.label),
-                  defaultOption: 'Severity score',
-                  className: 'map-filter',
-                  label: 'Select a dimension',
-                });
-                const s = window.L.control({ position: 'topright' });
-                const l = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
-                l.addTo(t);
-                const c = function (e) {
+                const i = window.L.control({ position: 'topright' });
+                const s = function (e) {
                   switch (e) {
                     case '5':
                       return '#7F1850';
@@ -1637,14 +1592,13 @@
                     case '1':
                       return '#F6B9C2';
                     case '':
-                      return l;
                     default:
                       return '#E6E1E5';
                   }
                 };
-                const u = function (e, n) {
+                const c = function (e, n) {
                   return e === ''
-                    ? l
+                    ? '#E6E1E5'
                     : Number(e) > n[1]
                     ? '#7F1850'
                     : Number(e) > n[2]
@@ -1664,20 +1618,20 @@
                     )
                     .then((e) => e.json())
                     .then((e) => {
-                      const a = e.features;
+                      const u = e.features;
                       A(
                         'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/map_data_long.csv'
                       ).then((e) => {
-                        let l;
-                        const d =
-                          ((l = a),
+                        let d;
+                        const f =
+                          ((d = u),
                           e.map((e) => {
                             const n = { ...e };
-                            const t = l.find((e) => e.properties.iso_a3 === n.Country_ID);
+                            const t = d.find((e) => e.properties.iso_a3 === n.Country_ID);
 
                             return t && (n.Country_name = t.properties.name), n;
                           }));
-                        const f = (function (e, n) {
+                        const p = (function (e, n) {
                           const t = [];
 
                           return (
@@ -1691,13 +1645,25 @@
                             }),
                             t
                           );
-                        })(Array.from(new Set(d.map((e) => e.Country_name))), d);
-                        const p = window.L.featureGroup().addTo(t);
-                        i.addEventListener('change', (e) => {
-                          (r = o.find((n) => n.label === e.target.value).name),
-                            Se(r, t, o.find((e) => e.name === r).scaleType === 'continous' ? u : c, a, f, o, s, p);
-                        }),
-                          Se(r, t, o.find((e) => e.name === r).scaleType === 'continous' ? u : c, a, f, o, s, p),
+                        })(Array.from(new Set(f.map((e) => e.Country_name))), f);
+                        const m = window.L.featureGroup().addTo(t);
+                        Object(l.createRoot)(r).render(
+                          Object(a.c)(me, {
+                            onSelectDimension(e) {
+                              he(e, t, o.find((n) => n.name === e).scaleType === 'continous' ? c : s, u, p, o, i, m);
+                            },
+                          })
+                        ),
+                          he(
+                            'Severity_score',
+                            t,
+                            o.find((e) => e.name === 'Severity_score').scaleType === 'continous' ? c : s,
+                            u,
+                            p,
+                            o,
+                            i,
+                            m
+                          ),
                           n.hideLoading();
                       });
                     })
@@ -1709,7 +1675,7 @@
       };
       t(581);
       window.addEventListener('load', () => {
-        $(), K(), pe(), xe();
+        G(), Z(), fe(), ye();
       });
     },
   },
