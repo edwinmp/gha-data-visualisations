@@ -1,11 +1,5 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-// const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
-// const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
-// const crisisDuration = 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg';
-// const crisisType = 'https://devinit.org/assets/svg/icons/crisis-type-icon.svg';
-// const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
-// const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
 
 const getCountryResponsePlan = (requirement, coverage) => {
   if (requirement) {
@@ -61,7 +55,7 @@ const highlightFeature = (e, variable, filterOptions) => {
           }: ${layer.feature.properties[variable]}${
             filterOptions.find((option) => option.name === variable).unit
           }</div>`
-        : layer.feature.properties.name
+        : `<div>${layer.feature.properties.name}<br> No data</div>`
     )
     .openPopup();
 };
@@ -123,7 +117,7 @@ const getLegendColor = (score) => {
     case '1':
       return '#F6B9C2';
     case '':
-      return 'repeating-linear-gradient(45deg, grey 0, grey 3px, transparent 3px, transparent 6px)';
+      return '#E6E1E5';
     default:
       return '#E6E1E5';
   }

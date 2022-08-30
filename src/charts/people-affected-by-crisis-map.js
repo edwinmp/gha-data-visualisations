@@ -78,7 +78,7 @@ const renderMap = (
   };
   legendInstanceCopy.addTo(mapInstance);
   const style = (feature) => ({
-    [feature.properties[dimensionVariable] === '' ? 'fillPattern' : 'fillColor']:
+    fillColor:
       filterOptions.find((opts) => opts.name === dimensionVariable).scaleType === 'piecewise'
         ? colorFunction(feature.properties[dimensionVariable])
         : colorFunction(
@@ -164,8 +164,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // Legend
           const legend = window.L.control({ position: 'topright' });
 
-          const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
-          stripes.addTo(map);
+          // const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
+          // stripes.addTo(map);
 
           const getColor = (score) => {
             switch (score) {
@@ -180,7 +180,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
               case '1':
                 return '#F6B9C2';
               case '':
-                return stripes;
+                return '#E6E1E5';
               default:
                 return '#E6E1E5';
             }
@@ -188,7 +188,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           const getColorContinous = (d, numberRange) => {
             if (d === '') {
-              return stripes;
+              return '#E6E1E5';
             }
             if (Number(d) > numberRange[1]) {
               return '#7F1850';
