@@ -16,7 +16,7 @@
 }
 
 .labelled-data-selector--wrapper {
-  display: inline-block;
+  display: table-cell;
 }
 
 .display-none {
