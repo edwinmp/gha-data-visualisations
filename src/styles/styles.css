@@ -66,3 +66,30 @@
 .leaflet-popup-close-button {
   display: none;
 }
+
+.databox {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  font-family: "Geomanist Regular", sans-serif;
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+  border-radius: 5px;
+}
+
+.databox span {
+  display: flex;
+}
+
+.databox span p {
+  padding-left: 2px;
+  padding-top: 3px;
+}
+
+.databox button {
+  position: absolute;
+  right: 5px;
+}

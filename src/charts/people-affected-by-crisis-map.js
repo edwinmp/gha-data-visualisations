@@ -1,100 +1,17 @@
+import 'leaflet.pattern';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
+import {
+  highlightFeature,
+  matchCountryNames,
+  processedData,
+  dataInjectedGeoJson,
+  onLegendAdd,
+  handleClickFeature,
+  dataBox,
+} from '../utils/interactiveMap';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
-
-const matchCountryNames = (csvData, worldData) => {
-  const matchedData = csvData.map((stream) => {
-    const streamCopy = { ...stream };
-    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy.Country_ID);
-    if (countryObject) {
-      streamCopy.Country_name = countryObject.properties.name;
-    }
-
-    return streamCopy;
-  });
-
-  return matchedData;
-};
-
-const processedData = (countries, processedCountryData) => {
-  const data = [];
-  countries.forEach((country) => {
-    const countryData = {};
-    countryData.name = country;
-    processedCountryData.forEach((stream) => {
-      if (stream.Country_name === country) {
-        countryData[stream.variable] = stream.value;
-      }
-    });
-    data.push(countryData);
-  });
-
-  return data;
-};
-
-const dataInjectedGeoJson = (jsonData, groupedData) =>
-  jsonData.map((feature) => {
-    const featureCopy = { ...feature };
-    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.name);
-    if (matchingCountryData) {
-      featureCopy.properties = {
-        ...feature.properties,
-        ...matchingCountryData,
-      };
-    }
-
-    return featureCopy;
-  });
-
-const getColor = (score) => {
-  switch (score) {
-    case '5':
-      return '#7F1850';
-    case '4':
-      return '#AD1156';
-    case '3':
-      return '#D64279';
-    case '2':
-      return '#E4819B';
-    case '1':
-      return '#F6B9C2';
-    default:
-      return '#E6E1E5';
-  }
-};
-
-const highlightFeature = (e) => {
-  const layer = e.target;
-
-  layer.setStyle({
-    fillColor: 'yellow',
-  });
-
-  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
-    layer.bringToFront();
-  }
-  // Bind popup to layer
-  layer.bindPopup(layer.feature.properties.name).openPopup();
-};
-
-const onLegendAdd = () => {
-  const div = window.L.DomUtil.create('div', 'legend');
-  const legendData = [
-    { score: '5', label: '5 - Very High' },
-    { score: '4', label: '4 - High' },
-    { score: '3', label: '3 - Medium' },
-    { score: '2', label: '2 - Low' },
-    { score: '1', label: '1 - Very Low' },
-  ];
-
-  const legendContent = legendData
-    .map((data) => `<span><i style="background:${getColor(data.score)}"></i><label>${data.label}</label></span>`)
-    .join('');
-  div.innerHTML = legendContent;
-
-  return div;
-};
 
 function renderPeopleAffectedByCrisisLeaflet() {
   window.DICharts.handler.addChart({
@@ -112,6 +29,28 @@ function renderPeopleAffectedByCrisisLeaflet() {
           legend.onAdd = onLegendAdd;
           legend.addTo(map);
 
+          const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
+          stripes.addTo(map);
+
+          const getColor = (score) => {
+            switch (score) {
+              case '5':
+                return '#7F1850';
+              case '4':
+                return '#AD1156';
+              case '3':
+                return '#D64279';
+              case '2':
+                return '#E4819B';
+              case '1':
+                return '#F6B9C2';
+              case '':
+                return stripes;
+              default:
+                return '#E6E1E5';
+            }
+          };
+
           dichart.showLoading();
 
           window
@@ -123,9 +62,18 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+                const filterOptions = [
+                  { name: 'Severity_score', label: 'Severity score' },
+                  { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
+                  { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate' },
+                  { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
+                  { name: 'People_in_need_(millions)', label: 'People in need' },
+                ];
 
                 const style = (feature) => ({
-                  fillColor: getColor(feature.properties[variable]),
+                  [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
+                    feature.properties[variable]
+                  ),
                   weight: 1,
                   opacity: 1,
                   color: 'white',
@@ -138,10 +86,11 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 };
 
                 const onEachFeature = (feature, layer) => {
-                  if (feature.properties[variable]) {
+                  if (feature.properties[variable] || feature.properties[variable] === '') {
                     layer.on({
-                      mouseover: highlightFeature,
+                      mouseover: (e) => highlightFeature(e, variable, filterOptions),
                       mouseout: resetHighlight,
+                      click: (e) => handleClickFeature(e, map, dataBox),
                     });
                   }
                 };
