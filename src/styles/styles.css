@@ -98,8 +98,23 @@
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
   background: rgba(255,255,255);
-  box-shadow: 0 0 15px rgb(0 0 0 / 20%);
-  border-radius: 5px;
-  cursor: pointer;
+  border: 1px solid #ddd !important;
   margin-right: 5px;
+}
+
+.mapFilterItem button {
+  display: flex;
+  border-color: '#ddd' !important;
+}
+
+.mapFilterItem p {
+  padding-top: 3px;
+}
+
+.mapFilterItem:hover {
+  border: 1px solid #8f1b13 !important;
+}
+
+.mapFilterItem-active {
+  border: 1px solid #8f1b13 !important;
 }

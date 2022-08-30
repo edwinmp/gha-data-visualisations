@@ -22,7 +22,10 @@ const MapFilters = (props) => {
   return (
     <ul>
       {filterOptions.map((option) => (
-        <li key={option.name} className="mapFilterItem">
+        <li
+          key={option.name}
+          className={dimension === option.name ? 'mapFilterItem mapFilterItem-active' : 'mapFilterItem'}
+        >
           {option.icon ? (
             <>
               <button
