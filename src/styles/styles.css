@@ -125,17 +125,15 @@
 }
 
 .reset-button {
-  border-style: solid;
-  border-width: 1px;
+  border: 2px solid #ccc;
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
   background: rgba(255,255,255);
-  border-color: '#ddd' !important;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .reset-button:hover {
-  border: 1px solid #8f1b13 !important;
+  background-color: #f4f4f4;
 }
 
 #closeDatabox img {
