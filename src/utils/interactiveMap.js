@@ -172,12 +172,12 @@ dataBox.update = function (props) {
 };
 
 const highlightFeature = (e, variable, filterOptions) => {
+  const layer = e.target;
   const databoxContainer = document.querySelector('[data-id="databoxContainer"]');
   if (databoxContainer && databoxContainer.style.display !== 'none') {
     dataBox.update();
     databoxContainer.style.display = 'none';
   }
-  const layer = e.target;
 
   layer.setStyle({
     fillColor: 'yellow',

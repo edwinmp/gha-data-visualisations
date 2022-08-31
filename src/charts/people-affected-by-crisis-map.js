@@ -104,6 +104,22 @@ const renderMap = (
         mouseout: resetHighlight,
         click: (e) => handleClickFeature(e, mapInstance, dataBox),
       });
+    } else {
+      layer.on({
+        mouseover: () => {
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive');
+          els.forEach((el) => {
+            const elementCopy = el;
+            elementCopy.classList += ' default-cursor-enabled';
+          });
+        },
+        mouseout: () => {
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive.default-cursor-enabled');
+          els.forEach((el) => {
+            el.classList.remove('default-cursor-enabled');
+          });
+        },
+      });
     }
   };
 
