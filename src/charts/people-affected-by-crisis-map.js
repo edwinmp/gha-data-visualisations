@@ -40,7 +40,7 @@ const renderMap = (
       { score: 'Medium', label: 'Medium' },
       { score: 'Low', label: 'Low' },
       { score: 'Very low', label: 'Very low' },
-      { score: 'Not assessed', label: 'Not assessed' },
+      { score: 'Not assessed', label: 'No data' },
     ];
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },

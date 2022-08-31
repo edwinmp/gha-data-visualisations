@@ -97,29 +97,6 @@ const getColor = (score) => {
   }
 };
 
-const onLegendAdd = function (map, variable) {
-  const div = window.L.DomUtil.create('div', 'legend');
-  const covidLegendData = [100, 80, 60, 40, 20, 0];
-  const foodInsecurityData = [26, 21, 16, 11, 6, 0];
-  const peopleInNeedData = [25, 20, 15, 10, 5, 0];
-  const piecewiselegendData = ['Very high', 'High', 'Medium', 'Low', 'Very Low', 'Not assessed'];
-  const legendData = [
-    { variable: 'Severity_score', data: piecewiselegendData },
-    { variable: 'Climate_vulnerability', data: piecewiselegendData },
-    { variable: 'COVID_vaccination_rate', data: covidLegendData },
-    { variable: 'Food_insecure_(millions)', data: foodInsecurityData },
-    { variable: 'People_in_need_(millions)', data: peopleInNeedData },
-  ];
-
-  const legendContent = legendData
-    .find((data) => data.variable === variable)
-    .data.map((data) => `<span><i style="background:${getColor(data)}"></i><label>${data}</label></span>`)
-    .join('');
-  div.innerHTML = legendContent;
-
-  return div;
-};
-
 const onCloseDatabox = (e, databoxElement) => {
   e.stopPropagation();
   databoxElement.update();
@@ -199,7 +176,6 @@ export {
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  onLegendAdd,
   onCloseDatabox,
   handleClickFeature,
   dataBox,
