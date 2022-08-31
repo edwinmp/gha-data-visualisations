@@ -280,11 +280,11 @@
       const a = t(3);
       const o = t(81);
       const i = t.n(o);
-      const l = t(61);
+      const l = t(54);
       const s = t(130);
       const c = t(1);
       const u = t.n(c);
-      const d = t(17);
+      const d = t(16);
       const f = t.n(d);
       const p = t(225);
       const m = t(230).a.div(
@@ -450,7 +450,7 @@
       };
       const C = x;
       const D = t(227);
-      const A = function (e) {
+      const O = function (e) {
         return new Promise((n) => {
           Object(D.parse)(e, {
             download: !0,
@@ -464,7 +464,7 @@
           });
         });
       };
-      const O = function (e) {
+      const A = function (e) {
         let n;
         const t = document.createElement('div');
 
@@ -556,7 +556,7 @@
           !0
         );
       };
-      const T = function (e) {
+      const R = function (e) {
         const n = e.some((e) => e.stack);
         const t = Array.from(new Set(e.map((e) => e.name))).length;
         const r = Math.max.apply(
@@ -576,10 +576,10 @@
           ? 'middle'
           : 'far';
       };
-      const R = j;
-      let k = 'Volumes';
-      const F = { Proportions: 'Proportions', Volumes: 'Absolute', '%GNI': '%GNI' };
-      const L = function (e) {
+      const T = j;
+      let L = 'Volumes';
+      const k = { Proportions: 'Proportions', Volumes: 'Absolute', '%GNI': '%GNI' };
+      const F = function (e) {
         return (
           void 0 === e && (e = ''),
           e.trim() ? Number(e.replace(',', '').replace(' ', '').replace('%', '').trim()) : null
@@ -589,14 +589,14 @@
         return e.map((e) => {
           const n = { ...e };
 
-          return (n.value = L(n.Value)), n;
+          return (n.value = F(n.Value)), n;
         });
       };
       const I = function (e) {
-        return e.filter((e) => (k === '%GNI' ? e === 'Total HA' : e !== 'Total HA'));
+        return e.filter((e) => (L === '%GNI' ? e === 'Total HA' : e !== 'Total HA'));
       };
       const M = function () {
-        return k === '%GNI' ? 'line' : 'bar';
+        return L === '%GNI' ? 'line' : 'bar';
       };
       const U = function (e, n, t, r, a) {
         void 0 === a && (a = 'Proportion');
@@ -619,8 +619,8 @@
       const P = function (e) {
         void 0 === e && (e = 'far');
 
-        return k !== 'Volumes'
-          ? { type: 'value', axisLabel: { formatter: '{value}%' }, name: '', max: k === 'Proportions' ? 100 : null }
+        return L !== 'Volumes'
+          ? { type: 'value', axisLabel: { formatter: '{value}%' }, name: '', max: L === 'Proportions' ? 100 : null }
           : {
               type: 'value',
               axisLabel: { formatter: '{value}' },
@@ -646,8 +646,8 @@
           yAxis: P(),
           series: I(a).map((e) => ({
             name: e,
-            data: U(n, r, 'All donors', e, F[k]).map((e) => ({
-              value: e && Number(k === 'Proportions' ? 100 * e.value : e.value),
+            data: U(n, r, 'All donors', e, k[L]).map((e) => ({
+              value: e && Number(L === 'Proportions' ? 100 * e.value : e.value),
               emphasis: { focus: 'self' },
             })),
             type: M(),
@@ -660,14 +660,14 @@
                     n['IHA type'] === e &&
                     n.Donor === 'All donors' &&
                     `${n.Year}` === t.name &&
-                    n['Value type'] === F[k]
+                    n['Value type'] === k[L]
                 );
                 const a = e.includes('Multilateral HA')
                   ? e.replace('Multilateral HA', 'Multilateral Humanitarian Assistance')
                   : e;
 
                 return `All donors, ${t.name} <br />${a}: <strong>${
-                  k === 'Proportions' ? `${t.value.toFixed(2)}%` : `US$${V(L(r.Value), 'decimal', 'never')} million`
+                  L === 'Proportions' ? `${t.value.toFixed(2)}%` : `US$${V(F(r.Value), 'decimal', 'never')} million`
                 } </strong>`;
               },
             },
@@ -676,9 +676,9 @@
         };
 
         return (
-          (o.yAxis = P(T(o.series))),
-          (R.toolbox.feature.saveAsImage.name = 'donors'),
-          e.setOption(i()(o, R), { replaceMerge: ['series'] }),
+          (o.yAxis = P(R(o.series))),
+          (T.toolbox.feature.saveAsImage.name = 'donors'),
+          e.setOption(i()(o, T), { replaceMerge: ['series'] }),
           e.on('legendselectchanged', (n) => {
             _(e, n);
           }),
@@ -694,13 +694,13 @@
         const s = r
           .map((e) =>
             I(a).map((n, t) => ({
-              name: k !== '%GNI' ? n : e,
-              data: U(i, o, e, n, F[k]).map((e) => ({
-                value: e && typeof e.value === 'number' ? Number(k !== 'Volumes' ? 100 * e.value : e.value) : null,
+              name: L !== '%GNI' ? n : e,
+              data: U(i, o, e, n, k[L]).map((e) => ({
+                value: e && typeof e.value === 'number' ? Number(L !== 'Volumes' ? 100 * e.value : e.value) : null,
                 emphasis: { focus: 'self' },
               })),
               type: l,
-              stack: k !== '%GNI' ? e : void 0,
+              stack: L !== '%GNI' ? e : void 0,
               symbol: 'circle',
               symbolSize: 10,
               connectNulls: l !== 'line' && void 0,
@@ -708,10 +708,10 @@
                 trigger: 'item',
                 formatter(t) {
                   const r = i.find(
-                    (r) => r['IHA type'] === n && r.Donor === e && `${r.Year}` === t.name && r['Value type'] === F[k]
+                    (r) => r['IHA type'] === n && r.Donor === e && `${r.Year}` === t.name && r['Value type'] === k[L]
                   );
                   const a =
-                    k === 'Volumes' ? `US$${V(L(r.Value), 'decimal', 'never')} million` : `${t.value.toFixed(2)}%`;
+                    L === 'Volumes' ? `US$${V(F(r.Value), 'decimal', 'never')} million` : `${t.value.toFixed(2)}%`;
 
                   return `${e}, ${t.name} <br />${n}: <strong>${a}</strong>`;
                 },
@@ -732,7 +732,7 @@
             }))
           )
           .reduce((e, n) => e.concat(n), []);
-        e.setOption({ yAxis: P(T(s)), series: s }, { replaceMerge: ['series'] });
+        e.setOption({ yAxis: P(R(s)), series: s }, { replaceMerge: ['series'] });
       };
       const G = function () {
         window.DICharts.handler.addChart({
@@ -741,10 +741,10 @@
             onAdd(e) {
               Array.prototype.forEach.call(e, (e) => {
                 const n = new window.DICharts.Chart(e.parentElement);
-                A(
+                O(
                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/donor_interactive_data_long.csv'
                 ).then((t) => {
-                  const r = O(e);
+                  const r = A(e);
                   const o = Array.from(new Set(t.map((e) => e.Donor))).sort();
                   const i = Array.from(new Set(t.map((e) => e.Year))).sort();
                   const s = Array.from(new Set(t.map((e) => e['IHA type'])));
@@ -756,7 +756,7 @@
                       selectErrorMessage: 'You can compare two donors. Please remove one before adding another.',
                       donors: o,
                       onSelectDataType(e) {
-                        if (((k = e || k), u.length)) {
+                        if (((L = e || L), u.length)) {
                           const n = t.filter((e) => u.includes(e.Donor));
                           z(c, n, { donors: u, channels: s, years: i });
                         } else $(c, B(t), { years: i, channels: s });
@@ -846,8 +846,8 @@
         };
 
         return (
-          (R.toolbox.feature.saveAsImage.name = 'funding-channels'),
-          e.setOption(i()(o, R), { replaceMerge: ['series'] }),
+          (T.toolbox.feature.saveAsImage.name = 'funding-channels'),
+          e.setOption(i()(o, T), { replaceMerge: ['series'] }),
           e.on('legendselectchanged', (n) => {
             _(e, n);
           }),
@@ -861,13 +861,13 @@
             onAdd(e) {
               Array.prototype.forEach.call(e, (e) => {
                 const n = new window.DICharts.Chart(e.parentElement);
-                A(
+                O(
                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/funding-channels-interactive-data.csv'
                 ).then((t) => {
                   let r;
                   let a;
                   let o;
-                  const i = O(e);
+                  const i = A(e);
                   const s = Array.from(new Set(t.map((e) => e.Donor)));
                   const c = Array.from(new Set(t.map((e) => e.Year)));
                   const d =
@@ -912,11 +912,12 @@
                                       tooltip: {
                                         trigger: 'item',
                                         formatter(t) {
-                                          const r = i.find(
-                                            (r) =>
+                                          const r = i.find((r) => {
+                                            return (
                                               r['Delivery channel'] === n && r.Donor === e && `${r.Year}` === t.name
-                                          );
-                                          const a = r
+                                            );
+                                          });
+                                          let a = r
                                             ? `<strong>${(100 * r.value).toFixed(2)}%</strong> (US$${q(
                                                 Y(r['US$ millions, constant 2020 prices']),
                                                 'decimal',
@@ -1099,9 +1100,9 @@
         };
 
         return (
-          (l.yAxis = se(T(l.series))),
-          (R.toolbox.feature.saveAsImage.name = 'recipients'),
-          e.setOption(i()(l, R), { replaceMerge: ['series'] }),
+          (l.yAxis = se(R(l.series))),
+          (T.toolbox.feature.saveAsImage.name = 'recipients'),
+          e.setOption(i()(l, T), { replaceMerge: ['series'] }),
           e.on('legendselectchanged', (n) => {
             _(e, n);
           }),
@@ -1127,7 +1128,7 @@
             },
           }))
           .reduce((e, n) => e.concat(n), []);
-        e.setOption({ yAxis: se(T(i)), series: i }, { replaceMerge: ['series'] });
+        e.setOption({ yAxis: se(R(i)), series: i }, { replaceMerge: ['series'] });
       };
       const de = function (e, n, t) {
         const r = t.recipient;
@@ -1163,7 +1164,7 @@
             },
           }))
           .reduce((e, n) => e.concat(n), []);
-        e.setOption({ yAxis: se(T(o)), series: o }, { replaceMerge: ['series'] });
+        e.setOption({ yAxis: se(R(o)), series: o }, { replaceMerge: ['series'] });
       };
       const fe = function () {
         window.DICharts.handler.addChart({
@@ -1195,7 +1196,7 @@
                               return (
                                 (t = new window.DICharts.Chart(n.parentElement)),
                                 (e.next = 3),
-                                A(
+                                O(
                                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/recipients-by-donor.csv'
                                 )
                               );
@@ -1203,13 +1204,13 @@
                               return (
                                 (r = e.sent),
                                 (e.next = 6),
-                                A(
+                                O(
                                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/recipients-by-org-type.csv'
                                 )
                               );
                             case 6:
                               (a = e.sent),
-                                (o = O(n)),
+                                (o = A(n)),
                                 (i = Array.from(
                                   new Set(
                                     r
@@ -1405,7 +1406,7 @@
           this.div.innerHTML = e
             ? `<div>${
                 e.name
-              } <button id=closeDatabox><img src=https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg height=20 width=20 ></img></button></div> <br> ${((n =
+              } <button id=closeDatabox><img src=https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg alt=close height=20 width=20 ></img></button></div> <br> ${((n =
                 e),
               [
                 {
@@ -1414,7 +1415,7 @@
                     (r = n['Country_response_plan_coverage_(%)']),
                     t ? `${r}% funded[US$${Math.round((Number(r) / 100) * Number(t))}  of US$${t}]` : 'None'),
                   label: 'Country response plan',
-                  icon: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg',
+                  icon: { image: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg', text: 'response-plan' },
                 },
                 {
                   value: be(
@@ -1422,10 +1423,13 @@
                     n['Regional_response_plan_funding_(US$,_million)']
                   ),
                   label: 'Regional response plan',
-                  icon: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg',
+                  icon: { image: 'https://devinit.org/assets/svg/icons/response-plan-icon.svg', text: 'response-plan' },
                 },
               ])
-                .map((e) => `<span><img src=${e.icon} height=20 width=20 ></img><p>${e.label}: ${e.value}</p> </span>`)
+                .map(
+                  (e) =>
+                    `<span><img src=${e.icon.image} alt=${e.icon.text} height=20 width=20 ></img><p>${e.label}: ${e.value}</p> </span>`
+                )
                 .join('')}`
             : '';
           const a = document.getElementById('closeDatabox');
@@ -1438,7 +1442,12 @@
               })(e, ge)
             );
         });
-      const he = function (e, n, t, r, a, o, i, l) {
+      const he = function (e) {
+        return u.a.createElement('button', { className: 'reset-button', onClick: e.onReset }, 'Reset');
+      };
+      he.propTypes = { onReset: f.a.func };
+      const ye = he;
+      const we = function (e, n, t, r, a, o, i, l) {
         let s;
         const c = i;
         (c.onAdd = function () {
@@ -1501,16 +1510,18 @@
             r.on({
               mouseover(n) {
                 return (function (e, n, t) {
-                  const r = e.target;
-                  r.setStyle({ fillColor: 'yellow', color: 'black', weight: 2 }),
-                    window.L.Browser.ie || window.L.Browser.opera || window.L.Browser.edge || r.bringToFront(),
-                    r
+                  const r = document.querySelector('[data-id="databoxContainer"]');
+                  r && r.style.display !== 'none' && (ge.update(), (r.style.display = 'none'));
+                  const a = e.target;
+                  a.setStyle({ fillColor: 'yellow', color: 'black', weight: 2 }),
+                    window.L.Browser.ie || window.L.Browser.opera || window.L.Browser.edge || a.bringToFront(),
+                    a
                       .bindPopup(
-                        r.feature.properties[n]
-                          ? `<div>${r.feature.properties.name}<br>${t.find((e) => e.name === n).label}: ${
-                              r.feature.properties[n]
-                            }${t.find((e) => e.name === n).unit}</div>`
-                          : `<div>${r.feature.properties.name}<br> No data</div>`
+                        a.feature.properties[n]
+                          ? `<div>${a.feature.properties.name}<br>${t.find((e) => e.name === n).label}:${
+                              a.feature.properties[n]
+                            }<span style="padding-left: 2px;">${t.find((e) => e.name === n).unit}</span></div>`
+                          : `<div>${a.feature.properties.name}<br> No data</div>`
                       )
                       .openPopup();
                 })(n, e, o);
@@ -1538,7 +1549,7 @@
           )),
           l.addLayer(s);
       };
-      const ye = function () {
+      const Se = function () {
         window.DICharts.handler.addChart({
           className: 'dicharts--gha-people-affected-by-crisis-leaflet',
           echarts: {
@@ -1552,7 +1563,7 @@
                   center: [0, 0],
                   zoom: 1,
                 });
-                const r = O(e);
+                const r = A(e);
                 const o = [
                   { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
                   { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise', unit: '' },
@@ -1579,7 +1590,8 @@
                   },
                 ];
                 const i = window.L.control({ position: 'topright' });
-                const s = function (e) {
+                const s = window.L.control({ position: 'bottomleft' });
+                const c = function (e) {
                   switch (e) {
                     case '5':
                       return '#7F1850';
@@ -1596,7 +1608,7 @@
                       return '#E6E1E5';
                   }
                 };
-                const c = function (e, n) {
+                const u = function (e, n) {
                   return e === ''
                     ? '#E6E1E5'
                     : Number(e) > n[1]
@@ -1618,20 +1630,20 @@
                     )
                     .then((e) => e.json())
                     .then((e) => {
-                      const u = e.features;
-                      A(
+                      const d = e.features;
+                      O(
                         'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/map_data_long.csv'
                       ).then((e) => {
-                        let d;
-                        const f =
-                          ((d = u),
+                        let f;
+                        const p =
+                          ((f = d),
                           e.map((e) => {
                             const n = { ...e };
-                            const t = d.find((e) => e.properties.iso_a3 === n.Country_ID);
+                            const t = f.find((e) => e.properties.iso_a3 === n.Country_ID);
 
                             return t && (n.Country_name = t.properties.name), n;
                           }));
-                        const p = (function (e, n) {
+                        const m = (function (e, n) {
                           const t = [];
 
                           return (
@@ -1645,24 +1657,33 @@
                             }),
                             t
                           );
-                        })(Array.from(new Set(f.map((e) => e.Country_name))), f);
-                        const m = window.L.featureGroup().addTo(t);
+                        })(Array.from(new Set(p.map((e) => e.Country_name))), p);
+                        const b = window.L.featureGroup().addTo(t);
+                        const v = function () {
+                          t.setView([0, 0], 1);
+                        };
                         Object(l.createRoot)(r).render(
                           Object(a.c)(me, {
                             onSelectDimension(e) {
-                              he(e, t, o.find((n) => n.name === e).scaleType === 'continous' ? c : s, u, p, o, i, m);
+                              we(e, t, o.find((n) => n.name === e).scaleType === 'continous' ? u : c, d, m, o, i, b);
                             },
                           })
                         ),
-                          he(
+                          (s.onAdd = function () {
+                            const e = window.L.DomUtil.create('div');
+
+                            return Object(l.createRoot)(e).render(Object(a.c)(ye, { onReset: v })), e;
+                          }),
+                          s.addTo(t),
+                          we(
                             'Severity_score',
                             t,
-                            o.find((e) => e.name === 'Severity_score').scaleType === 'continous' ? c : s,
-                            u,
-                            p,
+                            o.find((e) => e.name === 'Severity_score').scaleType === 'continous' ? u : c,
+                            d,
+                            m,
                             o,
                             i,
-                            m
+                            b
                           ),
                           n.hideLoading();
                       });
@@ -1675,7 +1696,7 @@
       };
       t(581);
       window.addEventListener('load', () => {
-        G(), Z(), fe(), ye();
+        G(), Z(), fe(), Se();
       });
     },
   },
