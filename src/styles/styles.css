@@ -137,3 +137,11 @@
 .reset-button:hover {
   border: 1px solid #8f1b13 !important;
 }
+
+#closeDatabox img {
+  filter: invert(76%) sepia(4%) saturate(24%) hue-rotate(334deg) brightness(91%) contrast(93%);
+}
+
+#closeDatabox img:hover {
+  filter: invert(42%) sepia(43%) saturate(23%) hue-rotate(339deg) brightness(101%) contrast(93%);
+}
