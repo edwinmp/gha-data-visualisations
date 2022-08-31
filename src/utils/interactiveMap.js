@@ -22,7 +22,7 @@ const dataBoxContent = (data) => [
       data['Country_response_plan_coverage_(%)']
     ),
     label: 'Country response plan',
-    icon: responsePlan,
+    icon: { image: responsePlan, text: 'response-plan' },
   },
   {
     value: getRegionalResponsePlan(
@@ -30,7 +30,7 @@ const dataBoxContent = (data) => [
       data['Regional_response_plan_funding_(US$,_million)']
     ),
     label: 'Regional response plan',
-    icon: responsePlan,
+    icon: { image: responsePlan, text: 'response-plan' },
   },
 ];
 
@@ -156,11 +156,12 @@ dataBox.update = function (props) {
   this.div.innerHTML = props
     ? `<div>${
         props.name
-      } <button id=closeDatabox><img src=${closeIcon} height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+      } <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
         props
       )
         .map(
-          (item) => `<span><img src=${item.icon} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
+          (item) =>
+            `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
         )
         .join('')}`
     : '';
