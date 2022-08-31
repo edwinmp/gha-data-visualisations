@@ -9,7 +9,7 @@ import {
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  getLegendColor,
+  getColor,
   handleClickFeature,
   dataBox,
 } from '../utils/interactiveMap';
@@ -35,12 +35,12 @@ const renderMap = (
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
     const piecewiselegendData = [
-      { score: '5', label: '5 - Very High' },
-      { score: '4', label: '4 - High' },
-      { score: '3', label: '3 - Medium' },
-      { score: '2', label: '2 - Low' },
-      { score: '1', label: '1 - Very Low' },
-      { score: '', label: 'Not assessed' },
+      { score: 'Very high', label: 'Very high' },
+      { score: 'High', label: 'High' },
+      { score: 'Medium', label: 'Medium' },
+      { score: 'Low', label: 'Low' },
+      { score: 'Very low', label: 'Very low' },
+      { score: 'Not assessed', label: 'Not assessed' },
     ];
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
@@ -68,9 +68,7 @@ const renderMap = (
             .find((items) => items.variable === dimensionVariable)
             .data.map(
               (dataItems) =>
-                `<span><i style="background:${getLegendColor(dataItems.score)}"></i><label>${
-                  dataItems.label
-                }</label></span>`
+                `<span><i style="background:${getColor(dataItems.score)}"></i><label>${dataItems.label}</label></span>`
             )
             .join('');
     div.innerHTML = legendContent;
@@ -184,25 +182,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
 
           // const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
           // stripes.addTo(map);
-
-          const getColor = (score) => {
-            switch (score) {
-              case '5':
-                return '#7F1850';
-              case '4':
-                return '#AD1156';
-              case '3':
-                return '#D64279';
-              case '2':
-                return '#E4819B';
-              case '1':
-                return '#F6B9C2';
-              case '':
-                return '#E6E1E5';
-              default:
-                return '#E6E1E5';
-            }
-          };
 
           const getColorContinous = (d, numberRange) => {
             if (d === '') {
