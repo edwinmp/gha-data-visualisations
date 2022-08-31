@@ -34,32 +34,6 @@ const dataBoxContent = (data) => [
   },
 ];
 
-const highlightFeature = (e, variable, filterOptions) => {
-  const layer = e.target;
-
-  layer.setStyle({
-    fillColor: 'yellow',
-    color: 'black',
-    weight: 2,
-  });
-
-  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
-    layer.bringToFront();
-  }
-  // Bind popup to layer
-  layer
-    .bindPopup(
-      layer.feature.properties[variable]
-        ? `<div>${layer.feature.properties.name}<br>${filterOptions.find((option) => option.name === variable).label}:${
-            layer.feature.properties[variable]
-          }<span style="padding-left: 2px;">${
-            filterOptions.find((option) => option.name === variable).unit
-          }</span></div>`
-        : `<div>${layer.feature.properties.name}<br> No data</div>`
-    )
-    .openPopup();
-};
-
 const matchCountryNames = (csvData, worldData) => {
   const matchedData = csvData.map((stream) => {
     const streamCopy = { ...stream };
@@ -194,6 +168,37 @@ dataBox.update = function (props) {
   if (closeButton) {
     closeButton.addEventListener('click', (e) => onCloseDatabox(e, dataBox));
   }
+};
+
+const highlightFeature = (e, variable, filterOptions) => {
+  const databoxContainer = document.querySelector('[data-id="databoxContainer"]');
+  if (databoxContainer && databoxContainer.style.display !== 'none') {
+    dataBox.update();
+    databoxContainer.style.display = 'none';
+  }
+  const layer = e.target;
+
+  layer.setStyle({
+    fillColor: 'yellow',
+    color: 'black',
+    weight: 2,
+  });
+
+  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
+    layer.bringToFront();
+  }
+  // Bind popup to layer
+  layer
+    .bindPopup(
+      layer.feature.properties[variable]
+        ? `<div>${layer.feature.properties.name}<br>${filterOptions.find((option) => option.name === variable).label}:${
+            layer.feature.properties[variable]
+          }<span style="padding-left: 2px;">${
+            filterOptions.find((option) => option.name === variable).unit
+          }</span></div>`
+        : `<div>${layer.feature.properties.name}<br> No data</div>`
+    )
+    .openPopup();
 };
 
 export {
