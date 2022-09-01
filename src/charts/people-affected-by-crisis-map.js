@@ -46,16 +46,18 @@ const renderMap = (
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
-      { variable: 'COVID_vaccination_rate', max: '100(%)' },
-      { variable: 'Food_insecure_(millions)', max: '26(million)' },
-      { variable: 'People_in_need_(millions)', max: '25(million)' },
+      { variable: 'COVID_vaccination_rate', max: '0(%)', min: '100(%)' },
+      { variable: 'Food_insecure_(millions)', max: '26(million)', min: '0(million)' },
+      { variable: 'People_in_need_(millions)', max: '25(million)', min: '0(million)' },
     ];
 
     const legendColors = ['#F6B9C2', '#E4819B', '#D64279', '#AD1156', '#7F1850'];
 
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `<p style="margin-right:1px;margin-top:5px;">0<p>${legendColors
+        ? `<p style="margin-right:1px;margin-top:5px;">${
+            legendData.find((items) => items.variable === dimensionVariable).min
+          }<p>${legendColors
             .map(
               (color) =>
                 `<span>
@@ -83,7 +85,8 @@ const renderMap = (
         ? colorFunction(feature.properties[dimensionVariable])
         : colorFunction(
             feature.properties[dimensionVariable],
-            filterOptions.find((opts) => opts.name === dimensionVariable).values
+            filterOptions.find((opts) => opts.name === dimensionVariable).values,
+            dimensionVariable
           ),
     weight: 1,
     opacity: 1,
@@ -158,7 +161,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
               name: 'COVID_vaccination_rate',
               label: 'Covid-19 vaccination rate',
               scaleType: 'continous',
-              values: [100, 80, 60, 40, 20, 0],
+              values: [0, 20, 40, 60, 80, 100],
               unit: '%',
             },
             {
@@ -184,23 +187,23 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
           // stripes.addTo(map);
 
-          const getColorContinous = (d, numberRange) => {
-            if (d === '') {
+          const getColorContinous = (d, numberRange, dimension) => {
+            if (d === 'No data') {
               return '#E6E1E5';
             }
-            if (Number(d) > numberRange[1]) {
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[1] : Number(d) > numberRange[1]) {
               return '#7F1850';
             }
-            if (Number(d) > numberRange[2]) {
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[2] : Number(d) > numberRange[2]) {
               return '#AD1156';
             }
-            if (Number(d) > numberRange[3]) {
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[3] : Number(d) > numberRange[3]) {
               return '#D64279';
             }
-            if (Number(d) > numberRange[4]) {
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[4] : Number(d) > numberRange[4]) {
               return '#E4819B';
             }
-            if (Number(d) >= numberRange[5]) {
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) <= numberRange[5] : Number(d) >= numberRange[5]) {
               return '#F6B9C2';
             }
 
