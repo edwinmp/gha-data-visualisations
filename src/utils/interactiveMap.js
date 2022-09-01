@@ -156,8 +156,8 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
   }
 
   layer.setStyle({
-    fillColor: 'yellow',
-    color: 'black',
+    fillColor: '#f7a838',
+    color: '#484848',
     weight: 2,
   });
 
