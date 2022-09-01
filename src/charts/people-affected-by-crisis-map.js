@@ -50,8 +50,7 @@ const renderMap = (
       { variable: 'Food_insecure_(millions)', max: '26(million)', min: '0(million)' },
       { variable: 'People_in_need_(millions)', max: '25(million)', min: '0(million)' },
     ];
-
-    const legendColors = ['#F6B9C2', '#E4819B', '#D64279', '#AD1156', '#7F1850'];
+    const legendColors = ['#77adde', '#5da3d9', '#0089cc', '#0071b1', '#0c457b'];
 
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
@@ -192,19 +191,19 @@ function renderPeopleAffectedByCrisisLeaflet() {
               return '#E6E1E5';
             }
             if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[1] : Number(d) > numberRange[1]) {
-              return '#7F1850';
+              return '#0c457b';
             }
             if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[2] : Number(d) > numberRange[2]) {
-              return '#AD1156';
+              return '#0071b1';
             }
             if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[3] : Number(d) > numberRange[3]) {
-              return '#D64279';
+              return '#0089cc';
             }
             if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[4] : Number(d) > numberRange[4]) {
-              return '#E4819B';
+              return '#5da3d9';
             }
             if (dimension === 'COVID_vaccination_rate' ? Number(d) <= numberRange[5] : Number(d) >= numberRange[5]) {
-              return '#F6B9C2';
+              return '#77adde';
             }
 
             return '#E6E1E5';

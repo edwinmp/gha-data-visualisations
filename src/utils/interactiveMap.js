@@ -88,15 +88,15 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
 const getColor = (score) => {
   switch (score) {
     case 'Very high':
-      return '#7F1850';
+      return '#0c457b';
     case 'High':
-      return '#AD1156';
+      return '#0071b1';
     case 'Medium':
-      return '#D64279';
+      return '#0089cc';
     case 'Low':
-      return '#E4819B';
+      return '#5da3d9';
     case 'Very low':
-      return '#F6B9C2';
+      return '#77adde';
     case 'Not assessed':
       return '#E6E1E5';
     default:
