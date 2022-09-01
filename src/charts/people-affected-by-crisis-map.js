@@ -36,12 +36,12 @@ const renderMap = (
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
     const piecewiselegendData = [
-      { score: 'Very high', label: 'Very high' },
-      { score: 'High', label: 'High' },
-      { score: 'Medium', label: 'Medium' },
-      { score: 'Low', label: 'Low' },
-      { score: 'Very low', label: 'Very low' },
       { score: 'Not assessed', label: 'No data' },
+      { score: 'Very low', label: 'Very low' },
+      { score: 'Low', label: 'Low' },
+      { score: 'Medium', label: 'Medium' },
+      { score: 'High', label: 'High' },
+      { score: 'Very high', label: 'Very high' },
     ];
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
