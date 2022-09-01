@@ -33,6 +33,13 @@ const dataBoxContent = (data) => [
     icon: { image: responsePlan, text: 'response-plan' },
   },
 ];
+const getOriginalCountryName = (csv, code) => {
+  const countryMap = csv.map((stream) => ({ id: stream.Country_ID, name: stream.Country_name }));
+  const countryIds = Array.from(new Set(csv.map((data) => data.Country_ID)));
+  const originalCountries = countryMap.slice(0, countryIds.length);
+
+  return originalCountries.find((country) => country.id === code).name;
+};
 
 const matchCountryNames = (csvData, worldData) => {
   const matchedData = csvData.map((stream) => {
@@ -139,7 +146,7 @@ dataBox.update = function (props) {
   }
 };
 
-const highlightFeature = (e, variable, filterOptions) => {
+const highlightFeature = (e, variable, filterOptions, csvData) => {
   const layer = e.target;
   const databoxContainer = document.querySelector('[data-id="databoxContainer"]');
   if (databoxContainer && databoxContainer.style.display !== 'none') {
@@ -160,7 +167,7 @@ const highlightFeature = (e, variable, filterOptions) => {
   layer
     .bindPopup(
       layer.feature.properties[variable]
-        ? `<div>${layer.feature.properties.name}<br>${
+        ? `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br>${
             filterOptions.find((option) => option.name === variable).label
           }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
             filterOptions.find((option) => option.name === variable).unit

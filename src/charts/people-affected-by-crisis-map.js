@@ -27,7 +27,8 @@ const renderMap = (
   processed,
   filterOptions,
   legendInstance,
-  groupInstance
+  groupInstance,
+  csvData
 ) => {
   let geojsonLayer;
 
@@ -98,7 +99,7 @@ const renderMap = (
   const onEachFeature = (feature, layer) => {
     if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
       layer.on({
-        mouseover: (e) => highlightFeature(e, dimensionVariable, filterOptions),
+        mouseover: (e) => highlightFeature(e, dimensionVariable, filterOptions, csvData),
         mouseout: resetHighlight,
         click: (e) => handleClickFeature(e, mapInstance, dataBox),
       });
@@ -229,7 +230,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     groupedData,
                     filterOptions,
                     legend,
-                    fg
+                    fg,
+                    data
                   );
                 };
 
@@ -263,7 +265,8 @@ function renderPeopleAffectedByCrisisLeaflet() {
                   groupedData,
                   filterOptions,
                   legend,
-                  fg
+                  fg,
+                  data
                 );
                 dichart.hideLoading();
               });
