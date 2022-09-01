@@ -5,7 +5,7 @@ const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-ico
 const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
 const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
 const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
-const foodSecurity = 'https://devinit.org/assets/svg/icons/food-security.svg';
+const foodSecurity = 'https://dev.devinit.org/assets/svg/icons/food-security.svg';
 
 const MapFilters = (props) => {
   const [dimension, setDimension] = useState('Severity_score');
