@@ -101,7 +101,7 @@ const renderMap = (
       layer.on({
         mouseover: (e) => highlightFeature(e, dimensionVariable, filterOptions, csvData),
         mouseout: resetHighlight,
-        click: (e) => handleClickFeature(e, mapInstance, dataBox),
+        click: (e) => handleClickFeature(e, mapInstance, dataBox, csvData),
       });
     } else {
       layer.on({

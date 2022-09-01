@@ -111,10 +111,10 @@ const onCloseDatabox = (e, databoxElement) => {
   databoxContainer.style.display = 'none';
 };
 
-const handleClickFeature = (e, mapInstance, databoxInstance) => {
+const handleClickFeature = (e, mapInstance, databoxInstance, csv) => {
   databoxInstance.addTo(mapInstance);
   const layer = e.target;
-  databoxInstance.update(layer.feature.properties);
+  databoxInstance.update(layer.feature.properties, csv);
 };
 
 // data box
@@ -127,12 +127,13 @@ dataBox.onAdd = function () {
   return this.div;
 };
 
-dataBox.update = function (props) {
-  this.div.innerHTML = props
-    ? `<div>${
-        props.name
-      } <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
-        props
+dataBox.update = function (properties, csv) {
+  this.div.innerHTML = properties
+    ? `<div>${getOriginalCountryName(
+        csv,
+        properties.iso_a3
+      )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+        properties
       )
         .map(
           (item) =>
