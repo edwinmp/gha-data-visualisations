@@ -111,11 +111,11 @@
 .mapFilterButton {
   display: flex;
   color: #ddd;
-  /* border-color: '#ddd' !important; */
 }
 
 .mapFilterItem p {
   padding-top: 3px;
+  margin-left: 2px;
 }
 
 .mapFilterButton:hover {
