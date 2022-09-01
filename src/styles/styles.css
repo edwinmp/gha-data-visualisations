@@ -118,10 +118,6 @@
   margin-left: 2px;
 }
 
-.mapFilterButton:hover {
-  color: black !important;
-}
-
 .mapFilterItem-active {
   color: black;
 }
