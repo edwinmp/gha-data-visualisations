@@ -35,10 +35,8 @@ const dataBoxContent = (data) => [
 ];
 const getOriginalCountryName = (csv, code) => {
   const countryMap = csv.map((stream) => ({ id: stream.Country_ID, name: stream.Country_name }));
-  const countryIds = Array.from(new Set(csv.map((data) => data.Country_ID)));
-  const originalCountries = countryMap.slice(0, countryIds.length);
 
-  return originalCountries.find((country) => country.id === code).name;
+  return countryMap.find((country) => country.id === code).name;
 };
 
 const matchCountryNames = (csvData, worldData) => {
