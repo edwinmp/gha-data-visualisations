@@ -1,6 +1,6 @@
 import { parse } from 'papaparse';
 
-export const ACTIVE_BRANCH = 'feature/map-filters';
+export const ACTIVE_BRANCH = 'main';
 
 const fetchCSVData = (url) =>
   new Promise((resolve) => {
