@@ -104,25 +104,30 @@
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
   background: rgba(255,255,255);
-  border: 1px solid #ddd !important;
+  color: #ddd !important;
   margin-right: 5px;
 }
 
-.mapFilterItem button {
+.mapFilterButton {
   display: flex;
-  border-color: '#ddd' !important;
+  color: #ddd;
+  /* border-color: '#ddd' !important; */
 }
 
 .mapFilterItem p {
   padding-top: 3px;
 }
 
-.mapFilterItem:hover {
-  border: 1px solid #8f1b13 !important;
+.mapFilterButton:hover {
+  color: black !important;
 }
 
 .mapFilterItem-active {
-  border: 1px solid #8f1b13 !important;
+  color: black;
+}
+
+.icon-disabled {
+  filter: invert(74%) sepia(99%) saturate(1%) hue-rotate(315deg) brightness(95%) contrast(102%);
 }
 
 .reset-button {
