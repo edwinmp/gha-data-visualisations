@@ -5,7 +5,7 @@ const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-ico
 const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
 const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
 const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
-const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
+const foodSecurity = 'https://devinit.org/assets/svg/icons/food-security.svg';
 
 const MapFilters = (props) => {
   const [dimension, setDimension] = useState('Severity_score');
@@ -16,7 +16,7 @@ const MapFilters = (props) => {
     { name: 'Severity_score', label: 'Severity of crisis', icon: crisisSeverity },
     { name: 'Climate_vulnerability', label: 'Climate vulnerability', icon: climateVulnerability },
     { name: 'COVID_vaccination_rate', label: 'Covid-19 vaccination rate', icon: covidVaccination },
-    { name: 'Food_insecure_(millions)', label: 'Food insecurity', icon: responsePlan },
+    { name: 'Food_insecure_(millions)', label: 'Food insecurity', icon: foodSecurity },
     { name: 'People_in_need_(millions)', label: 'People in need', icon: peopleInNeed },
   ];
 
@@ -39,7 +39,7 @@ const MapFilters = (props) => {
                   width="20"
                   className={dimension === option.name ? '' : 'icon-disabled'}
                 />
-                <p>{option.label}</p>
+                <p className={option.name === 'Food_insecure_(millions)' ? 'food-icon' : ''}>{option.label}</p>
               </button>
             </>
           ) : (
