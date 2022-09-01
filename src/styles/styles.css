@@ -150,6 +150,6 @@
   filter: invert(42%) sepia(43%) saturate(23%) hue-rotate(339deg) brightness(101%) contrast(93%);
 }
 
-.leaflet-interactive.default-cursor-enabled {
-  cursor: default !important;
+.leaflet-interactive.grab-cursor-enabled {
+  cursor: grab !important;
 }

@@ -111,13 +111,13 @@ const renderMap = (
           const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive');
           els.forEach((el) => {
             const elementCopy = el;
-            elementCopy.classList += ' default-cursor-enabled';
+            elementCopy.classList += ' grab-cursor-enabled';
           });
         },
         mouseout: () => {
-          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive.default-cursor-enabled');
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive.grab-cursor-enabled');
           els.forEach((el) => {
-            el.classList.remove('default-cursor-enabled');
+            el.classList.remove('grab-cursor-enabled');
           });
         },
       });
