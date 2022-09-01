@@ -1,78 +1,28 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
-const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
-const crisisDuration = 'https://devinit.org/assets/svg/icons/crisis-duration-icon.svg';
-const crisisType = 'https://devinit.org/assets/svg/icons/crisis-type-icon.svg';
-const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
-const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
 
-const getCrisisType = (data) => {
-  const finalValue = [];
-  if (Number(data.Conflict_marker) > 0) {
-    finalValue.push('Conflict');
-  }
-  if (Number(data.Displacement_marker) > 0) {
-    finalValue.push('Displacement');
-  }
-  if (Number(data.Physical_disaster_marker) > 0) {
-    finalValue.push('Natural hazard');
-  }
-
-  return finalValue.join(', ');
-};
-const getSeverity = (score) => {
-  switch (score) {
-    case '5':
-      return 'Very high';
-    case '4':
-      return 'High';
-    case '3':
-      return 'Medium';
-    case '2':
-      return 'Low';
-    case '1':
-      return 'Very Low';
-    case '':
-      return 'Not assessed';
-    default:
-      return '';
-  }
-};
-
-const getCrisisDuration = (data) => `${data['Protracted/Recurrent_crisis']}, ${data.Years_of_consecutive_crisis} years`;
 const getCountryResponsePlan = (requirement, coverage) => {
   if (requirement) {
     const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
 
-    return `${coverage}% funded[US$${fundInDollars}  of ${requirement}]`;
+    return `${coverage}% funded[US$${fundInDollars}  of US$${requirement}]`;
   }
 
-  return 'Not assessed';
+  return 'None';
 };
 const getRegionalResponsePlan = (requirement, funds) =>
   requirement
-    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of ${requirement}]`
-    : 'Not assessed';
+    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of US$${requirement}]`
+    : 'None';
 
 const dataBoxContent = (data) => [
-  { value: data['People_in_need_(millions)'], label: 'People in need', icon: peopleInNeed },
-  { value: getCrisisType(data), label: 'Crisis type', icon: crisisType },
-  { value: getSeverity(data.Severity_score), label: 'Severity of crisis', icon: crisisSeverity },
-  { value: getCrisisDuration(data), label: 'Crisis duration', icon: crisisDuration },
-  {
-    value: `${data.COVID_vaccination_rate}% of the population vaccinated`,
-    label: 'Covid vaccinations',
-    icon: covidVaccination,
-  },
-  { value: getSeverity(data.Climate_vulnerability), label: 'Climate vulnerability', icon: climateVulnerability },
   {
     value: getCountryResponsePlan(
       data['Country_response_plan_requirements_(US$,_million)'],
       data['Country_response_plan_coverage_(%)']
     ),
     label: 'Country response plan',
-    icon: responsePlan,
+    icon: { image: responsePlan, text: 'response-plan' },
   },
   {
     value: getRegionalResponsePlan(
@@ -80,32 +30,15 @@ const dataBoxContent = (data) => [
       data['Regional_response_plan_funding_(US$,_million)']
     ),
     label: 'Regional response plan',
-    icon: responsePlan,
+    icon: { image: responsePlan, text: 'response-plan' },
   },
 ];
+const getOriginalCountryName = (csv, code) => {
+  const countryMap = csv.map((stream) => ({ id: stream.Country_ID, name: stream.Country_name }));
+  const countryIds = Array.from(new Set(csv.map((data) => data.Country_ID)));
+  const originalCountries = countryMap.slice(0, countryIds.length);
 
-const highlightFeature = (e, variable, filterOptions) => {
-  const layer = e.target;
-
-  layer.setStyle({
-    fillColor: 'yellow',
-    color: 'black',
-    weight: 2,
-  });
-
-  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
-    layer.bringToFront();
-  }
-  // Bind popup to layer
-  layer
-    .bindPopup(
-      layer.feature.properties[variable]
-        ? `<div>${layer.feature.properties.name}<br>${
-            filterOptions.find((option) => option.name === variable).label
-          }: ${layer.feature.properties[variable]}</div>`
-        : layer.feature.properties.name
-    )
-    .openPopup();
+  return originalCountries.find((country) => country.id === code).name;
 };
 
 const matchCountryNames = (csvData, worldData) => {
@@ -152,42 +85,23 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
     return featureCopy;
   });
 
-const getLegendColor = (score) => {
+const getColor = (score) => {
   switch (score) {
-    case '5':
+    case 'Very high':
       return '#7F1850';
-    case '4':
+    case 'High':
       return '#AD1156';
-    case '3':
+    case 'Medium':
       return '#D64279';
-    case '2':
+    case 'Low':
       return '#E4819B';
-    case '1':
+    case 'Very low':
       return '#F6B9C2';
-    case '':
-      return 'repeating-linear-gradient(45deg, grey 0, grey 3px, transparent 3px, transparent 6px)';
+    case 'Not assessed':
+      return '#E6E1E5';
     default:
       return '#E6E1E5';
   }
-};
-
-const onLegendAdd = () => {
-  const div = window.L.DomUtil.create('div', 'legend');
-  const legendData = [
-    { score: '5', label: '5 - Very High' },
-    { score: '4', label: '4 - High' },
-    { score: '3', label: '3 - Medium' },
-    { score: '2', label: '2 - Low' },
-    { score: '1', label: '1 - Very Low' },
-    { score: '', label: 'Not assessed' },
-  ];
-
-  const legendContent = legendData
-    .map((data) => `<span><i style="background:${getLegendColor(data.score)}"></i><label>${data.label}</label></span>`)
-    .join('');
-  div.innerHTML = legendContent;
-
-  return div;
 };
 
 const onCloseDatabox = (e, databoxElement) => {
@@ -197,10 +111,10 @@ const onCloseDatabox = (e, databoxElement) => {
   databoxContainer.style.display = 'none';
 };
 
-const handleClickFeature = (e, mapInstance, databoxInstance) => {
+const handleClickFeature = (e, mapInstance, databoxInstance, csv) => {
   databoxInstance.addTo(mapInstance);
   const layer = e.target;
-  databoxInstance.update(layer.feature.properties);
+  databoxInstance.update(layer.feature.properties, csv);
 };
 
 // data box
@@ -213,15 +127,17 @@ dataBox.onAdd = function () {
   return this.div;
 };
 
-dataBox.update = function (props) {
-  this.div.innerHTML = props
-    ? `<div>${
-        props.name
-      } <button id=closeDatabox><img src=${closeIcon} height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
-        props
+dataBox.update = function (properties, csv) {
+  this.div.innerHTML = properties
+    ? `<div>${getOriginalCountryName(
+        csv,
+        properties.iso_a3
+      )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+        properties
       )
         .map(
-          (item) => `<span><img src=${item.icon} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
+          (item) =>
+            `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
         )
         .join('')}`
     : '';
@@ -231,14 +147,45 @@ dataBox.update = function (props) {
   }
 };
 
+const highlightFeature = (e, variable, filterOptions, csvData) => {
+  const layer = e.target;
+  const databoxContainer = document.querySelector('[data-id="databoxContainer"]');
+  if (databoxContainer && databoxContainer.style.display !== 'none') {
+    dataBox.update();
+    databoxContainer.style.display = 'none';
+  }
+
+  layer.setStyle({
+    fillColor: 'yellow',
+    color: 'black',
+    weight: 2,
+  });
+
+  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
+    layer.bringToFront();
+  }
+  // Bind popup to layer
+  layer
+    .bindPopup(
+      layer.feature.properties[variable] !== 'No data' && layer.feature.properties[variable] !== 'Not assessed'
+        ? `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br>${
+            filterOptions.find((option) => option.name === variable).label
+          }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
+            filterOptions.find((option) => option.name === variable).unit
+          }</span></div>`
+        : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> No data</div>`
+    )
+    .openPopup();
+};
+
 export {
   dataBoxContent,
   highlightFeature,
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  onLegendAdd,
   onCloseDatabox,
   handleClickFeature,
   dataBox,
+  getColor,
 };

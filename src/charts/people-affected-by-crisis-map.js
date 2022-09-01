@@ -1,17 +1,140 @@
+/** @jsx jsx */
 import 'leaflet.pattern';
+import { jsx } from '@emotion/react';
+import { createRoot } from 'react-dom/client';
+import MapFilters from '../components/MapFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
   highlightFeature,
   matchCountryNames,
   processedData,
   dataInjectedGeoJson,
-  onLegendAdd,
+  getColor,
   handleClickFeature,
   dataBox,
 } from '../utils/interactiveMap';
+import { addFilterWrapper } from '../widgets/filters';
+import MapResetButton from '../components/MapResetButton';
 
-const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
-const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/map_data_long.csv`;
+const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
+const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/map_data_long.csv`;
+
+const renderMap = (
+  dimensionVariable,
+  mapInstance,
+  colorFunction,
+  data,
+  processed,
+  filterOptions,
+  legendInstance,
+  groupInstance,
+  csvData
+) => {
+  let geojsonLayer;
+
+  const legendInstanceCopy = legendInstance;
+  legendInstanceCopy.onAdd = function () {
+    const div = window.L.DomUtil.create('div', 'legend');
+    const piecewiselegendData = [
+      { score: 'Very high', label: 'Very high' },
+      { score: 'High', label: 'High' },
+      { score: 'Medium', label: 'Medium' },
+      { score: 'Low', label: 'Low' },
+      { score: 'Very low', label: 'Very low' },
+      { score: 'Not assessed', label: 'No data' },
+    ];
+    const legendData = [
+      { variable: 'Severity_score', data: piecewiselegendData },
+      { variable: 'Climate_vulnerability', data: piecewiselegendData },
+      { variable: 'COVID_vaccination_rate', max: '0(%)', min: '100(%)' },
+      { variable: 'Food_insecure_(millions)', max: '26(million)', min: '0(million)' },
+      { variable: 'People_in_need_(millions)', max: '25(million)', min: '0(million)' },
+    ];
+
+    const legendColors = ['#F6B9C2', '#E4819B', '#D64279', '#AD1156', '#7F1850'];
+
+    const legendContent =
+      dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
+        ? `<p style="margin-right:1px;margin-top:5px;">${
+            legendData.find((items) => items.variable === dimensionVariable).min
+          }<p>${legendColors
+            .map(
+              (color) =>
+                `<span>
+          <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
+        </span>`
+            )
+            .join('')} <p style="margin-left:1px;margin-top:5px;">${
+            legendData.find((items) => items.variable === dimensionVariable).max
+          }</p>`
+        : legendData
+            .find((items) => items.variable === dimensionVariable)
+            .data.map(
+              (dataItems) =>
+                `<span><i style="background:${getColor(dataItems.score)}"></i><label>${dataItems.label}</label></span>`
+            )
+            .join('');
+    div.innerHTML = legendContent;
+
+    return div;
+  };
+  legendInstanceCopy.addTo(mapInstance);
+  const style = (feature) => ({
+    fillColor:
+      filterOptions.find((opts) => opts.name === dimensionVariable).scaleType === 'piecewise'
+        ? colorFunction(feature.properties[dimensionVariable])
+        : colorFunction(
+            feature.properties[dimensionVariable],
+            filterOptions.find((opts) => opts.name === dimensionVariable).values,
+            dimensionVariable
+          ),
+    weight: 1,
+    opacity: 1,
+    color: 'white',
+    fillOpacity: 1,
+  });
+
+  const resetHighlight = (e) => {
+    geojsonLayer.resetStyle(e.target);
+    e.target.closePopup();
+  };
+
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
+      layer.on({
+        mouseover: (e) => highlightFeature(e, dimensionVariable, filterOptions, csvData),
+        mouseout: resetHighlight,
+        click: (e) => handleClickFeature(e, mapInstance, dataBox, csvData),
+      });
+    } else {
+      layer.on({
+        mouseover: () => {
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive');
+          els.forEach((el) => {
+            const elementCopy = el;
+            elementCopy.classList += ' default-cursor-enabled';
+          });
+        },
+        mouseout: () => {
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive.default-cursor-enabled');
+          els.forEach((el) => {
+            el.classList.remove('default-cursor-enabled');
+          });
+        },
+      });
+    }
+  };
+
+  function loadLayer() {
+    groupInstance.clearLayers();
+    geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
+      style,
+      onEachFeature,
+    });
+    groupInstance.addLayer(geojsonLayer);
+  }
+  loadLayer();
+};
 
 function renderPeopleAffectedByCrisisLeaflet() {
   window.DICharts.handler.addChart({
@@ -20,39 +143,74 @@ function renderPeopleAffectedByCrisisLeaflet() {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
-          const map = window.L.map(chartNode).setView([20, -0.09], 2);
+          const map = window.L.map(chartNode, {
+            maxZoom: 3,
+            minZoom: 1,
+            crs: window.L.CRS.EPSG4326,
+            center: [0, 0],
+            zoom: 1,
+          });
           const variable = 'Severity_score';
-          let geojsonLayer;
+
+          // Filter
+          const filterWrapper = addFilterWrapper(chartNode);
+          const filterOptions = [
+            { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
+            { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise', unit: '' },
+            {
+              name: 'COVID_vaccination_rate',
+              label: 'Covid-19 vaccination rate',
+              scaleType: 'continous',
+              values: [0, 20, 40, 60, 80, 100],
+              unit: '%',
+            },
+            {
+              name: 'Food_insecure_(millions)',
+              label: 'Food insecurity',
+              scaleType: 'continous',
+              values: [26, 21, 16, 11, 6, 0],
+              unit: 'million',
+            },
+            {
+              name: 'People_in_need_(millions)',
+              label: 'People in need',
+              scaleType: 'continous',
+              values: [25, 20, 15, 10, 5, 0],
+              unit: 'million',
+            },
+          ];
 
           // Legend
           const legend = window.L.control({ position: 'topright' });
-          legend.onAdd = onLegendAdd;
-          legend.addTo(map);
+          const resetButton = window.L.control({ position: 'bottomleft' });
 
-          const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
-          stripes.addTo(map);
+          // const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
+          // stripes.addTo(map);
 
-          const getColor = (score) => {
-            switch (score) {
-              case '5':
-                return '#7F1850';
-              case '4':
-                return '#AD1156';
-              case '3':
-                return '#D64279';
-              case '2':
-                return '#E4819B';
-              case '1':
-                return '#F6B9C2';
-              case '':
-                return stripes;
-              default:
-                return '#E6E1E5';
+          const getColorContinous = (d, numberRange, dimension) => {
+            if (d === 'No data') {
+              return '#E6E1E5';
             }
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[1] : Number(d) > numberRange[1]) {
+              return '#7F1850';
+            }
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[2] : Number(d) > numberRange[2]) {
+              return '#AD1156';
+            }
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[3] : Number(d) > numberRange[3]) {
+              return '#D64279';
+            }
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[4] : Number(d) > numberRange[4]) {
+              return '#E4819B';
+            }
+            if (dimension === 'COVID_vaccination_rate' ? Number(d) <= numberRange[5] : Number(d) >= numberRange[5]) {
+              return '#F6B9C2';
+            }
+
+            return '#E6E1E5';
           };
 
           dichart.showLoading();
-
           window
             .fetch(MAP_FILE_PATH)
             .then((response) => response.json())
@@ -62,46 +220,57 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
-                const filterOptions = [
-                  { name: 'Severity_score', label: 'Severity score' },
-                  { name: 'Climate_vulnerability', label: 'Climate vulnerability score' },
-                  { name: 'COVID_vaccination_rate', label: 'COVID vaccinattion rate' },
-                  { name: 'Food_insecure_(millions)', label: 'People facing food insecurity' },
-                  { name: 'People_in_need_(millions)', label: 'People in need' },
-                ];
+                const fg = window.L.featureGroup().addTo(map);
 
-                const style = (feature) => ({
-                  [feature.properties[variable] === '' ? 'fillPattern' : 'fillColor']: getColor(
-                    feature.properties[variable]
-                  ),
-                  weight: 1,
-                  opacity: 1,
-                  color: 'white',
-                  fillOpacity: 1,
-                });
-
-                const resetHighlight = (e) => {
-                  geojsonLayer.resetStyle(e.target);
-                  e.target.closePopup();
+                const onSelectDimension = (dimension) => {
+                  renderMap(
+                    dimension,
+                    map,
+                    filterOptions.find((option) => option.name === dimension).scaleType === 'continous'
+                      ? getColorContinous
+                      : getColor,
+                    geojsonData,
+                    groupedData,
+                    filterOptions,
+                    legend,
+                    fg,
+                    data
+                  );
                 };
 
-                const onEachFeature = (feature, layer) => {
-                  if (feature.properties[variable] || feature.properties[variable] === '') {
-                    layer.on({
-                      mouseover: (e) => highlightFeature(e, variable, filterOptions),
-                      mouseout: resetHighlight,
-                      click: (e) => handleClickFeature(e, map, dataBox),
-                    });
-                  }
+                const onReset = () => {
+                  map.setView([0, 0], 1);
                 };
 
-                // Add geojson layer to the map
-                geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(geojsonData, groupedData), {
-                  style,
-                  onEachFeature,
-                  maxZoom: 3,
-                  minZoom: 2,
-                }).addTo(map);
+                // Render filter component
+                const root = createRoot(filterWrapper);
+                root.render(<MapFilters onSelectDimension={onSelectDimension} />);
+
+                // Render reset Button
+
+                resetButton.onAdd = function () {
+                  const div = window.L.DomUtil.create('div');
+                  const buttonRoot = createRoot(div);
+                  buttonRoot.render(<MapResetButton onReset={onReset} />);
+
+                  return div;
+                };
+
+                resetButton.addTo(map);
+
+                renderMap(
+                  variable,
+                  map,
+                  filterOptions.find((option) => option.name === variable).scaleType === 'continous'
+                    ? getColorContinous
+                    : getColor,
+                  geojsonData,
+                  groupedData,
+                  filterOptions,
+                  legend,
+                  fg,
+                  data
+                );
                 dichart.hideLoading();
               });
             })

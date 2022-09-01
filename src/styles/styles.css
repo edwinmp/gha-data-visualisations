@@ -7,6 +7,10 @@
   background: white;
 }
 
+.dicharts--gha-people-affected-by-crisis-leaflet {
+  z-index: 1;
+}
+
 .spotlight-banner.data-selector--wrapper {
   padding: 1em 2em;
 }
@@ -74,10 +78,10 @@
   font-family: "Geomanist Regular", sans-serif;
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
-  background: white;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255);
   box-shadow: 0 0 15px rgb(0 0 0 / 20%);
   border-radius: 5px;
+  cursor: default;
 }
 
 .databox span {
@@ -92,4 +96,54 @@
 .databox button {
   position: absolute;
   right: 5px;
+}
+
+.mapFilterItem {
+  display: inline-block;
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: rgba(255,255,255);
+  border: 1px solid #ddd !important;
+  margin-right: 5px;
+}
+
+.mapFilterItem button {
+  display: flex;
+  border-color: '#ddd' !important;
+}
+
+.mapFilterItem p {
+  padding-top: 3px;
+}
+
+.mapFilterItem:hover {
+  border: 1px solid #8f1b13 !important;
+}
+
+.mapFilterItem-active {
+  border: 1px solid #8f1b13 !important;
+}
+
+.reset-button {
+  border: 2px solid #ccc;
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: rgba(255,255,255);
+  border-radius: 2px;
+}
+
+.reset-button:hover {
+  background-color: #f4f4f4;
+}
+
+#closeDatabox img {
+  filter: invert(76%) sepia(4%) saturate(24%) hue-rotate(334deg) brightness(91%) contrast(93%);
+}
+
+#closeDatabox img:hover {
+  filter: invert(42%) sepia(43%) saturate(23%) hue-rotate(339deg) brightness(101%) contrast(93%);
+}
+
+.leaflet-interactive.default-cursor-enabled {
+  cursor: default !important;
 }
