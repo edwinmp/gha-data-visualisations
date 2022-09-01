@@ -167,13 +167,13 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
   // Bind popup to layer
   layer
     .bindPopup(
-      layer.feature.properties[variable]
+      layer.feature.properties[variable] !== 'No data' && layer.feature.properties[variable] !== 'Not assessed'
         ? `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br>${
             filterOptions.find((option) => option.name === variable).label
           }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
             filterOptions.find((option) => option.name === variable).unit
           }</span></div>`
-        : `<div>${layer.feature.properties.name}<br> No data</div>`
+        : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> No data</div>`
     )
     .openPopup();
 };
