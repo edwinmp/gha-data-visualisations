@@ -449,10 +449,10 @@
         defaultDataType: f.a.string,
       };
       const C = x;
-      const D = t(227);
-      const A = function (e) {
+      const A = t(227);
+      const D = function (e) {
         return new Promise((n) => {
-          Object(D.parse)(e, {
+          Object(A.parse)(e, {
             download: !0,
             header: !0,
             skipEmptyLines: !0,
@@ -585,7 +585,7 @@
           e.trim() ? Number(e.replace(',', '').replace(' ', '').replace('%', '').trim()) : null
         );
       };
-      const B = function (e) {
+      const V = function (e) {
         return e.map((e) => {
           const n = { ...e };
 
@@ -598,13 +598,13 @@
       const M = function () {
         return T === '%GNI' ? 'line' : 'bar';
       };
-      const U = function (e, n, t, r, a) {
+      const B = function (e, n, t, r, a) {
         void 0 === a && (a = 'Proportion');
         const o = e.filter((e) => e.Donor.trim() === t && e['IHA type'] === r && e['Value type'] === a);
 
         return n.map((e) => o.find((n) => n.Year === e));
       };
-      const V = function (e, n, t) {
+      const U = function (e, n, t) {
         return (
           void 0 === n && (n = 'currency'),
           void 0 === t && (t = 'auto'),
@@ -646,7 +646,7 @@
           yAxis: P(),
           series: I(a).map((e) => ({
             name: e,
-            data: U(n, r, 'All donors', e, k[T]).map((e) => ({
+            data: B(n, r, 'All donors', e, k[T]).map((e) => ({
               value: e && Number(T === 'Proportions' ? 100 * e.value : e.value),
               emphasis: { focus: 'self' },
             })),
@@ -667,7 +667,7 @@
                   : e;
 
                 return `All donors, ${t.name} <br />${a}: <strong>${
-                  T === 'Proportions' ? `${t.value.toFixed(2)}%` : `US$${V(F(r.Value), 'decimal', 'never')} million`
+                  T === 'Proportions' ? `${t.value.toFixed(2)}%` : `US$${U(F(r.Value), 'decimal', 'never')} million`
                 } </strong>`;
               },
             },
@@ -689,13 +689,13 @@
         const r = t.donors;
         const a = t.channels;
         const o = t.years;
-        const i = B(n);
+        const i = V(n);
         const l = M();
         const s = r
           .map((e) =>
             I(a).map((n, t) => ({
               name: T !== '%GNI' ? n : e,
-              data: U(i, o, e, n, k[T]).map((e) => ({
+              data: B(i, o, e, n, k[T]).map((e) => ({
                 value: e && typeof e.value === 'number' ? Number(T !== 'Volumes' ? 100 * e.value : e.value) : null,
                 emphasis: { focus: 'self' },
               })),
@@ -711,7 +711,7 @@
                     (r) => r['IHA type'] === n && r.Donor === e && `${r.Year}` === t.name && r['Value type'] === k[T]
                   );
                   const a =
-                    T === 'Volumes' ? `US$${V(F(r.Value), 'decimal', 'never')} million` : `${t.value.toFixed(2)}%`;
+                    T === 'Volumes' ? `US$${U(F(r.Value), 'decimal', 'never')} million` : `${t.value.toFixed(2)}%`;
 
                   return `${e}, ${t.name} <br />${n}: <strong>${a}</strong>`;
                 },
@@ -741,7 +741,7 @@
             onAdd(e) {
               Array.prototype.forEach.call(e, (e) => {
                 const n = new window.DICharts.Chart(e.parentElement);
-                A(
+                D(
                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/donor_interactive_data_long.csv'
                 ).then((t) => {
                   const r = O(e);
@@ -749,7 +749,7 @@
                   const i = Array.from(new Set(t.map((e) => e.Year))).sort();
                   const s = Array.from(new Set(t.map((e) => e['IHA type'])));
                   const c = window.echarts.init(e);
-                  $(c, B(t), { years: i, channels: s });
+                  $(c, V(t), { years: i, channels: s });
                   let u = [];
                   Object(l.createRoot)(r).render(
                     Object(a.c)(C, {
@@ -759,13 +759,13 @@
                         if (((T = e || T), u.length)) {
                           const n = t.filter((e) => u.includes(e.Donor));
                           z(c, n, { donors: u, channels: s, years: i });
-                        } else $(c, B(t), { years: i, channels: s });
+                        } else $(c, V(t), { years: i, channels: s });
                       },
                       onSelectDonor(e) {
                         if (e.length) {
                           const n = t.filter((n) => e.find((e) => e.value === n.Donor));
                           (u = e.map((e) => e.value)), z(c, n, { donors: u, channels: s, years: i });
-                        } else $(c, B(t), { years: i, channels: s });
+                        } else $(c, V(t), { years: i, channels: s });
                       },
                       defaultDonor: 'All donors',
                       defaultDataType: 'Volumes',
@@ -861,7 +861,7 @@
             onAdd(e) {
               Array.prototype.forEach.call(e, (e) => {
                 const n = new window.DICharts.Chart(e.parentElement);
-                A(
+                D(
                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/funding-channels-interactive-data.csv'
                 ).then((t) => {
                   let r;
@@ -1196,7 +1196,7 @@
                               return (
                                 (t = new window.DICharts.Chart(n.parentElement)),
                                 (e.next = 3),
-                                A(
+                                D(
                                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/recipients-by-donor.csv'
                                 )
                               );
@@ -1204,7 +1204,7 @@
                               return (
                                 (r = e.sent),
                                 (e.next = 6),
-                                A(
+                                D(
                                   'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/recipients-by-org-type.csv'
                                 )
                               );
@@ -1375,17 +1375,17 @@
       };
       const ve = function (e) {
         switch (e) {
-          case '5':
+          case 'Very high':
             return '#7F1850';
-          case '4':
+          case 'High':
             return '#AD1156';
-          case '3':
+          case 'Medium':
             return '#D64279';
-          case '2':
+          case 'Low':
             return '#E4819B';
-          case '1':
+          case 'Very low':
             return '#F6B9C2';
-          case '':
+          case 'Not assessed':
           default:
             return '#E6E1E5';
         }
@@ -1453,12 +1453,12 @@
         (c.onAdd = function () {
           const n = window.L.DomUtil.create('div', 'legend');
           const t = [
-            { score: '5', label: '5 - Very High' },
-            { score: '4', label: '4 - High' },
-            { score: '3', label: '3 - Medium' },
-            { score: '2', label: '2 - Low' },
-            { score: '1', label: '1 - Very Low' },
-            { score: '', label: 'Not assessed' },
+            { score: 'Very high', label: 'Very high' },
+            { score: 'High', label: 'High' },
+            { score: 'Medium', label: 'Medium' },
+            { score: 'Low', label: 'Low' },
+            { score: 'Very low', label: 'Very low' },
+            { score: 'Not assessed', label: 'No data' },
           ];
           const r = [
             { variable: 'Severity_score', data: t },
@@ -1518,7 +1518,7 @@
                       r
                         .bindPopup(
                           r.feature.properties[n]
-                            ? `<div>${r.feature.properties.name}<br>${t.find((e) => e.name === n).label}:${
+                            ? `<div>${r.feature.properties.name}<br>${t.find((e) => e.name === n).label}: ${
                                 r.feature.properties[n]
                               }<span style="padding-left: 2px;">${t.find((e) => e.name === n).unit}</span></div>`
                             : `<div>${r.feature.properties.name}<br> No data</div>`
@@ -1607,24 +1607,7 @@
                 ];
                 const i = window.L.control({ position: 'topright' });
                 const s = window.L.control({ position: 'bottomleft' });
-                const c = function (e) {
-                  switch (e) {
-                    case '5':
-                      return '#7F1850';
-                    case '4':
-                      return '#AD1156';
-                    case '3':
-                      return '#D64279';
-                    case '2':
-                      return '#E4819B';
-                    case '1':
-                      return '#F6B9C2';
-                    case '':
-                    default:
-                      return '#E6E1E5';
-                  }
-                };
-                const u = function (e, n) {
+                const c = function (e, n) {
                   return e === ''
                     ? '#E6E1E5'
                     : Number(e) > n[1]
@@ -1646,20 +1629,20 @@
                     )
                     .then((e) => e.json())
                     .then((e) => {
-                      const d = e.features;
-                      A(
+                      const u = e.features;
+                      D(
                         'https://raw.githubusercontent.com/devinit/gha-data-visualisations/feature/map-filters/public/assets/data/map_data_long.csv'
                       ).then((e) => {
-                        let f;
-                        const p =
-                          ((f = d),
+                        let d;
+                        const f =
+                          ((d = u),
                           e.map((e) => {
                             const n = { ...e };
-                            const t = f.find((e) => e.properties.iso_a3 === n.Country_ID);
+                            const t = d.find((e) => e.properties.iso_a3 === n.Country_ID);
 
                             return t && (n.Country_name = t.properties.name), n;
                           }));
-                        const m = (function (e, n) {
+                        const p = (function (e, n) {
                           const t = [];
 
                           return (
@@ -1673,33 +1656,33 @@
                             }),
                             t
                           );
-                        })(Array.from(new Set(p.map((e) => e.Country_name))), p);
-                        const b = window.L.featureGroup().addTo(t);
-                        const v = function () {
+                        })(Array.from(new Set(f.map((e) => e.Country_name))), f);
+                        const m = window.L.featureGroup().addTo(t);
+                        const b = function () {
                           t.setView([0, 0], 1);
                         };
                         Object(l.createRoot)(r).render(
                           Object(a.c)(me, {
                             onSelectDimension(e) {
-                              we(e, t, o.find((n) => n.name === e).scaleType === 'continous' ? u : c, d, m, o, i, b);
+                              we(e, t, o.find((n) => n.name === e).scaleType === 'continous' ? c : ve, u, p, o, i, m);
                             },
                           })
                         ),
                           (s.onAdd = function () {
                             const e = window.L.DomUtil.create('div');
 
-                            return Object(l.createRoot)(e).render(Object(a.c)(ye, { onReset: v })), e;
+                            return Object(l.createRoot)(e).render(Object(a.c)(ye, { onReset: b })), e;
                           }),
                           s.addTo(t),
                           we(
                             'Severity_score',
                             t,
-                            o.find((e) => e.name === 'Severity_score').scaleType === 'continous' ? u : c,
-                            d,
-                            m,
+                            o.find((e) => e.name === 'Severity_score').scaleType === 'continous' ? c : ve,
+                            u,
+                            p,
                             o,
                             i,
-                            b
+                            m
                           ),
                           n.hideLoading();
                       });
