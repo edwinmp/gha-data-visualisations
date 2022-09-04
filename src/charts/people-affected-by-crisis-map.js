@@ -146,7 +146,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
             maxZoom: 3,
             minZoom: 1,
             crs: window.L.CRS.EPSG4326,
-            center: [0, 0],
+            center: [6.6, 20.9],
             zoom: 1,
             attributionControl: false,
           });
