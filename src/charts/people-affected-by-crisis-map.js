@@ -46,7 +46,7 @@ const renderMap = (
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
-      { variable: 'COVID_vaccination_rate', max: '0(%)', min: '100(%)' },
+      { variable: 'COVID_vaccination_rate', max: '0% of population', min: '100% of population' },
       { variable: 'Food_insecure_(millions)', max: '26 millions of people', min: '0 millions of people' },
       { variable: 'People_in_need_(millions)', max: '25 millions of people', min: '0 millions of people' },
     ];
