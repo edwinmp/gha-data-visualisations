@@ -171,7 +171,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
           }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
             filterOptions.find((option) => option.name === variable).unit
           }</span></div>`
-        : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> No data</div>`,
+        : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
       { direction: 'top', opacity: 1 }
     )
     .openTooltip();
