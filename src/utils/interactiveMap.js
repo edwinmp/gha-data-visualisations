@@ -168,7 +168,11 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
       layer.feature.properties[variable] !== 'No data' && layer.feature.properties[variable] !== 'Not assessed'
         ? `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br>${
             filterOptions.find((option) => option.name === variable).label
-          }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
+          }: ${
+            variable === 'Food_insecure_(millions)' && layer.feature.properties[variable] === '0.0'
+              ? '< 0.1'
+              : layer.feature.properties[variable]
+          }<span style="padding-left: 2px;">${
             filterOptions.find((option) => option.name === variable).unit
           }</span></div>`
         : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
