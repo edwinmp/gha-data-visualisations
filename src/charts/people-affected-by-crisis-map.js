@@ -47,8 +47,8 @@ const renderMap = (
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
       { variable: 'COVID_vaccination_rate', max: '0(%)', min: '100(%)' },
-      { variable: 'Food_insecure_(millions)', max: '26(million)', min: '0(million)' },
-      { variable: 'People_in_need_(millions)', max: '25(million)', min: '0(million)' },
+      { variable: 'Food_insecure_(millions)', max: '26 millions of people', min: '0 millions of people' },
+      { variable: 'People_in_need_(millions)', max: '25 millions of people', min: '0 millions of people' },
     ];
     const legendColors = ['#77adde', '#5da3d9', '#0089cc', '#0071b1', '#0c457b'];
 
