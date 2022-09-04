@@ -5,14 +5,16 @@ const getCountryResponsePlan = (requirement, coverage) => {
   if (requirement) {
     const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
 
-    return `${coverage}% funded[US$${fundInDollars}  of US$${requirement}]`;
+    return `${coverage}% funded(US$${fundInDollars} million  of US$${requirement} million)`;
   }
 
   return 'None';
 };
 const getRegionalResponsePlan = (requirement, funds) =>
   requirement
-    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of US$${requirement}]`
+    ? `${Math.round(
+        (Number(funds) / Number(requirement)) * 100
+      )}% funded(US$${funds} million of US$${requirement} million)`
     : 'None';
 
 const dataBoxContent = (data) => [
@@ -21,7 +23,7 @@ const dataBoxContent = (data) => [
       data['Country_response_plan_requirements_(US$,_million)'],
       data['Country_response_plan_coverage_(%)']
     ),
-    label: 'Country response plan',
+    label: 'Country RP',
     icon: { image: responsePlan, text: 'response-plan' },
   },
   {
@@ -29,7 +31,7 @@ const dataBoxContent = (data) => [
       data['Regional_response_plan_requirements_(US$,_million)'],
       data['Regional_response_plan_funding_(US$,_million)']
     ),
-    label: 'Regional response plan',
+    label: 'Regional RP',
     icon: { image: responsePlan, text: 'response-plan' },
   },
 ];
