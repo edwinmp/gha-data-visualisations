@@ -239,7 +239,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 };
 
                 const onReset = () => {
-                  map.setView([0, 0], 1);
+                  map.setView([6.6, 20.9], 1);
                 };
 
                 // Render filter component
