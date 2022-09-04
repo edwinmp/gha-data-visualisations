@@ -148,6 +148,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
             crs: window.L.CRS.EPSG4326,
             center: [0, 0],
             zoom: 1,
+            attributionControl: false,
           });
           const variable = 'Severity_score';
 
