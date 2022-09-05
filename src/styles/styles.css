@@ -66,7 +66,7 @@
   padding: 8px;
   background-color: #fff;
   border: 1px solid #fff;
-  color: #443e42;
+  color: rgb(102, 102, 102) !important;
   white-space: nowrap;
   -webkit-user-select: none;
   -moz-user-select: none;
