@@ -67,7 +67,6 @@ const MapFilters = (props) => {
                   alt={option.name}
                   height="20"
                   width="20"
-                  // className={dimension === option.name ? '' : 'icon-disabled'}
                 />
                 <p className={option.name === 'Food_insecure_(millions)' ? 'food-icon' : ''}>{option.label}</p>
               </button>

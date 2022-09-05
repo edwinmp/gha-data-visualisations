@@ -127,10 +127,6 @@
   color: #555;
 }
 
-.icon-disabled {
-  filter: invert(74%) sepia(99%) saturate(1%) hue-rotate(315deg) brightness(95%) contrast(102%);
-}
-
 .food-icon {
   margin-left: 6px !important;
 }
