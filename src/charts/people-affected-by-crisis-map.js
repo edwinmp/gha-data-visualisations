@@ -46,17 +46,14 @@ const renderMap = (
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
-      { variable: 'COVID_vaccination_rate', max: '0% of population', min: '100% of population' },
-      { variable: 'Food_insecure_(millions)', max: '26 millions of people', min: '0 millions of people' },
-      { variable: 'People_in_need_(millions)', max: '25 millions of people', min: '0 millions of people' },
+      { variable: 'COVID_vaccination_rate', max: '0', min: '100' },
+      { variable: 'Food_insecure_(millions)', max: '26', min: '0' },
+      { variable: 'People_in_need_(millions)', max: '25', min: '0' },
     ];
     const legendColors = ['#77adde', '#5da3d9', '#0089cc', '#0071b1', '#0c457b'];
-
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `<p style="margin-right:1px;margin-top:5px;">${
-            legendData.find((items) => items.variable === dimensionVariable).min
-          }<p>${legendColors
+        ? `${legendColors
             .map(
               (color) =>
                 `<span>
@@ -64,7 +61,9 @@ const renderMap = (
         </span>`
             )
             .join('')} <p style="margin-left:1px;margin-top:5px;">${
-            legendData.find((items) => items.variable === dimensionVariable).max
+            legendData.find((items) => items.variable === dimensionVariable).min
+          } - ${legendData.find((items) => items.variable === dimensionVariable).max}${
+            dimensionVariable === 'COVID_vaccination_rate' ? ',% of population' : ',millions of people'
           }</p>`
         : legendData
             .find((items) => items.variable === dimensionVariable)
