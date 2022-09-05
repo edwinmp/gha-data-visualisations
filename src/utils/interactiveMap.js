@@ -129,17 +129,17 @@ dataBox.onAdd = function () {
 
 dataBox.update = function (properties, csv) {
   this.div.innerHTML = properties
-    ? `<div>${getOriginalCountryName(
+    ? `<div style="padding-bottom: 0px;">${getOriginalCountryName(
         csv,
         properties.iso_a3
-      )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+      )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div><div style="margin-top: 8px;"> ${dataBoxContent(
         properties
       )
         .map(
           (item) =>
             `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
         )
-        .join('')}`
+        .join('')}</div>`
     : '';
   const closeButton = document.getElementById('closeDatabox');
   if (closeButton) {
