@@ -63,7 +63,7 @@ const renderMap = (
             .join('')} <p style="margin-left:1px;margin-top:5px;">${
             legendData.find((items) => items.variable === dimensionVariable).min
           } - ${legendData.find((items) => items.variable === dimensionVariable).max}${
-            dimensionVariable === 'COVID_vaccination_rate' ? ',% of population' : ',millions of people'
+            dimensionVariable === 'COVID_vaccination_rate' ? ', % of population' : ', millions of people'
           }</p>`
         : legendData
             .find((items) => items.variable === dimensionVariable)
