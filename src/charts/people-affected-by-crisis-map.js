@@ -60,7 +60,7 @@ const renderMap = (
           <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
         </span>`
             )
-            .join('')} <p style="margin-left:1px;margin-top:5px;">${
+            .join('')} <p style="margin-left:1px;">${
             legendData.find((items) => items.variable === dimensionVariable).min
           } - ${legendData.find((items) => items.variable === dimensionVariable).max}${
             dimensionVariable === 'COVID_vaccination_rate' ? ', % of population' : ', millions of people'

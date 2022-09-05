@@ -32,9 +32,8 @@
   color: #555;
   display: flex;
   width: fit-content;
-  font-family: "Geomanist Regular", sans-serif;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   background: white;
   background: rgba(255,255,255,1);
   box-shadow: 0 0 15px rgb(0 0 0 / 20%);
@@ -75,8 +74,7 @@
   pointer-events: none;
   box-shadow: 0 1px 4px rgba(0,0,0,0.4);
   text-align: center;
-  font-size: 15px;
-  font-family: "Geomanist Regular", sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   border-radius: 10px;
 }
 
@@ -84,9 +82,8 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
-  font-family: "Geomanist Regular", sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
   background: rgba(255,255,255);
   box-shadow: 0 0 15px rgb(0 0 0 / 20%);
   border-radius: 5px;
@@ -110,7 +107,7 @@
 .mapFilterItem {
   display: inline-block;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   background: rgba(255,255,255);
   color: #ddd !important;
   margin-right: 5px;
@@ -141,7 +138,7 @@
 .reset-button {
   border: 2px solid #ccc;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   background: rgba(255,255,255);
   border-radius: 2px;
 }
