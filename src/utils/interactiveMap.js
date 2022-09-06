@@ -1,11 +1,30 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
 
+const addCommas = (amount) => {
+  if (amount.length > 3) {
+    let finalAmount = '';
+    const splitAmount = amount.split('');
+    splitAmount.forEach((item, index) => {
+      if (index === 1) {
+        finalAmount = finalAmount.concat(`,${item}`);
+      } else {
+        finalAmount = finalAmount.concat(item);
+      }
+    });
+
+    return finalAmount;
+  }
+
+  return amount;
+};
 const getCountryResponsePlan = (requirement, coverage, funding) =>
-  requirement ? `${coverage}% funded(US$${funding} million  of US$${requirement} million)` : 'None';
+  requirement
+    ? `${coverage}% funded(US$${addCommas(funding)} million  of US$${addCommas(requirement)} million)`
+    : 'None';
 
 const getRegionalResponsePlan = (requirement, funds, coverage) =>
-  requirement ? `${coverage}% funded(US$${funds} million of US$${requirement} million)` : 'None';
+  requirement ? `${coverage}% funded(US$${addCommas(funds)} million of US$${addCommas(requirement)} million)` : 'None';
 
 const dataBoxContent = (data) => [
   {
