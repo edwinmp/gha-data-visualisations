@@ -1,27 +1,18 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
 
-const getCountryResponsePlan = (requirement, coverage) => {
-  if (requirement) {
-    const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
+const getCountryResponsePlan = (requirement, coverage, funding) =>
+  requirement ? `${coverage}% funded(US$${funding} million  of US$${requirement} million)` : 'None';
 
-    return `${coverage}% funded(US$${fundInDollars} million  of US$${requirement} million)`;
-  }
-
-  return 'None';
-};
-const getRegionalResponsePlan = (requirement, funds) =>
-  requirement
-    ? `${Math.round(
-        (Number(funds) / Number(requirement)) * 100
-      )}% funded(US$${funds} million of US$${requirement} million)`
-    : 'None';
+const getRegionalResponsePlan = (requirement, funds, coverage) =>
+  requirement ? `${coverage}% funded(US$${funds} million of US$${requirement} million)` : 'None';
 
 const dataBoxContent = (data) => [
   {
     value: getCountryResponsePlan(
       data['Country_response_plan_requirements_(US$,_million)'],
-      data['Country_response_plan_coverage_(%)']
+      data['Country_response_plan_coverage_(%)'],
+      data['Country_response_plan_funding_(US$,_million)']
     ),
     label: 'Country RP',
     icon: { image: responsePlan, text: 'response-plan' },
@@ -29,7 +20,8 @@ const dataBoxContent = (data) => [
   {
     value: getRegionalResponsePlan(
       data['Regional_response_plan_requirements_(US$,_million)'],
-      data['Regional_response_plan_funding_(US$,_million)']
+      data['Regional_response_plan_funding_(US$,_million)'],
+      data['Regional_response_plan_coverage_(%)']
     ),
     label: 'Regional RP',
     icon: { image: responsePlan, text: 'response-plan' },
