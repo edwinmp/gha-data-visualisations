@@ -2,18 +2,18 @@
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
 import MapFilters from '../components/MapFilters';
+import MapResetButton from '../components/MapResetButton';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
-  highlightFeature,
-  matchCountryNames,
-  processedData,
+  dataBox,
   dataInjectedGeoJson,
   getColor,
   handleClickFeature,
-  dataBox,
+  highlightFeature,
+  matchCountryNames,
+  processedData,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
-import MapResetButton from '../components/MapResetButton';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/map_data_long.csv`;

@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const MapResetButton = (props) => (
   <button className="reset-button" onClick={props.onReset}>

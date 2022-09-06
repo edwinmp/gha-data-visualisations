@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
 const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
 const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
