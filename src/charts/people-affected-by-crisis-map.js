@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import 'leaflet.pattern';
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
 import MapFilters from '../components/MapFilters';
@@ -182,9 +181,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // Legend
           const legend = window.L.control({ position: 'topright' });
           const resetButton = window.L.control({ position: 'bottomleft' });
-
-          // const stripes = new window.L.StripePattern({ weight: 2, spaceWeight: 1, angle: 45, color: 'grey' });
-          // stripes.addTo(map);
 
           const getColorContinous = (d, numberRange, dimension) => {
             if (d === 'No data') {
