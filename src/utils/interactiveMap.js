@@ -1,44 +1,55 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
 
-const getCountryResponsePlan = (requirement, coverage) => {
-  if (requirement) {
-    const fundInDollars = Math.round((Number(coverage) / 100) * Number(requirement));
+const addCommas = (amount) => {
+  if (amount.length > 3) {
+    let finalAmount = '';
+    const splitAmount = amount.split('');
+    splitAmount.forEach((item, index) => {
+      if (index === 1) {
+        finalAmount = finalAmount.concat(`,${item}`);
+      } else {
+        finalAmount = finalAmount.concat(item);
+      }
+    });
 
-    return `${coverage}% funded[US$${fundInDollars}  of US$${requirement}]`;
+    return finalAmount;
   }
 
-  return 'None';
+  return amount;
 };
-const getRegionalResponsePlan = (requirement, funds) =>
+const getCountryResponsePlan = (requirement, coverage, funding) =>
   requirement
-    ? `${Math.round((Number(funds) / Number(requirement)) * 100)}% funded[US$${funds} of US$${requirement}]`
+    ? `${coverage}% funded(US$${addCommas(funding)} million  of US$${addCommas(requirement)} million)`
     : 'None';
+
+const getRegionalResponsePlan = (requirement, funds, coverage) =>
+  requirement ? `${coverage}% funded(US$${addCommas(funds)} million of US$${addCommas(requirement)} million)` : 'None';
 
 const dataBoxContent = (data) => [
   {
     value: getCountryResponsePlan(
       data['Country_response_plan_requirements_(US$,_million)'],
-      data['Country_response_plan_coverage_(%)']
+      data['Country_response_plan_coverage_(%)'],
+      data['Country_response_plan_funding_(US$,_million)']
     ),
-    label: 'Country response plan',
+    label: 'Country RP',
     icon: { image: responsePlan, text: 'response-plan' },
   },
   {
     value: getRegionalResponsePlan(
       data['Regional_response_plan_requirements_(US$,_million)'],
-      data['Regional_response_plan_funding_(US$,_million)']
+      data['Regional_response_plan_funding_(US$,_million)'],
+      data['Regional_response_plan_coverage_(%)']
     ),
-    label: 'Regional response plan',
+    label: 'Regional RP',
     icon: { image: responsePlan, text: 'response-plan' },
   },
 ];
 const getOriginalCountryName = (csv, code) => {
   const countryMap = csv.map((stream) => ({ id: stream.Country_ID, name: stream.Country_name }));
-  const countryIds = Array.from(new Set(csv.map((data) => data.Country_ID)));
-  const originalCountries = countryMap.slice(0, countryIds.length);
 
-  return originalCountries.find((country) => country.id === code).name;
+  return countryMap.find((country) => country.id === code).name;
 };
 
 const matchCountryNames = (csvData, worldData) => {
@@ -88,15 +99,15 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
 const getColor = (score) => {
   switch (score) {
     case 'Very high':
-      return '#7F1850';
+      return '#0c457b';
     case 'High':
-      return '#AD1156';
+      return '#0071b1';
     case 'Medium':
-      return '#D64279';
+      return '#0089cc';
     case 'Low':
-      return '#E4819B';
+      return '#5da3d9';
     case 'Very low':
-      return '#F6B9C2';
+      return '#77adde';
     case 'Not assessed':
       return '#E6E1E5';
     default:
@@ -129,17 +140,17 @@ dataBox.onAdd = function () {
 
 dataBox.update = function (properties, csv) {
   this.div.innerHTML = properties
-    ? `<div>${getOriginalCountryName(
+    ? `<div style="padding-bottom: 0px;">${getOriginalCountryName(
         csv,
         properties.iso_a3
-      )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div> <br> ${dataBoxContent(
+      )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div><div style="margin-top: 8px;"> ${dataBoxContent(
         properties
       )
         .map(
           (item) =>
             `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
         )
-        .join('')}`
+        .join('')}</div>`
     : '';
   const closeButton = document.getElementById('closeDatabox');
   if (closeButton) {
@@ -156,8 +167,8 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
   }
 
   layer.setStyle({
-    fillColor: 'yellow',
-    color: 'black',
+    fillColor: '#f7a838',
+    color: '#484848',
     weight: 2,
   });
 
@@ -166,16 +177,21 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
   }
   // Bind popup to layer
   layer
-    .bindPopup(
+    .bindTooltip(
       layer.feature.properties[variable] !== 'No data' && layer.feature.properties[variable] !== 'Not assessed'
         ? `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br>${
             filterOptions.find((option) => option.name === variable).label
-          }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
+          }: ${
+            variable === 'Food_insecure_(millions)' && layer.feature.properties[variable] === '0.0'
+              ? '< 0.1'
+              : layer.feature.properties[variable]
+          }<span style="padding-left: 2px;">${
             filterOptions.find((option) => option.name === variable).unit
           }</span></div>`
-        : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> No data</div>`
+        : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
+      { direction: 'top', opacity: 1 }
     )
-    .openPopup();
+    .openTooltip();
 };
 
 export {

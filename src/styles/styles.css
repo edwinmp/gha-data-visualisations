@@ -32,11 +32,10 @@
   color: #555;
   display: flex;
   width: fit-content;
-  font-family: "Geomanist Regular", sans-serif;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   background: white;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,1);
   box-shadow: 0 0 15px rgb(0 0 0 / 20%);
   border-radius: 5px;
 }
@@ -51,6 +50,7 @@
   border-radius: 50%;
   float: left;
   margin-right: 8px;
+  margin-top: 2px;
   opacity: 1;
 }
 
@@ -61,24 +61,30 @@
   padding: 2px;
 }
 
-.leaflet-popup-content {
-  min-width: 80px !important;
+.leaflet-tooltip {
+  position: absolute;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #fff;
+  color: rgb(102, 102, 102) !important;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
   text-align: center;
-  font-size: 15px;
-  font-family: "Geomanist Regular", sans-serif;
-}
-
-.leaflet-popup-close-button {
-  display: none;
+  font: 14px/21px "Geomanist Regular", sans-serif;
+  border-radius: 10px;
 }
 
 .databox {
   display: flex;
   flex-direction: column;
   width: fit-content;
-  font-family: "Geomanist Regular", sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
   background: rgba(255,255,255);
   box-shadow: 0 0 15px rgb(0 0 0 / 20%);
   border-radius: 5px;
@@ -91,7 +97,6 @@
 
 .databox span p {
   padding-left: 2px;
-  padding-top: 3px;
 }
 
 .databox button {
@@ -102,33 +107,34 @@
 .mapFilterItem {
   display: inline-block;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   background: rgba(255,255,255);
-  border: 1px solid #ddd !important;
+  color: #ddd !important;
   margin-right: 5px;
 }
 
-.mapFilterItem button {
+.mapFilterButton {
   display: flex;
-  border-color: '#ddd' !important;
+  color: #ddd;
 }
 
 .mapFilterItem p {
-  padding-top: 3px;
-}
-
-.mapFilterItem:hover {
-  border: 1px solid #8f1b13 !important;
+  padding-top: 1px;
+  margin-left: 2px;
 }
 
 .mapFilterItem-active {
-  border: 1px solid #8f1b13 !important;
+  color: #443e42;
+}
+
+.food-icon {
+  margin-left: 6px !important;
 }
 
 .reset-button {
   border: 2px solid #ccc;
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 14px/21px "Geomanist Regular", sans-serif;
   background: rgba(255,255,255);
   border-radius: 2px;
 }
@@ -145,6 +151,6 @@
   filter: invert(42%) sepia(43%) saturate(23%) hue-rotate(339deg) brightness(101%) contrast(93%);
 }
 
-.leaflet-interactive.default-cursor-enabled {
-  cursor: default !important;
+.leaflet-interactive.grab-cursor-enabled {
+  cursor: grab !important;
 }
