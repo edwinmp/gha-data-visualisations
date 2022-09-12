@@ -139,6 +139,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
+          window.dataLayer = window.dataLayer || [];
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
           const map = window.L.map(chartNode, {
             maxZoom: 3,
