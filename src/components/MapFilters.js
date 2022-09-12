@@ -16,6 +16,11 @@ const MapFilters = (props) => {
   const [dimension, setDimension] = useState('Severity_score');
   useEffect(() => {
     props.onSelectDimension(dimension);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'mapFilterSelected',
+      filter: dimension
+    });
   }, [dimension]);
   const filterOptions = [
     {
