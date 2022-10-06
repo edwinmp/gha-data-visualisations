@@ -125,6 +125,10 @@ const onCloseDatabox = (e, databoxElement) => {
 const handleClickFeature = (e, mapInstance, databoxInstance, csv) => {
   databoxInstance.addTo(mapInstance);
   const layer = e.target;
+  window.dataLayer.push({
+    event: 'countryClicked',
+    country: getOriginalCountryName(csv, layer.feature.properties.iso_a3)
+  });
   databoxInstance.update(layer.feature.properties, csv);
 };
 

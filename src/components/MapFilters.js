@@ -14,9 +14,6 @@ const peopleInNeedDisabled = 'https://devinit.org/assets/svg/icons/people-in-nee
 
 const MapFilters = (props) => {
   const [dimension, setDimension] = useState('Severity_score');
-  useEffect(() => {
-    props.onSelectDimension(dimension);
-  }, [dimension]);
   const filterOptions = [
     {
       name: 'Severity_score',
@@ -49,6 +46,14 @@ const MapFilters = (props) => {
       disabledIcon: peopleInNeedDisabled,
     },
   ];
+
+  useEffect(() => {
+    props.onSelectDimension(dimension);
+    window.dataLayer.push({
+      event: 'mapFilterSelected',
+      filter: filterOptions.find((opt) => opt.name === dimension).label
+    });
+  }, [dimension]);
 
   return (
     <ul>
