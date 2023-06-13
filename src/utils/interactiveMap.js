@@ -97,22 +97,31 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
     return featureCopy;
   });
 
-const getColor = (score) => {
-  switch (score) {
-    case 'Very high':
-      return '#7d4712';
-    case 'High':
-      return '#ba6b15';
-    case 'Medium':
-      return '#df8000';
-    case 'Low':
-      return '#f7a838';
-    case 'Very low':
-      return '#fac47e';
-    case 'Not assessed':
-      return '#E6E1E5';
-    default:
-      return '#E6E1E5';
+const getColor = (score, variable) => {
+  if (variable === 'Crisis_type') {
+    switch (score) {
+      case 'In protracted crisis':
+        return '#7d4712';
+      case 'Entering protracted crisis':
+        return '#ba6b15';
+      case 'In Crisis':
+        return '#df8000';
+      default:
+        return '#E6E1E5';
+    }
+  } else {
+    switch (score) {
+      case '4':
+        return '#7d4712';
+      case '3+':
+        return '#ba6b15';
+      case '3':
+        return '#df8000';
+      case '2':
+        return '#f7a838';
+      default:
+        return '#E6E1E5';
+    }
   }
 };
 
