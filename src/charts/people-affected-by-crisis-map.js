@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import chroma from 'chroma-js';
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
 import MapFilters from '../components/MapFilters';
@@ -16,7 +17,31 @@ import {
 import { addFilterWrapper } from '../widgets/filters';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
-const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/map_data_long.csv`;
+// const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/map_data_long.csv`;
+const CSV_PATH = '../src/data/Figure1.csv';
+
+const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
+const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) => {
+  // Generate a range of values between the minimum and maximum value
+  const values = [];
+
+  for (let i = minValue; i <= maxValue; i += increment) {
+    values.push(i);
+  }
+
+  const colorGen = chromaInstance.scale(colorArray).domain(values);
+
+  return colorGen(Math.abs(value));
+};
+
+const getMaxMinValues = (dataType, csvData) => {
+  const dataList = csvData.map((item) => Number(item[dataType]));
+
+  return {
+    maxValue: Math.ceil(Math.max(...dataList)),
+    minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
+  };
+};
 
 const renderMap = (
   dimensionVariable,
@@ -48,19 +73,19 @@ const renderMap = (
       { variable: 'Food_insecure_(millions)', max: '26', min: '0' },
       { variable: 'People_in_need_(millions)', max: '25', min: '0' },
     ];
-    const legendColors = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
+    const scaleData = getMaxMinValues(dimensionVariable, processed);
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `${legendColors
+        ? `${colorArray
             .map(
               (color) =>
                 `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
         </span>`
             )
-            .join('')} <p style="margin-left:1px;margin-top: 4px;">${
-            legendData.find((items) => items.variable === dimensionVariable).min
-          } - ${legendData.find((items) => items.variable === dimensionVariable).max}', millions of people'</p>`
+            .join('')} <p style="margin-left:1px;margin-top: 4px;">${scaleData.minValue} - ${
+            scaleData.maxValue
+          }, millions of people</p>`
         : legendData
             .find((items) => items.variable === dimensionVariable)
             .data.map(
@@ -77,10 +102,7 @@ const renderMap = (
     fillColor:
       filterOptions.find((opts) => opts.name === dimensionVariable).scaleType === 'piecewise'
         ? colorFunction(feature.properties[dimensionVariable])
-        : colorFunction(
-            feature.properties[dimensionVariable],
-            filterOptions.find((opts) => opts.name === dimensionVariable).values
-          ),
+        : colorFunction(feature.properties[dimensionVariable]),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -145,25 +167,23 @@ function renderPeopleAffectedByCrisisLeaflet() {
             zoom: 1,
             attributionControl: false,
           });
-          const variable = 'Severity_score';
+          const variable = 'People_in_need_(millions)';
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
-            { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
-            { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise', unit: '' },
-            {
-              name: 'Food_insecure_(millions)',
-              label: 'Food insecurity',
-              scaleType: 'continous',
-              values: [26, 21, 16, 11, 6, 0],
-              unit: 'million',
-            },
+            // { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
+            // {
+            //   name: 'Food_insecure_(millions)',
+            //   label: 'Food insecurity',
+            //   scaleType: 'continous',
+            //   values: [26, 21, 16, 11, 6, 0],
+            //   unit: 'million',
+            // },
             {
               name: 'People_in_need_(millions)',
               label: 'People in need',
               scaleType: 'continous',
-              values: [25, 20, 15, 10, 5, 0],
               unit: 'million',
             },
           ];
@@ -171,29 +191,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
           // Legend
           const legend = window.L.control({ position: 'topright' });
           const resetButton = window.L.control({ position: 'bottomleft' });
-
-          const getColorContinous = (d, numberRange) => {
-            if (d === 'No data') {
-              return '#E6E1E5';
-            }
-            if (Number(d) > numberRange[1]) {
-              return '#7d4712';
-            }
-            if (Number(d) > numberRange[2]) {
-              return '#ba6b15';
-            }
-            if (Number(d) > numberRange[3]) {
-              return '#df8000';
-            }
-            if (Number(d) > numberRange[4]) {
-              return '#f7a838';
-            }
-            if (Number(d) >= numberRange[5]) {
-              return '#fac47e';
-            }
-
-            return '#E6E1E5';
-          };
 
           dichart.showLoading();
           window
@@ -205,7 +202,19 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+
                 const fg = window.L.featureGroup().addTo(map);
+
+                const scaleData = getMaxMinValues(variable, groupedData);
+                const getColorContinous = (d) => {
+                  const increment = (scaleData.maxValue - scaleData.minValue) / colorArray.length;
+
+                  if (!d) {
+                    return '#E6E1E5';
+                  }
+
+                  return getColorDynamic(d, scaleData.minValue, scaleData.maxValue, increment, chroma);
+                };
 
                 const onSelectDimension = (dimension) => {
                   renderMap(
