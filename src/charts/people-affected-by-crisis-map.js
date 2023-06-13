@@ -13,35 +13,14 @@ import {
   highlightFeature,
   matchCountryNames,
   processedData,
+  getColorDynamic,
+  getMaxMinValues,
+  colorArray,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
-// const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/map_data_long.csv`;
-const CSV_PATH = '../src/data/Figure1.csv';
-
-const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
-const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) => {
-  // Generate a range of values between the minimum and maximum value
-  const values = [];
-
-  for (let i = minValue; i <= maxValue; i += increment) {
-    values.push(i);
-  }
-
-  const colorGen = chromaInstance.scale(colorArray).domain(values);
-
-  return colorGen(Math.abs(value));
-};
-
-const getMaxMinValues = (dataType, csvData) => {
-  const dataList = csvData.map((item) => Number(item[dataType]));
-
-  return {
-    maxValue: Math.ceil(Math.max(...dataList)),
-    minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
-  };
-};
+const CSV_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/map_data_long.csv`;
 
 const renderMap = (
   dimensionVariable,

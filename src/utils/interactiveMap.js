@@ -1,5 +1,6 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
+const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
 
 const addCommas = (amount) => {
   if (amount.length > 3) {
@@ -198,6 +199,28 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
+const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) => {
+  // Generate a range of values between the minimum and maximum value
+  const values = [];
+
+  for (let i = minValue; i <= maxValue; i += increment) {
+    values.push(i);
+  }
+
+  const colorGen = chromaInstance.scale(colorArray).domain(values);
+
+  return colorGen(Math.abs(value));
+};
+
+const getMaxMinValues = (dataType, csvData) => {
+  const dataList = csvData.map((item) => Number(item[dataType]));
+
+  return {
+    maxValue: Math.ceil(Math.max(...dataList)),
+    minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
+  };
+};
+
 export {
   dataBoxContent,
   highlightFeature,
@@ -208,4 +231,7 @@ export {
   handleClickFeature,
   dataBox,
   getColor,
+  getColorDynamic,
+  getMaxMinValues,
+  colorArray,
 };
