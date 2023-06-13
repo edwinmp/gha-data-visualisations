@@ -45,7 +45,6 @@ const renderMap = (
     const legendData = [
       { variable: 'Severity_score', data: piecewiselegendData },
       { variable: 'Climate_vulnerability', data: piecewiselegendData },
-      { variable: 'COVID_vaccination_rate', max: '0', min: '100' },
       { variable: 'Food_insecure_(millions)', max: '26', min: '0' },
       { variable: 'People_in_need_(millions)', max: '25', min: '0' },
     ];
@@ -61,9 +60,7 @@ const renderMap = (
             )
             .join('')} <p style="margin-left:1px;margin-top: 4px;">${
             legendData.find((items) => items.variable === dimensionVariable).min
-          } - ${legendData.find((items) => items.variable === dimensionVariable).max}${
-            dimensionVariable === 'COVID_vaccination_rate' ? ', % of population' : ', millions of people'
-          }</p>`
+          } - ${legendData.find((items) => items.variable === dimensionVariable).max}', millions of people'</p>`
         : legendData
             .find((items) => items.variable === dimensionVariable)
             .data.map(
@@ -82,8 +79,7 @@ const renderMap = (
         ? colorFunction(feature.properties[dimensionVariable])
         : colorFunction(
             feature.properties[dimensionVariable],
-            filterOptions.find((opts) => opts.name === dimensionVariable).values,
-            dimensionVariable
+            filterOptions.find((opts) => opts.name === dimensionVariable).values
           ),
     weight: 1,
     opacity: 1,
@@ -157,13 +153,6 @@ function renderPeopleAffectedByCrisisLeaflet() {
             { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
             { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise', unit: '' },
             {
-              name: 'COVID_vaccination_rate',
-              label: 'Covid-19 vaccination rate',
-              scaleType: 'continous',
-              values: [0, 20, 40, 60, 80, 100],
-              unit: '%',
-            },
-            {
               name: 'Food_insecure_(millions)',
               label: 'Food insecurity',
               scaleType: 'continous',
@@ -183,23 +172,23 @@ function renderPeopleAffectedByCrisisLeaflet() {
           const legend = window.L.control({ position: 'topright' });
           const resetButton = window.L.control({ position: 'bottomleft' });
 
-          const getColorContinous = (d, numberRange, dimension) => {
+          const getColorContinous = (d, numberRange) => {
             if (d === 'No data') {
               return '#E6E1E5';
             }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[1] : Number(d) > numberRange[1]) {
+            if (Number(d) > numberRange[1]) {
               return '#0c457b';
             }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[2] : Number(d) > numberRange[2]) {
+            if (Number(d) > numberRange[2]) {
               return '#0071b1';
             }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[3] : Number(d) > numberRange[3]) {
+            if (Number(d) > numberRange[3]) {
               return '#0089cc';
             }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[4] : Number(d) > numberRange[4]) {
+            if (Number(d) > numberRange[4]) {
               return '#5da3d9';
             }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) <= numberRange[5] : Number(d) >= numberRange[5]) {
+            if (Number(d) >= numberRange[5]) {
               return '#77adde';
             }
 

@@ -3,11 +3,9 @@ import React, { useEffect, useState } from 'react';
 
 const crisisSeverity = 'https://devinit.org/assets/svg/icons/crisis-severity-icon.svg';
 const climateVulnerability = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
-const covidVaccination = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon.svg';
 const peopleInNeed = 'https://devinit.org/assets/svg/icons/people-in-need-icon.svg';
 const foodSecurity = 'https://devinit.org/assets/svg/icons/food-security.svg';
 const climateVulnerabilityDisabled = 'https://devinit.org/assets/svg/icons/climate-vulnerability-icon-disabled.svg';
-const covidVaccinationDisabled = 'https://devinit.org/assets/svg/icons/covid-vaccination-icon-disabled.svg';
 const crisisSeverityDisabled = 'https://devinit.org/assets/svg/icons/crisis-severity-icon-disabled.svg';
 const foodSecurityDisabled = 'https://devinit.org/assets/svg/icons/food-security-disabled.svg';
 const peopleInNeedDisabled = 'https://devinit.org/assets/svg/icons/people-in-need-icon-disabled.svg';
@@ -28,12 +26,6 @@ const MapFilters = (props) => {
       disabledIcon: climateVulnerabilityDisabled,
     },
     {
-      name: 'COVID_vaccination_rate',
-      label: 'Covid-19 vaccination rate',
-      icon: covidVaccination,
-      disabledIcon: covidVaccinationDisabled,
-    },
-    {
       name: 'Food_insecure_(millions)',
       label: 'Food insecurity',
       icon: foodSecurity,
@@ -51,7 +43,7 @@ const MapFilters = (props) => {
     props.onSelectDimension(dimension);
     window.dataLayer.push({
       event: 'mapFilterSelected',
-      filter: filterOptions.find((opt) => opt.name === dimension).label
+      filter: filterOptions.find((opt) => opt.name === dimension).label,
     });
   }, [dimension]);
 
