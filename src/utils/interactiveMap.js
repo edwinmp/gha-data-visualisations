@@ -99,15 +99,15 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
 const getColor = (score) => {
   switch (score) {
     case 'Very high':
-      return '#0c457b';
+      return '#7d4712';
     case 'High':
-      return '#0071b1';
+      return '#ba6b15';
     case 'Medium':
-      return '#0089cc';
+      return '#df8000';
     case 'Low':
-      return '#5da3d9';
+      return '#f7a838';
     case 'Very low':
-      return '#77adde';
+      return '#fac47e';
     case 'Not assessed':
       return '#E6E1E5';
     default:
@@ -127,7 +127,7 @@ const handleClickFeature = (e, mapInstance, databoxInstance, csv) => {
   const layer = e.target;
   window.dataLayer.push({
     event: 'countryClicked',
-    country: getOriginalCountryName(csv, layer.feature.properties.iso_a3)
+    country: getOriginalCountryName(csv, layer.feature.properties.iso_a3),
   });
   databoxInstance.update(layer.feature.properties, csv);
 };
@@ -171,7 +171,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
   }
 
   layer.setStyle({
-    fillColor: '#f7a838',
+    fillColor: '#5da3d9',
     color: '#484848',
     weight: 2,
   });

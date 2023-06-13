@@ -48,7 +48,7 @@ const renderMap = (
       { variable: 'Food_insecure_(millions)', max: '26', min: '0' },
       { variable: 'People_in_need_(millions)', max: '25', min: '0' },
     ];
-    const legendColors = ['#77adde', '#5da3d9', '#0089cc', '#0071b1', '#0c457b'];
+    const legendColors = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
     const legendContent =
       dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
         ? `${legendColors
@@ -177,19 +177,19 @@ function renderPeopleAffectedByCrisisLeaflet() {
               return '#E6E1E5';
             }
             if (Number(d) > numberRange[1]) {
-              return '#0c457b';
+              return '#7d4712';
             }
             if (Number(d) > numberRange[2]) {
-              return '#0071b1';
+              return '#ba6b15';
             }
             if (Number(d) > numberRange[3]) {
-              return '#0089cc';
+              return '#df8000';
             }
             if (Number(d) > numberRange[4]) {
-              return '#5da3d9';
+              return '#f7a838';
             }
             if (Number(d) >= numberRange[5]) {
-              return '#77adde';
+              return '#fac47e';
             }
 
             return '#E6E1E5';

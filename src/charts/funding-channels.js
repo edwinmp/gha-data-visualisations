@@ -53,7 +53,7 @@ const sortOrgTypes = (orgTypes) => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.bluebell,
+    color: colorways.sunflower,
     legend: {
       show: true,
       top: 'top',

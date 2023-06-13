@@ -86,7 +86,7 @@ const getYaxisValue = (namePosition = 'far') => {
 
 const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   const option = {
-    color: colorways.bluebell,
+    color: colorways.sunflower,
     legend: {
       show: true,
       top: 'top',
