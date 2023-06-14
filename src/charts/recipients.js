@@ -45,7 +45,7 @@ const processOrgTypeData = (data, orgType, years) => {
 };
 
 const getRecipientDonors = (data, recipient) => {
-  const preApprovedDonors = ['US', 'EU institutions', 'Germany', 'UK', 'Saudi Arabia', 'All other donors'];
+  const preApprovedDonors = ['US', 'EU institutions', 'Germany', 'UK', 'Japan', 'All other donors'];
   const recipientData = data.filter((d) => d.Recipient.trim() === recipient);
   if (preApprovedDonors.length >= 5) {
     return preApprovedDonors;
@@ -138,12 +138,14 @@ const updateChartByDonors = (chart, updatedData, { recipient, years }) => {
   const series = donors
     .map((donor) => ({
       name: donor,
-      data: processData(cleanedData, years, recipient, donor).map((d) => ({
-        value: d && Number(d.value).toFixed(2),
-        emphasis: {
-          focus: 'self',
-        },
-      })),
+      data: processData(cleanedData, years, recipient, donor === 'All other donors' ? 'Other donors' : donor).map(
+        (d) => ({
+          value: d && Number(d.value).toFixed(2),
+          emphasis: {
+            focus: 'self',
+          },
+        })
+      ),
       type: 'bar',
       stack: recipient,
       cursor: 'auto',
