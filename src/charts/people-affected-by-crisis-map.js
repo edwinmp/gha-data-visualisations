@@ -152,23 +152,23 @@ function renderPeopleAffectedByCrisisLeaflet() {
             zoom: 1,
             attributionControl: false,
           });
-          const variable = 'Crisis_type';
+          const variable = 'People_in_need_(millions)';
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
+            {
+              name: 'People_in_need_(millions)',
+              label: 'People in need',
+              scaleType: 'continous',
+              unit: 'million',
+            },
             { name: 'Crisis_type', label: 'Crisis state', scaleType: 'piecewise', unit: '' },
             {
               name: 'IPC_Food_insecurity_phase',
               label: 'Food insecurity',
               scaleType: 'piecewise',
               unit: '',
-            },
-            {
-              name: 'People_in_need_(millions)',
-              label: 'People in need',
-              scaleType: 'continous',
-              unit: 'million',
             },
           ];
 

@@ -9,8 +9,14 @@ const foodSecurityDisabled = 'https://dev.devinit.org/assets/svg/icons/food-secu
 const peopleInNeedDisabled = 'https://dev.devinit.org/assets/svg/icons/people-in-need-icon-disabled.svg';
 
 const MapFilters = (props) => {
-  const [dimension, setDimension] = useState('Crisis_type');
+  const [dimension, setDimension] = useState('People_in_need_(millions)');
   const filterOptions = [
+    {
+      name: 'People_in_need_(millions)',
+      label: 'People in need',
+      icon: peopleInNeed,
+      disabledIcon: peopleInNeedDisabled,
+    },
     {
       name: 'Crisis_type',
       label: 'Crisis state',
@@ -22,12 +28,6 @@ const MapFilters = (props) => {
       label: 'Food insecurity',
       icon: foodSecurity,
       disabledIcon: foodSecurityDisabled,
-    },
-    {
-      name: 'People_in_need_(millions)',
-      label: 'People in need',
-      icon: peopleInNeed,
-      disabledIcon: peopleInNeedDisabled,
     },
   ];
 
