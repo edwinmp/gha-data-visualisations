@@ -2,30 +2,17 @@ const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate
 const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
 const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
 
-const addCommas = (amount) => {
-  if (amount.length > 3) {
-    let finalAmount = '';
-    const splitAmount = amount.split('');
-    splitAmount.forEach((item, index) => {
-      if (index === 1) {
-        finalAmount = finalAmount.concat(`,${item}`);
-      } else {
-        finalAmount = finalAmount.concat(item);
-      }
-    });
+const removeWhitespace = (string) => string.trim();
 
-    return finalAmount;
-  }
-
-  return amount;
-};
 const getCountryResponsePlan = (requirement, coverage, funding) =>
   requirement
-    ? `${coverage}% funded(US$${addCommas(funding)} million  of US$${addCommas(requirement)} million)`
+    ? `${coverage}% funded (US$${removeWhitespace(funding)} million  of US$${removeWhitespace(requirement)} million)`
     : 'None';
 
 const getRegionalResponsePlan = (requirement, funds, coverage) =>
-  requirement ? `${coverage}% funded(US$${addCommas(funds)} million of US$${addCommas(requirement)} million)` : 'None';
+  requirement
+    ? `${coverage}% funded (US$${removeWhitespace(funds)} million of US$${removeWhitespace(requirement)} million)`
+    : 'None';
 
 const dataBoxContent = (data) => [
   {
