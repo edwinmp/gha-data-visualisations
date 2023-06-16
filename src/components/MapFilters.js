@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 
 const crisisType = 'https://dev.devinit.org/assets/svg/icons/crisis-type-icon.svg';
 const peopleInNeed = 'https://dev.devinit.org/assets/svg/icons/people-in-need-icon.svg';
-const foodSecurity = 'https://dev.devinit.org/assets/svg/icons/food-security.svg';
+const foodSecurity = 'http:/dev.devinit.org/assets/svg/icons/food-security.svg';
+const climateVulnerability = 'http:/dev.devinit.org/assets/svg/icons/climate-vulnerability-icon.svg';
 const crisisTypeDisabled = 'https://dev.devinit.org/assets/svg/icons/crisis-type-icon-disabled.svg';
 const foodSecurityDisabled = 'https://dev.devinit.org/assets/svg/icons/food-security-disabled.svg';
 const peopleInNeedDisabled = 'https://dev.devinit.org/assets/svg/icons/people-in-need-icon-disabled.svg';
+const climateVulnerabilityDisabled = 'http:/dev.devinit.org/assets/svg/icons/climate-vulnerability-icon-disabled.svg';
 
 const MapFilters = (props) => {
   const [dimension, setDimension] = useState('People_in_need_(millions)');
@@ -28,6 +30,12 @@ const MapFilters = (props) => {
       label: 'Food insecurity',
       icon: foodSecurity,
       disabledIcon: foodSecurityDisabled,
+    },
+    {
+      name: 'Climate_vulnerability',
+      label: 'Climate vulnerability',
+      icon: climateVulnerability,
+      disabledIcon: climateVulnerabilityDisabled,
     },
   ];
 

@@ -16,6 +16,7 @@ import {
   getColorDynamic,
   getMaxMinValues,
   colorArray,
+  legendData,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 
@@ -38,24 +39,7 @@ const renderMap = (
   const legendInstanceCopy = legendInstance;
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
-    const crisisLegendData = [
-      { score: '', label: 'Not in crisis' },
-      { score: 'In Crisis', label: 'In crisis' },
-      { score: 'Entering protracted crisis', label: 'Entering protracted crisis' },
-      { score: 'In protracted crisis', label: 'In protracted crisis' },
-    ];
-    const foodSecuritylegendData = [
-      { score: 'Not assessed', label: 'No data' },
-      { score: '2', label: '2' },
-      { score: '3', label: '3' },
-      { score: '3+', label: '3+' },
-      { score: '4', label: '4' },
-    ];
-    const legendData = [
-      { variable: 'Crisis_type', data: crisisLegendData },
-      { variable: 'IPC_Food_insecurity_phase', data: foodSecuritylegendData },
-      { variable: 'People_in_need_(millions)' },
-    ];
+
     const scaleData = getMaxMinValues(dimensionVariable, processed);
     const legendContent =
       dimensionVariable === 'People_in_need_(millions)'
@@ -167,6 +151,12 @@ function renderPeopleAffectedByCrisisLeaflet() {
             {
               name: 'IPC_Food_insecurity_phase',
               label: 'Food insecurity',
+              scaleType: 'piecewise',
+              unit: '',
+            },
+            {
+              name: 'Climate_vulnerability',
+              label: 'Climate vulnerability',
               scaleType: 'piecewise',
               unit: '',
             },

@@ -1,6 +1,35 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
+const responsePlan = 'https://dev.devinit.org/assets/svg/icons/response-plan-icon.svg';
 const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
+
+const crisisLegendData = [
+  { score: '', label: 'Not in crisis' },
+  { score: 'In Crisis', label: 'In crisis' },
+  { score: 'Entering protracted crisis', label: 'Entering protracted crisis' },
+  { score: 'In protracted crisis', label: 'In protracted crisis' },
+];
+const foodSecuritylegendData = [
+  { score: 'Not assessed', label: 'No data' },
+  { score: '2', label: '2' },
+  { score: '3', label: '3' },
+  { score: '3+', label: '3+' },
+  { score: '4', label: '4' },
+];
+
+const climateVulnerabilityLegendData = [
+  { score: '', label: 'No data' },
+  { score: '1', label: 'Very low' },
+  { score: '2', label: 'Low' },
+  { score: '3', label: 'Medium' },
+  { score: '4', label: 'High' },
+  { score: '5', label: 'Very high' },
+];
+const legendData = [
+  { variable: 'Crisis_type', data: crisisLegendData },
+  { variable: 'IPC_Food_insecurity_phase', data: foodSecuritylegendData },
+  { variable: 'People_in_need_(millions)' },
+  { variable: 'Climate_vulnerability', data: climateVulnerabilityLegendData },
+];
 
 const removeWhitespace = (string) => string.trim();
 
@@ -96,7 +125,7 @@ const getColor = (score, variable) => {
       default:
         return '#E6E1E5';
     }
-  } else {
+  } else if (variable === 'IPC_Food_insecurity_phase') {
     switch (score) {
       case '4':
         return '#7d4712';
@@ -106,6 +135,21 @@ const getColor = (score, variable) => {
         return '#df8000';
       case '2':
         return '#f7a838';
+      default:
+        return '#E6E1E5';
+    }
+  } else {
+    switch (score) {
+      case '5':
+        return '#7d4712';
+      case '4':
+        return '#ba6b15';
+      case '3':
+        return '#df8000';
+      case '2':
+        return '#f7a838';
+      case '1':
+        return '#fac47e';
       default:
         return '#E6E1E5';
     }
@@ -230,4 +274,5 @@ export {
   getColorDynamic,
   getMaxMinValues,
   colorArray,
+  legendData,
 };
