@@ -7,7 +7,8 @@ import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/recipient-and-donors.csv`;
-const colors = ['#f49b21', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
+const donorColors = ['#f49b21', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
+const orgtypeColors = ['#f49b21', '#feedd4', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
 
 const nf = new Intl.NumberFormat();
 
@@ -87,7 +88,7 @@ const getYaxisValue = (namePosition = 'far') => {
 
 const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   const option = {
-    color: colors,
+    color: donorColors,
     legend: {
       show: true,
       top: 'top',
@@ -194,8 +195,9 @@ const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
       },
     }))
     .reduce((final, cur) => final.concat(cur), []);
+  const color = orgtypeColors;
   chart.setOption(
-    { yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)), series },
+    { yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)), color, series },
     { replaceMerge: ['series'] }
   );
 };
@@ -245,7 +247,7 @@ const renderRecipientChart = () => {
             if (breakdown === 'By donor') {
               if (selectedRecipient !== '10 largest recipients') {
                 const filteredData = donorData.filter((d) => d.Recipient === selectedRecipient);
-                updateChartByDonors(chart, filteredData, { recipient: selectedRecipient, years });
+                updateChartByDonors(chart, filteredData, { recipient: selectedRecipient, years }, breakdown);
               } else {
                 selectedRecipient = '10 largest recipients'; // reset country filter selected value
                 renderDefaultChart(chart, cleanData(donorData), '10 largest recipients', {
@@ -266,12 +268,18 @@ const renderRecipientChart = () => {
             if (value === 'By donor') {
               if (recipient !== '10 largest recipients') {
                 const filteredData = donorData.filter((d) => d.Recipient === recipient);
-                updateChartByDonors(chart, filteredData, { recipient, years });
+                updateChartByDonors(chart, filteredData, { recipient, years }, value);
               } else {
-                renderDefaultChart(chart, cleanData(donorData), '10 largest recipients', {
-                  years,
-                  channels: initialDonors,
-                });
+                renderDefaultChart(
+                  chart,
+                  cleanData(donorData),
+                  '10 largest recipients',
+                  {
+                    years,
+                    channels: initialDonors,
+                  },
+                  value
+                );
               }
             } else {
               updateChartByOrgType(
