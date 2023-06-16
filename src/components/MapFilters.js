@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 const crisisType = 'https://dev.devinit.org/assets/svg/icons/crisis-type-icon-yellow.svg';
-const peopleInNeed = 'https://dev.devinit.org/assets/svg/icons/people-in-need-icon.svg-yellow';
-const foodSecurity = 'https:/dev.devinit.org/assets/svg/icons/food-security.svg-yellow';
+const peopleInNeed = 'https://dev.devinit.org/assets/svg/icons/people-in-need-icon-yellow.svg';
+const foodSecurity = 'https:/dev.devinit.org/assets/svg/icons/food-security-yellow.svg';
 const climateVulnerability = 'https:/dev.devinit.org/assets/svg/icons/climate-vulnerability-icon-yellow.svg';
 const crisisTypeDisabled = 'https://dev.devinit.org/assets/svg/icons/crisis-type-icon-disabled.svg';
 const foodSecurityDisabled = 'https://dev.devinit.org/assets/svg/icons/food-security-disabled.svg';
