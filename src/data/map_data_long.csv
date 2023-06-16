@@ -1,309 +1,309 @@
-﻿Country_ID,Country_name,variable,value
-AFG,Afghanistan,"Country_response_plan_funding_(US$,_million)"," 3,358 "
+Country_ID,Country_name,variable,value
+AFG,Afghanistan,"Country_response_plan_funding_(US$,_million)","3,358"
 AGO,Angola,"Country_response_plan_funding_(US$,_million)",
 BGD,Bangladesh,"Country_response_plan_funding_(US$,_million)",
-BFA,Burkina Faso,"Country_response_plan_funding_(US$,_million)", 335
-BDI,Burundi,"Country_response_plan_funding_(US$,_million)", 94
-CMR,Cameroon,"Country_response_plan_funding_(US$,_million)", 206
-CAF,Central African Republic,"Country_response_plan_funding_(US$,_million)", 432
-TCD,Chad,"Country_response_plan_funding_(US$,_million)", 305
-COL,Colombia,"Country_response_plan_funding_(US$,_million)", 107
-COD,Congo (the Democratic Republic of the),"Country_response_plan_funding_(US$,_million)", 956
-COG,Congo (the),"Country_response_plan_funding_(US$,_million)",
-CUB,Cuba,"Country_response_plan_funding_(US$,_million)", 7
+BFA,Burkina Faso,"Country_response_plan_funding_(US$,_million)",335
+BDI,Burundi,"Country_response_plan_funding_(US$,_million)",94
+CMR,Cameroon,"Country_response_plan_funding_(US$,_million)",206
+CAF,CAR,"Country_response_plan_funding_(US$,_million)",432
+TCD,Chad,"Country_response_plan_funding_(US$,_million)",305
+COL,Colombia,"Country_response_plan_funding_(US$,_million)",107
+COD,DRC,"Country_response_plan_funding_(US$,_million)",956
+COG,Congo,"Country_response_plan_funding_(US$,_million)",
+CUB,Cuba,"Country_response_plan_funding_(US$,_million)",7
 EGY,Egypt,"Country_response_plan_funding_(US$,_million)",
-SLV,El Salvador,"Country_response_plan_funding_(US$,_million)", 31
+SLV,El Salvador,"Country_response_plan_funding_(US$,_million)",31
 ERI,Eritrea,"Country_response_plan_funding_(US$,_million)",
-ETH,Ethiopia,"Country_response_plan_funding_(US$,_million)"," 1,661 "
-GTM,Guatemala,"Country_response_plan_funding_(US$,_million)", 57
-HTI,Haiti,"Country_response_plan_funding_(US$,_million)", 200
-HND,Honduras,"Country_response_plan_funding_(US$,_million)", 69
+ETH,Ethiopia,"Country_response_plan_funding_(US$,_million)","1,661"
+GTM,Guatemala,"Country_response_plan_funding_(US$,_million)",57
+HTI,Haiti,"Country_response_plan_funding_(US$,_million)",200
+HND,Honduras,"Country_response_plan_funding_(US$,_million)",69
 HUN,Hungary,"Country_response_plan_funding_(US$,_million)",
-IRN,Iran (Islamic Republic of),"Country_response_plan_funding_(US$,_million)",
-IRQ,Iraq,"Country_response_plan_funding_(US$,_million)", 335
-KEN,Kenya,"Country_response_plan_funding_(US$,_million)", 165
-PRK,Korea (the Democratic People's Republic of),"Country_response_plan_funding_(US$,_million)",
-LBN,Lebanon,"Country_response_plan_funding_(US$,_million)", 279
-LBY,Libya,"Country_response_plan_funding_(US$,_million)", 94
-MDG,Madagascar,"Country_response_plan_funding_(US$,_million)", 177
-MWI,Malawi,"Country_response_plan_funding_(US$,_million)", 19
-MLI,Mali,"Country_response_plan_funding_(US$,_million)", 274
-MOZ,Mozambique,"Country_response_plan_funding_(US$,_million)", 294
-MMR,Myanmar,"Country_response_plan_funding_(US$,_million)", 341
-NER,Niger (the),"Country_response_plan_funding_(US$,_million)", 387
-NGA,Nigeria,"Country_response_plan_funding_(US$,_million)", 737
-PAK,Pakistan,"Country_response_plan_funding_(US$,_million)", 327
-PSE,"Palestine, State of","Country_response_plan_funding_(US$,_million)", 395
+IRN,Iran,"Country_response_plan_funding_(US$,_million)",
+IRQ,Iraq,"Country_response_plan_funding_(US$,_million)",335
+KEN,Kenya,"Country_response_plan_funding_(US$,_million)",165
+PRK,DPR Korea,"Country_response_plan_funding_(US$,_million)",
+LBN,Lebanon,"Country_response_plan_funding_(US$,_million)",279
+LBY,Libya,"Country_response_plan_funding_(US$,_million)",94
+MDG,Madagascar,"Country_response_plan_funding_(US$,_million)",177
+MWI,Malawi,"Country_response_plan_funding_(US$,_million)",19
+MLI,Mali,"Country_response_plan_funding_(US$,_million)",274
+MOZ,Mozambique,"Country_response_plan_funding_(US$,_million)",294
+MMR,Myanmar,"Country_response_plan_funding_(US$,_million)",341
+NER,Niger,"Country_response_plan_funding_(US$,_million)",387
+NGA,Nigeria,"Country_response_plan_funding_(US$,_million)",737
+PAK,Pakistan,"Country_response_plan_funding_(US$,_million)",327
+PSE,Palestine,"Country_response_plan_funding_(US$,_million)",395
 PER,Peru,"Country_response_plan_funding_(US$,_million)",
-PHL,Philippines (the),"Country_response_plan_funding_(US$,_million)", 93
+PHL,Philippines,"Country_response_plan_funding_(US$,_million)",93
 POL,Poland,"Country_response_plan_funding_(US$,_million)",
 ROU,Romania,"Country_response_plan_funding_(US$,_million)",
-SOM,Somalia,"Country_response_plan_funding_(US$,_million)"," 1,592 "
-SSD,South Sudan,"Country_response_plan_funding_(US$,_million)"," 1,215 "
-LKA,Sri Lanka,"Country_response_plan_funding_(US$,_million)", 100
-SDN,Sudan (the),"Country_response_plan_funding_(US$,_million)", 903
-SYR,Syrian Arab Republic,"Country_response_plan_funding_(US$,_million)"," 2,167 "
+SOM,Somalia,"Country_response_plan_funding_(US$,_million)","1,592"
+SSD,South Sudan,"Country_response_plan_funding_(US$,_million)","1,215"
+LKA,Sri Lanka,"Country_response_plan_funding_(US$,_million)",100
+SDN,Sudan,"Country_response_plan_funding_(US$,_million)",903
+SYR,Syria,"Country_response_plan_funding_(US$,_million)","2,167"
 TUR,Turkey,"Country_response_plan_funding_(US$,_million)",
 UGA,Uganda,"Country_response_plan_funding_(US$,_million)",
-UKR,Ukraine,"Country_response_plan_funding_(US$,_million)"," 3,594 "
-VEN,Venezuela (Bolivarian Republic of),"Country_response_plan_funding_(US$,_million)", 273
-YEM,Yemen,"Country_response_plan_funding_(US$,_million)"," 2,286 "
+UKR,Ukraine,"Country_response_plan_funding_(US$,_million)","3,594"
+VEN,Venezuela,"Country_response_plan_funding_(US$,_million)",273
+YEM,Yemen,"Country_response_plan_funding_(US$,_million)","2,286"
 ZMB,Zambia,"Country_response_plan_funding_(US$,_million)",
 ZWE,Zimbabwe,"Country_response_plan_funding_(US$,_million)",
-AFG,Afghanistan,"Country_response_plan_requirements_(US$,_million)"," 4,442 "
+AFG,Afghanistan,"Country_response_plan_requirements_(US$,_million)","4,442"
 AGO,Angola,"Country_response_plan_requirements_(US$,_million)",
 BGD,Bangladesh,"Country_response_plan_requirements_(US$,_million)",
-BFA,Burkina Faso,"Country_response_plan_requirements_(US$,_million)", 805
-BDI,Burundi,"Country_response_plan_requirements_(US$,_million)", 182
-CMR,Cameroon,"Country_response_plan_requirements_(US$,_million)", 376
-CAF,Central African Republic,"Country_response_plan_requirements_(US$,_million)", 461
-TCD,Chad,"Country_response_plan_requirements_(US$,_million)", 511
-COL,Colombia,"Country_response_plan_requirements_(US$,_million)", 284
-COD,Congo (the Democratic Republic of the),"Country_response_plan_requirements_(US$,_million)"," 1,882 "
-COG,Congo (the),"Country_response_plan_requirements_(US$,_million)",
-CUB,Cuba,"Country_response_plan_requirements_(US$,_million)", 42
+BFA,Burkina Faso,"Country_response_plan_requirements_(US$,_million)",805
+BDI,Burundi,"Country_response_plan_requirements_(US$,_million)",182
+CMR,Cameroon,"Country_response_plan_requirements_(US$,_million)",376
+CAF,CAR,"Country_response_plan_requirements_(US$,_million)",461
+TCD,Chad,"Country_response_plan_requirements_(US$,_million)",511
+COL,Colombia,"Country_response_plan_requirements_(US$,_million)",284
+COD,DRC,"Country_response_plan_requirements_(US$,_million)","1,882"
+COG,Congo,"Country_response_plan_requirements_(US$,_million)",
+CUB,Cuba,"Country_response_plan_requirements_(US$,_million)",42
 EGY,Egypt,"Country_response_plan_requirements_(US$,_million)",
-SLV,El Salvador,"Country_response_plan_requirements_(US$,_million)", 114
+SLV,El Salvador,"Country_response_plan_requirements_(US$,_million)",114
 ERI,Eritrea,"Country_response_plan_requirements_(US$,_million)",
-ETH,Ethiopia,"Country_response_plan_requirements_(US$,_million)"," 3,335 "
-GTM,Guatemala,"Country_response_plan_requirements_(US$,_million)", 154
-HTI,Haiti,"Country_response_plan_requirements_(US$,_million)", 519
-HND,Honduras,"Country_response_plan_requirements_(US$,_million)", 155
+ETH,Ethiopia,"Country_response_plan_requirements_(US$,_million)","3,335"
+GTM,Guatemala,"Country_response_plan_requirements_(US$,_million)",154
+HTI,Haiti,"Country_response_plan_requirements_(US$,_million)",519
+HND,Honduras,"Country_response_plan_requirements_(US$,_million)",155
 HUN,Hungary,"Country_response_plan_requirements_(US$,_million)",
-IRN,Iran (Islamic Republic of),"Country_response_plan_requirements_(US$,_million)",
-IRQ,Iraq,"Country_response_plan_requirements_(US$,_million)", 400
-KEN,Kenya,"Country_response_plan_requirements_(US$,_million)", 290
-PRK,Korea (the Democratic People's Republic of),"Country_response_plan_requirements_(US$,_million)",
-LBN,Lebanon,"Country_response_plan_requirements_(US$,_million)", 378
-LBY,Libya,"Country_response_plan_requirements_(US$,_million)", 114
-MDG,Madagascar,"Country_response_plan_requirements_(US$,_million)", 219
-MWI,Malawi,"Country_response_plan_requirements_(US$,_million)", 29
-MLI,Mali,"Country_response_plan_requirements_(US$,_million)", 686
-MOZ,Mozambique,"Country_response_plan_requirements_(US$,_million)", 437
-MMR,Myanmar,"Country_response_plan_requirements_(US$,_million)", 826
-NER,Niger (the),"Country_response_plan_requirements_(US$,_million)", 553
-NGA,Nigeria,"Country_response_plan_requirements_(US$,_million)"," 1,127 "
-PAK,Pakistan,"Country_response_plan_requirements_(US$,_million)", 472
-PSE,"Palestine, State of","Country_response_plan_requirements_(US$,_million)", 510
+IRN,Iran,"Country_response_plan_requirements_(US$,_million)",
+IRQ,Iraq,"Country_response_plan_requirements_(US$,_million)",400
+KEN,Kenya,"Country_response_plan_requirements_(US$,_million)",290
+PRK,DPR Korea,"Country_response_plan_requirements_(US$,_million)",
+LBN,Lebanon,"Country_response_plan_requirements_(US$,_million)",378
+LBY,Libya,"Country_response_plan_requirements_(US$,_million)",114
+MDG,Madagascar,"Country_response_plan_requirements_(US$,_million)",219
+MWI,Malawi,"Country_response_plan_requirements_(US$,_million)",29
+MLI,Mali,"Country_response_plan_requirements_(US$,_million)",686
+MOZ,Mozambique,"Country_response_plan_requirements_(US$,_million)",437
+MMR,Myanmar,"Country_response_plan_requirements_(US$,_million)",826
+NER,Niger,"Country_response_plan_requirements_(US$,_million)",553
+NGA,Nigeria,"Country_response_plan_requirements_(US$,_million)","1,127"
+PAK,Pakistan,"Country_response_plan_requirements_(US$,_million)",472
+PSE,Palestine,"Country_response_plan_requirements_(US$,_million)",510
 PER,Peru,"Country_response_plan_requirements_(US$,_million)",
-PHL,Philippines (the),"Country_response_plan_requirements_(US$,_million)", 169
+PHL,Philippines,"Country_response_plan_requirements_(US$,_million)",169
 POL,Poland,"Country_response_plan_requirements_(US$,_million)",
 ROU,Romania,"Country_response_plan_requirements_(US$,_million)",
-SOM,Somalia,"Country_response_plan_requirements_(US$,_million)"," 2,267 "
-SSD,South Sudan,"Country_response_plan_requirements_(US$,_million)"," 1,700 "
-LKA,Sri Lanka,"Country_response_plan_requirements_(US$,_million)", 150
-SDN,Sudan (the),"Country_response_plan_requirements_(US$,_million)"," 1,937 "
-SYR,Syrian Arab Republic,"Country_response_plan_requirements_(US$,_million)"," 4,444 "
+SOM,Somalia,"Country_response_plan_requirements_(US$,_million)","2,267"
+SSD,South Sudan,"Country_response_plan_requirements_(US$,_million)","1,700"
+LKA,Sri Lanka,"Country_response_plan_requirements_(US$,_million)",150
+SDN,Sudan,"Country_response_plan_requirements_(US$,_million)","1,937"
+SYR,Syria,"Country_response_plan_requirements_(US$,_million)","4,444"
 TUR,Turkey,"Country_response_plan_requirements_(US$,_million)",
 UGA,Uganda,"Country_response_plan_requirements_(US$,_million)",
-UKR,Ukraine,"Country_response_plan_requirements_(US$,_million)"," 4,292 "
-VEN,Venezuela (Bolivarian Republic of),"Country_response_plan_requirements_(US$,_million)", 797
-YEM,Yemen,"Country_response_plan_requirements_(US$,_million)"," 4,272 "
+UKR,Ukraine,"Country_response_plan_requirements_(US$,_million)","4,292"
+VEN,Venezuela,"Country_response_plan_requirements_(US$,_million)",797
+YEM,Yemen,"Country_response_plan_requirements_(US$,_million)","4,272"
 ZMB,Zambia,"Country_response_plan_requirements_(US$,_million)",
 ZWE,Zimbabwe,"Country_response_plan_requirements_(US$,_million)",
-AFG,Afghanistan,Country_response_plan_coverage_(%), 76
+AFG,Afghanistan,Country_response_plan_coverage_(%),76
 AGO,Angola,Country_response_plan_coverage_(%),
 BGD,Bangladesh,Country_response_plan_coverage_(%),
-BFA,Burkina Faso,Country_response_plan_coverage_(%), 42
-BDI,Burundi,Country_response_plan_coverage_(%), 52
-CMR,Cameroon,Country_response_plan_coverage_(%), 55
-CAF,Central African Republic,Country_response_plan_coverage_(%), 94
-TCD,Chad,Country_response_plan_coverage_(%), 60
-COL,Colombia,Country_response_plan_coverage_(%), 38
-COD,Congo (the Democratic Republic of the),Country_response_plan_coverage_(%), 51
-COG,Congo (the),Country_response_plan_coverage_(%),
-CUB,Cuba,Country_response_plan_coverage_(%), 18
+BFA,Burkina Faso,Country_response_plan_coverage_(%),42
+BDI,Burundi,Country_response_plan_coverage_(%),52
+CMR,Cameroon,Country_response_plan_coverage_(%),55
+CAF,CAR,Country_response_plan_coverage_(%),94
+TCD,Chad,Country_response_plan_coverage_(%),60
+COL,Colombia,Country_response_plan_coverage_(%),38
+COD,DRC,Country_response_plan_coverage_(%),51
+COG,Congo,Country_response_plan_coverage_(%),
+CUB,Cuba,Country_response_plan_coverage_(%),18
 EGY,Egypt,Country_response_plan_coverage_(%),
-SLV,El Salvador,Country_response_plan_coverage_(%), 27
+SLV,El Salvador,Country_response_plan_coverage_(%),27
 ERI,Eritrea,Country_response_plan_coverage_(%),
-ETH,Ethiopia,Country_response_plan_coverage_(%), 50
-GTM,Guatemala,Country_response_plan_coverage_(%), 37
-HTI,Haiti,Country_response_plan_coverage_(%), 39
-HND,Honduras,Country_response_plan_coverage_(%), 44
+ETH,Ethiopia,Country_response_plan_coverage_(%),50
+GTM,Guatemala,Country_response_plan_coverage_(%),37
+HTI,Haiti,Country_response_plan_coverage_(%),39
+HND,Honduras,Country_response_plan_coverage_(%),44
 HUN,Hungary,Country_response_plan_coverage_(%),
-IRN,Iran (Islamic Republic of),Country_response_plan_coverage_(%),
-IRQ,Iraq,Country_response_plan_coverage_(%), 84
-KEN,Kenya,Country_response_plan_coverage_(%), 57
-PRK,Korea (the Democratic People's Republic of),Country_response_plan_coverage_(%),
-LBN,Lebanon,Country_response_plan_coverage_(%), 74
-LBY,Libya,Country_response_plan_coverage_(%), 83
-MDG,Madagascar,Country_response_plan_coverage_(%), 81
-MWI,Malawi,Country_response_plan_coverage_(%), 64
-MLI,Mali,Country_response_plan_coverage_(%), 40
-MOZ,Mozambique,Country_response_plan_coverage_(%), 67
-MMR,Myanmar,Country_response_plan_coverage_(%), 41
-NER,Niger (the),Country_response_plan_coverage_(%), 70
-NGA,Nigeria,Country_response_plan_coverage_(%), 65
-PAK,Pakistan,Country_response_plan_coverage_(%), 69
-PSE,"Palestine, State of",Country_response_plan_coverage_(%), 77
+IRN,Iran,Country_response_plan_coverage_(%),
+IRQ,Iraq,Country_response_plan_coverage_(%),84
+KEN,Kenya,Country_response_plan_coverage_(%),57
+PRK,DPR Korea,Country_response_plan_coverage_(%),
+LBN,Lebanon,Country_response_plan_coverage_(%),74
+LBY,Libya,Country_response_plan_coverage_(%),83
+MDG,Madagascar,Country_response_plan_coverage_(%),81
+MWI,Malawi,Country_response_plan_coverage_(%),64
+MLI,Mali,Country_response_plan_coverage_(%),40
+MOZ,Mozambique,Country_response_plan_coverage_(%),67
+MMR,Myanmar,Country_response_plan_coverage_(%),41
+NER,Niger,Country_response_plan_coverage_(%),70
+NGA,Nigeria,Country_response_plan_coverage_(%),65
+PAK,Pakistan,Country_response_plan_coverage_(%),69
+PSE,Palestine,Country_response_plan_coverage_(%),77
 PER,Peru,Country_response_plan_coverage_(%),
-PHL,Philippines (the),Country_response_plan_coverage_(%), 55
+PHL,Philippines,Country_response_plan_coverage_(%),55
 POL,Poland,Country_response_plan_coverage_(%),
 ROU,Romania,Country_response_plan_coverage_(%),
-SOM,Somalia,Country_response_plan_coverage_(%), 70
-SSD,South Sudan,Country_response_plan_coverage_(%), 72
-LKA,Sri Lanka,Country_response_plan_coverage_(%), 67
-SDN,Sudan (the),Country_response_plan_coverage_(%), 47
-SYR,Syrian Arab Republic,Country_response_plan_coverage_(%), 49
+SOM,Somalia,Country_response_plan_coverage_(%),70
+SSD,South Sudan,Country_response_plan_coverage_(%),72
+LKA,Sri Lanka,Country_response_plan_coverage_(%),67
+SDN,Sudan,Country_response_plan_coverage_(%),47
+SYR,Syria,Country_response_plan_coverage_(%),49
 TUR,Turkey,Country_response_plan_coverage_(%),
 UGA,Uganda,Country_response_plan_coverage_(%),
-UKR,Ukraine,Country_response_plan_coverage_(%), 84
-VEN,Venezuela (Bolivarian Republic of),Country_response_plan_coverage_(%), 34
-YEM,Yemen,Country_response_plan_coverage_(%), 54
+UKR,Ukraine,Country_response_plan_coverage_(%),84
+VEN,Venezuela,Country_response_plan_coverage_(%),34
+YEM,Yemen,Country_response_plan_coverage_(%),54
 ZMB,Zambia,Country_response_plan_coverage_(%),
 ZWE,Zimbabwe,Country_response_plan_coverage_(%),
 AFG,Afghanistan,"Regional_response_plan_funding_(US$,_million)",
-AGO,Angola,"Regional_response_plan_funding_(US$,_million)", 11
-BGD,Bangladesh,"Regional_response_plan_funding_(US$,_million)", 555
+AGO,Angola,"Regional_response_plan_funding_(US$,_million)",11
+BGD,Bangladesh,"Regional_response_plan_funding_(US$,_million)",555
 BFA,Burkina Faso,"Regional_response_plan_funding_(US$,_million)",
-BDI,Burundi,"Regional_response_plan_funding_(US$,_million)", 16
+BDI,Burundi,"Regional_response_plan_funding_(US$,_million)",16
 CMR,Cameroon,"Regional_response_plan_funding_(US$,_million)",
-CAF,Central African Republic,"Regional_response_plan_funding_(US$,_million)",
+CAF,CAR,"Regional_response_plan_funding_(US$,_million)",
 TCD,Chad,"Regional_response_plan_funding_(US$,_million)",
-COL,Colombia,"Regional_response_plan_funding_(US$,_million)", 366
-COD,Congo (the Democratic Republic of the),"Regional_response_plan_funding_(US$,_million)",
-COG,Congo (the),"Regional_response_plan_funding_(US$,_million)", 14
+COL,Colombia,"Regional_response_plan_funding_(US$,_million)",366
+COD,DRC,"Regional_response_plan_funding_(US$,_million)",
+COG,Congo,"Regional_response_plan_funding_(US$,_million)",14
 CUB,Cuba,"Regional_response_plan_funding_(US$,_million)",
-EGY,Egypt,"Regional_response_plan_funding_(US$,_million)", 69
+EGY,Egypt,"Regional_response_plan_funding_(US$,_million)",69
 SLV,El Salvador,"Regional_response_plan_funding_(US$,_million)",
 ERI,Eritrea,"Regional_response_plan_funding_(US$,_million)",
-ETH,Ethiopia,"Regional_response_plan_funding_(US$,_million)", 213
+ETH,Ethiopia,"Regional_response_plan_funding_(US$,_million)",213
 GTM,Guatemala,"Regional_response_plan_funding_(US$,_million)",
 HTI,Haiti,"Regional_response_plan_funding_(US$,_million)",
 HND,Honduras,"Regional_response_plan_funding_(US$,_million)",
-HUN,Hungary,"Regional_response_plan_funding_(US$,_million)", 43
-IRN,Iran (Islamic Republic of),"Regional_response_plan_funding_(US$,_million)", 123
-IRQ,Iraq,"Regional_response_plan_funding_(US$,_million)", 70
-KEN,Kenya,"Regional_response_plan_funding_(US$,_million)", 252
-PRK,Korea (the Democratic People's Republic of),"Regional_response_plan_funding_(US$,_million)",
-LBN,Lebanon,"Regional_response_plan_funding_(US$,_million)", 826
+HUN,Hungary,"Regional_response_plan_funding_(US$,_million)",43
+IRN,Iran,"Regional_response_plan_funding_(US$,_million)",123
+IRQ,Iraq,"Regional_response_plan_funding_(US$,_million)",70
+KEN,Kenya,"Regional_response_plan_funding_(US$,_million)",252
+PRK,DPR Korea,"Regional_response_plan_funding_(US$,_million)",
+LBN,Lebanon,"Regional_response_plan_funding_(US$,_million)",826
 LBY,Libya,"Regional_response_plan_funding_(US$,_million)",
 MDG,Madagascar,"Regional_response_plan_funding_(US$,_million)",
 MWI,Malawi,"Regional_response_plan_funding_(US$,_million)",
 MLI,Mali,"Regional_response_plan_funding_(US$,_million)",
 MOZ,Mozambique,"Regional_response_plan_funding_(US$,_million)",
 MMR,Myanmar,"Regional_response_plan_funding_(US$,_million)",
-NER,Niger (the),"Regional_response_plan_funding_(US$,_million)",
+NER,Niger,"Regional_response_plan_funding_(US$,_million)",
 NGA,Nigeria,"Regional_response_plan_funding_(US$,_million)",
-PAK,Pakistan,"Regional_response_plan_funding_(US$,_million)", 193
-PSE,"Palestine, State of","Regional_response_plan_funding_(US$,_million)",
-PER,Peru,"Regional_response_plan_funding_(US$,_million)", 100
-PHL,Philippines (the),"Regional_response_plan_funding_(US$,_million)",
-POL,Poland,"Regional_response_plan_funding_(US$,_million)", 431
-ROU,Romania,"Regional_response_plan_funding_(US$,_million)", 198
-SOM,Somalia,"Regional_response_plan_funding_(US$,_million)", 0
+PAK,Pakistan,"Regional_response_plan_funding_(US$,_million)",193
+PSE,Palestine,"Regional_response_plan_funding_(US$,_million)",
+PER,Peru,"Regional_response_plan_funding_(US$,_million)",100
+PHL,Philippines,"Regional_response_plan_funding_(US$,_million)",
+POL,Poland,"Regional_response_plan_funding_(US$,_million)",431
+ROU,Romania,"Regional_response_plan_funding_(US$,_million)",198
+SOM,Somalia,"Regional_response_plan_funding_(US$,_million)",0
 SSD,South Sudan,"Regional_response_plan_funding_(US$,_million)",
 LKA,Sri Lanka,"Regional_response_plan_funding_(US$,_million)",
-SDN,Sudan (the),"Regional_response_plan_funding_(US$,_million)",
-SYR,Syrian Arab Republic,"Regional_response_plan_funding_(US$,_million)",
-TUR,Turkey,"Regional_response_plan_funding_(US$,_million)", 407
-UGA,Uganda,"Regional_response_plan_funding_(US$,_million)", 295
+SDN,Sudan,"Regional_response_plan_funding_(US$,_million)",
+SYR,Syria,"Regional_response_plan_funding_(US$,_million)",
+TUR,Turkey,"Regional_response_plan_funding_(US$,_million)",407
+UGA,Uganda,"Regional_response_plan_funding_(US$,_million)",295
 UKR,Ukraine,"Regional_response_plan_funding_(US$,_million)",
-VEN,Venezuela (Bolivarian Republic of),"Regional_response_plan_funding_(US$,_million)",
-YEM,Yemen,"Regional_response_plan_funding_(US$,_million)", 0
-ZMB,Zambia,"Regional_response_plan_funding_(US$,_million)", 12
+VEN,Venezuela,"Regional_response_plan_funding_(US$,_million)",
+YEM,Yemen,"Regional_response_plan_funding_(US$,_million)",0
+ZMB,Zambia,"Regional_response_plan_funding_(US$,_million)",12
 ZWE,Zimbabwe,"Regional_response_plan_funding_(US$,_million)",
 AFG,Afghanistan,"Regional_response_plan_requirements_(US$,_million)",
-AGO,Angola,"Regional_response_plan_requirements_(US$,_million)", 25
-BGD,Bangladesh,"Regional_response_plan_requirements_(US$,_million)", 881
+AGO,Angola,"Regional_response_plan_requirements_(US$,_million)",25
+BGD,Bangladesh,"Regional_response_plan_requirements_(US$,_million)",881
 BFA,Burkina Faso,"Regional_response_plan_requirements_(US$,_million)",
-BDI,Burundi,"Regional_response_plan_requirements_(US$,_million)", 54
+BDI,Burundi,"Regional_response_plan_requirements_(US$,_million)",54
 CMR,Cameroon,"Regional_response_plan_requirements_(US$,_million)",
-CAF,Central African Republic,"Regional_response_plan_requirements_(US$,_million)",
+CAF,CAR,"Regional_response_plan_requirements_(US$,_million)",
 TCD,Chad,"Regional_response_plan_requirements_(US$,_million)",
-COL,Colombia,"Regional_response_plan_requirements_(US$,_million)", 803
-COD,Congo (the Democratic Republic of the),"Regional_response_plan_requirements_(US$,_million)",
-COG,Congo (the),"Regional_response_plan_requirements_(US$,_million)", 15
+COL,Colombia,"Regional_response_plan_requirements_(US$,_million)",803
+COD,DRC,"Regional_response_plan_requirements_(US$,_million)",
+COG,Congo,"Regional_response_plan_requirements_(US$,_million)",15
 CUB,Cuba,"Regional_response_plan_requirements_(US$,_million)",
-EGY,Egypt,"Regional_response_plan_requirements_(US$,_million)", 130
+EGY,Egypt,"Regional_response_plan_requirements_(US$,_million)",130
 SLV,El Salvador,"Regional_response_plan_requirements_(US$,_million)",
 ERI,Eritrea,"Regional_response_plan_requirements_(US$,_million)",
-ETH,Ethiopia,"Regional_response_plan_requirements_(US$,_million)", 288
+ETH,Ethiopia,"Regional_response_plan_requirements_(US$,_million)",288
 GTM,Guatemala,"Regional_response_plan_requirements_(US$,_million)",
 HTI,Haiti,"Regional_response_plan_requirements_(US$,_million)",
 HND,Honduras,"Regional_response_plan_requirements_(US$,_million)",
-HUN,Hungary,"Regional_response_plan_requirements_(US$,_million)", 75
-IRN,Iran (Islamic Republic of),"Regional_response_plan_requirements_(US$,_million)", 259
-IRQ,Iraq,"Regional_response_plan_requirements_(US$,_million)", 251
-KEN,Kenya,"Regional_response_plan_requirements_(US$,_million)", 115
-PRK,Korea (the Democratic People's Republic of),"Regional_response_plan_requirements_(US$,_million)",
-LBN,Lebanon,"Regional_response_plan_requirements_(US$,_million)"," 3,196 "
+HUN,Hungary,"Regional_response_plan_requirements_(US$,_million)",75
+IRN,Iran,"Regional_response_plan_requirements_(US$,_million)",259
+IRQ,Iraq,"Regional_response_plan_requirements_(US$,_million)",251
+KEN,Kenya,"Regional_response_plan_requirements_(US$,_million)",115
+PRK,DPR Korea,"Regional_response_plan_requirements_(US$,_million)",
+LBN,Lebanon,"Regional_response_plan_requirements_(US$,_million)","3,196"
 LBY,Libya,"Regional_response_plan_requirements_(US$,_million)",
 MDG,Madagascar,"Regional_response_plan_requirements_(US$,_million)",
 MWI,Malawi,"Regional_response_plan_requirements_(US$,_million)",
 MLI,Mali,"Regional_response_plan_requirements_(US$,_million)",
 MOZ,Mozambique,"Regional_response_plan_requirements_(US$,_million)",
 MMR,Myanmar,"Regional_response_plan_requirements_(US$,_million)",
-NER,Niger (the),"Regional_response_plan_requirements_(US$,_million)",
+NER,Niger,"Regional_response_plan_requirements_(US$,_million)",
 NGA,Nigeria,"Regional_response_plan_requirements_(US$,_million)",
-PAK,Pakistan,"Regional_response_plan_requirements_(US$,_million)", 310
-PSE,"Palestine, State of","Regional_response_plan_requirements_(US$,_million)",
-PER,Peru,"Regional_response_plan_requirements_(US$,_million)", 304
-PHL,Philippines (the),"Regional_response_plan_requirements_(US$,_million)",
-POL,Poland,"Regional_response_plan_requirements_(US$,_million)", 778
-ROU,Romania,"Regional_response_plan_requirements_(US$,_million)", 227
-SOM,Somalia,"Regional_response_plan_requirements_(US$,_million)", 11
+PAK,Pakistan,"Regional_response_plan_requirements_(US$,_million)",310
+PSE,Palestine,"Regional_response_plan_requirements_(US$,_million)",
+PER,Peru,"Regional_response_plan_requirements_(US$,_million)",304
+PHL,Philippines,"Regional_response_plan_requirements_(US$,_million)",
+POL,Poland,"Regional_response_plan_requirements_(US$,_million)",778
+ROU,Romania,"Regional_response_plan_requirements_(US$,_million)",227
+SOM,Somalia,"Regional_response_plan_requirements_(US$,_million)",11
 SSD,South Sudan,"Regional_response_plan_requirements_(US$,_million)",
 LKA,Sri Lanka,"Regional_response_plan_requirements_(US$,_million)",
-SDN,Sudan (the),"Regional_response_plan_requirements_(US$,_million)",
-SYR,Syrian Arab Republic,"Regional_response_plan_requirements_(US$,_million)",
-TUR,Turkey,"Regional_response_plan_requirements_(US$,_million)"," 1,164 "
-UGA,Uganda,"Regional_response_plan_requirements_(US$,_million)", 817
+SDN,Sudan,"Regional_response_plan_requirements_(US$,_million)",
+SYR,Syria,"Regional_response_plan_requirements_(US$,_million)",
+TUR,Turkey,"Regional_response_plan_requirements_(US$,_million)","1,164"
+UGA,Uganda,"Regional_response_plan_requirements_(US$,_million)",817
 UKR,Ukraine,"Regional_response_plan_requirements_(US$,_million)",
-VEN,Venezuela (Bolivarian Republic of),"Regional_response_plan_requirements_(US$,_million)",
-YEM,Yemen,"Regional_response_plan_requirements_(US$,_million)", -
-ZMB,Zambia,"Regional_response_plan_requirements_(US$,_million)", 65
+VEN,Venezuela,"Regional_response_plan_requirements_(US$,_million)",
+YEM,Yemen,"Regional_response_plan_requirements_(US$,_million)", -   
+ZMB,Zambia,"Regional_response_plan_requirements_(US$,_million)",65
 ZWE,Zimbabwe,"Regional_response_plan_requirements_(US$,_million)",
 AFG,Afghanistan,Regional_response_plan_coverage_(%),
-AGO,Angola,Regional_response_plan_coverage_(%), 45
-BGD,Bangladesh,Regional_response_plan_coverage_(%), 63
+AGO,Angola,Regional_response_plan_coverage_(%),45
+BGD,Bangladesh,Regional_response_plan_coverage_(%),63
 BFA,Burkina Faso,Regional_response_plan_coverage_(%),
-BDI,Burundi,Regional_response_plan_coverage_(%), 29
+BDI,Burundi,Regional_response_plan_coverage_(%),29
 CMR,Cameroon,Regional_response_plan_coverage_(%),
-CAF,Central African Republic,Regional_response_plan_coverage_(%),
+CAF,CAR,Regional_response_plan_coverage_(%),
 TCD,Chad,Regional_response_plan_coverage_(%),
-COL,Colombia,Regional_response_plan_coverage_(%), 46
-COD,Congo (the Democratic Republic of the),Regional_response_plan_coverage_(%),
-COG,Congo (the),Regional_response_plan_coverage_(%), 93
+COL,Colombia,Regional_response_plan_coverage_(%),46
+COD,DRC,Regional_response_plan_coverage_(%),
+COG,Congo,Regional_response_plan_coverage_(%),93
 CUB,Cuba,Regional_response_plan_coverage_(%),
-EGY,Egypt,Regional_response_plan_coverage_(%), 53
+EGY,Egypt,Regional_response_plan_coverage_(%),53
 SLV,El Salvador,Regional_response_plan_coverage_(%),
 ERI,Eritrea,Regional_response_plan_coverage_(%),
-ETH,Ethiopia,Regional_response_plan_coverage_(%), 74
+ETH,Ethiopia,Regional_response_plan_coverage_(%),74
 GTM,Guatemala,Regional_response_plan_coverage_(%),
 HTI,Haiti,Regional_response_plan_coverage_(%),
 HND,Honduras,Regional_response_plan_coverage_(%),
-HUN,Hungary,Regional_response_plan_coverage_(%), 57
-IRN,Iran (Islamic Republic of),Regional_response_plan_coverage_(%), 47
-IRQ,Iraq,Regional_response_plan_coverage_(%), 28
-KEN,Kenya,Regional_response_plan_coverage_(%), 219
-PRK,Korea (the Democratic People's Republic of),Regional_response_plan_coverage_(%),
-LBN,Lebanon,Regional_response_plan_coverage_(%), 26
+HUN,Hungary,Regional_response_plan_coverage_(%),57
+IRN,Iran,Regional_response_plan_coverage_(%),47
+IRQ,Iraq,Regional_response_plan_coverage_(%),28
+KEN,Kenya,Regional_response_plan_coverage_(%),219
+PRK,DPR Korea,Regional_response_plan_coverage_(%),
+LBN,Lebanon,Regional_response_plan_coverage_(%),26
 LBY,Libya,Regional_response_plan_coverage_(%),
 MDG,Madagascar,Regional_response_plan_coverage_(%),
 MWI,Malawi,Regional_response_plan_coverage_(%),
 MLI,Mali,Regional_response_plan_coverage_(%),
 MOZ,Mozambique,Regional_response_plan_coverage_(%),
 MMR,Myanmar,Regional_response_plan_coverage_(%),
-NER,Niger (the),Regional_response_plan_coverage_(%),
+NER,Niger,Regional_response_plan_coverage_(%),
 NGA,Nigeria,Regional_response_plan_coverage_(%),
-PAK,Pakistan,Regional_response_plan_coverage_(%), 62
-PSE,"Palestine, State of",Regional_response_plan_coverage_(%),
-PER,Peru,Regional_response_plan_coverage_(%), 33
-PHL,Philippines (the),Regional_response_plan_coverage_(%),
-POL,Poland,Regional_response_plan_coverage_(%), 55
-ROU,Romania,Regional_response_plan_coverage_(%), 88
-SOM,Somalia,Regional_response_plan_coverage_(%), 4
+PAK,Pakistan,Regional_response_plan_coverage_(%),62
+PSE,Palestine,Regional_response_plan_coverage_(%),
+PER,Peru,Regional_response_plan_coverage_(%),33
+PHL,Philippines,Regional_response_plan_coverage_(%),
+POL,Poland,Regional_response_plan_coverage_(%),55
+ROU,Romania,Regional_response_plan_coverage_(%),88
+SOM,Somalia,Regional_response_plan_coverage_(%),4
 SSD,South Sudan,Regional_response_plan_coverage_(%),
 LKA,Sri Lanka,Regional_response_plan_coverage_(%),
-SDN,Sudan (the),Regional_response_plan_coverage_(%),
-SYR,Syrian Arab Republic,Regional_response_plan_coverage_(%),
-TUR,Turkey,Regional_response_plan_coverage_(%), 35
-UGA,Uganda,Regional_response_plan_coverage_(%), 36
+SDN,Sudan,Regional_response_plan_coverage_(%),
+SYR,Syria,Regional_response_plan_coverage_(%),
+TUR,Turkey,Regional_response_plan_coverage_(%),35
+UGA,Uganda,Regional_response_plan_coverage_(%),36
 UKR,Ukraine,Regional_response_plan_coverage_(%),
-VEN,Venezuela (Bolivarian Republic of),Regional_response_plan_coverage_(%),
+VEN,Venezuela,Regional_response_plan_coverage_(%),
 YEM,Yemen,Regional_response_plan_coverage_(%),
-ZMB,Zambia,Regional_response_plan_coverage_(%), 18
+ZMB,Zambia,Regional_response_plan_coverage_(%),18
 ZWE,Zimbabwe,Regional_response_plan_coverage_(%),
 AFG,Afghanistan,IPC_Food_insecurity_phase,3
 AGO,Angola,IPC_Food_insecurity_phase,3
@@ -311,11 +311,11 @@ BGD,Bangladesh,IPC_Food_insecurity_phase,3+
 BFA,Burkina Faso,IPC_Food_insecurity_phase,2
 BDI,Burundi,IPC_Food_insecurity_phase,2
 CMR,Cameroon,IPC_Food_insecurity_phase,2
-CAF,Central African Republic,IPC_Food_insecurity_phase,3
+CAF,CAR,IPC_Food_insecurity_phase,3
 TCD,Chad,IPC_Food_insecurity_phase,2
 COL,Colombia,IPC_Food_insecurity_phase,3+
-COD,Congo (the Democratic Republic of the),IPC_Food_insecurity_phase,3
-COG,Congo (the),IPC_Food_insecurity_phase,
+COD,DRC,IPC_Food_insecurity_phase,3
+COG,Congo,IPC_Food_insecurity_phase,
 CUB,Cuba,IPC_Food_insecurity_phase,3+
 EGY,Egypt,IPC_Food_insecurity_phase,
 SLV,El Salvador,IPC_Food_insecurity_phase,2
@@ -325,10 +325,10 @@ GTM,Guatemala,IPC_Food_insecurity_phase,3
 HTI,Haiti,IPC_Food_insecurity_phase,3
 HND,Honduras,IPC_Food_insecurity_phase,3
 HUN,Hungary,IPC_Food_insecurity_phase,
-IRN,Iran (Islamic Republic of),IPC_Food_insecurity_phase,
+IRN,Iran,IPC_Food_insecurity_phase,
 IRQ,Iraq,IPC_Food_insecurity_phase,3+
 KEN,Kenya,IPC_Food_insecurity_phase,3
-PRK,Korea (the Democratic People's Republic of),IPC_Food_insecurity_phase,3+
+PRK,DPR Korea,IPC_Food_insecurity_phase,3+
 LBN,Lebanon,IPC_Food_insecurity_phase,3
 LBY,Libya,IPC_Food_insecurity_phase,3+
 MDG,Madagascar,IPC_Food_insecurity_phase,3
@@ -336,23 +336,23 @@ MWI,Malawi,IPC_Food_insecurity_phase,2
 MLI,Mali,IPC_Food_insecurity_phase,2
 MOZ,Mozambique,IPC_Food_insecurity_phase,2
 MMR,Myanmar,IPC_Food_insecurity_phase,3+
-NER,Niger (the),IPC_Food_insecurity_phase,2
+NER,Niger,IPC_Food_insecurity_phase,2
 NGA,Nigeria,IPC_Food_insecurity_phase,2
 PAK,Pakistan,IPC_Food_insecurity_phase,3
-PSE,"Palestine, State of",IPC_Food_insecurity_phase,3+
+PSE,Palestine,IPC_Food_insecurity_phase,3+
 PER,Peru,IPC_Food_insecurity_phase,
-PHL,Philippines (the),IPC_Food_insecurity_phase,3+
+PHL,Philippines,IPC_Food_insecurity_phase,3+
 POL,Poland,IPC_Food_insecurity_phase,
 ROU,Romania,IPC_Food_insecurity_phase,
 SOM,Somalia,IPC_Food_insecurity_phase,3
 SSD,South Sudan,IPC_Food_insecurity_phase,4
 LKA,Sri Lanka,IPC_Food_insecurity_phase,3+
-SDN,Sudan (the),IPC_Food_insecurity_phase,2
-SYR,Syrian Arab Republic,IPC_Food_insecurity_phase,3+
+SDN,Sudan,IPC_Food_insecurity_phase,2
+SYR,Syria,IPC_Food_insecurity_phase,3+
 TUR,Turkey,IPC_Food_insecurity_phase,
 UGA,Uganda,IPC_Food_insecurity_phase,3
 UKR,Ukraine,IPC_Food_insecurity_phase,3+
-VEN,Venezuela (Bolivarian Republic of),IPC_Food_insecurity_phase,3+
+VEN,Venezuela,IPC_Food_insecurity_phase,3+
 YEM,Yemen,IPC_Food_insecurity_phase,4
 ZMB,Zambia,IPC_Food_insecurity_phase,2
 ZWE,Zimbabwe,IPC_Food_insecurity_phase,3
@@ -362,11 +362,11 @@ BGD,Bangladesh,People_in_need_(millions),4.9
 BFA,Burkina Faso,People_in_need_(millions),4.9
 BDI,Burundi,People_in_need_(millions),2.4
 CMR,Cameroon,People_in_need_(millions),11.7
-CAF,Central African Republic,People_in_need_(millions),3.1
+CAF,CAR,People_in_need_(millions),3.1
 TCD,Chad,People_in_need_(millions),6.4
 COL,Colombia,People_in_need_(millions),7.7
-COD,Congo (the Democratic Republic of the),People_in_need_(millions),27.0
-COG,Congo (the),People_in_need_(millions),1.2
+COD,DRC,People_in_need_(millions),27
+COG,Congo,People_in_need_(millions),1.2
 CUB,Cuba,People_in_need_(millions),1.1
 EGY,Egypt,People_in_need_(millions),2.7
 SLV,El Salvador,People_in_need_(millions),1.7
@@ -376,10 +376,10 @@ GTM,Guatemala,People_in_need_(millions),3.8
 HTI,Haiti,People_in_need_(millions),5.1
 HND,Honduras,People_in_need_(millions),3.3
 HUN,Hungary,People_in_need_(millions),1.6
-IRN,Iran (Islamic Republic of),People_in_need_(millions),3.4
+IRN,Iran,People_in_need_(millions),3.4
 IRQ,Iraq,People_in_need_(millions),2.8
 KEN,Kenya,People_in_need_(millions),4.9
-PRK,Korea (the Democratic People's Republic of),People_in_need_(millions),10.4
+PRK,DPR Korea,People_in_need_(millions),10.4
 LBN,Lebanon,People_in_need_(millions),2.5
 LBY,Libya,People_in_need_(millions),1.3
 MDG,Madagascar,People_in_need_(millions),3.3
@@ -387,37 +387,37 @@ MWI,Malawi,People_in_need_(millions),4.5
 MLI,Mali,People_in_need_(millions),7.5
 MOZ,Mozambique,People_in_need_(millions),2.5
 MMR,Myanmar,People_in_need_(millions),14.4
-NER,Niger (the),People_in_need_(millions),3.8
+NER,Niger,People_in_need_(millions),3.8
 NGA,Nigeria,People_in_need_(millions),19.2
 PAK,Pakistan,People_in_need_(millions),23.6
-PSE,"Palestine, State of",People_in_need_(millions),2.4
+PSE,Palestine,People_in_need_(millions),2.4
 PER,Peru,People_in_need_(millions),1.7
-PHL,Philippines (the),People_in_need_(millions),2.7
+PHL,Philippines,People_in_need_(millions),2.7
 POL,Poland,People_in_need_(millions),7.6
 ROU,Romania,People_in_need_(millions),1.6
 SOM,Somalia,People_in_need_(millions),7.8
 SSD,South Sudan,People_in_need_(millions),12.5
-LKA,Sri Lanka,People_in_need_(millions),7.0
-SDN,Sudan (the),People_in_need_(millions),15.8
-SYR,Syrian Arab Republic,People_in_need_(millions),14.6
+LKA,Sri Lanka,People_in_need_(millions),7
+SDN,Sudan,People_in_need_(millions),15.8
+SYR,Syria,People_in_need_(millions),14.6
 TUR,Turkey,People_in_need_(millions),2.4
 UGA,Uganda,People_in_need_(millions),2.3
 UKR,Ukraine,People_in_need_(millions),17.7
-VEN,Venezuela (Bolivarian Republic of),People_in_need_(millions),18.5
+VEN,Venezuela,People_in_need_(millions),18.5
 YEM,Yemen,People_in_need_(millions),23.5
-ZMB,Zambia,People_in_need_(millions),2.0
-ZWE,Zimbabwe,People_in_need_(millions),7.0
+ZMB,Zambia,People_in_need_(millions),2
+ZWE,Zimbabwe,People_in_need_(millions),7
 AFG,Afghanistan,Crisis_type,In protracted crisis
 AGO,Angola,Crisis_type,In protracted crisis
 BGD,Bangladesh,Crisis_type,In protracted crisis
 BFA,Burkina Faso,Crisis_type,In protracted crisis
 BDI,Burundi,Crisis_type,In protracted crisis
 CMR,Cameroon,Crisis_type,In protracted crisis
-CAF,Central African Republic,Crisis_type,In protracted crisis
+CAF,CAR,Crisis_type,In protracted crisis
 TCD,Chad,Crisis_type,In protracted crisis
 COL,Colombia,Crisis_type,Entering protracted crisis
-COD,Congo (the Democratic Republic of the),Crisis_type,In protracted crisis
-COG,Congo (the),Crisis_type,In protracted crisis
+COD,DRC,Crisis_type,In protracted crisis
+COG,Congo,Crisis_type,In protracted crisis
 CUB,Cuba,Crisis_type,In Crisis
 EGY,Egypt,Crisis_type,In protracted crisis
 SLV,El Salvador,Crisis_type,In Crisis
@@ -427,10 +427,10 @@ GTM,Guatemala,Crisis_type,In Crisis
 HTI,Haiti,Crisis_type,In protracted crisis
 HND,Honduras,Crisis_type,In Crisis
 HUN,Hungary,Crisis_type,In Crisis
-IRN,Iran (Islamic Republic of),Crisis_type,In Crisis
+IRN,Iran,Crisis_type,In Crisis
 IRQ,Iraq,Crisis_type,In protracted crisis
 KEN,Kenya,Crisis_type,In protracted crisis
-PRK,Korea (the Democratic People's Republic of),Crisis_type,In Crisis
+PRK,DPR Korea,Crisis_type,In Crisis
 LBN,Lebanon,Crisis_type,In protracted crisis
 LBY,Libya,Crisis_type,In protracted crisis
 MDG,Madagascar,Crisis_type,In Crisis
@@ -438,23 +438,74 @@ MWI,Malawi,Crisis_type,In Crisis
 MLI,Mali,Crisis_type,In protracted crisis
 MOZ,Mozambique,Crisis_type,In Crisis
 MMR,Myanmar,Crisis_type,In protracted crisis
-NER,Niger (the),Crisis_type,In protracted crisis
+NER,Niger,Crisis_type,In protracted crisis
 NGA,Nigeria,Crisis_type,In protracted crisis
 PAK,Pakistan,Crisis_type,In protracted crisis
-PSE,"Palestine, State of",Crisis_type,In protracted crisis
+PSE,Palestine,Crisis_type,In protracted crisis
 PER,Peru,Crisis_type,In protracted crisis
-PHL,Philippines (the),Crisis_type,In Crisis
+PHL,Philippines,Crisis_type,In Crisis
 POL,Poland,Crisis_type,In Crisis
 ROU,Romania,Crisis_type,In Crisis
 SOM,Somalia,Crisis_type,In protracted crisis
 SSD,South Sudan,Crisis_type,In protracted crisis
 LKA,Sri Lanka,Crisis_type,In Crisis
-SDN,Sudan (the),Crisis_type,In protracted crisis
-SYR,Syrian Arab Republic,Crisis_type,In protracted crisis
+SDN,Sudan,Crisis_type,In protracted crisis
+SYR,Syria,Crisis_type,In protracted crisis
 TUR,Turkey,Crisis_type,In protracted crisis
 UGA,Uganda,Crisis_type,In protracted crisis
 UKR,Ukraine,Crisis_type,In protracted crisis
-VEN,Venezuela (Bolivarian Republic of),Crisis_type,Entering protracted crisis
+VEN,Venezuela,Crisis_type,Entering protracted crisis
 YEM,Yemen,Crisis_type,In protracted crisis
 ZMB,Zambia,Crisis_type,Entering protracted crisis
 ZWE,Zimbabwe,Crisis_type,In Crisis
+AFG,Afghanistan,Climate_vulnerability,5
+AGO,Angola,Climate_vulnerability,4
+BGD,Bangladesh,Climate_vulnerability,5
+BFA,Burkina Faso,Climate_vulnerability,5
+BDI,Burundi,Climate_vulnerability,5
+CMR,Cameroon,Climate_vulnerability,4
+CAF,CAR,Climate_vulnerability,5
+TCD,Chad,Climate_vulnerability,5
+COL,Colombia,Climate_vulnerability,3
+COD,DRC,Climate_vulnerability,5
+COG,Congo,Climate_vulnerability,4
+CUB,Cuba,Climate_vulnerability,3
+EGY,Egypt,Climate_vulnerability,3
+SLV,El Salvador,Climate_vulnerability,3
+ERI,Eritrea,Climate_vulnerability,5
+ETH,Ethiopia,Climate_vulnerability,5
+GTM,Guatemala,Climate_vulnerability,3
+HTI,Haiti,Climate_vulnerability,5
+HND,Honduras,Climate_vulnerability,4
+HUN,Hungary,Climate_vulnerability,2
+IRN,Iran,Climate_vulnerability,2
+IRQ,Iraq,Climate_vulnerability,3
+KEN,Kenya,Climate_vulnerability,4
+PRK,DPR Korea,Climate_vulnerability,4
+LBN,Lebanon,Climate_vulnerability,3
+LBY,Libya,Climate_vulnerability,3
+MDG,Madagascar,Climate_vulnerability,5
+MWI,Malawi,Climate_vulnerability,5
+MLI,Mali,Climate_vulnerability,5
+MOZ,Mozambique,Climate_vulnerability,4
+MMR,Myanmar,Climate_vulnerability,5
+NER,Niger,Climate_vulnerability,5
+NGA,Nigeria,Climate_vulnerability,4
+PAK,Pakistan,Climate_vulnerability,5
+PSE,Palestine,Climate_vulnerability,3
+PER,Peru,Climate_vulnerability,3
+PHL,Philippines,Climate_vulnerability,4
+POL,Poland,Climate_vulnerability,1
+ROU,Romania,Climate_vulnerability,3
+SOM,Somalia,Climate_vulnerability,5
+SSD,South Sudan,Climate_vulnerability,5
+LKA,Sri Lanka,Climate_vulnerability,4
+SDN,Sudan,Climate_vulnerability,5
+SYR,Syria,Climate_vulnerability,4
+TUR,Turkey,Climate_vulnerability,1
+UGA,Uganda,Climate_vulnerability,5
+UKR,Ukraine,Climate_vulnerability,2
+VEN,Venezuela,Climate_vulnerability,2
+YEM,Yemen,Climate_vulnerability,5
+ZMB,Zambia,Climate_vulnerability,4
+ZWE,Zimbabwe,Climate_vulnerability,5
