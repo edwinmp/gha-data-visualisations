@@ -4,9 +4,10 @@ import { createRoot } from 'react-dom/client';
 import RecipientChartFilters from '../components/RecipientChartFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
+import defaultOptions, { getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/recipient-and-donors.csv`;
+const colors = ['#f49b21', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
 
 const nf = new Intl.NumberFormat();
 
@@ -45,7 +46,7 @@ const processOrgTypeData = (data, orgType, years) => {
 };
 
 const getRecipientDonors = (data, recipient) => {
-  const preApprovedDonors = ['US', 'EU institutions', 'Germany', 'UK', 'Japan', 'All other donors'];
+  const preApprovedDonors = ['US', 'Germany', 'EU institutions', 'Japan', 'UK', 'All other donors'];
   const recipientData = data.filter((d) => d.Recipient.trim() === recipient);
   if (preApprovedDonors.length >= 5) {
     return preApprovedDonors;
@@ -86,7 +87,7 @@ const getYaxisValue = (namePosition = 'far') => {
 
 const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
   const option = {
-    color: colorways.sunflower,
+    color: colors,
     legend: {
       show: true,
       top: 'top',

@@ -5,9 +5,10 @@ import ChartFilters from '../components/ChartFilters';
 import Select from '../components/Select';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
+import defaultOptions, { handleResize, legendSelection } from './echarts';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/funding-channels-interactive-data.csv`;
+const colors = ['#f49b21', '#feedd4', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
@@ -53,7 +54,7 @@ const sortOrgTypes = (orgTypes) => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.sunflower,
+    color: colors,
     legend: {
       show: true,
       top: 'top',

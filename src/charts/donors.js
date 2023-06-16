@@ -5,9 +5,10 @@ import { createRoot } from 'react-dom/client';
 import DonorChartFilters from '../components/DonorChartFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
+import defaultOptions, { getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/donor_interactive_data_long.csv`;
+const colors = ['#f49b21', '#fccc8e', '#f9b865'];
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
@@ -80,7 +81,7 @@ const getYaxisValue = (namePosition = 'far') => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.sunflower,
+    color: colors,
     legend: {
       show: true,
       top: 'top',
