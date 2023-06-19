@@ -5,9 +5,10 @@ import ChartFilters from '../components/ChartFilters';
 import Select from '../components/Select';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, handleResize, legendSelection } from './echarts';
+import defaultOptions, { handleResize, legendSelection } from './echarts';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/funding-channels-interactive-data.csv`;
+const colors = ['#f49b21', '#feedd4', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
 
 const cleanValue = (value = '') =>
   value.trim() ? Number(value.replace(',', '').replace(' ', '').replace('%', '').trim()) : null;
@@ -15,13 +16,13 @@ const cleanValue = (value = '') =>
 const cleanData = (data) =>
   data.map((d) => {
     const clean = { ...d };
-    clean.value = cleanValue(d.Proportions);
+    clean.value = cleanValue(d.Value);
 
     return clean;
   });
 
 const processData = (data, years, donor, channel) => {
-  const filteredData = data.filter((d) => d.Donor.trim() === donor && d['Delivery channel'] === channel);
+  const filteredData = data.filter((d) => d.Donor.trim() === donor && d.Series === channel);
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year));
 
   return sortedData;
@@ -53,7 +54,7 @@ const sortOrgTypes = (orgTypes) => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.bluebell,
+    color: colors,
     legend: {
       show: true,
       top: 'top',
@@ -75,7 +76,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
     series: channels.map((channel) => ({
       name: channel,
       data: processData(data, years, 'All donors', channel).map((d) => ({
-        value: d && Number(d.value * 100).toFixed(2),
+        value: d && Number(d.value),
         emphasis: {
           focus: 'self',
         },
@@ -86,7 +87,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
         trigger: 'item',
         formatter: (params) => {
           const item = data.find(
-            (d) => d['Delivery channel'] === channel && d.Donor === 'All donors' && `${d.Year}` === params.name
+            (d) => d.Series === channel && d.Donor === 'All donors' && `${d.Year}` === params.name
           );
 
           return `All donors, ${params.name} <br />${channel}: <strong>${Number(params.value, 10).toFixed(
@@ -117,7 +118,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
       channels.map((channel, index) => ({
         name: channel,
         data: processData(cleanedData, years, donor, channel).map((d) => ({
-          value: d && Number(d.value * 100).toFixed(2),
+          value: d && Number(d.value).toFixed(2),
           emphasis: {
             focus: 'self',
           },
@@ -128,15 +129,9 @@ const updateChart = (chart, data, { donors, channels, years }) => {
           trigger: 'item',
           formatter: (params) => {
             const item = cleanedData.find(
-              (d) => d['Delivery channel'] === channel && d.Donor === donor && `${d.Year}` === params.name
+              (d) => d.Series === channel && d.Donor === donor && `${d.Year}` === params.name
             );
-            const value = item
-              ? `<strong>${(item.value * 100).toFixed(2)}%</strong> (US$${toDollars(
-                  cleanValue(item['US$ millions, constant 2020 prices']),
-                  'decimal',
-                  'never'
-                )} million)`
-              : `<strong>${(item.value * 100).toFixed(2)}%</strong>`;
+            const value = `<strong>${item.value}%</strong>`;
 
             return `${donor}, ${params.name} <br />${channel}: ${value}`;
           },
@@ -175,7 +170,7 @@ const renderFundingChannelsChart = () => {
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor)));
             const years = Array.from(new Set(data.map((d) => d.Year)));
-            const channels = sortOrgTypes(Array.from(new Set(data.map((d) => d['Delivery channel']))));
+            const channels = sortOrgTypes(Array.from(new Set(data.map((d) => d.Series))));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
 
             // create UI elements

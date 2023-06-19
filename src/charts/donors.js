@@ -5,14 +5,15 @@ import { createRoot } from 'react-dom/client';
 import DonorChartFilters from '../components/DonorChartFilters';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
-import defaultOptions, { colorways, getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
+import defaultOptions, { getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/donor_interactive_data_long.csv`;
+const colors = ['#f49b21', '#fccc8e', '#f9b865'];
 
 let dataType = 'Volumes';
 const dataTypeMapping = {
   Proportions: 'Proportions',
-  Volumes: 'Absolute',
+  Volumes: 'Volumes',
   '%GNI': '%GNI',
 };
 
@@ -27,15 +28,10 @@ const cleanData = (data) =>
     return clean;
   });
 
-const filterChannels = (channels) =>
-  channels.filter((c) => (dataType === '%GNI' ? c === 'Total HA' : c !== 'Total HA'));
-
 const getSeriesType = () => (dataType === '%GNI' ? 'line' : 'bar');
 
-const processData = (data, years, donor, channel, valueType = 'Proportion') => {
-  const filteredData = data.filter(
-    (d) => d.Donor.trim() === donor && d['IHA type'] === channel && d['Value type'] === valueType
-  );
+const processData = (data, years, donor, channel, valueType = 'Proportions') => {
+  const filteredData = data.filter((d) => d.Donor.trim() === donor && d.Series === channel && d.Display === valueType);
   const sortedData = years.map((year) => filteredData.find((d) => d.Year === year));
 
   return sortedData;
@@ -85,7 +81,7 @@ const getYaxisValue = (namePosition = 'far') => {
 
 const renderDefaultChart = (chart, data, { years, channels }) => {
   const option = {
-    color: colorways.bluebell,
+    color: colors,
     legend: {
       show: true,
       top: 'top',
@@ -100,10 +96,10 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
       data: years,
     },
     yAxis: getYaxisValue(),
-    series: filterChannels(channels).map((channel) => ({
+    series: channels.map((channel) => ({
       name: channel,
       data: processData(data, years, 'All donors', channel, dataTypeMapping[dataType]).map((d) => ({
-        value: d && Number(dataType === 'Proportions' ? d.value * 100 : d.value),
+        value: d ? d.value : null,
         emphasis: {
           focus: 'self',
         },
@@ -115,10 +111,10 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
         formatter: (params) => {
           const item = data.find(
             (d) =>
-              d['IHA type'] === channel &&
+              d.Series === channel &&
               d.Donor === 'All donors' &&
               `${d.Year}` === params.name &&
-              d['Value type'] === dataTypeMapping[dataType]
+              d.Display === dataTypeMapping[dataType]
           );
           const updatedOrgType = channel.includes('Multilateral HA')
             ? channel.replace('Multilateral HA', 'Multilateral Humanitarian Assistance')
@@ -149,10 +145,10 @@ const updateChart = (chart, data, { donors, channels, years }) => {
   const type = getSeriesType();
   const series = donors
     .map((donor) =>
-      filterChannels(channels).map((channel, index) => ({
+      channels.map((channel, index) => ({
         name: dataType !== '%GNI' ? channel : donor, // GNI only has one channel, so the donors are the series
         data: processData(cleanedData, years, donor, channel, dataTypeMapping[dataType]).map((d) => ({
-          value: d && typeof d.value === 'number' ? Number(dataType !== 'Volumes' ? d.value * 100 : d.value) : null, // all other data types are %ages
+          value: d && typeof d.value === 'number' ? d.value : null, // all other data types are %ages
           emphasis: {
             focus: 'self',
           },
@@ -167,17 +163,19 @@ const updateChart = (chart, data, { donors, channels, years }) => {
           formatter: (params) => {
             const item = cleanedData.find(
               (d) =>
-                d['IHA type'] === channel &&
+                d.Series === channel &&
                 d.Donor === donor &&
                 `${d.Year}` === params.name &&
-                d['Value type'] === dataTypeMapping[dataType]
+                d.Display === dataTypeMapping[dataType]
             );
             const value =
               dataType === 'Volumes'
                 ? `US$${toDollars(cleanValue(item.Value), 'decimal', 'never')} million`
                 : `${params.value.toFixed(2)}%`;
 
-            return `${donor}, ${params.name} <br />${channel}: <strong>${value}</strong>`;
+            return `${donor}, ${params.name} <br />${
+              dataType === '%GNI' ? 'Total HA' : channel
+            }: <strong>${value}</strong>`;
           },
         },
         label: {
@@ -226,7 +224,7 @@ const renderDonorsChart = () => {
             // extract unique values
             const donors = Array.from(new Set(data.map((d) => d.Donor))).sort();
             const years = Array.from(new Set(data.map((d) => d.Year))).sort();
-            const channels = Array.from(new Set(data.map((d) => d['IHA type'])));
+            const channels = Array.from(new Set(data.map((d) => d.Series)));
             const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
             // create UI elements
 

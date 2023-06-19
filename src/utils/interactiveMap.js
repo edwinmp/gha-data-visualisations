@@ -1,30 +1,47 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon.svg';
+const responsePlan = 'https://devinit.org/assets/svg/icons/response-plan-icon-yellow.svg';
+const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
 
-const addCommas = (amount) => {
-  if (amount.length > 3) {
-    let finalAmount = '';
-    const splitAmount = amount.split('');
-    splitAmount.forEach((item, index) => {
-      if (index === 1) {
-        finalAmount = finalAmount.concat(`,${item}`);
-      } else {
-        finalAmount = finalAmount.concat(item);
-      }
-    });
+const crisisLegendData = [
+  { score: '', label: 'Not in crisis' },
+  { score: 'In Crisis', label: 'In crisis' },
+  { score: 'Entering protracted crisis', label: 'Entering protracted crisis' },
+  { score: 'In protracted crisis', label: 'In protracted crisis' },
+];
+const foodSecuritylegendData = [
+  { score: 'Not assessed', label: 'No data' },
+  { score: '2', label: '2' },
+  { score: '3', label: '3' },
+  { score: '3+', label: '3+' },
+  { score: '4', label: '4' },
+];
 
-    return finalAmount;
-  }
+const climateVulnerabilityLegendData = [
+  { score: '', label: 'No data' },
+  { score: '1', label: 'Very low' },
+  { score: '2', label: 'Low' },
+  { score: '3', label: 'Medium' },
+  { score: '4', label: 'High' },
+  { score: '5', label: 'Very high' },
+];
+const legendData = [
+  { variable: 'Crisis_type', data: crisisLegendData },
+  { variable: 'IPC_Food_insecurity_phase', data: foodSecuritylegendData },
+  { variable: 'People_in_need_(millions)' },
+  { variable: 'Climate_vulnerability', data: climateVulnerabilityLegendData },
+];
 
-  return amount;
-};
+const removeWhitespace = (string) => string.trim();
+
 const getCountryResponsePlan = (requirement, coverage, funding) =>
   requirement
-    ? `${coverage}% funded(US$${addCommas(funding)} million  of US$${addCommas(requirement)} million)`
+    ? `${coverage}% funded (US$${removeWhitespace(funding)} million  of US$${removeWhitespace(requirement)} million)`
     : 'None';
 
 const getRegionalResponsePlan = (requirement, funds, coverage) =>
-  requirement ? `${coverage}% funded(US$${addCommas(funds)} million of US$${addCommas(requirement)} million)` : 'None';
+  requirement
+    ? `${coverage}% funded (US$${removeWhitespace(funds)} million of US$${removeWhitespace(requirement)} million)`
+    : 'None';
 
 const dataBoxContent = (data) => [
   {
@@ -96,22 +113,46 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
     return featureCopy;
   });
 
-const getColor = (score) => {
-  switch (score) {
-    case 'Very high':
-      return '#0c457b';
-    case 'High':
-      return '#0071b1';
-    case 'Medium':
-      return '#0089cc';
-    case 'Low':
-      return '#5da3d9';
-    case 'Very low':
-      return '#77adde';
-    case 'Not assessed':
-      return '#E6E1E5';
-    default:
-      return '#E6E1E5';
+const getColor = (score, variable) => {
+  if (variable === 'Crisis_type') {
+    switch (score) {
+      case 'In protracted crisis':
+        return '#7d4712';
+      case 'Entering protracted crisis':
+        return '#ba6b15';
+      case 'In Crisis':
+        return '#df8000';
+      default:
+        return '#E6E1E5';
+    }
+  } else if (variable === 'IPC_Food_insecurity_phase') {
+    switch (score) {
+      case '4':
+        return '#7d4712';
+      case '3+':
+        return '#ba6b15';
+      case '3':
+        return '#df8000';
+      case '2':
+        return '#f7a838';
+      default:
+        return '#E6E1E5';
+    }
+  } else {
+    switch (score) {
+      case '5':
+        return '#7d4712';
+      case '4':
+        return '#ba6b15';
+      case '3':
+        return '#df8000';
+      case '2':
+        return '#f7a838';
+      case '1':
+        return '#fac47e';
+      default:
+        return '#E6E1E5';
+    }
   }
 };
 
@@ -127,7 +168,7 @@ const handleClickFeature = (e, mapInstance, databoxInstance, csv) => {
   const layer = e.target;
   window.dataLayer.push({
     event: 'countryClicked',
-    country: getOriginalCountryName(csv, layer.feature.properties.iso_a3)
+    country: getOriginalCountryName(csv, layer.feature.properties.iso_a3),
   });
   databoxInstance.update(layer.feature.properties, csv);
 };
@@ -171,7 +212,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
   }
 
   layer.setStyle({
-    fillColor: '#f7a838',
+    fillColor: '#5da3d9',
     color: '#484848',
     weight: 2,
   });
@@ -198,6 +239,28 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
+const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) => {
+  // Generate a range of values between the minimum and maximum value
+  const values = [];
+
+  for (let i = minValue; i <= maxValue; i += increment) {
+    values.push(i);
+  }
+
+  const colorGen = chromaInstance.scale(colorArray).domain(values);
+
+  return colorGen(Math.abs(value));
+};
+
+const getMaxMinValues = (dataType, csvData) => {
+  const dataList = csvData.map((item) => Number(item[dataType]));
+
+  return {
+    maxValue: Math.ceil(Math.max(...dataList)),
+    minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
+  };
+};
+
 export {
   dataBoxContent,
   highlightFeature,
@@ -208,4 +271,8 @@ export {
   handleClickFeature,
   dataBox,
   getColor,
+  getColorDynamic,
+  getMaxMinValues,
+  colorArray,
+  legendData,
 };

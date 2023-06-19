@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import chroma from 'chroma-js';
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
 import MapFilters from '../components/MapFilters';
@@ -12,6 +13,10 @@ import {
   highlightFeature,
   matchCountryNames,
   processedData,
+  getColorDynamic,
+  getMaxMinValues,
+  colorArray,
+  legendData,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 
@@ -34,41 +39,27 @@ const renderMap = (
   const legendInstanceCopy = legendInstance;
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
-    const piecewiselegendData = [
-      { score: 'Not assessed', label: 'No data' },
-      { score: 'Very low', label: 'Very low' },
-      { score: 'Low', label: 'Low' },
-      { score: 'Medium', label: 'Medium' },
-      { score: 'High', label: 'High' },
-      { score: 'Very high', label: 'Very high' },
-    ];
-    const legendData = [
-      { variable: 'Severity_score', data: piecewiselegendData },
-      { variable: 'Climate_vulnerability', data: piecewiselegendData },
-      { variable: 'COVID_vaccination_rate', max: '0', min: '100' },
-      { variable: 'Food_insecure_(millions)', max: '26', min: '0' },
-      { variable: 'People_in_need_(millions)', max: '25', min: '0' },
-    ];
-    const legendColors = ['#77adde', '#5da3d9', '#0089cc', '#0071b1', '#0c457b'];
+
+    const scaleData = getMaxMinValues(dimensionVariable, processed);
     const legendContent =
-      dimensionVariable !== 'Severity_score' && dimensionVariable !== 'Climate_vulnerability'
-        ? `${legendColors
+      dimensionVariable === 'People_in_need_(millions)'
+        ? `${colorArray
             .map(
               (color) =>
                 `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
         </span>`
             )
-            .join('')} <p style="margin-left:1px;margin-top: 4px;">${
-            legendData.find((items) => items.variable === dimensionVariable).min
-          } - ${legendData.find((items) => items.variable === dimensionVariable).max}${
-            dimensionVariable === 'COVID_vaccination_rate' ? ', % of population' : ', millions of people'
-          }</p>`
+            .join('')} <p style="margin-left:1px;margin-top: 4px;">${scaleData.minValue} - ${
+            scaleData.maxValue
+          }, millions of people</p>`
         : legendData
             .find((items) => items.variable === dimensionVariable)
             .data.map(
               (dataItems) =>
-                `<span><i style="background:${getColor(dataItems.score)}"></i><label>${dataItems.label}</label></span>`
+                `<span><i style="background:${getColor(dataItems.score, dimensionVariable)}"></i><label>${
+                  dataItems.label
+                }</label></span>`
             )
             .join('');
     div.innerHTML = legendContent;
@@ -77,14 +68,7 @@ const renderMap = (
   };
   legendInstanceCopy.addTo(mapInstance);
   const style = (feature) => ({
-    fillColor:
-      filterOptions.find((opts) => opts.name === dimensionVariable).scaleType === 'piecewise'
-        ? colorFunction(feature.properties[dimensionVariable])
-        : colorFunction(
-            feature.properties[dimensionVariable],
-            filterOptions.find((opts) => opts.name === dimensionVariable).values,
-            dimensionVariable
-          ),
+    fillColor: colorFunction(feature.properties[dimensionVariable], dimensionVariable),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -149,62 +133,35 @@ function renderPeopleAffectedByCrisisLeaflet() {
             zoom: 1,
             attributionControl: false,
           });
-          const variable = 'Severity_score';
+          const variable = 'People_in_need_(millions)';
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
-            { name: 'Severity_score', label: 'Severity of crisis', scaleType: 'piecewise', unit: '' },
-            { name: 'Climate_vulnerability', label: 'Climate vulnerability', scaleType: 'piecewise', unit: '' },
-            {
-              name: 'COVID_vaccination_rate',
-              label: 'Covid-19 vaccination rate',
-              scaleType: 'continous',
-              values: [0, 20, 40, 60, 80, 100],
-              unit: '%',
-            },
-            {
-              name: 'Food_insecure_(millions)',
-              label: 'Food insecurity',
-              scaleType: 'continous',
-              values: [26, 21, 16, 11, 6, 0],
-              unit: 'million',
-            },
             {
               name: 'People_in_need_(millions)',
               label: 'People in need',
               scaleType: 'continous',
-              values: [25, 20, 15, 10, 5, 0],
               unit: 'million',
+            },
+            { name: 'Crisis_type', label: 'Crisis state', scaleType: 'piecewise', unit: '' },
+            {
+              name: 'IPC_Food_insecurity_phase',
+              label: 'Food insecurity',
+              scaleType: 'piecewise',
+              unit: '',
+            },
+            {
+              name: 'Climate_vulnerability',
+              label: 'Climate vulnerability',
+              scaleType: 'piecewise',
+              unit: '',
             },
           ];
 
           // Legend
           const legend = window.L.control({ position: 'topright' });
           const resetButton = window.L.control({ position: 'bottomleft' });
-
-          const getColorContinous = (d, numberRange, dimension) => {
-            if (d === 'No data') {
-              return '#E6E1E5';
-            }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[1] : Number(d) > numberRange[1]) {
-              return '#0c457b';
-            }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[2] : Number(d) > numberRange[2]) {
-              return '#0071b1';
-            }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[3] : Number(d) > numberRange[3]) {
-              return '#0089cc';
-            }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) < numberRange[4] : Number(d) > numberRange[4]) {
-              return '#5da3d9';
-            }
-            if (dimension === 'COVID_vaccination_rate' ? Number(d) <= numberRange[5] : Number(d) >= numberRange[5]) {
-              return '#77adde';
-            }
-
-            return '#E6E1E5';
-          };
 
           dichart.showLoading();
           window
@@ -216,7 +173,19 @@ function renderPeopleAffectedByCrisisLeaflet() {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData);
+
                 const fg = window.L.featureGroup().addTo(map);
+
+                const getColorContinous = (d, dimensionVariable) => {
+                  const scaleData = getMaxMinValues(dimensionVariable, groupedData);
+                  const increment = (scaleData.maxValue - scaleData.minValue) / colorArray.length;
+
+                  if (!d) {
+                    return '#E6E1E5';
+                  }
+
+                  return getColorDynamic(d, scaleData.minValue, scaleData.maxValue, increment, chroma);
+                };
 
                 const onSelectDimension = (dimension) => {
                   renderMap(
