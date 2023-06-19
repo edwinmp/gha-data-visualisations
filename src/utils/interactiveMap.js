@@ -1,5 +1,5 @@
 const closeIcon = 'https://devinit.org/assets/svg/icons/cross.colors-poppy-slate-blank-poppydark.svg';
-const responsePlan = 'https://dev.devinit.org/assets/svg/icons/response-plan-icon.svg';
+const responsePlan = 'https://dev.devinit.org/assets/svg/icons/response-plan-icon-yellow.svg';
 const colorArray = ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'];
 
 const crisisLegendData = [

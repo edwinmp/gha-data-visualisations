@@ -8,7 +8,7 @@ const climateVulnerability = 'https://dev.devinit.org/assets/svg/icons/climate-v
 const crisisTypeDisabled = 'https://dev.devinit.org/assets/svg/icons/crisis-type-icon-disabled.svg';
 const foodSecurityDisabled = 'https://dev.devinit.org/assets/svg/icons/food-security-disabled.svg';
 const peopleInNeedDisabled = 'https://dev.devinit.org/assets/svg/icons/people-in-need-icon-disabled.svg';
-const climateVulnerabilityDisabled = 'http://dev.devinit.org/assets/svg/icons/climate-vulnerability-icon-disabled.svg';
+const climateVulnerabilityDisabled = 'https://dev.devinit.org/assets/svg/icons/climate-vulnerability-icon-disabled.svg';
 
 const MapFilters = (props) => {
   const [dimension, setDimension] = useState('People_in_need_(millions)');
