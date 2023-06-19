@@ -270,16 +270,10 @@ const renderRecipientChart = () => {
                 const filteredData = donorData.filter((d) => d.Recipient === recipient);
                 updateChartByDonors(chart, filteredData, { recipient, years });
               } else {
-                renderDefaultChart(
-                  chart,
-                  cleanData(donorData),
-                  '10 largest recipients',
-                  {
-                    years,
-                    channels: initialDonors,
-                  },
-                  value
-                );
+                renderDefaultChart(chart, cleanData(donorData), '10 largest recipients', {
+                  years,
+                  channels: initialDonors,
+                });
               }
             } else {
               updateChartByOrgType(
