@@ -68,10 +68,7 @@ const renderMap = (
   };
   legendInstanceCopy.addTo(mapInstance);
   const style = (feature) => ({
-    fillColor:
-      filterOptions.find((opts) => opts.name === dimensionVariable).scaleType === 'piecewise'
-        ? colorFunction(feature.properties[dimensionVariable], dimensionVariable)
-        : colorFunction(feature.properties[dimensionVariable], dimensionVariable),
+    fillColor: colorFunction(feature.properties[dimensionVariable], dimensionVariable),
     weight: 1,
     opacity: 1,
     color: 'white',

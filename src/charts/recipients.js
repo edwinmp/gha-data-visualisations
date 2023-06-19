@@ -247,7 +247,7 @@ const renderRecipientChart = () => {
             if (breakdown === 'By donor') {
               if (selectedRecipient !== '10 largest recipients') {
                 const filteredData = donorData.filter((d) => d.Recipient === selectedRecipient);
-                updateChartByDonors(chart, filteredData, { recipient: selectedRecipient, years }, breakdown);
+                updateChartByDonors(chart, filteredData, { recipient: selectedRecipient, years });
               } else {
                 selectedRecipient = '10 largest recipients'; // reset country filter selected value
                 renderDefaultChart(chart, cleanData(donorData), '10 largest recipients', {
@@ -268,7 +268,7 @@ const renderRecipientChart = () => {
             if (value === 'By donor') {
               if (recipient !== '10 largest recipients') {
                 const filteredData = donorData.filter((d) => d.Recipient === recipient);
-                updateChartByDonors(chart, filteredData, { recipient, years }, value);
+                updateChartByDonors(chart, filteredData, { recipient, years });
               } else {
                 renderDefaultChart(
                   chart,
