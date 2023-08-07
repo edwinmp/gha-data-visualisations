@@ -3,6 +3,7 @@ import renderDonorsChart from './charts/donors';
 import renderFundingChannelsChart from './charts/funding-channels';
 import renderRecipientChart from './charts/recipients';
 import renderPeopleAffectedByCrisisLeaflet from './charts/people-affected-by-crisis-map';
+import renderClimateFundingChart from './charts/climate-funding';
 import './styles/styles.css';
 
 /**
@@ -13,4 +14,5 @@ window.addEventListener('load', () => {
   renderFundingChannelsChart();
   renderRecipientChart();
   renderPeopleAffectedByCrisisLeaflet();
+  renderClimateFundingChart();
 });
