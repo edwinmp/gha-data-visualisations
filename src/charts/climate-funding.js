@@ -8,7 +8,6 @@ import ChartFilters from '../components/ChartFilters';
 import Select from '../components/Select';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
-const colors = ['#f49b21', '#feedd4', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'];
 const filterOptions = [
   { value: 'Total_Climate_USD', label: 'USD millions' },
   { value: 'Total_Climate_Share', label: 'Percentage share' },
@@ -36,9 +35,6 @@ const groupedCountryData = (data, countries, years) => {
 
 const groupedSeriesData = (data, variable, years) =>
   years.map((year) => ({
-    title: {
-      text: year,
-    },
     series: [
       {
         data: data
@@ -48,7 +44,7 @@ const groupedSeriesData = (data, variable, years) =>
     ],
   }));
 
-const renderDefaultChart = (chart, years, data) => {
+const renderDefaultChart = (chart, years, data, variable) => {
   const option = {
     timeline: {
       axisType: 'category',
@@ -60,15 +56,34 @@ const renderDefaultChart = (chart, years, data) => {
       width: 55,
       data: years,
     },
-    color: colors,
+    visualMap: {
+      type: 'continuous',
+      min: 0,
+      max: 70,
+      dimension: 1,
+      inRange: {
+        color: ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'],
+      },
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: (params) => `<strong>${params.data[2]}</strong> <br/>
+      Vulnerability score: ${params.data[1]} <br/>
+      ${variable}: ${params.data[0]}
+      `,
+    },
     grid: { bottom: '10%', top: '20%' },
-    xAxis: {},
-    yAxis: {},
+    xAxis: { show: false },
+    yAxis: { show: false },
     series: [
       {
         type: 'scatter',
         symbolSize(val) {
-          return val[1];
+          if (variable === 'Total_Climate_USD') {
+            return val[0] / 10;
+          }
+
+          return val[0];
         },
       },
     ],
@@ -99,7 +114,12 @@ const renderClimateFundingChart = () => {
           // create UI elements
 
           const chart = window.echarts.init(chartNode);
-          renderDefaultChart(chart, years, groupedSeriesData(consolidatedData, defaultVariable, years));
+          renderDefaultChart(
+            chart,
+            years,
+            groupedSeriesData(consolidatedData, defaultVariable, years),
+            defaultVariable
+          );
 
           const filterWrapper = addFilterWrapper(chartNode);
 
@@ -107,7 +127,8 @@ const renderClimateFundingChart = () => {
             renderDefaultChart(
               chart,
               years,
-              groupedSeriesData(consolidatedData, item.value ? item.value : defaultVariable, years)
+              groupedSeriesData(consolidatedData, item.value ? item.value : defaultVariable, years),
+              item.value ? item.value : defaultVariable
             );
           };
 
