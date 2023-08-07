@@ -48,21 +48,44 @@ const renderDefaultChart = (chart, years, data, variable) => {
   const option = {
     timeline: {
       axisType: 'category',
-      orient: 'vertical',
-      left: null,
-      right: 0,
+      orient: 'horizontal',
       top: 20,
-      bottom: 20,
-      width: 55,
+      bottom: 0,
       data: years,
+      lineStyle: {
+        color: '#f49b21',
+      },
+      label: {
+        position: 10,
+      },
+      tooltip: {
+        show: false,
+      },
+      itemStyle: {
+        color: '#f49b21',
+      },
+      checkpointStyle: {
+        color: '#7d4712',
+      },
+      progress: {
+        lineStyle: {
+          color: '#7d4712',
+        },
+        itemStyle: {
+          color: '#7d4712',
+        },
+      },
+      controlStyle: {
+        show: false,
+      },
     },
     visualMap: {
       type: 'continuous',
       min: 0,
-      max: 70,
+      max: 65,
       dimension: 1,
       inRange: {
-        color: ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'],
+        color: ['#f49b21', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'],
       },
     },
     tooltip: {
@@ -80,7 +103,7 @@ const renderDefaultChart = (chart, years, data, variable) => {
         type: 'scatter',
         symbolSize(val) {
           if (variable === 'Total_Climate_USD') {
-            return val[0] / 10;
+            return Math.sqrt(val[0]) * 2;
           }
 
           return val[0];
