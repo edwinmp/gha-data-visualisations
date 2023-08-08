@@ -90,9 +90,11 @@ const renderDefaultChart = (chart, years, data, variable) => {
     },
     tooltip: {
       trigger: 'item',
-      formatter: (params) => `<strong>${params.data[2]}</strong> <br/>
+      formatter: (params) => `${params.data[2]} <br/>
       Vulnerability score: ${params.data[1]} <br/>
-      ${variable}: ${params.data[0]}
+      ${filterOptions.find((item) => item.value === variable).label}: ${params.data[0]} ${
+        variable === 'Total_Climate_USD' ? 'USD' : '%'
+      }
       `,
     },
     grid: { bottom: '10%', top: '20%' },
