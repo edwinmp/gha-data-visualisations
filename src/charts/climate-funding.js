@@ -50,7 +50,7 @@ const renderDefaultChart = (chart, years, data, variable) => {
       axisType: 'category',
       orient: 'horizontal',
       top: 20,
-      bottom: 0,
+      bottom: 20,
       data: years,
       lineStyle: {
         color: '#f49b21',
@@ -78,6 +78,11 @@ const renderDefaultChart = (chart, years, data, variable) => {
       controlStyle: {
         show: false,
       },
+      emphasis: {
+        itemStyle: {
+          color: '#7d4712',
+        },
+      },
     },
     visualMap: {
       type: 'continuous',
@@ -85,7 +90,7 @@ const renderDefaultChart = (chart, years, data, variable) => {
       max: 65,
       dimension: 1,
       inRange: {
-        color: ['#f49b21', '#fccc8e', '#f9b865', '#e48a00', '#a85d00', '#7d4712'],
+        color: ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'],
       },
     },
     tooltip: {
@@ -103,12 +108,22 @@ const renderDefaultChart = (chart, years, data, variable) => {
     series: [
       {
         type: 'scatter',
+        itemStyle: {
+          borderColor: '#7d4712',
+          opacity: 1,
+        },
+        emphasis: {
+          itemStyle: {
+            borderColor: '#333',
+            borderWidth: 2.5,
+          },
+        },
         symbolSize(val) {
           if (variable === 'Total_Climate_USD') {
-            return Math.sqrt(val[0]) * 2;
+            return Math.sqrt(val[0]) * 5;
           }
 
-          return val[0];
+          return val[0] * 2;
         },
       },
     ],
