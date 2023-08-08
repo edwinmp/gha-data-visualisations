@@ -13,22 +13,38 @@ const filterOptions = [
   { value: 'Total_Climate_Share', label: 'Percentage share' },
 ];
 const requiredVariables = ['Total_Climate_USD', 'Total_Climate_Share', 'Vulnerability_Score'];
+const countryFilterOptions = (countryList) =>
+  [{ value: 'all', label: 'All' }].concat(countryList.map((country) => ({ value: country, label: country })));
 
-const groupedCountryData = (data, countries, years) => {
+const groupedCountryData = (data, countries, years, countryName) => {
   const finalData = [];
-  years.forEach((year) => {
-    countries.forEach((country) => {
+  if (countryName === 'all') {
+    years.forEach((year) => {
+      countries.forEach((country) => {
+        const countryData = {};
+        countryData.name = country;
+        countryData.year = year;
+        data.forEach((item) => {
+          if (item.countryname === country && item.year === year) {
+            countryData[item.variable] = item.value_fixed;
+          }
+        });
+        finalData.push(countryData);
+      });
+    });
+  } else {
+    years.forEach((year) => {
       const countryData = {};
-      countryData.name = country;
+      countryData.name = countryName;
       countryData.year = year;
       data.forEach((item) => {
-        if (item.countryname === country && item.year === year) {
+        if (item.countryname === countryName && item.year === year) {
           countryData[item.variable] = item.value_fixed;
         }
       });
       finalData.push(countryData);
     });
-  });
+  }
 
   return finalData;
 };
@@ -100,7 +116,7 @@ const renderDefaultChart = (chart, years, data, variable) => {
       formatter: (params) => `${params.data[2]} <br/>
       Vulnerability score: ${params.data[1]} <br/>
       ${filterOptions.find((item) => item.value === variable).label}: ${params.data[0]} ${
-        variable === 'Total_Climate_USD' ? 'USD' : '%'
+        variable === 'Total_Climate_USD' ? 'million' : '%'
       }
       `,
     },
@@ -145,33 +161,32 @@ const renderClimateFundingChart = () => {
         Array.prototype.forEach.call(chartNodes, async (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
-          const defaultVariable = 'Total_Climate_USD';
+          let variable = 'Total_Climate_USD';
+          let country = 'all';
           const data = await fetchCSVData(DATA_URL);
           const years = Array.from(new Set(data.map((d) => d.year)));
 
           const countries = Array.from(new Set(data.map((d) => d.countryname)));
           const filteredData = (csvData) => csvData.filter((item) => requiredVariables.includes(item.variable));
-          const consolidatedData = groupedCountryData(filteredData(data), countries, years);
+          let consolidatedData = groupedCountryData(filteredData(data), countries, years, country);
 
           // create UI elements
 
           const chart = window.echarts.init(chartNode);
-          renderDefaultChart(
-            chart,
-            years,
-            groupedSeriesData(consolidatedData, defaultVariable, years),
-            defaultVariable
-          );
+          renderDefaultChart(chart, years, groupedSeriesData(consolidatedData, variable, years), variable);
 
           const filterWrapper = addFilterWrapper(chartNode);
 
           const onSelectFilter = (item) => {
-            renderDefaultChart(
-              chart,
-              years,
-              groupedSeriesData(consolidatedData, item.value ? item.value : defaultVariable, years),
-              item.value ? item.value : defaultVariable
-            );
+            variable = item.value ? item.value : variable;
+            consolidatedData = groupedCountryData(filteredData(data), countries, years, country);
+            renderDefaultChart(chart, years, groupedSeriesData(consolidatedData, variable, years), variable);
+          };
+
+          const onSelectCountry = (item) => {
+            country = item.value ? item.value : 'all';
+            consolidatedData = groupedCountryData(filteredData(data), countries, years, country);
+            renderDefaultChart(chart, years, groupedSeriesData(consolidatedData, variable, years), variable);
           };
 
           // create dropdowns
@@ -184,6 +199,16 @@ const renderClimateFundingChart = () => {
                 options={filterOptions}
                 defaultValue={[{ value: 'Total_Climate_USD', label: 'USD millions' }]}
                 onChange={onSelectFilter}
+                css={{
+                  minWidth: '150px',
+                }}
+              />
+              <Select
+                classNamePrefix="climate-chart-country-select"
+                label="Select country"
+                options={countryFilterOptions(countries)}
+                defaultValue={[{ value: 'all', label: 'All' }]}
+                onChange={onSelectCountry}
                 css={{
                   minWidth: '150px',
                 }}
