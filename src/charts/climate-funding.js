@@ -88,9 +88,11 @@ const renderDefaultChart = (chart, years, data, variable) => {
       type: 'continuous',
       min: 0,
       max: 65,
+      textGap: 5,
       dimension: 1,
+      text: ['65', '0'],
       inRange: {
-        color: ['#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'],
+        color: ['#feedd4', '#fee7c1', '#fedcab', '#fac47e', '#f7a838', '#df8000', '#ba6b15', '#7d4712'],
       },
     },
     tooltip: {
