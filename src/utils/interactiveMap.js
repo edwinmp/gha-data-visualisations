@@ -83,14 +83,14 @@ const matchCountryNames = (csvData, worldData) => {
   return matchedData;
 };
 
-const processedData = (countries, processedCountryData) => {
+const processedData = (countries, processedCountryData, countryVariable, valueVariable) => {
   const data = [];
   countries.forEach((country) => {
     const countryData = {};
     countryData.name = country;
     processedCountryData.forEach((stream) => {
-      if (stream.Country_name === country) {
-        countryData[stream.variable] = stream.value;
+      if (stream[countryVariable] === country) {
+        countryData[stream.variable] = stream[valueVariable];
       }
     });
     data.push(countryData);
@@ -239,7 +239,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
-const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) => {
+const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance, colors) => {
   // Generate a range of values between the minimum and maximum value
   const values = [];
 
@@ -247,7 +247,7 @@ const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) =
     values.push(i);
   }
 
-  const colorGen = chromaInstance.scale(colorArray).domain(values);
+  const colorGen = chromaInstance.scale(colors).domain(values);
 
   return colorGen(Math.abs(value));
 };
