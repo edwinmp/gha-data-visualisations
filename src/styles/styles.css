@@ -1,7 +1,8 @@
 .dicharts--boilerplate-chart,
 .dicharts--gha-donors,
 .dicharts--gha-recipients,
-.dicharts--gha-people-affected-by-crisis-leaflet {
+.dicharts--gha-people-affected-by-crisis-leaflet,
+.dicharts--gha-climate-funding {
   width: 100%;
   min-height: 450px;
   background: white;
