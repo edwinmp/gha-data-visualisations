@@ -12,14 +12,24 @@ const RangeSlider = (props) => {
     setValue(event.target.value);
   };
 
-  return <input type="range" value={value} min={props.min} max={props.max} step={props.step} onChange={handleChange} />;
+  return (
+    <div className="range labelled-data-selector--wrapper">
+      <label>
+        <b>{props.label}</b>
+      </label>
+      <span>2017</span>
+      <input type="range" value={value} min={props.min} max={props.max} step={props.step} onChange={handleChange} />
+      <span>2021</span>
+    </div>
+  );
 };
 
 RangeSlider.propTypes = {
   step: PropTypes.number,
-  min: PropTypes.number,
-  max: PropTypes.number,
+  min: PropTypes.string,
+  max: PropTypes.string,
   onChange: PropTypes.func,
+  label: PropTypes.string,
 };
 
 export default RangeSlider;
