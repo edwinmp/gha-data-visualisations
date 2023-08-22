@@ -10,6 +10,7 @@ import {
   matchCountryNames,
   processedData,
   getColorDynamic,
+  highlightClimateMapFeature,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import ChartFilters from '../components/ChartFilters';
@@ -18,7 +19,7 @@ import RangeSlider from '../components/RangeSlider';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
-const colors = ['#0c457b', '#0071b1', '#0089cc', '#5da3d9', '#77adde', '#88bae5', '#bcd4f0', '#d3e0f4'];
+const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const getMaxMinValues = (dataType, csvData) => {
   const dataList = csvData
     .filter((d) => d[dataType])
@@ -38,7 +39,8 @@ const renderMap = (
   processed,
   filterOptions,
   legendInstance,
-  groupInstance
+  groupInstance,
+  csvData
 ) => {
   let geojsonLayer;
 
@@ -50,18 +52,41 @@ const renderMap = (
     fillOpacity: 1,
   });
 
-  // const resetHighlight = (e) => {
-  //   geojsonLayer.resetStyle(e.target);
-  //   e.target.closePopup();
-  // };
+  const resetHighlight = (e) => {
+    geojsonLayer.resetStyle(e.target);
+    e.target.closePopup();
+  };
 
-  // const onEachFeature = (feature, layer) => {};
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
+      layer.on({
+        mouseover: (e) => highlightClimateMapFeature(e, dimensionVariable, filterOptions, csvData),
+        mouseout: resetHighlight,
+      });
+    } else {
+      layer.on({
+        mouseover: () => {
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive');
+          els.forEach((el) => {
+            const elementCopy = el;
+            elementCopy.classList += ' grab-cursor-enabled';
+          });
+        },
+        mouseout: () => {
+          const els = mapInstance.getContainer().querySelectorAll('.leaflet-interactive.grab-cursor-enabled');
+          els.forEach((el) => {
+            el.classList.remove('grab-cursor-enabled');
+          });
+        },
+      });
+    }
+  };
 
   function loadLayer() {
     groupInstance.clearLayers();
     geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
       style,
-      // onEachFeature,
+      onEachFeature,
     });
     groupInstance.addLayer(geojsonLayer);
   }
@@ -128,6 +153,7 @@ function renderClimateFundingMap() {
                   'countryname',
                   'value_precise'
                 );
+                console.log(groupedData);
 
                 const fg = window.L.featureGroup().addTo(map);
 
@@ -160,7 +186,8 @@ function renderClimateFundingMap() {
                   groupedData,
                   filterOptionMapping,
                   legend,
-                  fg
+                  fg,
+                  data
                 );
 
                 const onSelectDimension = (dimension) => {
@@ -176,7 +203,8 @@ function renderClimateFundingMap() {
                     groupedData,
                     filterOptionMapping,
                     legend,
-                    fg
+                    fg,
+                    data
                   );
                 };
 
@@ -199,7 +227,8 @@ function renderClimateFundingMap() {
                     groupedData,
                     filterOptionMapping,
                     legend,
-                    fg
+                    fg,
+                    data
                   );
                 };
 
