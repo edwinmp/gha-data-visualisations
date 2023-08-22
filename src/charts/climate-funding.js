@@ -14,14 +14,15 @@ import {
 import { addFilterWrapper } from '../widgets/filters';
 import ChartFilters from '../components/ChartFilters';
 import Select from '../components/Select';
+import RangeSlider from '../components/RangeSlider';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#0c457b', '#0071b1', '#0089cc', '#5da3d9', '#77adde', '#88bae5', '#bcd4f0', '#d3e0f4'];
 const getMaxMinValues = (dataType, csvData) => {
-  const dataList = csvData.map((item) =>
-    Number(dataType === 'Total_Climate_Share' ? item[dataType].replace('%', '') : item[dataType])
-  );
+  const dataList = csvData
+    .filter((d) => d[dataType])
+    .map((item) => Number(dataType === 'Total_Climate_Share' ? item[dataType].replace('%', '') : item[dataType]));
 
   return {
     maxValue: Math.ceil(Math.max(...dataList)),
@@ -84,7 +85,7 @@ function renderClimateFundingMap() {
             attributionControl: false,
           });
           let variable = 'Total_Climate_Share';
-          const year = '2021';
+          let year = '2017';
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
@@ -119,15 +120,14 @@ function renderClimateFundingMap() {
               const geojsonData = jsonData.features;
               fetchCSVData(DATA_URL).then((data) => {
                 const processedCountryNameData = matchCountryNames(data, geojsonData);
-                const yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
+                let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
-                const groupedData = processedData(
+                let groupedData = processedData(
                   countries,
                   yearlyProcessedCountryNameData,
                   'countryname',
                   'value_precise'
                 );
-                console.log(groupedData);
 
                 const fg = window.L.featureGroup().addTo(map);
 
@@ -149,9 +149,46 @@ function renderClimateFundingMap() {
                   );
                 };
 
+                // Render default map
+                renderMap(
+                  variable,
+                  map,
+                  filterOptionMapping.find((option) => option.name === variable).scaleType === 'continous'
+                    ? getColorContinous
+                    : getColor,
+                  geojsonData,
+                  groupedData,
+                  filterOptionMapping,
+                  legend,
+                  fg
+                );
+
                 const onSelectDimension = (dimension) => {
                   variable = dimension.value ? dimension.value : variable;
 
+                  renderMap(
+                    variable,
+                    map,
+                    filterOptionMapping.find((option) => option.name === variable).scaleType === 'continous'
+                      ? getColorContinous
+                      : getColor,
+                    geojsonData,
+                    groupedData,
+                    filterOptionMapping,
+                    legend,
+                    fg
+                  );
+                };
+
+                const onSelectYear = (value) => {
+                  year = value || year;
+                  yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
+                  groupedData = processedData(
+                    countries,
+                    yearlyProcessedCountryNameData,
+                    'countryname',
+                    'value_precise'
+                  );
                   renderMap(
                     variable,
                     map,
@@ -184,6 +221,7 @@ function renderClimateFundingMap() {
                         minWidth: '150px',
                       }}
                     />
+                    <RangeSlider label="Select a year" min="2017" max="2021" step={1} onChange={onSelectYear} />
                   </ChartFilters>
                 );
 
@@ -199,18 +237,6 @@ function renderClimateFundingMap() {
 
                 resetButton.addTo(map);
 
-                renderMap(
-                  variable,
-                  map,
-                  filterOptionMapping.find((option) => option.name === variable).scaleType === 'continous'
-                    ? getColorContinous
-                    : getColor,
-                  geojsonData,
-                  groupedData,
-                  filterOptionMapping,
-                  legend,
-                  fg
-                );
                 dichart.hideLoading();
               });
             })
