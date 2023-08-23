@@ -70,6 +70,27 @@ const renderMap = (
   let geojsonLayer;
   let crisisLayer;
 
+  const legendInstanceCopy = legendInstance;
+  legendInstanceCopy.onAdd = function () {
+    const div = window.L.DomUtil.create('div', 'legend');
+
+    const scaleData = getMaxMinValues(dimensionVariable, processed);
+    const legendContent = `${colors
+      .map(
+        (color) =>
+          `<span>
+          <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
+        </span>`
+      )
+      .join('')} <p style="margin-left:1px;margin-top: 4px;">${scaleData.minValue} - ${scaleData.maxValue}${
+      dimensionVariable === 'Total_Climate_Share' ? '%' : ',million USD'
+    }</p>`;
+    div.innerHTML = legendContent;
+
+    return div;
+  };
+  legendInstanceCopy.addTo(mapInstance);
+
   const style = (feature) => ({
     fillColor: colorFunction(feature.properties[dimensionVariable], dimensionVariable),
     weight: 1,
