@@ -17,9 +17,9 @@ const RangeSlider = (props) => {
       <label>
         <b>{props.label}</b>
       </label>
-      <span>2017</span>
+      <span>{props.labelLeft}</span>
       <input type="range" value={value} min={props.min} max={props.max} step={props.step} onChange={handleChange} />
-      <span>2021</span>
+      <span>{props.labelRight}</span>
     </div>
   );
 };
@@ -30,6 +30,8 @@ RangeSlider.propTypes = {
   max: PropTypes.string,
   onChange: PropTypes.func,
   label: PropTypes.string,
+  labelLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  labelRight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default RangeSlider;
