@@ -2,6 +2,7 @@
 import chroma from 'chroma-js';
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
+import 'leaflet.pattern';
 import MapResetButton from '../components/MapResetButton';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
@@ -10,15 +11,20 @@ import {
   processedData,
   getColorDynamic,
   highlightClimateMapFeature,
+  crisisGeoJson,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
-import ChartFilters from '../components/ChartFilters';
 import Select from '../components/Select';
 import RangeSlider from '../components/RangeSlider';
+import RadioInput from '../components/RadioInput';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
+const crisisOptions = [
+  { value: 'yes', label: 'Protracted crisis' },
+  { value: 'no', label: 'No crisis' },
+];
 
 const getMaxMinValues = (dataType, csvData) => {
   const dataList = csvData
@@ -43,6 +49,11 @@ const getVulnerabilityScale = (data) => {
 const filterByVulnerability = (data, value) =>
   value === 0 ? data : data.filter((d) => Number(d.Vulnerability_Score_new) >= value);
 
+const getCrisisData = (data, value) =>
+  data.filter((item) => (value === 'no' ? !item.protracted_crisis : item.protracted_crisis === value));
+
+const filterDataByYear = (data, year) => data.filter((item) => item.year === year);
+
 const renderMap = (
   dimensionVariable,
   mapInstance,
@@ -52,9 +63,12 @@ const renderMap = (
   filterOptions,
   legendInstance,
   groupInstance,
-  csvData
+  csvData,
+  crisisData,
+  crisisValue
 ) => {
   let geojsonLayer;
+  let crisisLayer;
 
   const style = (feature) => ({
     fillColor: colorFunction(feature.properties[dimensionVariable], dimensionVariable),
@@ -64,8 +78,24 @@ const renderMap = (
     fillOpacity: 1,
   });
 
+  const crisisStyle = (feature) => ({
+    [feature.properties.protracted_crisis ? 'fillPattern' : 'fillColor']: feature.properties.protracted_crisis
+      ? new window.L.StripePattern({
+          weight: 2,
+          spaceWeight: 1,
+          angle: 45,
+          color: '#fff',
+        }).addTo(mapInstance)
+      : '#00000000',
+    weight: 1,
+    opacity: 1,
+    color: 'white',
+    fillOpacity: 1,
+  });
+
   const resetHighlight = (e) => {
     geojsonLayer.resetStyle(e.target);
+    crisisLayer.resetStyle(e.target);
     e.target.closePopup();
   };
 
@@ -100,7 +130,14 @@ const renderMap = (
       style,
       onEachFeature,
     });
+    crisisLayer = window.L.geoJSON(crisisGeoJson(dataInjectedGeoJson(data, processed), crisisData, crisisValue), {
+      style: crisisStyle,
+      onEachFeature,
+    });
     groupInstance.addLayer(geojsonLayer);
+    if (crisisValue) {
+      groupInstance.addLayer(crisisLayer);
+    }
   }
   loadLayer();
 };
@@ -157,7 +194,7 @@ function renderClimateFundingMap() {
             .then((jsonData) => {
               const geojsonData = jsonData.features;
               fetchCSVData(DATA_URL).then((data) => {
-                const processedCountryNameData = matchCountryNames(data, geojsonData);
+                const processedCountryNameData = matchCountryNames(data, geojsonData, 'iso3', 'countryname');
                 let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
                 let groupedData = processedData(
@@ -167,6 +204,8 @@ function renderClimateFundingMap() {
                   'value_precise'
                 );
                 let finalFilteredData = filterByVulnerability(groupedData, vulnerability);
+                let crisisCountries = [];
+                let crisisValue;
 
                 const fg = window.L.featureGroup().addTo(map);
 
@@ -198,7 +237,9 @@ function renderClimateFundingMap() {
                   filterOptionMapping,
                   legend,
                   fg,
-                  data
+                  data,
+                  crisisCountries,
+                  crisisValue
                 );
 
                 const onSelectDimension = (dimension) => {
@@ -213,13 +254,15 @@ function renderClimateFundingMap() {
                     filterOptionMapping,
                     legend,
                     fg,
-                    data
+                    data,
+                    crisisCountries,
+                    crisisValue
                   );
                 };
 
                 const onSelectYear = (value) => {
                   year = value || year;
-                  yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
+                  yearlyProcessedCountryNameData = filterDataByYear(processedCountryNameData, year);
                   groupedData = processedData(
                     countries,
                     yearlyProcessedCountryNameData,
@@ -236,7 +279,9 @@ function renderClimateFundingMap() {
                     filterOptionMapping,
                     legend,
                     fg,
-                    data
+                    data,
+                    crisisCountries,
+                    crisisValue
                   );
                 };
 
@@ -252,8 +297,30 @@ function renderClimateFundingMap() {
                     filterOptionMapping,
                     legend,
                     fg,
-                    data
+                    data,
+                    crisisCountries,
+                    crisisValue
                   );
+                };
+
+                const onCrisisChange = (value) => {
+                  crisisValue = value;
+                  const crisisData = getCrisisData(filterDataByYear(processedCountryNameData, year), value);
+                  crisisCountries = Array.from(new Set(crisisData.map((stream) => stream.countryname)));
+                  renderMap(
+                    variable,
+                    map,
+                    getColorContinous,
+                    geojsonData,
+                    finalFilteredData,
+                    filterOptionMapping,
+                    legend,
+                    fg,
+                    data,
+                    crisisCountries,
+                    crisisValue
+                  );
+                  console.log(crisisCountries);
                 };
 
                 const onReset = () => {
@@ -263,7 +330,7 @@ function renderClimateFundingMap() {
                 // Render filter component
                 const root = createRoot(filterWrapper);
                 root.render(
-                  <ChartFilters>
+                  <div>
                     <Select
                       classNamePrefix="climate-chart-select"
                       label="Select value type"
@@ -292,7 +359,8 @@ function renderClimateFundingMap() {
                       labelLeft={0}
                       labelRight={getVulnerabilityScale(groupedData).max}
                     />
-                  </ChartFilters>
+                    <RadioInput name="crisis" options={crisisOptions} label="Select crisis" onChange={onCrisisChange} />
+                  </div>
                 );
 
                 // Render reset Button
