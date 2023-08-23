@@ -702,6 +702,7 @@ function renderClimateFundingMap() {
                     crisisValue,
                     adaptationVariable
                   );
+                  console.log(crisisCountries);
                 };
 
                 const onReset = () => {
