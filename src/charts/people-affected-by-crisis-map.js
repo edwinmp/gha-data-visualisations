@@ -170,7 +170,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
             .then((jsonData) => {
               const geojsonData = jsonData.features;
               fetchCSVData(CSV_PATH).then((data) => {
-                const processedCountryNameData = matchCountryNames(data, geojsonData);
+                const processedCountryNameData = matchCountryNames(data, geojsonData, 'Country_ID', 'Country_name');
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
                 const groupedData = processedData(countries, processedCountryNameData, 'Country_name', 'value');
 

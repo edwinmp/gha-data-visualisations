@@ -69,12 +69,12 @@ const getOriginalCountryName = (csv, code) => {
   return countryMap.find((country) => country.id === code).name;
 };
 
-const matchCountryNames = (csvData, worldData) => {
+const matchCountryNames = (csvData, worldData, countryCodeVariable, countryNameVariable) => {
   const matchedData = csvData.map((stream) => {
     const streamCopy = { ...stream };
-    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy.Country_ID);
+    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy[countryCodeVariable]);
     if (countryObject) {
-      streamCopy.Country_name = countryObject.properties.name;
+      streamCopy[countryNameVariable] = countryObject.properties.name;
     }
 
     return streamCopy;
@@ -261,7 +261,8 @@ const getMaxMinValues = (dataType, csvData) => {
   };
 };
 
-const getClimateOriginalCountryName = (csv, code) => csv.find((stream) => stream.iso3 === code).countryname;
+const getClimateOriginalCountryName = (csv, code) =>
+  csv.find((stream) => stream.iso3 === code) ? csv.find((stream) => stream.iso3 === code).countryname : '';
 
 const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   const layer = e.target;
@@ -284,9 +285,13 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   layer
     .bindTooltip(
       layer.feature.properties[variable]
-        ? `<div>${getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br>${
-            filterOptions.find((option) => option.name === variable).label
-          }: ${layer.feature.properties[variable]}<span style="padding-left: 2px;">${
+        ? `<div>${
+            getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)
+              ? getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)
+              : layer.feature.properties.name
+          }<br>${filterOptions.find((option) => option.name === variable).label}: ${
+            layer.feature.properties[variable]
+          }<span style="padding-left: 2px;">${
             variable === 'Total_Climate_USD' ? filterOptions.find((option) => option.name === variable).unit : ''
           }</span></div>`
         : `<div>${getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
