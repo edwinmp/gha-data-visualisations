@@ -6,7 +6,6 @@ import MapResetButton from '../components/MapResetButton';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
   dataInjectedGeoJson,
-  getColor,
   matchCountryNames,
   processedData,
   getColorDynamic,
@@ -20,6 +19,7 @@ import RangeSlider from '../components/RangeSlider';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
+
 const getMaxMinValues = (dataType, csvData) => {
   const dataList = csvData
     .filter((d) => d[dataType])
@@ -30,6 +30,18 @@ const getMaxMinValues = (dataType, csvData) => {
     minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
   };
 };
+
+const getVulnerabilityScale = (data) => {
+  const vulnerabilityList = data.map((item) => Number(item.Vulnerability_Score_new));
+
+  return {
+    max: Math.ceil(Math.max(...vulnerabilityList)).toString(),
+    min: Math.ceil(Math.min(...vulnerabilityList)).toString(),
+  };
+};
+
+const filterByVulnerability = (data, value) =>
+  value === 0 ? data : data.filter((d) => Number(d.Vulnerability_Score_new) >= value);
 
 const renderMap = (
   dimensionVariable,
@@ -111,6 +123,7 @@ function renderClimateFundingMap() {
           });
           let variable = 'Total_Climate_Share';
           let year = '2017';
+          let vulnerability = 0;
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
@@ -153,7 +166,7 @@ function renderClimateFundingMap() {
                   'countryname',
                   'value_precise'
                 );
-                console.log(groupedData);
+                let finalFilteredData = filterByVulnerability(groupedData, vulnerability);
 
                 const fg = window.L.featureGroup().addTo(map);
 
@@ -179,11 +192,9 @@ function renderClimateFundingMap() {
                 renderMap(
                   variable,
                   map,
-                  filterOptionMapping.find((option) => option.name === variable).scaleType === 'continous'
-                    ? getColorContinous
-                    : getColor,
+                  getColorContinous,
                   geojsonData,
-                  groupedData,
+                  finalFilteredData,
                   filterOptionMapping,
                   legend,
                   fg,
@@ -196,11 +207,9 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    filterOptionMapping.find((option) => option.name === variable).scaleType === 'continous'
-                      ? getColorContinous
-                      : getColor,
+                    getColorContinous,
                     geojsonData,
-                    groupedData,
+                    finalFilteredData,
                     filterOptionMapping,
                     legend,
                     fg,
@@ -217,14 +226,29 @@ function renderClimateFundingMap() {
                     'countryname',
                     'value_precise'
                   );
+                  finalFilteredData = filterByVulnerability(groupedData, vulnerability);
                   renderMap(
                     variable,
                     map,
-                    filterOptionMapping.find((option) => option.name === variable).scaleType === 'continous'
-                      ? getColorContinous
-                      : getColor,
+                    getColorContinous,
                     geojsonData,
-                    groupedData,
+                    finalFilteredData,
+                    filterOptionMapping,
+                    legend,
+                    fg,
+                    data
+                  );
+                };
+
+                const onSelectVulnerability = (value) => {
+                  vulnerability = Number(value);
+                  finalFilteredData = filterByVulnerability(groupedData, vulnerability);
+                  renderMap(
+                    variable,
+                    map,
+                    getColorContinous,
+                    geojsonData,
+                    finalFilteredData,
                     filterOptionMapping,
                     legend,
                     fg,
@@ -250,7 +274,24 @@ function renderClimateFundingMap() {
                         minWidth: '150px',
                       }}
                     />
-                    <RangeSlider label="Select a year" min="2017" max="2021" step={1} onChange={onSelectYear} />
+                    <RangeSlider
+                      label="Select a year"
+                      min="2017"
+                      max="2021"
+                      step={1}
+                      onChange={onSelectYear}
+                      labelLeft={2017}
+                      labelRight={2021}
+                    />
+                    <RangeSlider
+                      label="Select vulnerability index"
+                      min="0"
+                      max={getVulnerabilityScale(groupedData).max}
+                      step={1}
+                      onChange={onSelectVulnerability}
+                      labelLeft={0}
+                      labelRight={getVulnerabilityScale(groupedData).max}
+                    />
                   </ChartFilters>
                 );
 
