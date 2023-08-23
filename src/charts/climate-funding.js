@@ -100,14 +100,15 @@ const renderMap = (
   });
 
   const crisisStyle = (feature) => ({
-    [feature.properties.protracted_crisis ? 'fillPattern' : 'fillColor']: feature.properties.protracted_crisis
-      ? new window.L.StripePattern({
-          weight: 2,
-          spaceWeight: 1,
-          angle: 45,
-          color: '#fff',
-        }).addTo(mapInstance)
-      : '#00000000',
+    [feature.properties.protracted_crisis && feature.properties[dimensionVariable] ? 'fillPattern' : 'fillColor']:
+      feature.properties.protracted_crisis && feature.properties[dimensionVariable]
+        ? new window.L.StripePattern({
+            weight: 2,
+            spaceWeight: 1,
+            angle: 45,
+            color: '#fff',
+          }).addTo(mapInstance)
+        : '#00000000',
     weight: 1,
     opacity: 1,
     color: 'white',
