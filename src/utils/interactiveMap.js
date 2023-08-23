@@ -300,6 +300,20 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
+const crisisGeoJson = (jsonData, countries, value) =>
+  jsonData.map((feature) => {
+    const featureCopy = { ...feature };
+    const matchingCountryData = countries.find((country) => country === feature.properties.name);
+    if (matchingCountryData) {
+      featureCopy.properties = {
+        ...feature.properties,
+        protracted_crisis: value,
+      };
+    }
+
+    return featureCopy;
+  });
+
 export {
   dataBoxContent,
   highlightFeature,
@@ -316,4 +330,5 @@ export {
   legendData,
   highlightClimateMapFeature,
   getClimateOriginalCountryName,
+  crisisGeoJson,
 };
