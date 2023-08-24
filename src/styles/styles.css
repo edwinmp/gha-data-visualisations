@@ -8,7 +8,7 @@
   background: white;
 }
 
-.dicharts--gha-people-affected-by-crisis-leaflet {
+.dicharts--gha-people-affected-by-crisis-leaflet, .dicharts--gha-climate-funding {
   z-index: 1;
 }
 
@@ -156,6 +156,85 @@
   cursor: grab !important;
 }
 
-.range {
+.range > input {
   /* display: flex; */
+  margin-top: 10px;
+}
+
+.range > span {
+  font-size: 13px;
+}
+
+.dicharts--gha-climate-funding {
+  margin-top: 80px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 6px;
+  background: #ccc;
+}
+/* Track: webkit browsers */
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  height: 15px;
+  width: 15px;
+  background: #cb5730;
+  border-radius: 50%;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #7a2e05;
+}
+
+/* input[type="range"]:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(255,85,0, .2)
+} */
+
+
+/* Track: Mozilla Firefox */
+
+/* Thumb: Firefox */
+
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: #cb5730;
+  border-radius: 50%;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: #7a2e05;
+}
+/* input[type="range"]:active::-moz-range-thumb {
+  box-shadow: 0 0 0 13px rgba(255,85,0, .2)
+} */
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.slider-ticks span {
+  display: flex;
+  justify-content: center;
+  width: 1px;
+  height: 10px;
+  background: #d3d3d3;
+  line-height: 40px;
 }

@@ -116,7 +116,6 @@ const renderMap = (
 
   const resetHighlight = (e) => {
     geojsonLayer.resetStyle(e.target);
-    // crisisLayer.resetStyle(e.target);
     e.target.closePopup();
   };
 
@@ -367,8 +366,8 @@ function renderClimateFundingMap() {
                       max="2021"
                       step={1}
                       onChange={onSelectYear}
-                      labelLeft={2017}
-                      labelRight={2021}
+                      dataList={['2017', '2018', '2019', '2020', '2021']}
+                      name="years"
                     />
                     <RangeSlider
                       label="Select vulnerability index"
@@ -376,8 +375,8 @@ function renderClimateFundingMap() {
                       max={getVulnerabilityScale(groupedData).max}
                       step={1}
                       onChange={onSelectVulnerability}
-                      labelLeft={0}
-                      labelRight={getVulnerabilityScale(groupedData).max}
+                      dataList={[0, getVulnerabilityScale(groupedData).max]}
+                      name={'vulnerability'}
                     />
                     <CheckboxInput name="crisis" label="Select crisis" onChange={onCrisisChange} />
                   </div>
