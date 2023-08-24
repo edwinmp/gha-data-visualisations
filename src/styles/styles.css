@@ -238,3 +238,7 @@ input[type="range"]::-moz-range-thumb:hover {
   background: #d3d3d3;
   line-height: 40px;
 }
+
+input[type=checkbox]{
+  accent-color: #cb5730;
+}
