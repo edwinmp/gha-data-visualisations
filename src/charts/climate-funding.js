@@ -16,15 +16,11 @@ import {
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
 import RangeSlider from '../components/RangeSlider';
-import RadioInput from '../components/RadioInput';
+import CheckboxInput from '../components/CheckboxInput';
 
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
-const crisisOptions = [
-  { value: 'yes', label: 'Protracted crisis' },
-  { value: 'no', label: 'No crisis' },
-];
 
 const getMaxMinValues = (dataType, csvData) => {
   const dataList = csvData
@@ -49,8 +45,11 @@ const getVulnerabilityScale = (data) => {
 const filterByVulnerability = (data, value) =>
   value === 0 ? data : data.filter((d) => Number(d.Vulnerability_Score_new) >= value);
 
-const getCrisisData = (data, value) =>
-  data.filter((item) => (value === 'no' ? !item.protracted_crisis : item.protracted_crisis === value));
+const getCrisisData = (data, value) => {
+  if (!value) return data;
+
+  return data.filter((item) => (value === 'no' ? !item.protracted_crisis : item.protracted_crisis === value));
+};
 
 const filterDataByYear = (data, year) => data.filter((item) => item.year === year);
 
@@ -117,7 +116,7 @@ const renderMap = (
 
   const resetHighlight = (e) => {
     geojsonLayer.resetStyle(e.target);
-    crisisLayer.resetStyle(e.target);
+    // crisisLayer.resetStyle(e.target);
     e.target.closePopup();
   };
 
@@ -342,7 +341,6 @@ function renderClimateFundingMap() {
                     crisisCountries,
                     crisisValue
                   );
-                  console.log(crisisCountries);
                 };
 
                 const onReset = () => {
@@ -381,7 +379,7 @@ function renderClimateFundingMap() {
                       labelLeft={0}
                       labelRight={getVulnerabilityScale(groupedData).max}
                     />
-                    <RadioInput name="crisis" options={crisisOptions} label="Select crisis" onChange={onCrisisChange} />
+                    <CheckboxInput name="crisis" label="Select crisis" onChange={onCrisisChange} />
                   </div>
                 );
 
