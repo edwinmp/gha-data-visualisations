@@ -282,19 +282,20 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
     layer.bringToFront();
   }
   // Bind popup to layer
+  const country = getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3);
   layer
     .bindTooltip(
       layer.feature.properties[variable]
-        ? `<div>${
-            getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)
-              ? getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)
-              : layer.feature.properties.name
-          }<br>${filterOptions.find((option) => option.name === variable).label}: ${
-            layer.feature.properties[variable]
+        ? `<div>${country || layer.feature.properties.name}<br>${
+            filterOptions.find((option) => option.name === variable).label
+          }: ${
+            variable === 'Total_Climate_USD'
+              ? Number(layer.feature.properties[variable]).toFixed(3)
+              : layer.feature.properties[variable]
           }<span style="padding-left: 2px;">${
             variable === 'Total_Climate_USD' ? filterOptions.find((option) => option.name === variable).unit : ''
           }</span></div>`
-        : `<div>${getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
+        : `<div>${country}<br> Not assessed</div>`,
       { direction: 'top', opacity: 1 }
     )
     .openTooltip();
