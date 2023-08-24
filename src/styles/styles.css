@@ -156,13 +156,13 @@
   cursor: grab !important;
 }
 
-.range > input {
-  /* display: flex; */
-  margin-top: 10px;
+.range {
+  padding-right: 50px;
+  font-size: 13px;
 }
 
-.range > span {
-  font-size: 13px;
+.range > input {
+  margin-top: 10px;
 }
 
 .dicharts--gha-climate-funding {
@@ -220,14 +220,11 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-moz-range-thumb:hover {
   background: #7a2e05;
 }
-/* input[type="range"]:active::-moz-range-thumb {
-  box-shadow: 0 0 0 13px rgba(255,85,0, .2)
-} */
 
 .slider-ticks {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
+  /* padding: 0 10px; */
 }
 
 .slider-ticks span {
