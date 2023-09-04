@@ -105,7 +105,7 @@ const renderMap = (
             weight: 2,
             spaceWeight: 1,
             angle: 45,
-            color: '#fff',
+            color: '#d12568',
           }).addTo(mapInstance)
         : '#00000000',
     weight: 1,
