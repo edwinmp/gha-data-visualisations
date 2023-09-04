@@ -33,6 +33,26 @@ const getMaxMinValues = (dataType, csvData) => {
   };
 };
 
+const getLegendValues = (minValue, maxValue, colorLength) => {
+  const items = [];
+  const increment = maxValue / colorLength;
+  let initialValue = minValue;
+  while (items.length <= colorLength) {
+    if (initialValue === minValue) {
+      items.push(initialValue);
+    }
+
+    initialValue += increment;
+    if (Number(initialValue) === initialValue && initialValue % 1 !== 0) {
+      items.push(Number(initialValue.toFixed(1)));
+    } else {
+      items.push(initialValue);
+    }
+  }
+
+  return items;
+};
+
 const getVulnerabilityScale = (data) => {
   const vulnerabilityList = data.map((item) => Number(item.Vulnerability_Score_new));
 
@@ -74,16 +94,32 @@ const renderMap = (
     const div = window.L.DomUtil.create('div', 'legend');
 
     const scaleData = getMaxMinValues(dimensionVariable, processed);
-    const legendContent = `${colors
+    const legendValues = getLegendValues(scaleData.minValue, scaleData.maxValue, colors.length);
+
+    const legendContent = `<div style="display:flex;flex-direction:column;">
+    <div>
+    ${colors
       .map(
         (color) =>
           `<span>
-          <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
+          <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
         </span>`
       )
-      .join('')} <p style="margin-left:1px;margin-top: 4px;">${scaleData.minValue} - ${scaleData.maxValue}${
-      dimensionVariable === 'Total_Climate_Share' ? '%' : ',million USD'
-    }</p>`;
+      .join('')}
+    </div>
+    <div>
+    ${legendValues
+      .map(
+        (item, index) =>
+          `${
+            index === legendValues.length - 1
+              ? `<span> ${item} (${dimensionVariable === 'Total_Climate_Share' ? '%' : 'million USD'})</span>`
+              : `<span style="width:50px;">${item}</span>`
+          }`
+      )
+      .join('')}
+    </div>
+     </div>`;
     div.innerHTML = legendContent;
 
     return div;
