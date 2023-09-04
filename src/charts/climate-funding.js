@@ -405,6 +405,7 @@ function renderClimateFundingMap() {
                       onChange={onSelectYear}
                       dataList={['2017', '2018', '2019', '2020', '2021']}
                       name="years"
+                      incremental={false}
                     />
                     <RangeSlider
                       label="Select vulnerability index"
@@ -414,6 +415,7 @@ function renderClimateFundingMap() {
                       onChange={onSelectVulnerability}
                       dataList={[0, getVulnerabilityScale(groupedData).max]}
                       name={'vulnerability'}
+                      incremental={true}
                     />
                     <CheckboxInput name="crisis" label="Select crisis" onChange={onCrisisChange} />
                   </div>

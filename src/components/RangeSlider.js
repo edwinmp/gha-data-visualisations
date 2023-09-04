@@ -25,7 +25,9 @@ const RangeSlider = (props) => {
       progress = (Number(event.target.value) / Number(sliderEl.max)) * 100;
     }
 
-    sliderEl.style.background = `linear-gradient(to right, #cb5730 ${progress}%, #ccc ${progress}%)`;
+    if (props.incremental) {
+      sliderEl.style.background = `linear-gradient(to right, #cb5730 ${progress}%, #ccc ${progress}%)`;
+    }
     setValue(event.target.value);
   };
 
@@ -60,6 +62,7 @@ RangeSlider.propTypes = {
   label: PropTypes.string,
   dataList: PropTypes.array,
   name: PropTypes.string,
+  incremental: PropTypes.bool,
 };
 
 export default RangeSlider;
