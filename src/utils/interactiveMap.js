@@ -266,12 +266,6 @@ const getClimateOriginalCountryName = (csv, code) =>
 
 const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   const layer = e.target;
-  // const databoxContainer = document.querySelector('[data-id="databoxContainer"]');
-  // if (databoxContainer && databoxContainer.style.display !== 'none') {
-  //   dataBox.update();
-  //   databoxContainer.style.display = 'none';
-  // }
-
   layer.setStyle({
     fillColor: '#df8000',
     color: '#484848',

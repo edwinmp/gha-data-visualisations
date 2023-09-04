@@ -107,7 +107,7 @@ const renderMap = (
             angle: 45,
             color: '#d12568',
           }).addTo(mapInstance)
-        : '#00000000',
+        : colorFunction(feature.properties[dimensionVariable], dimensionVariable),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -116,6 +116,7 @@ const renderMap = (
 
   const resetHighlight = (e) => {
     geojsonLayer.resetStyle(e.target);
+    crisisLayer.resetStyle(e.target);
     e.target.closePopup();
   };
 
