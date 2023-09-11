@@ -83,7 +83,7 @@ const matchCountryNames = (csvData, worldData, countryCodeVariable, countryNameV
   return matchedData;
 };
 
-const processedData = (countries, processedCountryData, countryVariable, valueVariable) => {
+const processedData = (countries, processedCountryData, countryVariable, valueVariable, extraVariable) => {
   const data = [];
   countries.forEach((country) => {
     const countryData = {};
@@ -91,6 +91,9 @@ const processedData = (countries, processedCountryData, countryVariable, valueVa
     processedCountryData.forEach((stream) => {
       if (stream[countryVariable] === country) {
         countryData[stream.variable] = stream[valueVariable];
+        if (extraVariable) {
+          countryData[extraVariable] = stream[extraVariable];
+        }
       }
     });
     data.push(countryData);
@@ -280,34 +283,26 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   layer
     .bindTooltip(
       layer.feature.properties[variable]
-        ? `<div>${country || layer.feature.properties.name}<br>${
-            filterOptions.find((option) => option.name === variable).label
-          }: ${
-            variable === 'Total_Climate_USD'
-              ? Number(layer.feature.properties[variable]).toFixed(3)
-              : layer.feature.properties[variable]
-          }<span style="padding-left: 2px;">${
-            variable === 'Total_Climate_USD' ? filterOptions.find((option) => option.name === variable).unit : ''
-          }</span></div>`
+        ? `<div>${country || layer.feature.properties.name}<br>
+          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${
+            layer.feature.properties.CCA_Share
+          }) <br>
+          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
+            layer.feature.properties.CCM_Share
+          })<br>
+          Climate vulnerability: ${
+            layer.feature.properties.Vulnerability_Score_new
+              ? Number(layer.feature.properties.Vulnerability_Score_new).toFixed(1)
+              : 'Not assesed'
+          }<br>
+          ${layer.feature.properties.protracted_crisis ? `In protracted crisis` : ''}
+          </div>
+          `
         : `<div>${country}<br> Not assessed</div>`,
       { direction: 'top', opacity: 1 }
     )
     .openTooltip();
 };
-
-const crisisGeoJson = (jsonData, countries, value) =>
-  jsonData.map((feature) => {
-    const featureCopy = { ...feature };
-    const matchingCountryData = countries.find((country) => country === feature.properties.name);
-    if (matchingCountryData) {
-      featureCopy.properties = {
-        ...feature.properties,
-        protracted_crisis: value,
-      };
-    }
-
-    return featureCopy;
-  });
 
 export {
   dataBoxContent,
@@ -325,5 +320,4 @@ export {
   legendData,
   highlightClimateMapFeature,
   getClimateOriginalCountryName,
-  crisisGeoJson,
 };

@@ -11,7 +11,6 @@ import {
   processedData,
   getColorDynamic,
   highlightClimateMapFeature,
-  crisisGeoJson,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
@@ -168,8 +167,10 @@ const renderMap = (
   });
 
   const crisisStyle = (feature) => ({
-    [feature.properties.protracted_crisis && feature.properties[dimensionVariable] ? 'fillPattern' : 'fillColor']:
-      feature.properties.protracted_crisis && feature.properties[dimensionVariable]
+    [feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
+      ? 'fillPattern'
+      : 'fillColor']:
+      feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
         ? new window.L.StripePattern({
             weight: 2,
             spaceWeight: 1,
@@ -227,7 +228,7 @@ const renderMap = (
       style,
       onEachFeature,
     });
-    crisisLayer = window.L.geoJSON(crisisGeoJson(dataInjectedGeoJson(data, processed), crisisData, crisisValue), {
+    crisisLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
       style: crisisStyle,
       onEachFeature,
     });
@@ -304,7 +305,8 @@ function renderClimateFundingMap() {
                   countries,
                   yearlyProcessedCountryNameData,
                   'countryname',
-                  'value_precise'
+                  'value_precise',
+                  'protracted_crisis'
                 );
                 let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                 let crisisCountries = [];
@@ -376,7 +378,8 @@ function renderClimateFundingMap() {
                     countries,
                     yearlyProcessedCountryNameData,
                     'countryname',
-                    'value_precise'
+                    'value_precise',
+                    'protracted_crisis'
                   );
                   finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                   renderMap(
@@ -396,7 +399,7 @@ function renderClimateFundingMap() {
                 };
 
                 const onSelectVulnerability = (value) => {
-                  vulnerability = Number(value) || vulnerability;
+                  vulnerability = value ? Number(value) : vulnerability;
                   finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                   renderMap(
                     variable,
