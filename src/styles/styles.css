@@ -239,3 +239,17 @@ input[type=checkbox]{
   position: absolute !important;
   z-index: 2 !important;
 }
+
+.range-width {
+  min-width: 250px;
+}
+
+.slider-ticks label {
+  line-height: 20px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.vulnerability-range {
+  padding-left: 10px;
+}

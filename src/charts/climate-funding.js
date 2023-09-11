@@ -21,6 +21,13 @@ import CheckboxInput from '../components/CheckboxInput';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
+const vulnerabilityMapping = [
+  { label: 4, value: 60 },
+  { label: 3, value: 55 },
+  { label: 2, value: 50 },
+  { label: 1, value: 40 },
+  { label: 0, value: 0 },
+];
 
 const getMaxMinValues = (dataType, csvData) => {
   const dataList = csvData
@@ -59,15 +66,6 @@ const getLegendValues = (minValue, maxValue, colorLength) => {
   return items;
 };
 
-const getVulnerabilityScale = (data) => {
-  const vulnerabilityList = data.map((item) => Number(item.Vulnerability_Score_new));
-
-  return {
-    max: Math.ceil(Math.max(...vulnerabilityList)).toString(),
-    min: Math.ceil(Math.min(...vulnerabilityList)).toString(),
-  };
-};
-
 const filterByVulnerability = (data, value) =>
   value === 0 ? data : data.filter((d) => Number(d.Vulnerability_Score_new) >= value);
 
@@ -95,6 +93,9 @@ const getAdaptationActualValue = (selected, dimension) => {
 
   return dimension;
 };
+
+const getVulnerabilityValue = (selectedValue) =>
+  vulnerabilityMapping.find((item) => item.label === selectedValue).value;
 
 const renderMap = (
   dimensionVariable,
@@ -305,7 +306,7 @@ function renderClimateFundingMap() {
                   'countryname',
                   'value_precise'
                 );
-                let finalFilteredData = filterByVulnerability(groupedData, vulnerability);
+                let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                 let crisisCountries = [];
                 let crisisValue;
 
@@ -377,7 +378,7 @@ function renderClimateFundingMap() {
                     'countryname',
                     'value_precise'
                   );
-                  finalFilteredData = filterByVulnerability(groupedData, vulnerability);
+                  finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                   renderMap(
                     variable,
                     map,
@@ -395,8 +396,8 @@ function renderClimateFundingMap() {
                 };
 
                 const onSelectVulnerability = (value) => {
-                  vulnerability = Number(value);
-                  finalFilteredData = filterByVulnerability(groupedData, vulnerability);
+                  vulnerability = Number(value) || vulnerability;
+                  finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                   renderMap(
                     variable,
                     map,
@@ -493,12 +494,13 @@ function renderClimateFundingMap() {
                     <RangeSlider
                       label="Select vulnerability level"
                       min="0"
-                      max={getVulnerabilityScale(groupedData).max}
+                      max="4"
                       step={1}
                       onChange={onSelectVulnerability}
-                      dataList={[0, getVulnerabilityScale(groupedData).max]}
-                      name={'vulnerability'}
+                      dataList={['All countries', 'Low', 'Medium', 'High', 'Very high']}
+                      name="vulnerability"
                       incremental={true}
+                      className="range-width vulnerability-range"
                     />
                     <CheckboxInput name="crisis" label="Select crisis" onChange={onCrisisChange} />
                   </div>

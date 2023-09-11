@@ -32,7 +32,7 @@ const RangeSlider = (props) => {
   };
 
   return (
-    <div className="range labelled-data-selector--wrapper">
+    <div className={`range labelled-data-selector--wrapper ${props.className}`}>
       <label>
         <b>{props.label}</b>
       </label>
@@ -47,7 +47,10 @@ const RangeSlider = (props) => {
       />
       <div className="slider-ticks">
         {props.dataList.map((item) => (
-          <span key={item}>{item}</span>
+          <span key={item}>
+            {' '}
+            <label>{item}</label>
+          </span>
         ))}
       </div>
     </div>
@@ -63,6 +66,7 @@ RangeSlider.propTypes = {
   dataList: PropTypes.array,
   name: PropTypes.string,
   incremental: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default RangeSlider;
