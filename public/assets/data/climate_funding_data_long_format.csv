@@ -104,11 +104,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,CCA_Share,percentage_
 China (People's Republic of),CHN,2019,East Asia & Pacific,,CCA_Share,percentage_share,0.83%,0.83
 China (People's Republic of),CHN,2020,East Asia & Pacific,,CCA_Share,percentage_share,3.00%,3
 China (People's Republic of),CHN,2021,East Asia & Pacific,,CCA_Share,percentage_share,0.87%,0.87
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCA_Share,percentage_share,0.00%,0
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCA_Share,percentage_share,0.01%,0.01
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCA_Share,percentage_share,0.40%,0.4
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCA_Share,percentage_share,0.25%,0.25
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCA_Share,percentage_share,0.88%,0.88
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCA_Share,percentage_share,0.00%,0
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCA_Share,percentage_share,0.01%,0.01
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCA_Share,percentage_share,0.40%,0.4
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCA_Share,percentage_share,0.25%,0.25
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCA_Share,percentage_share,0.88%,0.88
 Cameroon,CMR,2017,Sub-Saharan Africa,,CCA_Share,percentage_share,1.88%,1.88
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,CCA_Share,percentage_share,0.06%,0.06
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,CCA_Share,percentage_share,4.32%,4.32
@@ -639,11 +639,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,CCA_Share,percentage_share,2.07%,2.
 Tunisia,TUN,2019,Middle East & North Africa,,CCA_Share,percentage_share,2.20%,2.2
 Tunisia,TUN,2020,Middle East & North Africa,,CCA_Share,percentage_share,3.63%,3.63
 Tunisia,TUN,2021,Middle East & North Africa,,CCA_Share,percentage_share,3.38%,3.38
-T�rkiye,TUR,2017,Europe & Central Asia,yes,CCA_Share,percentage_share,0.00%,0
-T�rkiye,TUR,2018,Europe & Central Asia,yes,CCA_Share,percentage_share,0.00%,0
-T�rkiye,TUR,2019,Europe & Central Asia,yes,CCA_Share,percentage_share,0.01%,0.01
-T�rkiye,TUR,2020,Europe & Central Asia,yes,CCA_Share,percentage_share,0.00%,0
-T�rkiye,TUR,2021,Europe & Central Asia,yes,CCA_Share,percentage_share,0.99%,0.99
+Türkiye,TUR,2017,Europe & Central Asia,yes,CCA_Share,percentage_share,0.00%,0
+Türkiye,TUR,2018,Europe & Central Asia,yes,CCA_Share,percentage_share,0.00%,0
+Türkiye,TUR,2019,Europe & Central Asia,yes,CCA_Share,percentage_share,0.01%,0.01
+Türkiye,TUR,2020,Europe & Central Asia,yes,CCA_Share,percentage_share,0.00%,0
+Türkiye,TUR,2021,Europe & Central Asia,yes,CCA_Share,percentage_share,0.99%,0.99
 Tuvalu,TUV,2017,East Asia & Pacific,,CCA_Share,percentage_share,0.39%,0.39
 Tuvalu,TUV,2018,East Asia & Pacific,,CCA_Share,percentage_share,5.58%,5.58
 Tuvalu,TUV,2019,East Asia & Pacific,,CCA_Share,percentage_share,0.52%,0.52
@@ -834,11 +834,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,CCA_USD,usd_millions,
 China (People's Republic of),CHN,2019,East Asia & Pacific,,CCA_USD,usd_millions,12.961872,12.96
 China (People's Republic of),CHN,2020,East Asia & Pacific,,CCA_USD,usd_millions,49.519482,49.52
 China (People's Republic of),CHN,2021,East Asia & Pacific,,CCA_USD,usd_millions,10.732482,10.73
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCA_USD,usd_millions,0.038421,0.04
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCA_USD,usd_millions,0.062739,0.06
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCA_USD,usd_millions,5.470581,5.47
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCA_USD,usd_millions,4.54327,4.54
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCA_USD,usd_millions,15.010415,15.01
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCA_USD,usd_millions,0.038421,0.04
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCA_USD,usd_millions,0.062739,0.06
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCA_USD,usd_millions,5.470581,5.47
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCA_USD,usd_millions,4.54327,4.54
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCA_USD,usd_millions,15.010415,15.01
 Cameroon,CMR,2017,Sub-Saharan Africa,,CCA_USD,usd_millions,26.426492,26.43
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,CCA_USD,usd_millions,0.752505,0.75
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,CCA_USD,usd_millions,63.722702,63.72
@@ -1369,11 +1369,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,CCA_USD,usd_millions,29.041063,29.0
 Tunisia,TUN,2019,Middle East & North Africa,,CCA_USD,usd_millions,35.526321,35.53
 Tunisia,TUN,2020,Middle East & North Africa,,CCA_USD,usd_millions,58.016837,58.02
 Tunisia,TUN,2021,Middle East & North Africa,,CCA_USD,usd_millions,56.730916,56.73
-T�rkiye,TUR,2017,Europe & Central Asia,yes,CCA_USD,usd_millions,0.164368,0.16
-T�rkiye,TUR,2018,Europe & Central Asia,yes,CCA_USD,usd_millions,0,0
-T�rkiye,TUR,2019,Europe & Central Asia,yes,CCA_USD,usd_millions,0.134638,0.13
-T�rkiye,TUR,2020,Europe & Central Asia,yes,CCA_USD,usd_millions,0.084865,0.08
-T�rkiye,TUR,2021,Europe & Central Asia,yes,CCA_USD,usd_millions,29.353254,29.35
+Türkiye,TUR,2017,Europe & Central Asia,yes,CCA_USD,usd_millions,0.164368,0.16
+Türkiye,TUR,2018,Europe & Central Asia,yes,CCA_USD,usd_millions,0,0
+Türkiye,TUR,2019,Europe & Central Asia,yes,CCA_USD,usd_millions,0.134638,0.13
+Türkiye,TUR,2020,Europe & Central Asia,yes,CCA_USD,usd_millions,0.084865,0.08
+Türkiye,TUR,2021,Europe & Central Asia,yes,CCA_USD,usd_millions,29.353254,29.35
 Tuvalu,TUV,2017,East Asia & Pacific,,CCA_USD,usd_millions,0.115769,0.12
 Tuvalu,TUV,2018,East Asia & Pacific,,CCA_USD,usd_millions,1.545552,1.55
 Tuvalu,TUV,2019,East Asia & Pacific,,CCA_USD,usd_millions,0.193527,0.19
@@ -1564,11 +1564,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,CCM_Share,percentage_
 China (People's Republic of),CHN,2019,East Asia & Pacific,,CCM_Share,percentage_share,9.06%,9.06
 China (People's Republic of),CHN,2020,East Asia & Pacific,,CCM_Share,percentage_share,7.58%,7.58
 China (People's Republic of),CHN,2021,East Asia & Pacific,,CCM_Share,percentage_share,7.65%,7.65
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCM_Share,percentage_share,0.00%,0
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCM_Share,percentage_share,0.13%,0.13
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCM_Share,percentage_share,11.16%,11.16
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCM_Share,percentage_share,6.98%,6.98
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCM_Share,percentage_share,5.19%,5.19
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCM_Share,percentage_share,0.00%,0
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCM_Share,percentage_share,0.13%,0.13
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCM_Share,percentage_share,11.16%,11.16
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCM_Share,percentage_share,6.98%,6.98
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCM_Share,percentage_share,5.19%,5.19
 Cameroon,CMR,2017,Sub-Saharan Africa,,CCM_Share,percentage_share,0.33%,0.33
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,CCM_Share,percentage_share,0.60%,0.6
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,CCM_Share,percentage_share,0.62%,0.62
@@ -2099,11 +2099,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,CCM_Share,percentage_share,8.08%,8.
 Tunisia,TUN,2019,Middle East & North Africa,,CCM_Share,percentage_share,12.84%,12.84
 Tunisia,TUN,2020,Middle East & North Africa,,CCM_Share,percentage_share,5.31%,5.31
 Tunisia,TUN,2021,Middle East & North Africa,,CCM_Share,percentage_share,3.43%,3.43
-T�rkiye,TUR,2017,Europe & Central Asia,yes,CCM_Share,percentage_share,8.73%,8.73
-T�rkiye,TUR,2018,Europe & Central Asia,yes,CCM_Share,percentage_share,1.46%,1.46
-T�rkiye,TUR,2019,Europe & Central Asia,yes,CCM_Share,percentage_share,3.83%,3.83
-T�rkiye,TUR,2020,Europe & Central Asia,yes,CCM_Share,percentage_share,3.14%,3.14
-T�rkiye,TUR,2021,Europe & Central Asia,yes,CCM_Share,percentage_share,4.83%,4.83
+Türkiye,TUR,2017,Europe & Central Asia,yes,CCM_Share,percentage_share,8.73%,8.73
+Türkiye,TUR,2018,Europe & Central Asia,yes,CCM_Share,percentage_share,1.46%,1.46
+Türkiye,TUR,2019,Europe & Central Asia,yes,CCM_Share,percentage_share,3.83%,3.83
+Türkiye,TUR,2020,Europe & Central Asia,yes,CCM_Share,percentage_share,3.14%,3.14
+Türkiye,TUR,2021,Europe & Central Asia,yes,CCM_Share,percentage_share,4.83%,4.83
 Tuvalu,TUV,2017,East Asia & Pacific,,CCM_Share,percentage_share,0.00%,0
 Tuvalu,TUV,2018,East Asia & Pacific,,CCM_Share,percentage_share,0.00%,0
 Tuvalu,TUV,2019,East Asia & Pacific,,CCM_Share,percentage_share,0.00%,0
@@ -2294,11 +2294,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,CCM_USD,usd_millions,
 China (People's Republic of),CHN,2019,East Asia & Pacific,,CCM_USD,usd_millions,141.815084,141.82
 China (People's Republic of),CHN,2020,East Asia & Pacific,,CCM_USD,usd_millions,125.26846,125.27
 China (People's Republic of),CHN,2021,East Asia & Pacific,,CCM_USD,usd_millions,94.186798,94.19
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCM_USD,usd_millions,0.025267,0.03
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCM_USD,usd_millions,1.630715,1.63
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCM_USD,usd_millions,153.106894,153.11
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCM_USD,usd_millions,124.937151,124.94
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCM_USD,usd_millions,88.732365,88.73
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,CCM_USD,usd_millions,0.025267,0.03
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,CCM_USD,usd_millions,1.630715,1.63
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,CCM_USD,usd_millions,153.106894,153.11
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,CCM_USD,usd_millions,124.937151,124.94
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,CCM_USD,usd_millions,88.732365,88.73
 Cameroon,CMR,2017,Sub-Saharan Africa,,CCM_USD,usd_millions,4.563153,4.56
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,CCM_USD,usd_millions,7.693893,7.69
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,CCM_USD,usd_millions,9.207078,9.21
@@ -2829,11 +2829,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,CCM_USD,usd_millions,113.621542,113
 Tunisia,TUN,2019,Middle East & North Africa,,CCM_USD,usd_millions,207.338877,207.34
 Tunisia,TUN,2020,Middle East & North Africa,,CCM_USD,usd_millions,84.732596,84.73
 Tunisia,TUN,2021,Middle East & North Africa,,CCM_USD,usd_millions,57.656783,57.66
-T�rkiye,TUR,2017,Europe & Central Asia,yes,CCM_USD,usd_millions,432.586581,432.59
-T�rkiye,TUR,2018,Europe & Central Asia,yes,CCM_USD,usd_millions,47.727991,47.73
-T�rkiye,TUR,2019,Europe & Central Asia,yes,CCM_USD,usd_millions,103.305215,103.31
-T�rkiye,TUR,2020,Europe & Central Asia,yes,CCM_USD,usd_millions,85.157179,85.16
-T�rkiye,TUR,2021,Europe & Central Asia,yes,CCM_USD,usd_millions,142.861868,142.86
+Türkiye,TUR,2017,Europe & Central Asia,yes,CCM_USD,usd_millions,432.586581,432.59
+Türkiye,TUR,2018,Europe & Central Asia,yes,CCM_USD,usd_millions,47.727991,47.73
+Türkiye,TUR,2019,Europe & Central Asia,yes,CCM_USD,usd_millions,103.305215,103.31
+Türkiye,TUR,2020,Europe & Central Asia,yes,CCM_USD,usd_millions,85.157179,85.16
+Türkiye,TUR,2021,Europe & Central Asia,yes,CCM_USD,usd_millions,142.861868,142.86
 Tuvalu,TUV,2017,East Asia & Pacific,,CCM_USD,usd_millions,0,0
 Tuvalu,TUV,2018,East Asia & Pacific,,CCM_USD,usd_millions,0,0
 Tuvalu,TUV,2019,East Asia & Pacific,,CCM_USD,usd_millions,0,0
@@ -3024,11 +3024,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Dual_Purpose_USD,usd_
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Dual_Purpose_USD,usd_millions,10.130928,10.13
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Dual_Purpose_USD,usd_millions,10.149286,10.15
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Dual_Purpose_USD,usd_millions,6.202186,6.2
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,0,0
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,0.8931,0.89
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,4.582388,4.58
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,0.031312,0.03
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,1.780303,1.78
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,0,0
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,0.8931,0.89
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,4.582388,4.58
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,0.031312,0.03
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,1.780303,1.78
 Cameroon,CMR,2017,Sub-Saharan Africa,,Dual_Purpose_USD,usd_millions,2.483749,2.48
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Dual_Purpose_USD,usd_millions,1.351377,1.35
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Dual_Purpose_USD,usd_millions,1.076688,1.08
@@ -3559,11 +3559,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Dual_Purpose_USD,usd_millions,0.101
 Tunisia,TUN,2019,Middle East & North Africa,,Dual_Purpose_USD,usd_millions,0.121038,0.12
 Tunisia,TUN,2020,Middle East & North Africa,,Dual_Purpose_USD,usd_millions,1.083512,1.08
 Tunisia,TUN,2021,Middle East & North Africa,,Dual_Purpose_USD,usd_millions,1.060147,1.06
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,0,0
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,0.867796,0.87
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,88.666729,88.67
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,88.915639,88.92
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,3.249099,3.25
+Türkiye,TUR,2017,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,0,0
+Türkiye,TUR,2018,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,0.867796,0.87
+Türkiye,TUR,2019,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,88.666729,88.67
+Türkiye,TUR,2020,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,88.915639,88.92
+Türkiye,TUR,2021,Europe & Central Asia,yes,Dual_Purpose_USD,usd_millions,3.249099,3.25
 Tuvalu,TUV,2017,East Asia & Pacific,,Dual_Purpose_USD,usd_millions,0.641637,0.64
 Tuvalu,TUV,2018,East Asia & Pacific,,Dual_Purpose_USD,usd_millions,0.086453,0.09
 Tuvalu,TUV,2019,East Asia & Pacific,,Dual_Purpose_USD,usd_millions,0.158694,0.16
@@ -3754,11 +3754,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Dual_Share,percentage
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Dual_Share,percentage_share,0.65%,0.65
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Dual_Share,percentage_share,0.61%,0.61
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Dual_Share,percentage_share,0.50%,0.5
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Dual_Share,percentage_share,0.00%,0
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Dual_Share,percentage_share,0.07%,0.07
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Dual_Share,percentage_share,0.33%,0.33
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Dual_Share,percentage_share,0.00%,0
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Dual_Share,percentage_share,0.10%,0.1
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Dual_Share,percentage_share,0.00%,0
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Dual_Share,percentage_share,0.07%,0.07
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Dual_Share,percentage_share,0.33%,0.33
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Dual_Share,percentage_share,0.00%,0
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Dual_Share,percentage_share,0.10%,0.1
 Cameroon,CMR,2017,Sub-Saharan Africa,,Dual_Share,percentage_share,0.18%,0.18
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Dual_Share,percentage_share,0.11%,0.11
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Dual_Share,percentage_share,0.07%,0.07
@@ -4289,11 +4289,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Dual_Share,percentage_share,0.01%,0
 Tunisia,TUN,2019,Middle East & North Africa,,Dual_Share,percentage_share,0.01%,0.01
 Tunisia,TUN,2020,Middle East & North Africa,,Dual_Share,percentage_share,0.07%,0.07
 Tunisia,TUN,2021,Middle East & North Africa,,Dual_Share,percentage_share,0.06%,0.06
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Dual_Share,percentage_share,0.00%,0
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Dual_Share,percentage_share,0.03%,0.03
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Dual_Share,percentage_share,3.29%,3.29
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Dual_Share,percentage_share,3.28%,3.28
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Dual_Share,percentage_share,0.11%,0.11
+Türkiye,TUR,2017,Europe & Central Asia,yes,Dual_Share,percentage_share,0.00%,0
+Türkiye,TUR,2018,Europe & Central Asia,yes,Dual_Share,percentage_share,0.03%,0.03
+Türkiye,TUR,2019,Europe & Central Asia,yes,Dual_Share,percentage_share,3.29%,3.29
+Türkiye,TUR,2020,Europe & Central Asia,yes,Dual_Share,percentage_share,3.28%,3.28
+Türkiye,TUR,2021,Europe & Central Asia,yes,Dual_Share,percentage_share,0.11%,0.11
 Tuvalu,TUV,2017,East Asia & Pacific,,Dual_Share,percentage_share,2.18%,2.18
 Tuvalu,TUV,2018,East Asia & Pacific,,Dual_Share,percentage_share,0.31%,0.31
 Tuvalu,TUV,2019,East Asia & Pacific,,Dual_Share,percentage_share,0.42%,0.42
@@ -4484,11 +4484,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Total_Climate_Share,p
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Total_Climate_Share,percentage_share,10.54%,10.54
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Total_Climate_Share,percentage_share,11.19%,11.19
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Total_Climate_Share,percentage_share,9.03%,9.03
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,0.00%,0
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,0.20%,0.2
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,11.90%,11.9
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,7.24%,7.24
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,6.17%,6.17
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,0.00%,0
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,0.20%,0.2
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,11.90%,11.9
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,7.24%,7.24
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,6.17%,6.17
 Cameroon,CMR,2017,Sub-Saharan Africa,,Total_Climate_Share,percentage_share,2.38%,2.38
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Total_Climate_Share,percentage_share,0.76%,0.76
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Total_Climate_Share,percentage_share,5.02%,5.02
@@ -5019,11 +5019,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Total_Climate_Share,percentage_shar
 Tunisia,TUN,2019,Middle East & North Africa,,Total_Climate_Share,percentage_share,15.05%,15.05
 Tunisia,TUN,2020,Middle East & North Africa,,Total_Climate_Share,percentage_share,9.01%,9.01
 Tunisia,TUN,2021,Middle East & North Africa,,Total_Climate_Share,percentage_share,6.87%,6.87
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,8.73%,8.73
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,1.49%,1.49
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,7.12%,7.12
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,6.43%,6.43
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,5.93%,5.93
+Türkiye,TUR,2017,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,8.73%,8.73
+Türkiye,TUR,2018,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,1.49%,1.49
+Türkiye,TUR,2019,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,7.12%,7.12
+Türkiye,TUR,2020,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,6.43%,6.43
+Türkiye,TUR,2021,Europe & Central Asia,yes,Total_Climate_Share,percentage_share,5.93%,5.93
 Tuvalu,TUV,2017,East Asia & Pacific,,Total_Climate_Share,percentage_share,2.58%,2.58
 Tuvalu,TUV,2018,East Asia & Pacific,,Total_Climate_Share,percentage_share,5.89%,5.89
 Tuvalu,TUV,2019,East Asia & Pacific,,Total_Climate_Share,percentage_share,0.94%,0.94
@@ -5214,11 +5214,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Total_Climate_USD,usd
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Total_Climate_USD,usd_millions,164.907884,164.91
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Total_Climate_USD,usd_millions,184.937228,184.94
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Total_Climate_USD,usd_millions,111.121466,111.12
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,0.063688,0.06
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,2.586554,2.59
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,163.159863,163.16
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,129.511733,129.51
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,105.523083,105.52
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,0.063688,0.06
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,2.586554,2.59
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,163.159863,163.16
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,129.511733,129.51
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,105.523083,105.52
 Cameroon,CMR,2017,Sub-Saharan Africa,,Total_Climate_USD,usd_millions,33.473394,33.47
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Total_Climate_USD,usd_millions,9.797775,9.8
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Total_Climate_USD,usd_millions,74.006468,74.01
@@ -5749,11 +5749,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Total_Climate_USD,usd_millions,142.
 Tunisia,TUN,2019,Middle East & North Africa,,Total_Climate_USD,usd_millions,242.986236,242.99
 Tunisia,TUN,2020,Middle East & North Africa,,Total_Climate_USD,usd_millions,143.832945,143.83
 Tunisia,TUN,2021,Middle East & North Africa,,Total_Climate_USD,usd_millions,115.447846,115.45
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,432.750949,432.75
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,48.595787,48.6
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,192.106582,192.11
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,174.157683,174.16
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,175.464221,175.46
+Türkiye,TUR,2017,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,432.750949,432.75
+Türkiye,TUR,2018,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,48.595787,48.6
+Türkiye,TUR,2019,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,192.106582,192.11
+Türkiye,TUR,2020,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,174.157683,174.16
+Türkiye,TUR,2021,Europe & Central Asia,yes,Total_Climate_USD,usd_millions,175.464221,175.46
 Tuvalu,TUV,2017,East Asia & Pacific,,Total_Climate_USD,usd_millions,0.757406,0.76
 Tuvalu,TUV,2018,East Asia & Pacific,,Total_Climate_USD,usd_millions,1.632005,1.63
 Tuvalu,TUV,2019,East Asia & Pacific,,Total_Climate_USD,usd_millions,0.352221,0.35
@@ -5944,11 +5944,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Total_ODA_USD,usd_mil
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Total_ODA_USD,usd_millions,1565.066083,"1,565.07"
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Total_ODA_USD,usd_millions,1652.085863,"1,652.09"
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Total_ODA_USD,usd_millions,1231.252899,"1,231.25"
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1466.959438,"1,466.96"
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1308.174116,"1,308.17"
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1371.664194,"1,371.66"
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1789.396683,"1,789.40"
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1711.348047,"1,711.35"
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1466.959438,"1,466.96"
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1308.174116,"1,308.17"
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1371.664194,"1,371.66"
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1789.396683,"1,789.40"
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1711.348047,"1,711.35"
 Cameroon,CMR,2017,Sub-Saharan Africa,,Total_ODA_USD,usd_millions,1405.648947,"1,405.65"
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Total_ODA_USD,usd_millions,1282.716452,"1,282.72"
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Total_ODA_USD,usd_millions,1475.375239,"1,475.38"
@@ -6479,11 +6479,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Total_ODA_USD,usd_millions,1406.679
 Tunisia,TUN,2019,Middle East & North Africa,,Total_ODA_USD,usd_millions,1614.357142,"1,614.36"
 Tunisia,TUN,2020,Middle East & North Africa,,Total_ODA_USD,usd_millions,1596.967921,"1,596.97"
 Tunisia,TUN,2021,Middle East & North Africa,,Total_ODA_USD,usd_millions,1680.859474,"1,680.86"
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,4954.928254,"4,954.93"
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,3267.800752,"3,267.80"
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,2699.41771,"2,699.42"
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,2710.229612,"2,710.23"
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,2961.035172,"2,961.04"
+Türkiye,TUR,2017,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,4954.928254,"4,954.93"
+Türkiye,TUR,2018,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,3267.800752,"3,267.80"
+Türkiye,TUR,2019,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,2699.41771,"2,699.42"
+Türkiye,TUR,2020,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,2710.229612,"2,710.23"
+Türkiye,TUR,2021,Europe & Central Asia,yes,Total_ODA_USD,usd_millions,2961.035172,"2,961.04"
 Tuvalu,TUV,2017,East Asia & Pacific,,Total_ODA_USD,usd_millions,29.414717,29.41
 Tuvalu,TUV,2018,East Asia & Pacific,,Total_ODA_USD,usd_millions,27.690203,27.69
 Tuvalu,TUV,2019,East Asia & Pacific,,Total_ODA_USD,usd_millions,37.485667,37.49
@@ -6674,11 +6674,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Vulnerability_Score,i
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Vulnerability_Score,index,43.18301521,43.18
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Vulnerability_Score,index,42.13225156,42.13
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Vulnerability_Score,index,42.13225156,42.13
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Vulnerability_Score,index,61.52052711,61.52
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Vulnerability_Score,index,60.82219966,60.82
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Vulnerability_Score,index,60.62636836,60.63
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Vulnerability_Score,index,60.3911988,60.39
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Vulnerability_Score,index,60.3911988,60.39
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Vulnerability_Score,index,61.52052711,61.52
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Vulnerability_Score,index,60.82219966,60.82
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Vulnerability_Score,index,60.62636836,60.63
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Vulnerability_Score,index,60.3911988,60.39
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Vulnerability_Score,index,60.3911988,60.39
 Cameroon,CMR,2017,Sub-Saharan Africa,,Vulnerability_Score,index,60.84545115,60.85
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Vulnerability_Score,index,60.65352999,60.65
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Vulnerability_Score,index,61.07546032,61.08
@@ -7209,11 +7209,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Vulnerability_Score,index,48.445302
 Tunisia,TUN,2019,Middle East & North Africa,,Vulnerability_Score,index,48.04141655,48.04
 Tunisia,TUN,2020,Middle East & North Africa,,Vulnerability_Score,index,47.51854256,47.52
 Tunisia,TUN,2021,Middle East & North Africa,,Vulnerability_Score,index,47.51854256,47.52
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Vulnerability_Score,index,44.6043132,44.6
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Vulnerability_Score,index,44.46325592,44.46
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Vulnerability_Score,index,43.72041647,43.72
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Vulnerability_Score,index,43.3049568,43.3
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Vulnerability_Score,index,43.3049568,43.3
+Türkiye,TUR,2017,Europe & Central Asia,yes,Vulnerability_Score,index,44.6043132,44.6
+Türkiye,TUR,2018,Europe & Central Asia,yes,Vulnerability_Score,index,44.46325592,44.46
+Türkiye,TUR,2019,Europe & Central Asia,yes,Vulnerability_Score,index,43.72041647,43.72
+Türkiye,TUR,2020,Europe & Central Asia,yes,Vulnerability_Score,index,43.3049568,43.3
+Türkiye,TUR,2021,Europe & Central Asia,yes,Vulnerability_Score,index,43.3049568,43.3
 Tuvalu,TUV,2017,East Asia & Pacific,,Vulnerability_Score,index,,
 Tuvalu,TUV,2018,East Asia & Pacific,,Vulnerability_Score,index,,
 Tuvalu,TUV,2019,East Asia & Pacific,,Vulnerability_Score,index,,
@@ -7404,11 +7404,11 @@ China (People's Republic of),CHN,2018,East Asia & Pacific,,Vulnerability_Score_n
 China (People's Republic of),CHN,2019,East Asia & Pacific,,Vulnerability_Score_new,index,43.18,43.18
 China (People's Republic of),CHN,2020,East Asia & Pacific,,Vulnerability_Score_new,index,42.13,42.13
 China (People's Republic of),CHN,2021,East Asia & Pacific,,Vulnerability_Score_new,index,42.13,42.13
-C�te d'Ivoire,CIV,2017,Sub-Saharan Africa,,Vulnerability_Score_new,index,61.52,61.52
-C�te d'Ivoire,CIV,2018,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.82,60.82
-C�te d'Ivoire,CIV,2019,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.63,60.63
-C�te d'Ivoire,CIV,2020,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.39,60.39
-C�te d'Ivoire,CIV,2021,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.39,60.39
+Côte d'Ivoire,CIV,2017,Sub-Saharan Africa,,Vulnerability_Score_new,index,61.52,61.52
+Côte d'Ivoire,CIV,2018,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.82,60.82
+Côte d'Ivoire,CIV,2019,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.63,60.63
+Côte d'Ivoire,CIV,2020,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.39,60.39
+Côte d'Ivoire,CIV,2021,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.39,60.39
 Cameroon,CMR,2017,Sub-Saharan Africa,,Vulnerability_Score_new,index,60.85,60.85
 Cameroon,CMR,2018,Sub-Saharan Africa,yes,Vulnerability_Score_new,index,60.65,60.65
 Cameroon,CMR,2019,Sub-Saharan Africa,yes,Vulnerability_Score_new,index,61.08,61.08
@@ -7940,11 +7940,11 @@ Tunisia,TUN,2018,Middle East & North Africa,,Vulnerability_Score_new,index,48.45
 Tunisia,TUN,2019,Middle East & North Africa,,Vulnerability_Score_new,index,48.04,48.04
 Tunisia,TUN,2020,Middle East & North Africa,,Vulnerability_Score_new,index,47.52,47.52
 Tunisia,TUN,2021,Middle East & North Africa,,Vulnerability_Score_new,index,47.52,47.52
-T�rkiye,TUR,2017,Europe & Central Asia,yes,Vulnerability_Score_new,index,44.6,44.6
-T�rkiye,TUR,2018,Europe & Central Asia,yes,Vulnerability_Score_new,index,44.46,44.46
-T�rkiye,TUR,2019,Europe & Central Asia,yes,Vulnerability_Score_new,index,43.72,43.72
-T�rkiye,TUR,2020,Europe & Central Asia,yes,Vulnerability_Score_new,index,43.3,43.3
-T�rkiye,TUR,2021,Europe & Central Asia,yes,Vulnerability_Score_new,index,43.3,43.3
+Türkiye,TUR,2017,Europe & Central Asia,yes,Vulnerability_Score_new,index,44.6,44.6
+Türkiye,TUR,2018,Europe & Central Asia,yes,Vulnerability_Score_new,index,44.46,44.46
+Türkiye,TUR,2019,Europe & Central Asia,yes,Vulnerability_Score_new,index,43.72,43.72
+Türkiye,TUR,2020,Europe & Central Asia,yes,Vulnerability_Score_new,index,43.3,43.3
+Türkiye,TUR,2021,Europe & Central Asia,yes,Vulnerability_Score_new,index,43.3,43.3
 Tuvalu,TUV,2017,East Asia & Pacific,,Vulnerability_Score_new,index,60.65,60.65
 Tuvalu,TUV,2018,East Asia & Pacific,,Vulnerability_Score_new,index,60.65,60.65
 Tuvalu,TUV,2019,East Asia & Pacific,,Vulnerability_Score_new,index,60.65,60.65
