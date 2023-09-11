@@ -254,7 +254,7 @@ function renderClimateFundingMap() {
             zoom: 1,
             attributionControl: false,
           });
-          let variable = 'Total_Climate_Share';
+          let variable = 'Total_Climate_USD';
           let year = '2017';
           let vulnerability = 0;
           let adaptationVariable = 'total';
@@ -262,8 +262,8 @@ function renderClimateFundingMap() {
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
-            { value: 'Total_Climate_Share', label: 'Percentage share' },
-            { value: 'Total_Climate_USD', label: 'USD millions' },
+            { value: 'Total_Climate_USD', label: 'US$ millions' },
+            { value: 'Total_Climate_Share', label: '% of total ODA' },
           ];
           const adaptationFilterOptions = [
             { value: 'total', label: 'Total climate finance' },
@@ -273,13 +273,13 @@ function renderClimateFundingMap() {
           const filterOptionMapping = [
             {
               name: 'Total_Climate_USD',
-              label: 'USD millions',
+              label: 'US$ millions',
               scaleType: 'continous',
               unit: 'million',
             },
             {
               name: 'Total_Climate_Share',
-              label: 'Percentage share',
+              label: '% of total ODA',
               scaleType: 'continous',
               unit: '%',
             },
@@ -464,7 +464,7 @@ function renderClimateFundingMap() {
                       classNamePrefix="climate-chart-select"
                       label="Select value type"
                       options={filterOptions}
-                      defaultValue={[{ value: 'Total_Climate_Share', label: 'Percentage share' }]}
+                      defaultValue={[{ value: 'Total_Climate_USD', label: 'US$ millions' }]}
                       onChange={onSelectDimension}
                       css={{
                         minWidth: '150px',
@@ -491,7 +491,7 @@ function renderClimateFundingMap() {
                       incremental={false}
                     />
                     <RangeSlider
-                      label="Select vulnerability index"
+                      label="Select vulnerability level"
                       min="0"
                       max={getVulnerabilityScale(groupedData).max}
                       step={1}
