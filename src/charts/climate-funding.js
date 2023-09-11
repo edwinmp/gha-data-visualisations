@@ -72,7 +72,7 @@ const filterByVulnerability = (data, value) =>
 const getCrisisData = (data, value) => {
   if (!value) return data;
 
-  return data.filter((item) => (value === 'no' ? !item.protracted_crisis : item.protracted_crisis === value));
+  return data.filter((item) => item.protracted_crisis === value);
 };
 
 const filterDataByYear = (data, year) => data.filter((item) => item.year === year);
@@ -502,7 +502,7 @@ function renderClimateFundingMap() {
                       incremental={true}
                       className="range-width vulnerability-range"
                     />
-                    <CheckboxInput name="crisis" label="Select crisis" onChange={onCrisisChange} />
+                    <CheckboxInput name="crisis" label="Highlight" onChange={onCrisisChange} />
                   </div>
                 );
 
