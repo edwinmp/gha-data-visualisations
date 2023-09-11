@@ -166,7 +166,7 @@
 }
 
 .dicharts--gha-climate-funding {
-  margin-top: 80px;
+  margin-top: 50px;
 }
 
 input[type="range"] {
@@ -233,4 +233,9 @@ input[type="range"]::-moz-range-thumb:hover {
 
 input[type=checkbox]{
   accent-color: #cb5730;
+}
+
+.climate-adaptation-select__menu, .climate-chart-select__menu {
+  position: absolute !important;
+  z-index: 2 !important;
 }

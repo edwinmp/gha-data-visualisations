@@ -25,7 +25,13 @@ const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const getMaxMinValues = (dataType, csvData) => {
   const dataList = csvData
     .filter((d) => d[dataType])
-    .map((item) => Number(dataType === 'Total_Climate_Share' ? item[dataType].replace('%', '') : item[dataType]));
+    .map((item) =>
+      Number(
+        dataType === 'Total_Climate_Share' || dataType === 'CCA_Share' || dataType === 'CCM_Share'
+          ? item[dataType].replace('%', '')
+          : item[dataType]
+      )
+    );
 
   return {
     maxValue: Math.ceil(Math.max(...dataList)),
@@ -73,6 +79,23 @@ const getCrisisData = (data, value) => {
 
 const filterDataByYear = (data, year) => data.filter((item) => item.year === year);
 
+const getAdaptationActualValue = (selected, dimension) => {
+  if (selected === 'CCA' && dimension === 'Total_Climate_USD') {
+    return 'CCA_USD';
+  }
+  if (selected === 'CCA' && dimension === 'Total_Climate_Share') {
+    return 'CCA_Share';
+  }
+  if (selected === 'CCM' && dimension === 'Total_Climate_Share') {
+    return 'CCM_Share';
+  }
+  if (selected === 'CCM' && dimension === 'Total_Climate_USD') {
+    return 'CCM_USD';
+  }
+
+  return dimension;
+};
+
 const renderMap = (
   dimensionVariable,
   mapInstance,
@@ -84,7 +107,8 @@ const renderMap = (
   groupInstance,
   csvData,
   crisisData,
-  crisisValue
+  crisisValue,
+  adaptationValue
 ) => {
   let geojsonLayer;
   let crisisLayer;
@@ -93,7 +117,10 @@ const renderMap = (
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
 
-    const scaleData = getMaxMinValues(dimensionVariable, processed);
+    const scaleData = getMaxMinValues(
+      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable),
+      processed
+    );
     const legendValues = getLegendValues(scaleData.minValue, scaleData.maxValue, colors.length);
 
     const legendContent = `<div style="display:flex;flex-direction:column;">
@@ -127,7 +154,12 @@ const renderMap = (
   legendInstanceCopy.addTo(mapInstance);
 
   const style = (feature) => ({
-    fillColor: colorFunction(feature.properties[dimensionVariable], dimensionVariable),
+    fillColor: colorFunction(
+      adaptationValue === 'total'
+        ? feature.properties[dimensionVariable]
+        : feature.properties[getAdaptationActualValue(adaptationValue, dimensionVariable)],
+      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
+    ),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -143,7 +175,14 @@ const renderMap = (
             angle: 45,
             color: '#d12568',
           }).addTo(mapInstance)
-        : colorFunction(feature.properties[dimensionVariable], dimensionVariable),
+        : colorFunction(
+            adaptationValue === 'total'
+              ? feature.properties[dimensionVariable]
+              : feature.properties[getAdaptationActualValue(adaptationValue, dimensionVariable)],
+            adaptationValue === 'total'
+              ? dimensionVariable
+              : getAdaptationActualValue(adaptationValue, dimensionVariable)
+          ),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -218,12 +257,18 @@ function renderClimateFundingMap() {
           let variable = 'Total_Climate_Share';
           let year = '2017';
           let vulnerability = 0;
+          let adaptationVariable = 'total';
 
           // Filter
           const filterWrapper = addFilterWrapper(chartNode);
           const filterOptions = [
             { value: 'Total_Climate_Share', label: 'Percentage share' },
             { value: 'Total_Climate_USD', label: 'USD millions' },
+          ];
+          const adaptationFilterOptions = [
+            { value: 'total', label: 'Total climate finance' },
+            { value: 'CCA', label: 'Climate adaptation finace' },
+            { value: 'CCM', label: 'Climate mitigation finance' },
           ];
           const filterOptionMapping = [
             {
@@ -275,7 +320,11 @@ function renderClimateFundingMap() {
                   }
 
                   return getColorDynamic(
-                    dimensionVariable === 'Total_Climate_Share' ? d.replace('%', '') : d,
+                    dimensionVariable === 'Total_Climate_Share' ||
+                      dimensionVariable === 'CCA_Share' ||
+                      dimensionVariable === 'CCM_Share'
+                      ? d.replace('%', '')
+                      : d,
                     scaleData.minValue,
                     scaleData.maxValue,
                     increment,
@@ -296,7 +345,8 @@ function renderClimateFundingMap() {
                   fg,
                   data,
                   crisisCountries,
-                  crisisValue
+                  crisisValue,
+                  adaptationVariable
                 );
 
                 const onSelectDimension = (dimension) => {
@@ -313,7 +363,8 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisCountries,
-                    crisisValue
+                    crisisValue,
+                    adaptationVariable
                   );
                 };
 
@@ -338,7 +389,8 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisCountries,
-                    crisisValue
+                    crisisValue,
+                    adaptationVariable
                   );
                 };
 
@@ -356,7 +408,8 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisCountries,
-                    crisisValue
+                    crisisValue,
+                    adaptationVariable
                   );
                 };
 
@@ -375,7 +428,27 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisCountries,
-                    crisisValue
+                    crisisValue,
+                    adaptationVariable
+                  );
+                };
+
+                const onSelectAdaptation = (value) => {
+                  adaptationVariable = value.value ? value.value : adaptationVariable;
+
+                  renderMap(
+                    variable,
+                    map,
+                    getColorContinous,
+                    geojsonData,
+                    finalFilteredData,
+                    filterOptionMapping,
+                    legend,
+                    fg,
+                    data,
+                    crisisCountries,
+                    crisisValue,
+                    adaptationVariable
                   );
                 };
 
@@ -393,6 +466,16 @@ function renderClimateFundingMap() {
                       options={filterOptions}
                       defaultValue={[{ value: 'Total_Climate_Share', label: 'Percentage share' }]}
                       onChange={onSelectDimension}
+                      css={{
+                        minWidth: '150px',
+                      }}
+                    />
+                    <Select
+                      classNamePrefix="climate-adaptation-select"
+                      label="Select adaptation/mitigation"
+                      options={adaptationFilterOptions}
+                      defaultValue={[{ value: 'total', label: 'Total climate finance' }]}
+                      onChange={onSelectAdaptation}
                       css={{
                         minWidth: '150px',
                       }}
