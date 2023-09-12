@@ -21,11 +21,11 @@ const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visual
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const vulnerabilityMapping = [
-  { label: 4, value: 60 },
-  { label: 3, value: 55 },
-  { label: 2, value: 50 },
-  { label: 1, value: 40 },
-  { label: 0, value: 0 },
+  { label: 4, value: 60, text: 'Very high' },
+  { label: 3, value: 55, text: 'High', min: 50, max: 55 },
+  { label: 2, value: 50, text: 'Medium', min: 40, max: 50 },
+  { label: 1, value: 40, text: 'Low', min: 0, max: 40 },
+  { label: 0, value: 0, text: 'Very low' },
 ];
 
 const getMaxMinValues = (dataType, csvData) => {
@@ -65,8 +65,17 @@ const getLegendValues = (minValue, maxValue, colorLength) => {
   return items;
 };
 
-const filterByVulnerability = (data, value) =>
-  value === 0 ? data : data.filter((d) => Number(d.Vulnerability_Score_new) >= value);
+const filterByVulnerability = (data, value) => {
+  if (value === 0) {
+    return data;
+  }
+
+  const mappingData = vulnerabilityMapping.find((item) => item.value === value);
+
+  return mappingData.value === 60
+    ? data.filter((d) => d.Vulnerability_Score_new >= 60)
+    : data.filter((d) => d.Vulnerability_Score_new < mappingData.max && d.Vulnerability_Score_new >= mappingData.min);
+};
 
 const getCrisisData = (data, value) => {
   if (!value) return data;

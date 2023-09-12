@@ -271,13 +271,13 @@ const vulnerabilityLabelMapping = (value) => {
   if (value === 0) {
     return 'Very low';
   }
-  if (value <= 40 && value > 0) {
+  if (value > 0 && value <= 40) {
     return 'Low';
   }
-  if (value <= 50 && value > 40) {
+  if (value > 40 && value <= 50) {
     return 'Medium';
   }
-  if (value <= 55 && value > 50) {
+  if (value > 50 && value <= 55) {
     return 'High';
   }
   if (value >= 60) {
