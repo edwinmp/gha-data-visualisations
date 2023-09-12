@@ -267,6 +267,26 @@ const getMaxMinValues = (dataType, csvData) => {
 const getClimateOriginalCountryName = (csv, code) =>
   csv.find((stream) => stream.iso3 === code) ? csv.find((stream) => stream.iso3 === code).countryname : '';
 
+const vulnerabilityLabelMapping = (value) => {
+  if (value === 0) {
+    return 'Very low';
+  }
+  if (value <= 40 && value > 0) {
+    return 'Low';
+  }
+  if (value <= 50 && value > 40) {
+    return 'Medium';
+  }
+  if (value <= 55 && value > 50) {
+    return 'High';
+  }
+  if (value >= 60) {
+    return 'Very high';
+  }
+
+  return 'Not assessed';
+};
+
 const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   const layer = e.target;
   layer.setStyle({
@@ -292,7 +312,7 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
           ).toFixed(1)}%)<br>
           Climate vulnerability: ${
             layer.feature.properties.Vulnerability_Score_new
-              ? Number(layer.feature.properties.Vulnerability_Score_new).toFixed(1)
+              ? vulnerabilityLabelMapping(Number(layer.feature.properties.Vulnerability_Score_new))
               : 'Not assesed'
           }<br>
           ${layer.feature.properties.protracted_crisis ? `In protracted crisis` : ''}
