@@ -511,7 +511,7 @@ function renderClimateFundingMap() {
                       onChange={onSelectVulnerability}
                       dataList={['All countries', 'Low', 'Medium', 'High', 'Very high']}
                       name="vulnerability"
-                      incremental={true}
+                      incremental={false}
                       className="range-width vulnerability-range"
                     />
                     <CheckboxInput name="crisis" label="Highlight" onChange={onCrisisChange} />
