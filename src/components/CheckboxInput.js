@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const CheckboxInput = ({ label, onChange }) => {
-  const [checkedYes, setCheckedYes] = useState(false)
+  const [checkedYes, setCheckedYes] = useState(true)
   const [value, setValue] = useState('');
 
   useEffect(()=> {
