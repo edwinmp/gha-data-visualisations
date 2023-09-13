@@ -11,7 +11,6 @@ import {
   processedData,
   getColorDynamic,
   highlightClimateMapFeature,
-  getYearFromMapping,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
@@ -267,7 +266,7 @@ function renderClimateFundingMap() {
             attributionControl: false,
           });
           let variable = 'Total_Climate_USD';
-          let year = 0;
+          let year = '2021';
           let vulnerability = 0;
           let adaptationVariable = 'total';
 
@@ -310,9 +309,7 @@ function renderClimateFundingMap() {
               const geojsonData = jsonData.features;
               fetchCSVData(DATA_URL).then((data) => {
                 const processedCountryNameData = matchCountryNames(data, geojsonData, 'iso3', 'countryname');
-                let yearlyProcessedCountryNameData = processedCountryNameData.filter(
-                  (item) => item.year === getYearFromMapping(year)
-                );
+                let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
                 let groupedData = processedData(
                   countries,
@@ -385,7 +382,8 @@ function renderClimateFundingMap() {
                 };
 
                 const onSelectYear = (value) => {
-                  year = getYearFromMapping(value ? Number(value) : year);
+                  // year = getYearFromMapping(value ? Number(value) : year);
+                  year = value || year;
                   yearlyProcessedCountryNameData = filterDataByYear(processedCountryNameData, year);
                   groupedData = processedData(
                     countries,
@@ -499,11 +497,12 @@ function renderClimateFundingMap() {
                     />
                     <RangeSlider
                       label="Select a year"
-                      min="0"
-                      max="4"
+                      min="2017"
+                      max="2021"
+                      defaultValue="2021"
                       step={1}
                       onChange={onSelectYear}
-                      dataList={['2021', '2020', '2019', '2018', '2017']}
+                      dataList={['2017', '2018', '2019', '2020', '2021']}
                       name="years"
                       incremental={false}
                     />

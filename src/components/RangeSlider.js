@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getYearFromMapping } from '../utils/interactiveMap';
 
 const yearProgressMapping = [
   { year: '2017', progress: 0 },
@@ -10,7 +9,7 @@ const yearProgressMapping = [
   { year: '2021', progress: 100 },
 ];
 const RangeSlider = (props) => {
-  const [value, setValue] = useState(props.min);
+  const [value, setValue] = useState(props.defaultValue ? props.defaultValue : props.min);
   useEffect(() => {
     if (props.onChange) props.onChange(value);
   }, [value]);
@@ -22,7 +21,7 @@ const RangeSlider = (props) => {
     let progress;
     if (props.incremental) {
       if (props.name === 'years') {
-        progress = yearProgressMapping.find((item) => item.year === getYearFromMapping(event.target.value)).progress;
+        progress = yearProgressMapping.find((item) => item.year === event.target.value).progress;
       } else {
         progress = (Number(event.target.value) / Number(sliderEl.max)) * 100;
       }
@@ -68,6 +67,7 @@ RangeSlider.propTypes = {
   name: PropTypes.string,
   incremental: PropTypes.bool,
   className: PropTypes.string,
+  defaultValue: PropTypes.string,
 };
 
 export default RangeSlider;
