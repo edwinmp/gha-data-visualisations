@@ -304,11 +304,13 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
     .bindTooltip(
       layer.feature.properties[variable]
         ? `<div>${country || layer.feature.properties.name}<br>
-          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${Number(
-            layer.feature.properties.CCA_Share.replace('%', '')
+          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${(
+            (Number(layer.feature.properties.CCA_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
+            100
           ).toFixed(1)}%)<br>
-          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${Number(
-            layer.feature.properties.CCM_Share.replace('%', '')
+          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${(
+            (Number(layer.feature.properties.CCM_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
+            100
           ).toFixed(1)}%)<br>
           Climate vulnerability: ${
             layer.feature.properties.Vulnerability_Score_new
