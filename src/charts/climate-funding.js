@@ -210,18 +210,23 @@ const renderMap = (
     color: 'white',
     fillOpacity: 1,
   });
+  const patternShape = new window.L.PatternCircle({
+    x: 1,
+    y: 1,
+    radius: 0.1,
+    fill: true,
+    color: '#d12568',
+  });
+  const circlePattern = new window.L.Pattern({ angle: 45 });
+  circlePattern.addShape(patternShape);
+  circlePattern.addTo(mapInstance);
 
   const crisisStyle = (feature) => ({
     [feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
       ? 'fillPattern'
       : 'fillColor']:
       feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
-        ? new window.L.StripePattern({
-            weight: 2,
-            spaceWeight: 1,
-            angle: 45,
-            color: '#d12568',
-          }).addTo(mapInstance)
+        ? circlePattern
         : colorFunction(
             getVariableValue(dimensionVariable, feature, adaptationValue),
             adaptationValue === 'total'
