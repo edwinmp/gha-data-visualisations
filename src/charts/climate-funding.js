@@ -11,6 +11,7 @@ import {
   processedData,
   getColorDynamic,
   highlightClimateMapFeature,
+  getYearFromMapping,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
@@ -266,7 +267,7 @@ function renderClimateFundingMap() {
             attributionControl: false,
           });
           let variable = 'Total_Climate_USD';
-          let year = '2017';
+          let year = 0;
           let vulnerability = 0;
           let adaptationVariable = 'total';
 
@@ -296,8 +297,9 @@ function renderClimateFundingMap() {
             },
           ];
 
-          // Legend
+          // Initialise Legend
           const legend = window.L.control({ position: 'topright' });
+          // Initialise reset button
           const resetButton = window.L.control({ position: 'bottomleft' });
 
           dichart.showLoading();
@@ -308,7 +310,9 @@ function renderClimateFundingMap() {
               const geojsonData = jsonData.features;
               fetchCSVData(DATA_URL).then((data) => {
                 const processedCountryNameData = matchCountryNames(data, geojsonData, 'iso3', 'countryname');
-                let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
+                let yearlyProcessedCountryNameData = processedCountryNameData.filter(
+                  (item) => item.year === getYearFromMapping(year)
+                );
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
                 let groupedData = processedData(
                   countries,
@@ -381,7 +385,7 @@ function renderClimateFundingMap() {
                 };
 
                 const onSelectYear = (value) => {
-                  year = value || year;
+                  year = getYearFromMapping(value ? Number(value) : year);
                   yearlyProcessedCountryNameData = filterDataByYear(processedCountryNameData, year);
                   groupedData = processedData(
                     countries,
@@ -495,11 +499,11 @@ function renderClimateFundingMap() {
                     />
                     <RangeSlider
                       label="Select a year"
-                      min="2017"
-                      max="2021"
+                      min="0"
+                      max="4"
                       step={1}
                       onChange={onSelectYear}
-                      dataList={['2017', '2018', '2019', '2020', '2021']}
+                      dataList={['2021', '2020', '2019', '2018', '2017']}
                       name="years"
                       incremental={false}
                     />
@@ -529,6 +533,20 @@ function renderClimateFundingMap() {
                 };
 
                 resetButton.addTo(map);
+
+                // Informational div
+                // const info = window.L.control();
+                // info.onAdd = function () {
+                //   const infoDiv = window.L.DomUtil.create('div', 'infoDiv');
+                //   infoDiv.innerHTML = `I am here`;
+                //   const lnglat = window.L.latLng(23.984444, -74.925693);
+                //   const pixelCoords = map.latLngToContainerPoint(lnglat);
+                //   window.L.DomUtil.setPosition(infoDiv, window.L.point(pixelCoords.x, pixelCoords.y));
+
+                //   return infoDiv;
+                // };
+
+                // info.addTo(map);
 
                 dichart.hideLoading();
               });

@@ -324,6 +324,16 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
+const yearMapping = [
+  { label: '2021', value: 0 },
+  { label: '2020', value: 1 },
+  { label: '2019', value: 2 },
+  { label: '2018', value: 3 },
+  { label: '2017', value: 4 },
+];
+
+const getYearFromMapping = (selectedValue) => yearMapping.find((item) => item.value === selectedValue).label;
+
 export {
   dataBoxContent,
   highlightFeature,
@@ -340,4 +350,5 @@ export {
   legendData,
   highlightClimateMapFeature,
   getClimateOriginalCountryName,
+  getYearFromMapping,
 };
