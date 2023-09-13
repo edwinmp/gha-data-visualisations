@@ -179,7 +179,7 @@ const renderMap = (
               (item, index) =>
                 `${
                   index === legendValues.length - 1
-                    ? `<span> ${item} ('%')</span>`
+                    ? `<span> ${item} (%)</span>`
                     : `<span style="width:50px;">${item}</span>`
                 }`
             )
@@ -211,13 +211,14 @@ const renderMap = (
     fillOpacity: 1,
   });
   const patternShape = new window.L.PatternCircle({
-    x: 1,
-    y: 1,
+    x: 5,
+    y: 5,
     radius: 0.1,
     fill: true,
     color: '#d12568',
+    fillOpacity: 1,
   });
-  const circlePattern = new window.L.Pattern({ angle: 45 });
+  const circlePattern = new window.L.Pattern({ angle: 45, fillOpacity: 1 });
   circlePattern.addShape(patternShape);
   circlePattern.addTo(mapInstance);
 
