@@ -11,6 +11,7 @@ import {
   processedData,
   getColorDynamic,
   highlightClimateMapFeature,
+  getColorFinance,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
@@ -20,6 +21,8 @@ import CheckboxInput from '../components/CheckboxInput';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
+const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#00538e'];
+const financeLegendMapping = ['0', '0.1m', '1m', '10m', '100m', '1b', '1.5b'];
 const vulnerabilityMapping = [
   { label: 4, value: 60, text: 'Very high' },
   { label: 3, value: 55, text: 'High', min: 50, max: 55 },
@@ -105,6 +108,20 @@ const getAdaptationActualValue = (selected, dimension) => {
 const getVulnerabilityValue = (selectedValue) =>
   vulnerabilityMapping.find((item) => item.label === selectedValue).value;
 
+const getVariableValue = (variable, feature, adaptationValue) => {
+  if (adaptationValue === 'total') {
+    if (variable === 'Total_Climate_Share') {
+      return feature.properties[variable];
+    }
+
+    return feature.properties[variable] / 1000;
+  }
+
+  return variable === 'Total_Climate_Share'
+    ? feature.properties[getAdaptationActualValue(adaptationValue, variable)]
+    : feature.properties[getAdaptationActualValue(adaptationValue, variable)] / 1000;
+};
+
 const renderMap = (
   dimensionVariable,
   mapInstance,
@@ -134,26 +151,47 @@ const renderMap = (
 
     const legendContent = `<div style="display:flex;flex-direction:column;">
     <div>
-    ${colors
-      .map(
-        (color) =>
-          `<span>
+    ${
+      dimensionVariable === 'Total_Climate_Share'
+        ? colors
+            .map(
+              (color) =>
+                `<span>
+      <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
+    </span>`
+            )
+            .join('')
+        : financeColors
+            .map(
+              (color) =>
+                `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
         </span>`
-      )
-      .join('')}
+            )
+            .join('')
+    }
     </div>
     <div>
-    ${legendValues
-      .map(
-        (item, index) =>
-          `${
-            index === legendValues.length - 1
-              ? `<span> ${item} (${dimensionVariable === 'Total_Climate_Share' ? '%' : 'million USD'})</span>`
-              : `<span style="width:50px;">${item}</span>`
-          }`
-      )
-      .join('')}
+    ${
+      dimensionVariable === 'Total_Climate_Share'
+        ? legendValues
+            .map(
+              (item, index) =>
+                `${
+                  index === legendValues.length - 1
+                    ? `<span> ${item} ('%')</span>`
+                    : `<span style="width:50px;">${item}</span>`
+                }`
+            )
+            .join('')
+        : financeLegendMapping
+            .map(
+              (item, index) => `
+        <span style="width:45px;">${index === financeLegendMapping.length - 1 ? `${item} ($)` : item}</span>
+        `
+            )
+            .join('')
+    }
     </div>
      </div>`;
     div.innerHTML = legendContent;
@@ -164,9 +202,7 @@ const renderMap = (
 
   const style = (feature) => ({
     fillColor: colorFunction(
-      adaptationValue === 'total'
-        ? feature.properties[dimensionVariable]
-        : feature.properties[getAdaptationActualValue(adaptationValue, dimensionVariable)],
+      getVariableValue(dimensionVariable, feature, adaptationValue),
       adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
     ),
     weight: 1,
@@ -187,9 +223,7 @@ const renderMap = (
             color: '#d12568',
           }).addTo(mapInstance)
         : colorFunction(
-            adaptationValue === 'total'
-              ? feature.properties[dimensionVariable]
-              : feature.properties[getAdaptationActualValue(adaptationValue, dimensionVariable)],
+            getVariableValue(dimensionVariable, feature, adaptationValue),
             adaptationValue === 'total'
               ? dimensionVariable
               : getAdaptationActualValue(adaptationValue, dimensionVariable)
@@ -350,7 +384,7 @@ function renderClimateFundingMap() {
                 renderMap(
                   variable,
                   map,
-                  getColorContinous,
+                  variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                   geojsonData,
                   finalFilteredData,
                   filterOptionMapping,
@@ -368,7 +402,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    getColorContinous,
+                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     filterOptionMapping,
@@ -396,7 +430,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    getColorContinous,
+                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     filterOptionMapping,
@@ -415,7 +449,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    getColorContinous,
+                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     filterOptionMapping,
@@ -435,7 +469,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    getColorContinous,
+                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     filterOptionMapping,
@@ -454,7 +488,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    getColorContinous,
+                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     filterOptionMapping,

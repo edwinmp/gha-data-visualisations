@@ -324,6 +324,29 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
+const getColorFinance = (value) => {
+  if (value >= 0 && value < 0.0001) {
+    return '#d3e0f4';
+  }
+  if (value >= 0.0001 && value < 0.001) {
+    return '#a3c7eb';
+  }
+  if (value >= 0.001 && value < 0.01) {
+    return '#77adde';
+  }
+  if (value >= 0.01 && value < 0.1) {
+    return '#4397d3';
+  }
+  if (value >= 0.1 && value < 1) {
+    return '#105fa3';
+  }
+  if (value >= 1) {
+    return '#00538e';
+  }
+
+  return '#E6E1E5';
+};
+
 export {
   dataBoxContent,
   highlightFeature,
@@ -340,4 +363,5 @@ export {
   legendData,
   highlightClimateMapFeature,
   getClimateOriginalCountryName,
+  getColorFinance,
 };
