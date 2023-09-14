@@ -201,6 +201,10 @@ const smallCountryMarkerData = [
     name: 'Mauritius',
     coordinates: [-21.008972, 55.405847],
   },
+  {
+    name: 'Fiji',
+    coordinates: [-17.493468, 178.018069],
+  },
 ];
 const renderMap = (
   dimensionVariable,
@@ -377,22 +381,29 @@ const renderMap = (
         adaptationValue
       )};' class='marker-pin'></div>`,
     });
+    const highlightedMarker = window.L.divIcon({
+      className: 'my-div-icon',
+      html: `<div style='background-color:#df8000;' class='marker-pin'></div>`,
+    });
     const marker = window.L.marker(item.coordinates, {
       icon: myIcon,
     });
     if (iconData) {
-      marker
-        .bindTooltip(
-          iconData[dimensionVariable]
-            ? `<div>${item.name}<br>
+      marker.on({
+        mouseover: (e) => {
+          e.target.setIcon(highlightedMarker);
+          marker
+            .bindTooltip(
+              iconData[dimensionVariable]
+                ? `<div>${item.name}<br>
           Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${(
-                (Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) *
-                100
-              ).toFixed(1)}%)<br>
+                    (Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) *
+                    100
+                  ).toFixed(1)}%)<br>
           Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${(
-                (Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) *
-                100
-              ).toFixed(1)}%)<br>
+                    (Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) *
+                    100
+                  ).toFixed(1)}%)<br>
           Climate vulnerability: ${
             iconData.Vulnerability_Score_new
               ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
@@ -401,10 +412,16 @@ const renderMap = (
           ${iconData.protracted_crisis ? `In protracted crisis` : ''}
           </div>
           `
-            : `<div>${item.name}<br> Not assessed</div>`,
-          { direction: 'top', opacity: 1 }
-        )
-        .openTooltip();
+                : `<div>${item.name}<br> Not assessed</div>`,
+              { direction: 'top', opacity: 1 }
+            )
+            .openTooltip();
+        },
+        mouseout: (e) => {
+          e.target.setIcon(myIcon);
+          e.target.closePopup();
+        },
+      });
     }
 
     marker.addTo(mapInstance);
