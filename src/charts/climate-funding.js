@@ -6,19 +6,20 @@ import 'leaflet.pattern';
 import MapResetButton from '../components/MapResetButton';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
-  dataInjectedGeoJson,
-  matchCountryNames,
   processedData,
   getColorDynamic,
   highlightClimateMapFeature,
   getColorFinance,
+  matchClimateCountryNames,
+  climateDataInjectedGeojson,
+  vulnerabilityLabelMapping,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
 import RangeSlider from '../components/RangeSlider';
 import CheckboxInput from '../components/CheckboxInput';
 
-const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/src/data/world_map.geo.json`;
+const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#00538e'];
@@ -46,6 +47,28 @@ const getMaxMinValues = (dataType, csvData) => {
     maxValue: Math.ceil(Math.max(...dataList)),
     minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
   };
+};
+
+const getColorContinous = (d, dimensionVariable, groupedData) => {
+  const scaleData = getMaxMinValues(dimensionVariable, groupedData);
+  const increment = (scaleData.maxValue - scaleData.minValue) / colors.length;
+
+  if (!d) {
+    return '#E6E1E5';
+  }
+
+  return getColorDynamic(
+    dimensionVariable === 'Total_Climate_Share' ||
+      dimensionVariable === 'CCA_Share' ||
+      dimensionVariable === 'CCM_Share'
+      ? d.replace('%', '')
+      : d,
+    scaleData.minValue,
+    scaleData.maxValue,
+    increment,
+    chroma,
+    colors
+  );
 };
 
 const getLegendValues = (minValue, maxValue, colorLength) => {
@@ -122,6 +145,63 @@ const getVariableValue = (variable, feature, adaptationValue) => {
     : feature.properties[getAdaptationActualValue(adaptationValue, variable)] / 1000;
 };
 
+const getMarkerCountryData = (data, name) => data.find((d) => d.name === name);
+
+const getCurrentIconColor = (data, dimension, name, adaptation) => {
+  const countryData = getMarkerCountryData(data, name);
+  if (countryData) {
+    let value;
+    if (adaptation === 'total') {
+      if (dimension === 'Total_Climate_Share') {
+        value = countryData[dimension];
+      } else {
+        value = countryData[dimension] / 1000;
+      }
+    } else {
+      value =
+        dimension === 'Total_Climate_Share'
+          ? countryData[getAdaptationActualValue(adaptation, dimension)]
+          : countryData[getAdaptationActualValue(adaptation, dimension)] / 1000;
+    }
+
+    return dimension === 'Total_Climate_Share'
+      ? getColorContinous(
+          value,
+          adaptation === 'total' ? dimension : getAdaptationActualValue(adaptation, dimension),
+          data
+        )
+      : getColorFinance(value, adaptation === 'total' ? dimension : getAdaptationActualValue(adaptation, dimension));
+  }
+
+  return '#E6E1E5';
+};
+
+const smallCountryMarkerData = [
+  {
+    name: 'Solomon Islands',
+    coordinates: [-10.575488, 161.755118],
+  },
+  {
+    name: 'Vanuatu',
+    coordinates: [-15.04767, 166.737858],
+  },
+  {
+    name: 'Comoros',
+    coordinates: [-11.638005, 43.328645],
+  },
+  {
+    name: 'Cabo Verde',
+    coordinates: [16.841028, -23.742468],
+  },
+  {
+    name: 'São Tomé and Príncipe',
+    coordinates: [0.384856, 6.651183],
+  },
+  {
+    name: 'Mauritius',
+    coordinates: [-21.008972, 55.405847],
+  },
+];
 const renderMap = (
   dimensionVariable,
   mapInstance,
@@ -201,33 +281,53 @@ const renderMap = (
   legendInstanceCopy.addTo(mapInstance);
 
   const style = (feature) => ({
-    fillColor: colorFunction(
-      getVariableValue(dimensionVariable, feature, adaptationValue),
-      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
-    ),
-    weight: 1,
-    opacity: 1,
-    color: 'white',
-    fillOpacity: 1,
-  });
-
-  const crisisStyle = (feature) => ({
-    [feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
-      ? 'fillPattern'
-      : 'fillColor']:
-      feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
-        ? new window.L.StripePattern({
-            weight: 2,
-            spaceWeight: 1,
-            angle: 45,
-            color: '#d12568',
-          }).addTo(mapInstance)
+    fillColor:
+      dimensionVariable === 'Total_Climate_Share'
+        ? colorFunction(
+            getVariableValue(dimensionVariable, feature, adaptationValue),
+            adaptationValue === 'total'
+              ? dimensionVariable
+              : getAdaptationActualValue(adaptationValue, dimensionVariable),
+            processed
+          )
         : colorFunction(
             getVariableValue(dimensionVariable, feature, adaptationValue),
             adaptationValue === 'total'
               ? dimensionVariable
               : getAdaptationActualValue(adaptationValue, dimensionVariable)
           ),
+    weight: 1,
+    opacity: 1,
+    color: 'white',
+    fillOpacity: 1,
+  });
+
+  const getCrisisColorStyle = (feature) => {
+    if (feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue) {
+      return new window.L.StripePattern({
+        weight: 2,
+        spaceWeight: 1,
+        angle: 45,
+        color: '#d12568',
+      }).addTo(mapInstance);
+    }
+    if (dimensionVariable === 'Total_Climate_Share') {
+      return colorFunction(
+        getVariableValue(dimensionVariable, feature, adaptationValue),
+        adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable),
+        processed
+      );
+    }
+
+    return colorFunction(
+      getVariableValue(dimensionVariable, feature, adaptationValue),
+      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
+    );
+  };
+  const crisisStyle = (feature) => ({
+    [feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
+      ? 'fillPattern'
+      : 'fillColor']: getCrisisColorStyle(feature),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -264,14 +364,59 @@ const renderMap = (
       });
     }
   };
+  // Add markers for small island countries
+
+  smallCountryMarkerData.forEach((item) => {
+    const iconData = getMarkerCountryData(processed, item.name);
+    const myIcon = window.L.divIcon({
+      className: 'my-div-icon',
+      html: `<div style='background-color:${getCurrentIconColor(
+        processed,
+        dimensionVariable,
+        item.name,
+        adaptationValue
+      )};' class='marker-pin'></div>`,
+    });
+    const marker = window.L.marker(item.coordinates, {
+      icon: myIcon,
+    });
+    if (iconData) {
+      marker
+        .bindTooltip(
+          iconData[dimensionVariable]
+            ? `<div>${item.name}<br>
+          Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${(
+                (Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) *
+                100
+              ).toFixed(1)}%)<br>
+          Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${(
+                (Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) *
+                100
+              ).toFixed(1)}%)<br>
+          Climate vulnerability: ${
+            iconData.Vulnerability_Score_new
+              ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
+              : 'Not assesed'
+          }<br>
+          ${iconData.protracted_crisis ? `In protracted crisis` : ''}
+          </div>
+          `
+            : `<div>${item.name}<br> Not assessed</div>`,
+          { direction: 'top', opacity: 1 }
+        )
+        .openTooltip();
+    }
+
+    marker.addTo(mapInstance);
+  });
 
   function loadLayer() {
     groupInstance.clearLayers();
-    geojsonLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
+    geojsonLayer = window.L.geoJSON(climateDataInjectedGeojson(data, processed), {
       style,
       onEachFeature,
     });
-    crisisLayer = window.L.geoJSON(dataInjectedGeoJson(data, processed), {
+    crisisLayer = window.L.geoJSON(climateDataInjectedGeojson(data, processed), {
       style: crisisStyle,
       onEachFeature,
     });
@@ -342,7 +487,7 @@ function renderClimateFundingMap() {
             .then((jsonData) => {
               const geojsonData = jsonData.features;
               fetchCSVData(DATA_URL).then((data) => {
-                const processedCountryNameData = matchCountryNames(data, geojsonData, 'iso3', 'countryname');
+                const processedCountryNameData = matchClimateCountryNames(data, geojsonData, 'iso3', 'countryname');
                 let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
                 let groupedData = processedData(
@@ -357,28 +502,6 @@ function renderClimateFundingMap() {
                 let crisisValue;
 
                 const fg = window.L.featureGroup().addTo(map);
-
-                const getColorContinous = (d, dimensionVariable) => {
-                  const scaleData = getMaxMinValues(dimensionVariable, groupedData);
-                  const increment = (scaleData.maxValue - scaleData.minValue) / colors.length;
-
-                  if (!d) {
-                    return '#E6E1E5';
-                  }
-
-                  return getColorDynamic(
-                    dimensionVariable === 'Total_Climate_Share' ||
-                      dimensionVariable === 'CCA_Share' ||
-                      dimensionVariable === 'CCM_Share'
-                      ? d.replace('%', '')
-                      : d,
-                    scaleData.minValue,
-                    scaleData.maxValue,
-                    increment,
-                    chroma,
-                    colors
-                  );
-                };
 
                 // Render default map
                 renderMap(

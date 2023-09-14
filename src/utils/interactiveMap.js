@@ -83,6 +83,20 @@ const matchCountryNames = (csvData, worldData, countryCodeVariable, countryNameV
   return matchedData;
 };
 
+const matchClimateCountryNames = (csvData, worldData, countryCodeVariable, countryNameVariable) => {
+  const matchedData = csvData.map((stream) => {
+    const streamCopy = { ...stream };
+    const countryObject = worldData.find((feature) => feature.properties.ISO_A3 === streamCopy[countryCodeVariable]);
+    if (countryObject) {
+      streamCopy[countryNameVariable] = countryObject.properties.WB_NAME;
+    }
+
+    return streamCopy;
+  });
+
+  return matchedData;
+};
+
 const processedData = (countries, processedCountryData, countryVariable, valueVariable, extraVariable) => {
   const data = [];
   countries.forEach((country) => {
@@ -106,6 +120,20 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
   jsonData.map((feature) => {
     const featureCopy = { ...feature };
     const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.name);
+    if (matchingCountryData) {
+      featureCopy.properties = {
+        ...feature.properties,
+        ...matchingCountryData,
+      };
+    }
+
+    return featureCopy;
+  });
+
+const climateDataInjectedGeojson = (jsonData, groupedData) =>
+  jsonData.map((feature) => {
+    const featureCopy = { ...feature };
+    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.WB_NAME);
     if (matchingCountryData) {
       featureCopy.properties = {
         ...feature.properties,
@@ -366,4 +394,7 @@ export {
   highlightClimateMapFeature,
   getClimateOriginalCountryName,
   getColorFinance,
+  matchClimateCountryNames,
+  climateDataInjectedGeojson,
+  vulnerabilityLabelMapping,
 };

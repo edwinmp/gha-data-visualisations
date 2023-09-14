@@ -253,3 +253,19 @@ input[type=checkbox]{
 .vulnerability-range {
   padding-left: 10px;
 }
+
+.marker-pin {
+  width: 20px;
+  height: 5px;
+}
+
+.my-div-icon {
+  width: 100%;
+}
+
+.my-div-icon > span {
+  font-size: 1rem;
+  background: rgba(255,255,255,1);
+  white-space: nowrap;
+  margin-top: 0;
+}
