@@ -205,6 +205,67 @@ const smallCountryMarkerData = [
     name: 'Fiji',
     coordinates: [-17.493468, 178.018069],
   },
+  {
+    name: 'Samoa',
+    coordinates: [-13.494016, -172.520477],
+  },
+  {
+    name: 'Saint Vincent and the Grenadines',
+    coordinates: [13.348472, -61.147504],
+  },
+  {
+    name: 'Tuvalu',
+    coordinates: [-8.444944, 179.127396],
+  },
+  {
+    name: 'Tonga',
+    coordinates: [-21.141279, -175.303819],
+  },
+  {
+    name: 'Timor-Leste',
+    coordinates: [-8.555272, 126.67637],
+  },
+  {
+    name: 'Tokelau',
+    coordinates: [-9.129344, -171.840652],
+  },
+  {
+    name: 'Seychelles',
+    coordinates: [-4.596714, 55.443287],
+  },
+  {
+    name: 'Palau',
+    coordinates: [7.599856, 134.62149],
+  },
+  {
+    name: 'Nauru',
+    coordinates: [-0.520427, 166.936612],
+  },
+
+  {
+    name: 'Marshall Islands',
+    coordinates: [7.583201, 168.612489],
+  },
+  {
+    name: 'Maldives',
+    coordinates: [-0.383325, 73.103751],
+  },
+  {
+    name: 'Kiribati',
+    coordinates: [1.784491, -157.299146],
+  },
+  {
+    name: 'Antigua and Barbuda',
+    coordinates: [17.195139, -61.306447],
+  },
+  // {
+  //   name: 'Cook Islands',
+  //   coordinates: [-21.251607, -159.764738],
+  // },
+  // {
+  //   name: 'Micronesia',
+  //   coordinates: [6.952106, 158.228441],
+  // },
 ];
 const renderMap = (
   dimensionVariable,
