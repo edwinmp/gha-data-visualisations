@@ -327,7 +327,8 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
     layer.bringToFront();
   }
   // Bind popup to layer
-  const country = getClimateOriginalCountryName(csvData, layer.feature.properties.iso_a3);
+  const country = getClimateOriginalCountryName(csvData, layer.feature.properties.ISO_A3);
+
   layer
     .bindTooltip(
       layer.feature.properties[variable]
