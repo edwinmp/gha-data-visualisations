@@ -332,15 +332,23 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   layer
     .bindTooltip(
       layer.feature.properties[variable]
-        ? `<div>${country || layer.feature.properties.name}<br>
-          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${(
-            (Number(layer.feature.properties.CCA_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
-            100
-          ).toFixed(1)}%)<br>
-          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${(
-            (Number(layer.feature.properties.CCM_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
-            100
-          ).toFixed(1)}%)<br>
+        ? `<div>${country || layer.feature.properties.WB_NAME}<br>
+          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${
+            Number(layer.feature.properties.Total_Climate_USD) !== 0
+              ? (
+                  (Number(layer.feature.properties.CCA_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
+                  100
+                ).toFixed(1)
+              : 0
+          }%)<br>
+          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
+            Number(layer.feature.properties.Total_Climate_USD) !== 0
+              ? (
+                  (Number(layer.feature.properties.CCM_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
+                  100
+                ).toFixed(1)
+              : 0
+          }%)<br>
           Climate vulnerability: ${
             layer.feature.properties.Vulnerability_Score_new
               ? vulnerabilityLabelMapping(Number(layer.feature.properties.Vulnerability_Score_new))
