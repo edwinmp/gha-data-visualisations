@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /** @jsx jsx */
 import chroma from 'chroma-js';
 import { jsx } from '@emotion/react';
@@ -442,48 +443,47 @@ const renderMap = (
         adaptationValue
       )};' class='marker-pin'></div>`,
     });
-    const highlightedMarker = window.L.divIcon({
-      className: 'my-div-icon',
-      html: `<div style='background-color:#df8000;' class='marker-pin'></div>`,
-    });
     const marker = window.L.marker(item.coordinates, {
       icon: myIcon,
     });
     if (iconData) {
-      marker.on({
-        mouseover: (e) => {
-          e.target.setIcon(highlightedMarker);
-          marker
-            .bindTooltip(
-              iconData[dimensionVariable]
-                ? `<div>${item.name}<br>
-          Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
-                    Number(iconData.Total_Climate_USD) !== 0
-                      ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
-                      : 0
-                  }%)<br>
-          Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${
-                    Number(iconData.Total_Climate_USD) !== 0
-                      ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
-                      : 0
-                  }%)<br>
-          Climate vulnerability: ${
-            iconData.Vulnerability_Score_new
-              ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
-              : 'Not assesed'
-          }<br>
-          ${iconData.protracted_crisis ? `In protracted crisis` : ''}
-          </div>
-          `
-                : `<div>${item.name}<br> Not assessed</div>`,
-              { direction: 'top', opacity: 1 }
-            )
-            .openTooltip();
-        },
-        mouseout: (e) => {
-          e.target.setIcon(myIcon);
-          e.target.closePopup();
-        },
+      marker.bindTooltip(
+        iconData[dimensionVariable]
+          ? `<div>${item.name}<br>
+    Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
+              Number(iconData.Total_Climate_USD) !== 0
+                ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+                : 0
+            }%)<br>
+    Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${
+              Number(iconData.Total_Climate_USD) !== 0
+                ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+                : 0
+            }%)<br>
+    Climate vulnerability: ${
+      iconData.Vulnerability_Score_new
+        ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
+        : 'Not assesed'
+    }<br>
+    ${iconData.protracted_crisis ? `In protracted crisis` : ''}
+    </div>
+    `
+          : `<div>${item.name}<br> Not assessed</div>`,
+        { direction: 'top', opacity: 1 }
+      );
+
+      marker.on('mouseover', (e) => {
+        e.target.openTooltip();
+        e.target._icon.childNodes[0].style.backgroundColor = '#df8000';
+      });
+      marker.on('mouseout', (e) => {
+        e.target.closePopup();
+        e.target._icon.childNodes[0].style.backgroundColor = getCurrentIconColor(
+          processed,
+          dimensionVariable,
+          item.name,
+          adaptationValue
+        );
       });
     }
 
