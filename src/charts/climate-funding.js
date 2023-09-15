@@ -27,10 +27,10 @@ const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#
 const financeLegendMapping = ['0', '0.1m', '1m', '10m', '100m', '1b', '1.5b'];
 const vulnerabilityMapping = [
   { label: 4, value: 60, text: 'Very high' },
-  { label: 3, value: 55, text: 'High', min: 50, max: 55 },
-  { label: 2, value: 50, text: 'Medium', min: 40, max: 50 },
-  { label: 1, value: 40, text: 'Low', min: 0, max: 40 },
-  { label: 0, value: 0, text: 'Very low' },
+  { label: 3, value: 55, text: 'High', min: 55, max: 60 },
+  { label: 2, value: 50, text: 'Medium', min: 50, max: 55 },
+  { label: 1, value: 40, text: 'Low', min: 40, max: 50 },
+  { label: 0, value: 0, text: 'Very low', min: 0, max: 40 },
 ];
 
 const getMaxMinValues = (dataType, csvData) => {

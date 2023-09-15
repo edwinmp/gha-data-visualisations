@@ -296,16 +296,16 @@ const getClimateOriginalCountryName = (csv, code) =>
   csv.find((stream) => stream.iso3 === code) ? csv.find((stream) => stream.iso3 === code).countryname : '';
 
 const vulnerabilityLabelMapping = (value) => {
-  if (value === 0) {
+  if (value >= 0 && value < 40) {
     return 'Very low';
   }
-  if (value > 0 && value <= 40) {
+  if (value >= 40 && value < 50) {
     return 'Low';
   }
-  if (value > 40 && value <= 50) {
+  if (value >= 50 && value < 55) {
     return 'Medium';
   }
-  if (value > 50 && value <= 55) {
+  if (value >= 55 && value < 60) {
     return 'High';
   }
   if (value >= 60) {
