@@ -457,14 +457,16 @@ const renderMap = (
             .bindTooltip(
               iconData[dimensionVariable]
                 ? `<div>${item.name}<br>
-          Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${(
-                    (Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) *
-                    100
-                  ).toFixed(1)}%)<br>
-          Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${(
-                    (Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) *
-                    100
-                  ).toFixed(1)}%)<br>
+          Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
+                    Number(iconData.Total_Climate_USD) !== 0
+                      ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+                      : 0
+                  }%)<br>
+          Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${
+                    Number(iconData.Total_Climate_USD) !== 0
+                      ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+                      : 0
+                  }%)<br>
           Climate vulnerability: ${
             iconData.Vulnerability_Score_new
               ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
