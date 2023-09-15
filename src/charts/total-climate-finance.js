@@ -10,7 +10,7 @@ const seriesData = (data) =>
     .filter(item => item['GNR Region'] !== '#N/A').map((d) => [Number(d.Vulnerability), d['GNR Region'], Number(d['Total Climate Funding']), d.Country]);
 
 
-const renderDefaultChart = (chart, regions, data,) => {
+const renderDefaultChart = (chart, data,) => {
   const option = {
     tooltip: {
       trigger: 'item',
@@ -18,9 +18,9 @@ const renderDefaultChart = (chart, regions, data,) => {
       Vulnerability score: ${params.data[0]} <br/>
       `,
     },
-    grid: { bottom: '10%', top: '20%', left: '5%' },
+    grid: { bottom: '10%', top: '20%', left: 0 },
     xAxis: {
-      name: 'Vulnerability score',
+      name: 'Vulnerability level',
       nameLocation: 'center',
       min: 0.4,
       max: 0.7,
@@ -30,6 +30,7 @@ const renderDefaultChart = (chart, regions, data,) => {
     yAxis: {
       type: 'category',
       data: ['Oceania','Latin America and the Caribbean', 'Asia', 'Africa' ],
+      // show: false,
       axisLine: {
         show: false
       }
@@ -66,7 +67,7 @@ const renderDefaultChart = (chart, regions, data,) => {
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#7a2e05',
+          color: '#cb5730',
         },
         symbolSize(val) {
 
@@ -102,14 +103,12 @@ const renderTotalClimateFinanceChart = () => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
           const data = await fetchCSVData(DATA_URL);
-          const regions = Array.from(new Set(data.map((d) => d['GNR Region']))).filter((item) => item !== '#N/A');
 
           // create UI elements
 
           const chart = window.echarts.init(chartNode);
           renderDefaultChart(
             chart,
-            regions,
             data
           );
 
