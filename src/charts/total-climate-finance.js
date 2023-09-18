@@ -17,6 +17,7 @@ const renderDefaultChart = (chart, data,) => {
       trigger: 'item',
       formatter: (params) => `${params.data[3]} <br/>
       Vulnerability: ${vulnerabilityLabelMapping(Number(params.data[0]) * 100) } <br/>
+      Total climate finance: $${Number(params.data[2]).toFixed(1)} million
       `,
     },
     grid: { bottom: '10%', top: '20%', left: '5%' },
