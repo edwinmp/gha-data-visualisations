@@ -7,6 +7,7 @@ import './styles/styles.css';
 import renderClimateFundingMap from './charts/climate-funding';
 import renderTotalClimateFinanceChart from './charts/total-climate-finance';
 import renderClimatePercentageOdaChart from './charts/climate-percentage-oda-bubble';
+import renderClimateAdaptationFundingChart from './charts/climate-adaptation-funding-bubble';
 
 /**
  * Run your code after the page has loaded
@@ -19,4 +20,5 @@ window.addEventListener('load', () => {
   renderClimateFundingMap();
   renderTotalClimateFinanceChart();
   renderClimatePercentageOdaChart();
+  renderClimateAdaptationFundingChart();
 });
