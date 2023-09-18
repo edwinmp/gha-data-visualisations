@@ -18,7 +18,7 @@ const renderDefaultChart = (chart, data,) => {
       Vulnerability score: ${params.data[0]} <br/>
       `,
     },
-    grid: { bottom: '10%', top: '20%', left: 0 },
+    grid: { bottom: '10%', top: '20%', left: '5%' },
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
@@ -30,9 +30,14 @@ const renderDefaultChart = (chart, data,) => {
     yAxis: {
       type: 'category',
       data: ['Oceania','Latin America and the Caribbean', 'Asia', 'Africa' ],
-      // show: false,
-      axisLine: {
-        show: false
+      axisLabel: {
+        formatter(value) {
+          if (value === 'Latin America and the Caribbean') {
+            return 'LAC'
+          }
+
+          return value
+        }
       }
     },
     series: [
@@ -87,7 +92,7 @@ const renderDefaultChart = (chart, data,) => {
       },
     ],
   };
-
+  console.log(deepMerge(defaultOptions, option))
   chart.setOption(deepMerge(defaultOptions, option));
 
   return chart;
