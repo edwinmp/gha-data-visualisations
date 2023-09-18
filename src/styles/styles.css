@@ -1,13 +1,14 @@
 .dicharts--boilerplate-chart,
 .dicharts--gha-donors,
 .dicharts--gha-recipients,
-.dicharts--gha-people-affected-by-crisis-leaflet {
+.dicharts--gha-people-affected-by-crisis-leaflet,
+.dicharts--gha-climate-funding {
   width: 100%;
   min-height: 450px;
   background: white;
 }
 
-.dicharts--gha-people-affected-by-crisis-leaflet {
+.dicharts--gha-people-affected-by-crisis-leaflet, .dicharts--gha-climate-funding {
   z-index: 1;
 }
 
@@ -153,4 +154,118 @@
 
 .leaflet-interactive.grab-cursor-enabled {
   cursor: grab !important;
+}
+
+.range {
+  padding-right: 50px;
+  font-size: 13px;
+}
+
+.range > input {
+  margin-top: 10px;
+}
+
+.dicharts--gha-climate-funding {
+  margin-top: 50px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 6px;
+  background: #ccc;
+}
+/* Track: webkit browsers */
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  height: 15px;
+  width: 15px;
+  background: #cb5730;
+  border-radius: 50%;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #7a2e05;
+}
+
+/* Track: Mozilla Firefox */
+
+/* Thumb: Firefox */
+
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: #cb5730;
+  border-radius: 50%;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: #7a2e05;
+}
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0 10px; */
+}
+
+.slider-ticks span {
+  display: flex;
+  justify-content: center;
+  width: 1px;
+  height: 10px;
+  background: #d3d3d3;
+  line-height: 40px;
+}
+
+input[type=checkbox]{
+  accent-color: #cb5730;
+}
+
+.climate-adaptation-select__menu, .climate-chart-select__menu {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+.range-width {
+  min-width: 250px;
+}
+
+.slider-ticks label {
+  line-height: 20px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.vulnerability-range {
+  padding-left: 10px;
+}
+
+.marker-pin {
+  width: 20px;
+  height: 5px;
+}
+
+.my-div-icon {
+  width: 100%;
+}
+
+.my-div-icon > span {
+  font-size: 1rem;
+  background: rgba(255,255,255,1);
+  white-space: nowrap;
+  margin-top: 0;
 }

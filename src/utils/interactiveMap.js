@@ -69,12 +69,12 @@ const getOriginalCountryName = (csv, code) => {
   return countryMap.find((country) => country.id === code).name;
 };
 
-const matchCountryNames = (csvData, worldData) => {
+const matchCountryNames = (csvData, worldData, countryCodeVariable, countryNameVariable) => {
   const matchedData = csvData.map((stream) => {
     const streamCopy = { ...stream };
-    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy.Country_ID);
+    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy[countryCodeVariable]);
     if (countryObject) {
-      streamCopy.Country_name = countryObject.properties.name;
+      streamCopy[countryNameVariable] = countryObject.properties.name;
     }
 
     return streamCopy;
@@ -83,14 +83,31 @@ const matchCountryNames = (csvData, worldData) => {
   return matchedData;
 };
 
-const processedData = (countries, processedCountryData) => {
+const matchClimateCountryNames = (csvData, worldData, countryCodeVariable, countryNameVariable) => {
+  const matchedData = csvData.map((stream) => {
+    const streamCopy = { ...stream };
+    const countryObject = worldData.find((feature) => feature.properties.ISO_A3 === streamCopy[countryCodeVariable]);
+    if (countryObject) {
+      streamCopy[countryNameVariable] = countryObject.properties.WB_NAME;
+    }
+
+    return streamCopy;
+  });
+
+  return matchedData;
+};
+
+const processedData = (countries, processedCountryData, countryVariable, valueVariable, extraVariable) => {
   const data = [];
   countries.forEach((country) => {
     const countryData = {};
     countryData.name = country;
     processedCountryData.forEach((stream) => {
-      if (stream.Country_name === country) {
-        countryData[stream.variable] = stream.value;
+      if (stream[countryVariable] === country) {
+        countryData[stream.variable] = stream[valueVariable];
+        if (extraVariable) {
+          countryData[extraVariable] = stream[extraVariable];
+        }
       }
     });
     data.push(countryData);
@@ -103,6 +120,20 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
   jsonData.map((feature) => {
     const featureCopy = { ...feature };
     const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.name);
+    if (matchingCountryData) {
+      featureCopy.properties = {
+        ...feature.properties,
+        ...matchingCountryData,
+      };
+    }
+
+    return featureCopy;
+  });
+
+const climateDataInjectedGeojson = (jsonData, groupedData) =>
+  jsonData.map((feature) => {
+    const featureCopy = { ...feature };
+    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.WB_NAME);
     if (matchingCountryData) {
       featureCopy.properties = {
         ...feature.properties,
@@ -239,7 +270,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
     .openTooltip();
 };
 
-const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) => {
+const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance, colors) => {
   // Generate a range of values between the minimum and maximum value
   const values = [];
 
@@ -247,7 +278,7 @@ const getColorDynamic = (value, minValue, maxValue, increment, chromaInstance) =
     values.push(i);
   }
 
-  const colorGen = chromaInstance.scale(colorArray).domain(values);
+  const colorGen = chromaInstance.scale(colors).domain(values);
 
   return colorGen(Math.abs(value));
 };
@@ -259,6 +290,100 @@ const getMaxMinValues = (dataType, csvData) => {
     maxValue: Math.ceil(Math.max(...dataList)),
     minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
   };
+};
+
+const getClimateOriginalCountryName = (csv, code) =>
+  csv.find((stream) => stream.iso3 === code) ? csv.find((stream) => stream.iso3 === code).countryname : '';
+
+const vulnerabilityLabelMapping = (value) => {
+  if (value >= 0 && value < 40) {
+    return 'Very low';
+  }
+  if (value >= 40 && value < 50) {
+    return 'Low';
+  }
+  if (value >= 50 && value < 55) {
+    return 'Medium';
+  }
+  if (value >= 55 && value < 60) {
+    return 'High';
+  }
+  if (value >= 60) {
+    return 'Very high';
+  }
+
+  return 'Not assessed';
+};
+
+const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
+  const layer = e.target;
+  layer.setStyle({
+    fillColor: '#df8000',
+    color: '#484848',
+    weight: 2,
+  });
+
+  if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
+    layer.bringToFront();
+  }
+  // Bind popup to layer
+  const country = getClimateOriginalCountryName(csvData, layer.feature.properties.ISO_A3);
+
+  layer
+    .bindTooltip(
+      layer.feature.properties[variable]
+        ? `<div>${country || layer.feature.properties.WB_NAME}<br>
+          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${
+            Number(layer.feature.properties.Total_Climate_USD) !== 0
+              ? (
+                  (Number(layer.feature.properties.CCA_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
+                  100
+                ).toFixed(1)
+              : 0
+          }%)<br>
+          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
+            Number(layer.feature.properties.Total_Climate_USD) !== 0
+              ? (
+                  (Number(layer.feature.properties.CCM_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
+                  100
+                ).toFixed(1)
+              : 0
+          }%)<br>
+          Climate vulnerability: ${
+            layer.feature.properties.Vulnerability_Score_new
+              ? vulnerabilityLabelMapping(Number(layer.feature.properties.Vulnerability_Score_new))
+              : 'Not assesed'
+          }<br>
+          ${layer.feature.properties.protracted_crisis ? `In protracted crisis` : ''}
+          </div>
+          `
+        : `<div>${country}<br> Not assessed</div>`,
+      { direction: 'top', opacity: 1 }
+    )
+    .openTooltip();
+};
+
+const getColorFinance = (value) => {
+  if (value >= 0 && value < 0.0001) {
+    return '#d3e0f4';
+  }
+  if (value >= 0.0001 && value < 0.001) {
+    return '#a3c7eb';
+  }
+  if (value >= 0.001 && value < 0.01) {
+    return '#77adde';
+  }
+  if (value >= 0.01 && value < 0.1) {
+    return '#4397d3';
+  }
+  if (value >= 0.1 && value < 1) {
+    return '#105fa3';
+  }
+  if (value >= 1) {
+    return '#00538e';
+  }
+
+  return '#E6E1E5';
 };
 
 export {
@@ -275,4 +400,10 @@ export {
   getMaxMinValues,
   colorArray,
   legendData,
+  highlightClimateMapFeature,
+  getClimateOriginalCountryName,
+  getColorFinance,
+  matchClimateCountryNames,
+  climateDataInjectedGeojson,
+  vulnerabilityLabelMapping,
 };

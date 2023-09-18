@@ -4,6 +4,7 @@ import renderFundingChannelsChart from './charts/funding-channels';
 import renderRecipientChart from './charts/recipients';
 import renderPeopleAffectedByCrisisLeaflet from './charts/people-affected-by-crisis-map';
 import './styles/styles.css';
+import renderClimateFundingMap from './charts/climate-funding';
 
 /**
  * Run your code after the page has loaded
@@ -13,4 +14,5 @@ window.addEventListener('load', () => {
   renderFundingChannelsChart();
   renderRecipientChart();
   renderPeopleAffectedByCrisisLeaflet();
+  renderClimateFundingMap();
 });
