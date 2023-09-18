@@ -1,6 +1,7 @@
 import deepMerge from 'deepmerge';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import defaultOptions, { handleResize } from './echarts';
+import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/Climate_Finance_Dataset.csv`;
@@ -15,17 +16,20 @@ const renderDefaultChart = (chart, data,) => {
     tooltip: {
       trigger: 'item',
       formatter: (params) => `${params.data[3]} <br/>
-      Vulnerability score: ${params.data[0]} <br/>
+      Vulnerability: ${vulnerabilityLabelMapping(Number(params.data[0]) * 100) } <br/>
       `,
     },
     grid: { bottom: '10%', top: '20%', left: '5%' },
     xAxis: {
-      name: 'Vulnerability level',
+      name: 'Vulnerability level (Low to Very high)',
       nameLocation: 'center',
       min: 0.4,
       max: 0.7,
       scale: true,
       nameGap: 25,
+      axisLabel: {
+        show: false
+      }
     },
     yAxis: {
       type: 'category',
