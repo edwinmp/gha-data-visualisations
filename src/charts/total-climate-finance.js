@@ -1,6 +1,6 @@
 import deepMerge from 'deepmerge';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
-import defaultOptions, { handleResize } from './echarts';
+import defaultOptions, { handleResize, legendSelection } from './echarts';
 import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
 
@@ -97,8 +97,11 @@ const renderDefaultChart = (chart, data,) => {
       },
     ],
   };
-  console.log(deepMerge(defaultOptions, option))
   chart.setOption(deepMerge(defaultOptions, option));
+  chart.on('legendselectchanged', (params) => {
+    legendSelection(chart, params);
+  });
+
 
   return chart;
 };
