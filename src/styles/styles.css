@@ -3,7 +3,8 @@
 .dicharts--gha-recipients,
 .dicharts--gha-people-affected-by-crisis-leaflet,
 .dicharts--gha-climate-funding,
-.dicharts--gha-total-climate-finance {
+.dicharts--gha-total-climate-finance,
+.dicharts--gha-climate-percentage-oda {
   width: 100%;
   min-height: 450px;
   background: white;

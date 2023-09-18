@@ -6,6 +6,7 @@ import renderPeopleAffectedByCrisisLeaflet from './charts/people-affected-by-cri
 import './styles/styles.css';
 import renderClimateFundingMap from './charts/climate-funding';
 import renderTotalClimateFinanceChart from './charts/total-climate-finance';
+import renderClimatePercentageOdaChart from './charts/climate-percentage-oda-bubble';
 
 /**
  * Run your code after the page has loaded
@@ -17,4 +18,5 @@ window.addEventListener('load', () => {
   renderPeopleAffectedByCrisisLeaflet();
   renderClimateFundingMap();
   renderTotalClimateFinanceChart();
+  renderClimatePercentageOdaChart();
 });
