@@ -397,7 +397,7 @@ const getColorFinance = (value) => {
     return '#105fa3';
   }
   if (value >= 1) {
-    return '#00538e';
+    return '#0a3a64';
   }
 
   return '#E6E1E5';

@@ -22,7 +22,7 @@ import CheckboxInput from '../components/CheckboxInput';
 const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
-const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#00538e'];
+const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#0a3a64'];
 const financeLegendMapping = ['0', '0.1m', '1m', '10m', '100m', '1b', '1.5b'];
 const shareLegendMapping = [0, 7.5, 15, 22.5, 30, 37.5];
 const vulnerabilityMapping = [
