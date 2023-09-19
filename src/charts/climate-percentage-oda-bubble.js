@@ -1,12 +1,12 @@
 import deepMerge from 'deepmerge';
-import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
+import fetchCSVData, { ACTIVE_BRANCH, sortedData } from '../utils/data';
 import defaultOptions, { handleResize, legendSelection } from './echarts';
 import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/Climate_Finance_Dataset.csv`;
 
 const seriesData = (data) =>
-  data
+sortedData(data, 'Climate Funding as % of ODA')
     .filter(item => item['GNR Region'] !== '#N/A').map((d) => [Number(d.Vulnerability), d['GNR Region'], Number(d['Climate Funding as % of ODA']), d.Country]);
 
 
@@ -79,6 +79,7 @@ const renderDefaultChart = (chart, data,) => {
         type: 'scatter',
         name:'Protracted Crisis',
         data: seriesData(data.filter((d) => d.PC === 'PC')),
+        zlevel: 1,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',

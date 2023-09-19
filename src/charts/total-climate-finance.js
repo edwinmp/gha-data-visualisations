@@ -1,5 +1,5 @@
 import deepMerge from 'deepmerge';
-import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
+import fetchCSVData, { ACTIVE_BRANCH, sortedData } from '../utils/data';
 import defaultOptions, { handleResize, legendSelection } from './echarts';
 import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
@@ -7,7 +7,7 @@ import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/Climate_Finance_Dataset.csv`;
 
 const seriesData = (data) =>
-  data
+  sortedData(data, 'Total Climate Funding')
     .filter(item => item['GNR Region'] !== '#N/A').map((d) => [Number(d.Vulnerability), d['GNR Region'], Number(d['Total Climate Funding']), d.Country]);
 
 
@@ -57,6 +57,7 @@ const renderDefaultChart = (chart, data,) => {
         type: 'scatter',
         name:'Developing Countries',
         data: seriesData(data.filter((d) => d.PC !== 'PC')),
+        zlevel: 1,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
@@ -80,6 +81,7 @@ const renderDefaultChart = (chart, data,) => {
         type: 'scatter',
         name:'Protracted Crisis',
         data: seriesData(data.filter((d) => d.PC === 'PC')),
+        // zlevel: 2,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
@@ -106,7 +108,9 @@ const renderDefaultChart = (chart, data,) => {
   chart.on('legendselectchanged', (params) => {
     legendSelection(chart, params);
   });
-
+  chart.on('mouseover', {seriesName: 'Developing Countries'}, (params) =>{
+    console.log(params)
+  })
 
   return chart;
 };
