@@ -315,13 +315,28 @@ const vulnerabilityLabelMapping = (value) => {
   return 'Not assessed';
 };
 
-const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
+const highlightClimateMapFeature = (e, variable, csvData, map) => {
   const layer = e.target;
-  layer.setStyle({
-    fillColor: '#df8000',
-    color: '#484848',
-    weight: 2,
-  });
+  if (layer.feature.properties.protracted_crisis) {
+    layer.setStyle({
+      color: '#484848',
+      weight: 2,
+      fillPattern: new window.L.StripePattern({
+        weight: 2,
+        spaceOpacity: 1,
+        spaceColor: '#df8000',
+        spaceWeight: 6,
+        angle: 45,
+        color: '#d12568',
+      }).addTo(map),
+    });
+  } else {
+    layer.setStyle({
+      fillColor: '#df8000',
+      color: '#484848',
+      weight: 2,
+    });
+  }
 
   if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
     layer.bringToFront();
