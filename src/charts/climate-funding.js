@@ -104,12 +104,6 @@ const filterByVulnerability = (data, value) => {
     : data.filter((d) => d.Vulnerability_Score_new < mappingData.max && d.Vulnerability_Score_new >= mappingData.min);
 };
 
-const getCrisisData = (data, value) => {
-  if (!value) return data;
-
-  return data.filter((item) => item.protracted_crisis === value);
-};
-
 const filterDataByYear = (data, year) => data.filter((item) => item.year === year);
 
 const getAdaptationActualValue = (selected, dimension) => {
@@ -259,31 +253,21 @@ const smallCountryMarkerData = [
     name: 'Antigua and Barbuda',
     coordinates: [17.195139, -61.306447],
   },
-  // {
-  //   name: 'Cook Islands',
-  //   coordinates: [-21.251607, -159.764738],
-  // },
-  // {
-  //   name: 'Micronesia',
-  //   coordinates: [6.952106, 158.228441],
-  // },
 ];
+
 const renderMap = (
   dimensionVariable,
   mapInstance,
   colorFunction,
   data,
   processed,
-  filterOptions,
   legendInstance,
   groupInstance,
   csvData,
-  crisisData,
   crisisValue,
   adaptationValue
 ) => {
   let geojsonLayer;
-  let crisisLayer;
 
   const legendInstanceCopy = legendInstance;
   legendInstanceCopy.onAdd = function () {
@@ -346,37 +330,7 @@ const renderMap = (
   };
   legendInstanceCopy.addTo(mapInstance);
 
-  const style = (feature) => ({
-    fillColor:
-      dimensionVariable === 'Total_Climate_Share'
-        ? colorFunction(
-            getVariableValue(dimensionVariable, feature, adaptationValue),
-            adaptationValue === 'total'
-              ? dimensionVariable
-              : getAdaptationActualValue(adaptationValue, dimensionVariable),
-            processed
-          )
-        : colorFunction(
-            getVariableValue(dimensionVariable, feature, adaptationValue),
-            adaptationValue === 'total'
-              ? dimensionVariable
-              : getAdaptationActualValue(adaptationValue, dimensionVariable)
-          ),
-    weight: 1,
-    opacity: 1,
-    color: 'white',
-    fillOpacity: 1,
-  });
-
-  const getCrisisColorStyle = (feature) => {
-    if (feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue) {
-      return new window.L.StripePattern({
-        weight: 2,
-        spaceWeight: 1,
-        angle: 45,
-        color: '#d12568',
-      }).addTo(mapInstance);
-    }
+  const getStyleColor = (feature) => {
     if (dimensionVariable === 'Total_Climate_Share') {
       return colorFunction(
         getVariableValue(dimensionVariable, feature, adaptationValue),
@@ -390,10 +344,26 @@ const renderMap = (
       adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
     );
   };
-  const crisisStyle = (feature) => ({
+
+  const getStyle = (feature) => {
+    if (feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue) {
+      return new window.L.StripePattern({
+        fill: true,
+        weight: 2,
+        spaceWeight: 6,
+        spaceColor: getStyleColor(feature),
+        spaceOpacity: 1,
+        angle: 45,
+        color: '#d12568',
+      }).addTo(mapInstance);
+    }
+
+    return getStyleColor(feature);
+  };
+  const style = (feature) => ({
     [feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
       ? 'fillPattern'
-      : 'fillColor']: getCrisisColorStyle(feature),
+      : 'fillColor']: getStyle(feature),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -402,14 +372,13 @@ const renderMap = (
 
   const resetHighlight = (e) => {
     geojsonLayer.resetStyle(e.target);
-    crisisLayer.resetStyle(e.target);
     e.target.closePopup();
   };
 
   const onEachFeature = (feature, layer) => {
     if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
       layer.on({
-        mouseover: (e) => highlightClimateMapFeature(e, dimensionVariable, filterOptions, csvData),
+        mouseover: (e) => highlightClimateMapFeature(e, dimensionVariable, csvData, mapInstance, crisisValue),
         mouseout: resetHighlight,
       });
     } else {
@@ -496,14 +465,7 @@ const renderMap = (
       style,
       onEachFeature,
     });
-    crisisLayer = window.L.geoJSON(climateDataInjectedGeojson(data, processed), {
-      style: crisisStyle,
-      onEachFeature,
-    });
     groupInstance.addLayer(geojsonLayer);
-    if (crisisValue) {
-      groupInstance.addLayer(crisisLayer);
-    }
   }
   loadLayer();
 };
@@ -540,20 +502,6 @@ function renderClimateFundingMap() {
             { value: 'CCA', label: 'Climate adaptation finace' },
             { value: 'CCM', label: 'Climate mitigation finance' },
           ];
-          const filterOptionMapping = [
-            {
-              name: 'Total_Climate_USD',
-              label: 'US$ millions',
-              scaleType: 'continous',
-              unit: 'million',
-            },
-            {
-              name: 'Total_Climate_Share',
-              label: '% of total ODA',
-              scaleType: 'continous',
-              unit: '%',
-            },
-          ];
 
           // Initialise Legend
           const legend = window.L.control({ position: 'topright' });
@@ -578,7 +526,6 @@ function renderClimateFundingMap() {
                   'protracted_crisis'
                 );
                 let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
-                let crisisCountries = [];
                 let crisisValue;
 
                 const fg = window.L.featureGroup().addTo(map);
@@ -590,11 +537,9 @@ function renderClimateFundingMap() {
                   variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                   geojsonData,
                   finalFilteredData,
-                  filterOptionMapping,
                   legend,
                   fg,
                   data,
-                  crisisCountries,
                   crisisValue,
                   adaptationVariable
                 );
@@ -608,11 +553,9 @@ function renderClimateFundingMap() {
                     variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
                     adaptationVariable
                   );
@@ -636,11 +579,9 @@ function renderClimateFundingMap() {
                     variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
                     adaptationVariable
                   );
@@ -655,11 +596,9 @@ function renderClimateFundingMap() {
                     variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
                     adaptationVariable
                   );
@@ -667,19 +606,16 @@ function renderClimateFundingMap() {
 
                 const onCrisisChange = (value) => {
                   crisisValue = value;
-                  const crisisData = getCrisisData(filterDataByYear(processedCountryNameData, year), value);
-                  crisisCountries = Array.from(new Set(crisisData.map((stream) => stream.countryname)));
+
                   renderMap(
                     variable,
                     map,
                     variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
                     adaptationVariable
                   );
@@ -694,11 +630,9 @@ function renderClimateFundingMap() {
                     variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
                     adaptationVariable
                   );

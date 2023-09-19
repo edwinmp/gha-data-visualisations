@@ -315,9 +315,9 @@ const vulnerabilityLabelMapping = (value) => {
   return 'Not assessed';
 };
 
-const highlightClimateMapFeature = (e, variable, csvData, map) => {
+const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
   const layer = e.target;
-  if (layer.feature.properties.protracted_crisis) {
+  if (layer.feature.properties.protracted_crisis && crisisValue) {
     layer.setStyle({
       color: '#484848',
       weight: 2,
