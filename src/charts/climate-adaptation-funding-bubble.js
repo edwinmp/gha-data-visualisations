@@ -42,7 +42,13 @@ const renderDefaultChart = (chart, data,) => {
 
           return value
         }
-      }
+      },
+      splitArea: {
+        show: true,
+        areaStyle: {
+          color: [ 'white', '#faf6f5',]
+        }
+      },
     },
     series: [
 

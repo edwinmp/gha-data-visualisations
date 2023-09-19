@@ -34,6 +34,12 @@ const renderDefaultChart = (chart, data,) => {
     yAxis: {
       type: 'category',
       data: ['Oceania','Latin America and the Caribbean', 'Asia', 'Africa' ],
+      splitArea: {
+        show: true,
+        areaStyle: {
+          color: [ 'white', '#faf6f5',]
+        }
+      },
       axisLabel: {
         formatter(value) {
           if (value === 'Latin America and the Caribbean') {
