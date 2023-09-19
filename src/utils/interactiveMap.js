@@ -348,7 +348,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
     .bindTooltip(
       layer.feature.properties[variable]
         ? `<div>${country || layer.feature.properties.WB_NAME}<br>
-          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${
+          Adaptation:  US$${Number(layer.feature.properties.CCA_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
                   (Number(layer.feature.properties.CCA_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
@@ -356,7 +356,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
                 ).toFixed(1)
               : 0
           }%)<br>
-          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
+          Mitigation: US$${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
                   (Number(layer.feature.properties.CCM_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
