@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 /** @jsx jsx */
-import chroma from 'chroma-js';
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
 import 'leaflet.pattern';
@@ -8,12 +7,12 @@ import MapResetButton from '../components/MapResetButton';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
   processedData,
-  getColorDynamic,
   highlightClimateMapFeature,
   getColorFinance,
   matchClimateCountryNames,
   climateDataInjectedGeojson,
   vulnerabilityLabelMapping,
+  getColorClimateShare,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
@@ -25,6 +24,7 @@ const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisati
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#00538e'];
 const financeLegendMapping = ['0', '0.1m', '1m', '10m', '100m', '1b', '1.5b'];
+const shareLegendMapping = [0, 7.5, 15, 22.5, 30, 37.5];
 const vulnerabilityMapping = [
   { label: 4, value: 60, text: 'Very high' },
   { label: 3, value: 55, text: 'High', min: 55, max: 60 },
@@ -32,65 +32,6 @@ const vulnerabilityMapping = [
   { label: 1, value: 40, text: 'Low', min: 40, max: 50 },
   { label: 0, value: 0, text: 'Very low', min: 0, max: 40 },
 ];
-
-const getMaxMinValues = (dataType, csvData) => {
-  const dataList = csvData
-    .filter((d) => d[dataType])
-    .map((item) =>
-      Number(
-        dataType === 'Total_Climate_Share' || dataType === 'CCA_Share' || dataType === 'CCM_Share'
-          ? item[dataType].replace('%', '')
-          : item[dataType]
-      )
-    );
-
-  return {
-    maxValue: Math.ceil(Math.max(...dataList)),
-    minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
-  };
-};
-
-const getColorContinous = (d, dimensionVariable, groupedData) => {
-  const scaleData = getMaxMinValues(dimensionVariable, groupedData);
-  const increment = (scaleData.maxValue - scaleData.minValue) / colors.length;
-
-  if (!d) {
-    return '#E6E1E5';
-  }
-
-  return getColorDynamic(
-    dimensionVariable === 'Total_Climate_Share' ||
-      dimensionVariable === 'CCA_Share' ||
-      dimensionVariable === 'CCM_Share'
-      ? d.replace('%', '')
-      : d,
-    scaleData.minValue,
-    scaleData.maxValue,
-    increment,
-    chroma,
-    colors
-  );
-};
-
-const getLegendValues = (minValue, maxValue, colorLength) => {
-  const items = [];
-  const increment = maxValue / colorLength;
-  let initialValue = minValue;
-  while (items.length <= colorLength) {
-    if (initialValue === minValue) {
-      items.push(initialValue);
-    }
-
-    initialValue += increment;
-    if (Number(initialValue) === initialValue && initialValue % 1 !== 0) {
-      items.push(Number(initialValue.toFixed(1)));
-    } else {
-      items.push(initialValue);
-    }
-  }
-
-  return items;
-};
 
 const filterByVulnerability = (data, value) => {
   if (value === 0) {
@@ -159,13 +100,7 @@ const getCurrentIconColor = (data, dimension, name, adaptation) => {
           : countryData[getAdaptationActualValue(adaptation, dimension)] / 1000;
     }
 
-    return dimension === 'Total_Climate_Share'
-      ? getColorContinous(
-          value,
-          adaptation === 'total' ? dimension : getAdaptationActualValue(adaptation, dimension),
-          data
-        )
-      : getColorFinance(value, adaptation === 'total' ? dimension : getAdaptationActualValue(adaptation, dimension));
+    return dimension === 'Total_Climate_Share' ? getColorClimateShare(value) : getColorFinance(value);
   }
 
   return '#E6E1E5';
@@ -273,12 +208,6 @@ const renderMap = (
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
 
-    const scaleData = getMaxMinValues(
-      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable),
-      processed
-    );
-    const legendValues = getLegendValues(scaleData.minValue, scaleData.maxValue, colors.length);
-
     const legendContent = `<div style="display:flex;flex-direction:column;">
     <div>
     ${
@@ -304,11 +233,11 @@ const renderMap = (
     <div>
     ${
       dimensionVariable === 'Total_Climate_Share'
-        ? legendValues
+        ? shareLegendMapping
             .map(
               (item, index) =>
                 `${
-                  index === legendValues.length - 1
+                  index === shareLegendMapping.length - 1
                     ? `<span> ${item} (%)</span>`
                     : `<span style="width:50px;">${item}</span>`
                 }`
@@ -332,19 +261,13 @@ const renderMap = (
 
   const getStyleColor = (feature) => {
     if (dimensionVariable === 'Total_Climate_Share') {
-      return colorFunction(
-        getVariableValue(dimensionVariable, feature, adaptationValue),
-        adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable),
-        processed
-      );
+      return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue));
     }
 
-    return colorFunction(
-      getVariableValue(dimensionVariable, feature, adaptationValue),
-      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
-    );
+    return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue));
   };
 
+  // Map style
   const getStyle = (feature) => {
     if (feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue) {
       return new window.L.StripePattern({
@@ -399,8 +322,8 @@ const renderMap = (
       });
     }
   };
-  // Add markers for small island countries
 
+  // Add markers for small island countries
   smallCountryMarkerData.forEach((item) => {
     const iconData = getMarkerCountryData(processed, item.name);
     const myIcon = window.L.divIcon({
@@ -534,7 +457,7 @@ function renderClimateFundingMap() {
                 renderMap(
                   variable,
                   map,
-                  variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                  variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                   geojsonData,
                   finalFilteredData,
                   legend,
@@ -550,7 +473,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     legend,
@@ -576,7 +499,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     legend,
@@ -593,7 +516,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     legend,
@@ -610,7 +533,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     legend,
@@ -627,7 +550,7 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
                     legend,
@@ -703,20 +626,6 @@ function renderClimateFundingMap() {
                 };
 
                 resetButton.addTo(map);
-
-                // Informational div
-                // const info = window.L.control();
-                // info.onAdd = function () {
-                //   const infoDiv = window.L.DomUtil.create('div', 'infoDiv');
-                //   infoDiv.innerHTML = `I am here`;
-                //   const lnglat = window.L.latLng(23.984444, -74.925693);
-                //   const pixelCoords = map.latLngToContainerPoint(lnglat);
-                //   window.L.DomUtil.setPosition(infoDiv, window.L.point(pixelCoords.x, pixelCoords.y));
-
-                //   return infoDiv;
-                // };
-
-                // info.addTo(map);
 
                 dichart.hideLoading();
               });

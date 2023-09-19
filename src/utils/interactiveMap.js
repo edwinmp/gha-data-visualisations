@@ -378,6 +378,8 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
     .openTooltip();
 };
 
+const cleanClimateShare = (value) => (value ? value.replace('%', '') : '');
+
 const getColorFinance = (value) => {
   if (value >= 0 && value < 0.0001) {
     return '#d3e0f4';
@@ -396,6 +398,27 @@ const getColorFinance = (value) => {
   }
   if (value >= 1) {
     return '#00538e';
+  }
+
+  return '#E6E1E5';
+};
+
+const getColorClimateShare = (value) => {
+  const cleanValue = cleanClimateShare(value) ? Number(cleanClimateShare(value)) : undefined;
+  if (cleanValue >= 0 && cleanValue < 7.5) {
+    return '#bcd4f0';
+  }
+  if (cleanValue >= 7.5 && cleanValue < 15) {
+    return '#77adde';
+  }
+  if (cleanValue >= 15 && cleanValue < 22.5) {
+    return '#5da3d9';
+  }
+  if (cleanValue >= 22.5 && cleanValue < 30) {
+    return '#0089cc';
+  }
+  if (cleanValue >= 30) {
+    return '#0c457b';
   }
 
   return '#E6E1E5';
@@ -421,4 +444,5 @@ export {
   matchClimateCountryNames,
   climateDataInjectedGeojson,
   vulnerabilityLabelMapping,
+  getColorClimateShare,
 };
