@@ -59,7 +59,7 @@ const renderDefaultChart = (chart, data,) => {
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#facbad'
+          color: '#f9cdd0'
         },
         symbolSize(val) {
           if (Math.round((val[2])*100) !== 0) {
@@ -82,7 +82,7 @@ const renderDefaultChart = (chart, data,) => {
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#cb5730',
+          color: '#7e1850',
         },
         symbolSize(val) {
           if (Math.round((val[2])*100) !== 0) {
@@ -104,7 +104,6 @@ const renderDefaultChart = (chart, data,) => {
   chart.on('legendselectchanged', (params) => {
     legendSelection(chart, params);
   });
-
 
   return chart;
 };

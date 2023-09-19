@@ -60,7 +60,7 @@ const renderDefaultChart = (chart, data,) => {
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#facbad'
+          color: '#f9cdd0'
         },
         symbolSize(val) {
           if (Math.round(val[2]) !== 0){
@@ -83,7 +83,7 @@ const renderDefaultChart = (chart, data,) => {
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#cb5730',
+          color: '#7e1850',
         },
         symbolSize(val) {
 
@@ -93,7 +93,6 @@ const renderDefaultChart = (chart, data,) => {
 
             return val[2]
         },
-        // symbolOffset: [0, '-50%'],
         emphasis: {
           itemStyle: {
             borderColor: '#333',
