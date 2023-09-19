@@ -3,13 +3,11 @@ import fetchCSVData, { ACTIVE_BRANCH, sortedData } from '../utils/data';
 import defaultOptions, { handleResize, legendSelection } from './echarts';
 import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
-
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate-finance-bubble-data.csv`;
 
 const seriesData = (data) =>
-  sortedData(data, 'Total Funding')
-    .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number(d['Total Funding']), d.Country]);
-
+sortedData(data, 'Funding per capita (US$)')
+    .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number(d['Funding per capita (US$)']), d.Country]);
 
 const renderDefaultChart = (chart, data,) => {
   const option = {
@@ -17,7 +15,7 @@ const renderDefaultChart = (chart, data,) => {
       trigger: 'item',
       formatter: (params) => `${params.data[3]} <br/>
       Vulnerability: ${vulnerabilityLabelMapping(Number(params.data[0]) * 100) } <br/>
-      Total climate finance: US$${Number(params.data[2]).toFixed(1)} million
+      Funding per capita: US$${(Number(params.data[2])).toFixed(1)} million
       `,
     },
     grid: { bottom: '10%', top: '20%', left: '5%' },
@@ -58,14 +56,13 @@ const renderDefaultChart = (chart, data,) => {
         type: 'scatter',
         name:'Developing Countries',
         data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
-        zlevel: 1,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
           color: '#f9cdd0'
         },
         symbolSize(val) {
-          return val[2]/10
+          return (val[2])
         },
         emphasis: {
           itemStyle: {
@@ -78,13 +75,14 @@ const renderDefaultChart = (chart, data,) => {
         type: 'scatter',
         name:'Protracted Crisis',
         data: seriesData(data.filter((d) => d['Crisis Class'] === 'Protracted Crisis')),
+        zlevel: 1,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
           color: '#7e1850',
         },
         symbolSize(val) {
-          return val[2]/10
+          return (val[2])
         },
         emphasis: {
           itemStyle: {
@@ -104,9 +102,9 @@ const renderDefaultChart = (chart, data,) => {
 };
 
 
-const renderTotalClimateFinanceChart = () => {
+const renderClimateFundingPerCapitaChart = () => {
   window.DICharts.handler.addChart({
-    className: 'dicharts--gha-total-climate-finance',
+    className: 'dicharts--gha-climate-funding-per-capita',
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, async (chartNode) => {
@@ -132,4 +130,4 @@ const renderTotalClimateFinanceChart = () => {
   });
 };
 
-export default renderTotalClimateFinanceChart
+export default renderClimateFundingPerCapitaChart

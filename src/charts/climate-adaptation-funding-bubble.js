@@ -1,13 +1,13 @@
 import deepMerge from 'deepmerge';
 import fetchCSVData, { ACTIVE_BRANCH, sortedData } from '../utils/data';
 import defaultOptions, { handleResize, legendSelection } from './echarts';
-import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
+import { cleanPercentageValues, vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
-const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/Climate_Finance_Dataset.csv`;
+const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate-finance-bubble-data.csv`;
 
 const seriesData = (data) =>
-  sortedData(data, 'Adapation Funding')
-    .filter(item => item['GNR Region'] !== '#N/A').map((d) => [Number(d.Vulnerability), d['GNR Region'], Number(d['Adapation Funding']), d.Country]);
+  sortedData(data, 'Adaptation Share')
+    .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number(cleanPercentageValues(d['Adaptation Share'])), d.Country]);
 
 
 const renderDefaultChart = (chart, data,) => {
@@ -16,13 +16,14 @@ const renderDefaultChart = (chart, data,) => {
       trigger: 'item',
       formatter: (params) => `${params.data[3]} <br/>
       Vulnerability: ${vulnerabilityLabelMapping(Number(params.data[0]) * 100) } <br/>
-      Adaptation funding: $${(Number(params.data[2])).toFixed(1)} million
+      Adaptation share: ${(Number(params.data[2])).toFixed(1)}%
       `,
     },
     grid: { bottom: '10%', top: '20%', left: '5%' },
     xAxis: {
-      name: 'Vulnerability level (Low to Very high)',
+      name: 'Vulnerability level',
       nameLocation: 'center',
+      position: 'top',
       min: 0.4,
       max: 0.7,
       scale: true,
@@ -55,18 +56,14 @@ const renderDefaultChart = (chart, data,) => {
       {
         type: 'scatter',
         name:'Developing Countries',
-        data: seriesData(data.filter((d) => d.PC !== 'PC')),
+        data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
           color: '#f9cdd0'
         },
         symbolSize(val) {
-          if (Math.round((val[2])*100) !== 0) {
-            return Math.log(Math.round((val[2])))*8
-          }
-
-          return (val[2])*100
+          return (val[2])/2
         },
         emphasis: {
           itemStyle: {
@@ -78,7 +75,7 @@ const renderDefaultChart = (chart, data,) => {
       {
         type: 'scatter',
         name:'Protracted Crisis',
-        data: seriesData(data.filter((d) => d.PC === 'PC')),
+        data: seriesData(data.filter((d) => d['Crisis Class'] === 'Protracted Crisis')),
         zlevel:1,
         itemStyle: {
           opacity: 0.8,
@@ -86,11 +83,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          if (Math.round((val[2])*100) !== 0) {
-            return Math.log(Math.round((val[2])))*8
-          }
-
-          return (val[2])*100
+          return (val[2])/2
         },
         emphasis: {
           itemStyle: {

@@ -5,7 +5,9 @@
 .dicharts--gha-climate-funding,
 .dicharts--gha-total-climate-finance,
 .dicharts--gha-climate-percentage-oda,
-.dicharts--gha-climate-adaptation-funding {
+.dicharts--gha-climate-adaptation-funding,
+.dicharts--gha-climate-finance-food-insecure,
+.dicharts--gha-climate-funding-per-capita {
   width: 100%;
   min-height: 450px;
   background: white;

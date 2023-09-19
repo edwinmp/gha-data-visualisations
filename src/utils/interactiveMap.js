@@ -378,7 +378,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
     .openTooltip();
 };
 
-const cleanClimateShare = (value) => (value ? value.replace('%', '') : '');
+const cleanPercentageValues = (value) => (value ? value.replace('%', '') : '');
 
 const getColorFinance = (value) => {
   if (value >= 0 && value < 0.0001) {
@@ -404,7 +404,7 @@ const getColorFinance = (value) => {
 };
 
 const getColorClimateShare = (value) => {
-  const cleanValue = cleanClimateShare(value) ? Number(cleanClimateShare(value)) : undefined;
+  const cleanValue = cleanPercentageValues(value) ? Number(cleanPercentageValues(value)) : undefined;
   if (cleanValue >= 0 && cleanValue < 7.5) {
     return '#bcd4f0';
   }
@@ -445,4 +445,5 @@ export {
   climateDataInjectedGeojson,
   vulnerabilityLabelMapping,
   getColorClimateShare,
+  cleanPercentageValues,
 };
