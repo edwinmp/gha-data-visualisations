@@ -29,7 +29,17 @@ const renderDefaultChart = (chart, data,) => {
       scale: true,
       nameGap: 25,
       axisLabel: {
-        show: false
+        formatter(value) {
+          if (value === 0.4) {
+            return 'Low'
+          }
+          if (value === 0.7) {
+            return 'High'
+          }
+
+          return ''
+        },
+        padding: [0, 0, 0, 30]
       }
     },
     yAxis: {
