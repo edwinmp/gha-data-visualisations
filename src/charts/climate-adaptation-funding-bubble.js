@@ -6,8 +6,8 @@ import { cleanPercentageValues, vulnerabilityLabelMapping } from '../utils/inter
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate-finance-bubble-data.csv`;
 
 const seriesData = (data) =>
-  sortedData(data, 'Adaptation Share')
-    .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number(cleanPercentageValues(d['Adaptation Share'])), d.Country]);
+  sortedData(data, 'Adaptation Share ODA(%)')
+    .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number(cleanPercentageValues(d['Adaptation Share ODA(%)'])), d.Country]);
 
 
 const renderDefaultChart = (chart, data,) => {
@@ -16,7 +16,7 @@ const renderDefaultChart = (chart, data,) => {
       trigger: 'item',
       formatter: (params) => `${params.data[3]} <br/>
       Vulnerability: ${vulnerabilityLabelMapping(Number(params.data[0]) * 100) } <br/>
-      Adaptation share: ${(Number(params.data[2])).toFixed(1)}%
+      Adaptation as % of ODA: ${(Number(params.data[2])).toFixed(1)}%
       `,
     },
     grid: { bottom: '10%', top: '20%', left: '5%' },
@@ -63,7 +63,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#f9cdd0'
         },
         symbolSize(val) {
-          return (val[2])/2
+          return (val[2])*4.2
         },
         emphasis: {
           itemStyle: {
@@ -83,7 +83,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          return (val[2])/2
+          return (val[2])*4.2
         },
         emphasis: {
           itemStyle: {
