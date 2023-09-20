@@ -42,7 +42,7 @@ const renderDefaultChart = (chart, data,) => {
         padding: [0, 0, 0, 30]
       },
       axisLine: {
-        show: false
+        show: true
       },
       axisTick: {
         show: false
