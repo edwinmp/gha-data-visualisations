@@ -56,7 +56,7 @@ const renderDefaultChart = (chart, data,) => {
 
       {
         type: 'scatter',
-        name:'Developing Countries',
+        name:'Other ODA Recipients',
         data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
         zlevel: 1,
         itemStyle: {
