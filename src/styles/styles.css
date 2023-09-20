@@ -274,3 +274,11 @@ input[type=checkbox]{
   white-space: nowrap;
   margin-top: 0;
 }
+
+.year-slider {
+  min-width: 150px;
+}
+
+.radio-select {
+  padding-right: 0;
+}

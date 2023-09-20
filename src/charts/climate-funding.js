@@ -599,6 +599,7 @@ function renderClimateFundingMap() {
                       dataList={['2017', '2018', '2019', '2020', '2021']}
                       name="years"
                       incremental={false}
+                      className={'year-slider'}
                     />
                     <RangeSlider
                       label="Select vulnerability level"
