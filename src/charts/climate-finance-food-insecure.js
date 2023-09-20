@@ -42,7 +42,7 @@ const renderDefaultChart = (chart, data,) => {
       min: 0,
       max: 45,
       scale: true,
-      name: 'Food Insecurity Gap',
+      name: 'Food insecurity gap',
       nameLocation: 'center',
       nameGap: 35,
       axisLabel: {
