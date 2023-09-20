@@ -422,7 +422,7 @@ function renderClimateFundingMap() {
           ];
           const adaptationFilterOptions = [
             { value: 'total', label: 'Total climate finance' },
-            { value: 'CCA', label: 'Climate adaptation finace' },
+            { value: 'CCA', label: 'Climate adaptation finance' },
             { value: 'CCM', label: 'Climate mitigation finance' },
           ];
 
