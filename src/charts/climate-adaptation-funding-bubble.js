@@ -69,6 +69,7 @@ const renderDefaultChart = (chart, data,) => {
           itemStyle: {
             borderColor: '#333',
             borderWidth: 2.5,
+            color: '#df8000',
           },
         },
       },
@@ -89,6 +90,7 @@ const renderDefaultChart = (chart, data,) => {
           itemStyle: {
             borderColor: '#333',
             borderWidth: 2.5,
+            color: '#df8000',
           },
         },
       },
