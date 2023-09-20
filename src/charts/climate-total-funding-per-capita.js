@@ -15,7 +15,7 @@ const renderDefaultChart = (chart, data,) => {
       trigger: 'item',
       formatter: (params) => `${params.data[3]} <br/>
       Vulnerability: ${vulnerabilityLabelMapping(Number(params.data[0]) * 100) } <br/>
-      Funding per capita: US$${(Number(params.data[2])).toFixed(1)} million
+      Funding per capita: US$${(Number(params.data[2])).toFixed(1)}
       `,
     },
     grid: { bottom: '10%', top: '20%', left: '5%' },
