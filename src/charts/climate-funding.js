@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 /** @jsx jsx */
-import chroma from 'chroma-js';
 import { jsx } from '@emotion/react';
 import { createRoot } from 'react-dom/client';
 import 'leaflet.pattern';
@@ -8,23 +7,25 @@ import MapResetButton from '../components/MapResetButton';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import {
   processedData,
-  getColorDynamic,
   highlightClimateMapFeature,
   getColorFinance,
   matchClimateCountryNames,
   climateDataInjectedGeojson,
   vulnerabilityLabelMapping,
+  getColorClimateShare,
 } from '../utils/interactiveMap';
 import { addFilterWrapper } from '../widgets/filters';
 import Select from '../components/Select';
 import RangeSlider from '../components/RangeSlider';
 import CheckboxInput from '../components/CheckboxInput';
 
-const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
+const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/custom.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
-const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#00538e'];
+const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#0a3a64'];
 const financeLegendMapping = ['0', '0.1m', '1m', '10m', '100m', '1b', '1.5b'];
+const shareLegendMapping = [0, 7.5, 15, 22.5, 30, 37.5];
+const otherShareLegendMapping = [0, 7, 14, 21, 28, 35];
 const vulnerabilityMapping = [
   { label: 4, value: 60, text: 'Very high' },
   { label: 3, value: 55, text: 'High', min: 55, max: 60 },
@@ -32,65 +33,6 @@ const vulnerabilityMapping = [
   { label: 1, value: 40, text: 'Low', min: 40, max: 50 },
   { label: 0, value: 0, text: 'Very low', min: 0, max: 40 },
 ];
-
-const getMaxMinValues = (dataType, csvData) => {
-  const dataList = csvData
-    .filter((d) => d[dataType])
-    .map((item) =>
-      Number(
-        dataType === 'Total_Climate_Share' || dataType === 'CCA_Share' || dataType === 'CCM_Share'
-          ? item[dataType].replace('%', '')
-          : item[dataType]
-      )
-    );
-
-  return {
-    maxValue: Math.ceil(Math.max(...dataList)),
-    minValue: Math.ceil(Math.min(...dataList)) < 10 ? 0 : Math.ceil(Math.min(...dataList)),
-  };
-};
-
-const getColorContinous = (d, dimensionVariable, groupedData) => {
-  const scaleData = getMaxMinValues(dimensionVariable, groupedData);
-  const increment = (scaleData.maxValue - scaleData.minValue) / colors.length;
-
-  if (!d) {
-    return '#E6E1E5';
-  }
-
-  return getColorDynamic(
-    dimensionVariable === 'Total_Climate_Share' ||
-      dimensionVariable === 'CCA_Share' ||
-      dimensionVariable === 'CCM_Share'
-      ? d.replace('%', '')
-      : d,
-    scaleData.minValue,
-    scaleData.maxValue,
-    increment,
-    chroma,
-    colors
-  );
-};
-
-const getLegendValues = (minValue, maxValue, colorLength) => {
-  const items = [];
-  const increment = maxValue / colorLength;
-  let initialValue = minValue;
-  while (items.length <= colorLength) {
-    if (initialValue === minValue) {
-      items.push(initialValue);
-    }
-
-    initialValue += increment;
-    if (Number(initialValue) === initialValue && initialValue % 1 !== 0) {
-      items.push(Number(initialValue.toFixed(1)));
-    } else {
-      items.push(initialValue);
-    }
-  }
-
-  return items;
-};
 
 const filterByVulnerability = (data, value) => {
   if (value === 0) {
@@ -102,12 +44,6 @@ const filterByVulnerability = (data, value) => {
   return mappingData.value === 60
     ? data.filter((d) => d.Vulnerability_Score_new >= 60)
     : data.filter((d) => d.Vulnerability_Score_new < mappingData.max && d.Vulnerability_Score_new >= mappingData.min);
-};
-
-const getCrisisData = (data, value) => {
-  if (!value) return data;
-
-  return data.filter((item) => item.protracted_crisis === value);
 };
 
 const filterDataByYear = (data, year) => data.filter((item) => item.year === year);
@@ -150,6 +86,7 @@ const getMarkerCountryData = (data, name) => data.find((d) => d.name === name);
 
 const getCurrentIconColor = (data, dimension, name, adaptation) => {
   const countryData = getMarkerCountryData(data, name);
+
   if (countryData) {
     let value;
     if (adaptation === 'total') {
@@ -165,13 +102,7 @@ const getCurrentIconColor = (data, dimension, name, adaptation) => {
           : countryData[getAdaptationActualValue(adaptation, dimension)] / 1000;
     }
 
-    return dimension === 'Total_Climate_Share'
-      ? getColorContinous(
-          value,
-          adaptation === 'total' ? dimension : getAdaptationActualValue(adaptation, dimension),
-          data
-        )
-      : getColorFinance(value, adaptation === 'total' ? dimension : getAdaptationActualValue(adaptation, dimension));
+    return dimension === 'Total_Climate_Share' ? getColorClimateShare(value, adaptation) : getColorFinance(value);
   }
 
   return '#E6E1E5';
@@ -179,7 +110,8 @@ const getCurrentIconColor = (data, dimension, name, adaptation) => {
 
 const smallCountryMarkerData = [
   {
-    name: 'Solomon Islands',
+    label: 'Solomon Islands',
+    name: 'Solomon Is.',
     coordinates: [-10.575488, 161.755118],
   },
   {
@@ -195,7 +127,7 @@ const smallCountryMarkerData = [
     coordinates: [16.841028, -23.742468],
   },
   {
-    name: 'São Tomé and Príncipe',
+    name: 'São Tomé and Principe',
     coordinates: [0.384856, 6.651183],
   },
   {
@@ -211,7 +143,8 @@ const smallCountryMarkerData = [
     coordinates: [-13.494016, -172.520477],
   },
   {
-    name: 'Saint Vincent and the Grenadines',
+    label: 'Saint Vincent and the Grenadines',
+    name: 'St. Vin. and Gren.',
     coordinates: [13.348472, -61.147504],
   },
   {
@@ -244,7 +177,8 @@ const smallCountryMarkerData = [
   },
 
   {
-    name: 'Marshall Islands',
+    label: 'Marshall Islands',
+    name: 'Marshall Is.',
     coordinates: [7.583201, 168.612489],
   },
   {
@@ -256,44 +190,55 @@ const smallCountryMarkerData = [
     coordinates: [1.784491, -157.299146],
   },
   {
-    name: 'Antigua and Barbuda',
+    label: 'Antigua and Barbuda',
+    name: 'Antigua and Barb.',
     coordinates: [17.195139, -61.306447],
   },
-  // {
-  //   name: 'Cook Islands',
-  //   coordinates: [-21.251607, -159.764738],
-  // },
-  // {
-  //   name: 'Micronesia',
-  //   coordinates: [6.952106, 158.228441],
-  // },
 ];
+
+const getClimateShareLegendText = (adaptation) => {
+  if (adaptation === 'total') {
+    return shareLegendMapping
+      .map(
+        (item, index) =>
+          `${
+            index === shareLegendMapping.length - 1
+              ? `<span> ${item} (%)</span>`
+              : `<span style="width:50px;">${item}</span>`
+          }`,
+      )
+      .join('');
+  }
+
+  return otherShareLegendMapping
+    .map(
+      (item, index) =>
+        `${
+          index === otherShareLegendMapping.length - 1
+            ? `<span> ${item} (%)</span>`
+            : `<span style="width:50px;">${item}</span>`
+        }`,
+    )
+    .join('');
+};
+
 const renderMap = (
   dimensionVariable,
   mapInstance,
   colorFunction,
   data,
   processed,
-  filterOptions,
   legendInstance,
   groupInstance,
   csvData,
-  crisisData,
   crisisValue,
-  adaptationValue
+  adaptationValue,
 ) => {
   let geojsonLayer;
-  let crisisLayer;
 
   const legendInstanceCopy = legendInstance;
   legendInstanceCopy.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'legend');
-
-    const scaleData = getMaxMinValues(
-      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable),
-      processed
-    );
-    const legendValues = getLegendValues(scaleData.minValue, scaleData.maxValue, colors.length);
 
     const legendContent = `<div style="display:flex;flex-direction:column;">
     <div>
@@ -304,7 +249,7 @@ const renderMap = (
               (color) =>
                 `<span>
       <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
-    </span>`
+    </span>`,
             )
             .join('')
         : financeColors
@@ -312,7 +257,7 @@ const renderMap = (
               (color) =>
                 `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
-        </span>`
+        </span>`,
             )
             .join('')
     }
@@ -320,21 +265,12 @@ const renderMap = (
     <div>
     ${
       dimensionVariable === 'Total_Climate_Share'
-        ? legendValues
-            .map(
-              (item, index) =>
-                `${
-                  index === legendValues.length - 1
-                    ? `<span> ${item} (%)</span>`
-                    : `<span style="width:50px;">${item}</span>`
-                }`
-            )
-            .join('')
+        ? getClimateShareLegendText(adaptationValue)
         : financeLegendMapping
             .map(
               (item, index) => `
-        <span style="width:45px;">${index === financeLegendMapping.length - 1 ? `${item} ($)` : item}</span>
-        `
+        <span style="width:45px;">${index === financeLegendMapping.length - 1 ? `${item} (US$)` : item}</span>
+        `,
             )
             .join('')
     }
@@ -346,54 +282,34 @@ const renderMap = (
   };
   legendInstanceCopy.addTo(mapInstance);
 
-  const style = (feature) => ({
-    fillColor:
-      dimensionVariable === 'Total_Climate_Share'
-        ? colorFunction(
-            getVariableValue(dimensionVariable, feature, adaptationValue),
-            adaptationValue === 'total'
-              ? dimensionVariable
-              : getAdaptationActualValue(adaptationValue, dimensionVariable),
-            processed
-          )
-        : colorFunction(
-            getVariableValue(dimensionVariable, feature, adaptationValue),
-            adaptationValue === 'total'
-              ? dimensionVariable
-              : getAdaptationActualValue(adaptationValue, dimensionVariable)
-          ),
-    weight: 1,
-    opacity: 1,
-    color: 'white',
-    fillOpacity: 1,
-  });
+  const getStyleColor = (feature) => {
+    if (dimensionVariable === 'Total_Climate_Share') {
+      return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue), adaptationValue);
+    }
 
-  const getCrisisColorStyle = (feature) => {
+    return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue));
+  };
+
+  // Map style
+  const getStyle = (feature) => {
     if (feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue) {
       return new window.L.StripePattern({
+        fill: true,
         weight: 2,
-        spaceWeight: 1,
+        spaceWeight: 6,
+        spaceColor: getStyleColor(feature),
+        spaceOpacity: 1,
         angle: 45,
         color: '#d12568',
       }).addTo(mapInstance);
     }
-    if (dimensionVariable === 'Total_Climate_Share') {
-      return colorFunction(
-        getVariableValue(dimensionVariable, feature, adaptationValue),
-        adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable),
-        processed
-      );
-    }
 
-    return colorFunction(
-      getVariableValue(dimensionVariable, feature, adaptationValue),
-      adaptationValue === 'total' ? dimensionVariable : getAdaptationActualValue(adaptationValue, dimensionVariable)
-    );
+    return getStyleColor(feature);
   };
-  const crisisStyle = (feature) => ({
+  const style = (feature) => ({
     [feature.properties.protracted_crisis && feature.properties[dimensionVariable] && crisisValue
       ? 'fillPattern'
-      : 'fillColor']: getCrisisColorStyle(feature),
+      : 'fillColor']: getStyle(feature),
     weight: 1,
     opacity: 1,
     color: 'white',
@@ -402,14 +318,13 @@ const renderMap = (
 
   const resetHighlight = (e) => {
     geojsonLayer.resetStyle(e.target);
-    crisisLayer.resetStyle(e.target);
     e.target.closePopup();
   };
 
   const onEachFeature = (feature, layer) => {
     if (feature.properties[dimensionVariable] || feature.properties[dimensionVariable] === '') {
       layer.on({
-        mouseover: (e) => highlightClimateMapFeature(e, dimensionVariable, filterOptions, csvData),
+        mouseover: (e) => highlightClimateMapFeature(e, dimensionVariable, csvData, mapInstance, crisisValue),
         mouseout: resetHighlight,
       });
     } else {
@@ -430,8 +345,8 @@ const renderMap = (
       });
     }
   };
-  // Add markers for small island countries
 
+  // Add markers for small island countries
   smallCountryMarkerData.forEach((item) => {
     const iconData = getMarkerCountryData(processed, item.name);
     const myIcon = window.L.divIcon({
@@ -440,7 +355,7 @@ const renderMap = (
         processed,
         dimensionVariable,
         item.name,
-        adaptationValue
+        adaptationValue,
       )};' class='marker-pin'></div>`,
     });
     const marker = window.L.marker(item.coordinates, {
@@ -449,27 +364,33 @@ const renderMap = (
     if (iconData) {
       marker.bindTooltip(
         iconData[dimensionVariable]
-          ? `<div>${item.name}<br>
+          ? `<div>${item.label ? item.label : item.name}<br>
+    Total climate ODA: US$${Number(iconData.Total_Climate_USD).toFixed(1)}<br>
     Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
-              Number(iconData.Total_Climate_USD) !== 0
-                ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
-                : 0
-            }%)<br>
+      Number(iconData.Total_Climate_USD) !== 0
+        ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+        : 0
+    }%)<br>
     Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${
-              Number(iconData.Total_Climate_USD) !== 0
-                ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
-                : 0
-            }%)<br>
+      Number(iconData.Total_Climate_USD) !== 0
+        ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+        : 0
+    }%)<br>
     Climate vulnerability: ${
       iconData.Vulnerability_Score_new
         ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
         : 'Not assesed'
     }<br>
+    Share of total ODA: ${
+      Number(iconData.Total_ODA_USD) !== 0
+        ? `${((Number(iconData.Total_Climate_USD) / Number(iconData.Total_ODA_USD)) * 100).toFixed(1)}%`
+        : '0%'
+    }<br>
     ${iconData.protracted_crisis ? `In protracted crisis` : ''}
     </div>
     `
           : `<div>${item.name}<br> Not assessed</div>`,
-        { direction: 'top', opacity: 1 }
+        { direction: 'top', opacity: 1 },
       );
 
       marker.on('mouseover', (e) => {
@@ -482,7 +403,7 @@ const renderMap = (
           processed,
           dimensionVariable,
           item.name,
-          adaptationValue
+          adaptationValue,
         );
       });
     }
@@ -496,14 +417,7 @@ const renderMap = (
       style,
       onEachFeature,
     });
-    crisisLayer = window.L.geoJSON(climateDataInjectedGeojson(data, processed), {
-      style: crisisStyle,
-      onEachFeature,
-    });
     groupInstance.addLayer(geojsonLayer);
-    if (crisisValue) {
-      groupInstance.addLayer(crisisLayer);
-    }
   }
   loadLayer();
 };
@@ -520,7 +434,7 @@ function renderClimateFundingMap() {
             maxZoom: 3,
             minZoom: 1,
             crs: window.L.CRS.EPSG4326,
-            center: [6.6, 20.9],
+            center: [6.6, 14.1],
             zoom: 1,
             attributionControl: false,
           });
@@ -536,23 +450,9 @@ function renderClimateFundingMap() {
             { value: 'Total_Climate_Share', label: '% of total ODA' },
           ];
           const adaptationFilterOptions = [
-            { value: 'total', label: 'Total climate finance' },
-            { value: 'CCA', label: 'Climate adaptation finace' },
-            { value: 'CCM', label: 'Climate mitigation finance' },
-          ];
-          const filterOptionMapping = [
-            {
-              name: 'Total_Climate_USD',
-              label: 'US$ millions',
-              scaleType: 'continous',
-              unit: 'million',
-            },
-            {
-              name: 'Total_Climate_Share',
-              label: '% of total ODA',
-              scaleType: 'continous',
-              unit: '%',
-            },
+            { value: 'total', label: 'Total climate ODA' },
+            { value: 'CCA', label: 'Climate adaptation ODA' },
+            { value: 'CCM', label: 'Climate mitigation ODA' },
           ];
 
           // Initialise Legend
@@ -575,10 +475,9 @@ function renderClimateFundingMap() {
                   yearlyProcessedCountryNameData,
                   'countryname',
                   'value_precise',
-                  'protracted_crisis'
+                  'protracted_crisis',
                 );
                 let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
-                let crisisCountries = [];
                 let crisisValue;
 
                 const fg = window.L.featureGroup().addTo(map);
@@ -587,16 +486,14 @@ function renderClimateFundingMap() {
                 renderMap(
                   variable,
                   map,
-                  variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                  variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                   geojsonData,
                   finalFilteredData,
-                  filterOptionMapping,
                   legend,
                   fg,
                   data,
-                  crisisCountries,
                   crisisValue,
-                  adaptationVariable
+                  adaptationVariable,
                 );
 
                 const onSelectDimension = (dimension) => {
@@ -605,16 +502,14 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -627,22 +522,20 @@ function renderClimateFundingMap() {
                     yearlyProcessedCountryNameData,
                     'countryname',
                     'value_precise',
-                    'protracted_crisis'
+                    'protracted_crisis',
                   );
                   finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -652,36 +545,31 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
                 const onCrisisChange = (value) => {
                   crisisValue = value;
-                  const crisisData = getCrisisData(filterDataByYear(processedCountryNameData, year), value);
-                  crisisCountries = Array.from(new Set(crisisData.map((stream) => stream.countryname)));
+
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -691,21 +579,19 @@ function renderClimateFundingMap() {
                   renderMap(
                     variable,
                     map,
-                    variable === 'Total_Climate_Share' ? getColorContinous : getColorFinance,
+                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
                     geojsonData,
                     finalFilteredData,
-                    filterOptionMapping,
                     legend,
                     fg,
                     data,
-                    crisisCountries,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
                 const onReset = () => {
-                  map.setView([6.6, 20.9], 1);
+                  map.setView([[6.6, 14.1]], 1);
                 };
 
                 // Render filter component
@@ -726,7 +612,7 @@ function renderClimateFundingMap() {
                       classNamePrefix="climate-adaptation-select"
                       label="Select adaptation/mitigation"
                       options={adaptationFilterOptions}
-                      defaultValue={[{ value: 'total', label: 'Total climate finance' }]}
+                      defaultValue={[{ value: 'total', label: 'Total climate ODA' }]}
                       onChange={onSelectAdaptation}
                       css={{
                         minWidth: '150px',
@@ -742,6 +628,7 @@ function renderClimateFundingMap() {
                       dataList={['2017', '2018', '2019', '2020', '2021']}
                       name="years"
                       incremental={false}
+                      className={'year-slider'}
                     />
                     <RangeSlider
                       label="Select vulnerability level"
@@ -755,7 +642,7 @@ function renderClimateFundingMap() {
                       className="range-width vulnerability-range"
                     />
                     <CheckboxInput name="crisis" label="Highlight" onChange={onCrisisChange} />
-                  </div>
+                  </div>,
                 );
 
                 // Render reset Button
@@ -769,20 +656,6 @@ function renderClimateFundingMap() {
                 };
 
                 resetButton.addTo(map);
-
-                // Informational div
-                // const info = window.L.control();
-                // info.onAdd = function () {
-                //   const infoDiv = window.L.DomUtil.create('div', 'infoDiv');
-                //   infoDiv.innerHTML = `I am here`;
-                //   const lnglat = window.L.latLng(23.984444, -74.925693);
-                //   const pixelCoords = map.latLngToContainerPoint(lnglat);
-                //   window.L.DomUtil.setPosition(infoDiv, window.L.point(pixelCoords.x, pixelCoords.y));
-
-                //   return infoDiv;
-                // };
-
-                // info.addTo(map);
 
                 dichart.hideLoading();
               });

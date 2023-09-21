@@ -2,7 +2,12 @@
 .dicharts--gha-donors,
 .dicharts--gha-recipients,
 .dicharts--gha-people-affected-by-crisis-leaflet,
-.dicharts--gha-climate-funding {
+.dicharts--gha-climate-funding,
+.dicharts--gha-total-climate-finance,
+.dicharts--gha-climate-percentage-oda,
+.dicharts--gha-climate-adaptation-funding,
+.dicharts--gha-climate-finance-food-insecure,
+.dicharts--gha-climate-funding-per-capita {
   width: 100%;
   min-height: 450px;
   background: white;
@@ -268,4 +273,12 @@ input[type=checkbox]{
   background: rgba(255,255,255,1);
   white-space: nowrap;
   margin-top: 0;
+}
+
+.year-slider {
+  min-width: 150px;
+}
+
+.radio-select {
+  padding-right: 0;
 }

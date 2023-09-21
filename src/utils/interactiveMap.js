@@ -48,7 +48,7 @@ const dataBoxContent = (data) => [
     value: getCountryResponsePlan(
       data['Country_response_plan_requirements_(US$,_million)'],
       data['Country_response_plan_coverage_(%)'],
-      data['Country_response_plan_funding_(US$,_million)']
+      data['Country_response_plan_funding_(US$,_million)'],
     ),
     label: 'Country RP',
     icon: { image: responsePlan, text: 'response-plan' },
@@ -57,7 +57,7 @@ const dataBoxContent = (data) => [
     value: getRegionalResponsePlan(
       data['Regional_response_plan_requirements_(US$,_million)'],
       data['Regional_response_plan_funding_(US$,_million)'],
-      data['Regional_response_plan_coverage_(%)']
+      data['Regional_response_plan_coverage_(%)'],
     ),
     label: 'Regional RP',
     icon: { image: responsePlan, text: 'response-plan' },
@@ -86,9 +86,9 @@ const matchCountryNames = (csvData, worldData, countryCodeVariable, countryNameV
 const matchClimateCountryNames = (csvData, worldData, countryCodeVariable, countryNameVariable) => {
   const matchedData = csvData.map((stream) => {
     const streamCopy = { ...stream };
-    const countryObject = worldData.find((feature) => feature.properties.ISO_A3 === streamCopy[countryCodeVariable]);
+    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy[countryCodeVariable]);
     if (countryObject) {
-      streamCopy[countryNameVariable] = countryObject.properties.WB_NAME;
+      streamCopy[countryNameVariable] = countryObject.properties.name;
     }
 
     return streamCopy;
@@ -133,7 +133,7 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
 const climateDataInjectedGeojson = (jsonData, groupedData) =>
   jsonData.map((feature) => {
     const featureCopy = { ...feature };
-    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.WB_NAME);
+    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.name);
     if (matchingCountryData) {
       featureCopy.properties = {
         ...feature.properties,
@@ -218,13 +218,13 @@ dataBox.update = function (properties, csv) {
   this.div.innerHTML = properties
     ? `<div style="padding-bottom: 0px;">${getOriginalCountryName(
         csv,
-        properties.iso_a3
+        properties.iso_a3,
       )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div><div style="margin-top: 8px;"> ${dataBoxContent(
-        properties
+        properties,
       )
         .map(
           (item) =>
-            `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
+            `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`,
         )
         .join('')}</div>`
     : '';
@@ -265,7 +265,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
             filterOptions.find((option) => option.name === variable).unit
           }</span></div>`
         : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
-      { direction: 'top', opacity: 1 }
+      { direction: 'top', opacity: 1 },
     )
     .openTooltip();
 };
@@ -315,13 +315,28 @@ const vulnerabilityLabelMapping = (value) => {
   return 'Not assessed';
 };
 
-const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
+const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
   const layer = e.target;
-  layer.setStyle({
-    fillColor: '#df8000',
-    color: '#484848',
-    weight: 2,
-  });
+  if (layer.feature.properties.protracted_crisis && crisisValue) {
+    layer.setStyle({
+      color: '#484848',
+      weight: 2,
+      fillPattern: new window.L.StripePattern({
+        weight: 2,
+        spaceOpacity: 1,
+        spaceColor: '#df8000',
+        spaceWeight: 6,
+        angle: 45,
+        color: '#d12568',
+      }).addTo(map),
+    });
+  } else {
+    layer.setStyle({
+      fillColor: '#df8000',
+      color: '#484848',
+      weight: 2,
+    });
+  }
 
   if (!window.L.Browser.ie && !window.L.Browser.opera && !window.L.Browser.edge) {
     layer.bringToFront();
@@ -332,8 +347,9 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
   layer
     .bindTooltip(
       layer.feature.properties[variable]
-        ? `<div>${country || layer.feature.properties.WB_NAME}<br>
-          Adaptation:  US$ ${Number(layer.feature.properties.CCA_USD).toFixed(1)} ( ${
+        ? `<div>${country || layer.feature.properties.name}<br>
+          Total climate ODA: US$${Number(layer.feature.properties.Total_Climate_USD).toFixed(1)}<br>
+          Adaptation:  US$${Number(layer.feature.properties.CCA_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
                   (Number(layer.feature.properties.CCA_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
@@ -341,7 +357,7 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
                 ).toFixed(1)
               : 0
           }%)<br>
-          Mitigation: US$ ${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
+          Mitigation: US$${Number(layer.feature.properties.CCM_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
                   (Number(layer.feature.properties.CCM_USD) / Number(layer.feature.properties.Total_Climate_USD)) *
@@ -354,14 +370,25 @@ const highlightClimateMapFeature = (e, variable, filterOptions, csvData) => {
               ? vulnerabilityLabelMapping(Number(layer.feature.properties.Vulnerability_Score_new))
               : 'Not assesed'
           }<br>
+          Share of total ODA: ${
+            Number(layer.feature.properties.Total_ODA_USD) !== 0
+              ? `${(
+                  (Number(layer.feature.properties.Total_Climate_USD) /
+                    Number(layer.feature.properties.Total_ODA_USD)) *
+                  100
+                ).toFixed(1)}%`
+              : '0%'
+          }<br>
           ${layer.feature.properties.protracted_crisis ? `In protracted crisis` : ''}
           </div>
           `
         : `<div>${country}<br> Not assessed</div>`,
-      { direction: 'top', opacity: 1 }
+      { direction: 'top', opacity: 1 },
     )
     .openTooltip();
 };
+
+const cleanPercentageValues = (value) => (value ? value.replace('%', '') : '');
 
 const getColorFinance = (value) => {
   if (value >= 0 && value < 0.0001) {
@@ -380,7 +407,34 @@ const getColorFinance = (value) => {
     return '#105fa3';
   }
   if (value >= 1) {
-    return '#00538e';
+    return '#0a3a64';
+  }
+
+  return '#E6E1E5';
+};
+
+const getColorClimateShare = (value, adaptationValue) => {
+  let scaleValues;
+  if (adaptationValue === 'total') {
+    scaleValues = [0, 7.5, 15, 22.5, 30, 37.5];
+  } else {
+    scaleValues = [0, 7, 14, 21, 28, 35];
+  }
+  const cleanValue = cleanPercentageValues(value) ? Number(cleanPercentageValues(value)) : undefined;
+  if (cleanValue >= 0 && cleanValue < scaleValues[1]) {
+    return '#bcd4f0';
+  }
+  if (cleanValue >= scaleValues[1] && cleanValue < scaleValues[2]) {
+    return '#77adde';
+  }
+  if (cleanValue >= scaleValues[2] && cleanValue < scaleValues[3]) {
+    return '#5da3d9';
+  }
+  if (cleanValue >= scaleValues[3] && cleanValue < scaleValues[4]) {
+    return '#0089cc';
+  }
+  if (cleanValue >= scaleValues[4]) {
+    return '#0c457b';
   }
 
   return '#E6E1E5';
@@ -406,4 +460,6 @@ export {
   matchClimateCountryNames,
   climateDataInjectedGeojson,
   vulnerabilityLabelMapping,
+  getColorClimateShare,
+  cleanPercentageValues,
 };

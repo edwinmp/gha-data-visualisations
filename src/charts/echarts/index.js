@@ -172,4 +172,19 @@ export const getYAxisNamePositionFromSeries = (series) => {
   return 'far';
 };
 
+export const getScaledValue = (value, scaleMin, scaleMax, dataMin, dataMax) => {
+  const scaleFactor = (scaleMax - scaleMin) / (dataMax- dataMin)
+
+  // Scale down the value
+  const scaledValue = (value - dataMin) * scaleFactor + scaleMin;
+
+  return scaledValue
+}
+
+export const getSymbolSizeRange = (data, variable) => {
+  const values = data.map((d) => Number(d[variable]))
+
+  return {min: Math.min(...values), max: Math.max(...values)}
+}
+
 export default defaultOptions;

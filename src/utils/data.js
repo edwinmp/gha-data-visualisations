@@ -2,6 +2,8 @@ import { parse } from 'papaparse';
 
 export const ACTIVE_BRANCH = 'dev';
 
+export const sortedData = (data, property) => data.sort((a, b) => Number(b[property]) - Number(a[property]));
+
 const fetchCSVData = (url) =>
   new Promise((resolve) => {
     parse(url, {
