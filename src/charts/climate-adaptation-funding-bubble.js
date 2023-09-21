@@ -29,6 +29,9 @@ const renderDefaultChart = (chart, data) => {
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
+      nameTextStyle: {
+        fontWeight: 'bold',
+      },
       position: 'top',
       min: 0.4,
       max: 0.7,
@@ -42,6 +45,7 @@ const renderDefaultChart = (chart, data) => {
       type: 'category',
       data: ['Oceania', 'Latin America and the Caribbean', 'Asia', 'Africa'],
       axisLabel: {
+        fontWeight: 'bold',
         formatter(value) {
           if (value === 'Latin America and the Caribbean') {
             return 'Latin America and\nthe Caribbean';

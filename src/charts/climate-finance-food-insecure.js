@@ -33,6 +33,9 @@ const renderDefaultChart = (chart, data) => {
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
+      nameTextStyle: {
+        fontWeight: 'bold',
+      },
       min: 0.5,
       max: 0.7,
       scale: true,
@@ -56,8 +59,12 @@ const renderDefaultChart = (chart, data) => {
       scale: true,
       name: 'Food insecurity gap',
       nameLocation: 'center',
+      nameTextStyle: {
+        fontWeight: 'bold',
+      },
       nameGap: 35,
       axisLabel: {
+        fontWeight: 'bold',
         formatter(value) {
           return `${value}%`;
         },
