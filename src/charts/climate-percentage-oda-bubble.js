@@ -1,6 +1,6 @@
 import deepMerge from 'deepmerge';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
-import defaultOptions, { handleResize, legendSelection } from './echarts';
+import defaultOptions, { handleResize, legendSelection, getScaledValue } from './echarts';
 import { cleanPercentageValues, vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate-finance-bubble-data.csv`;
@@ -9,6 +9,11 @@ const seriesData = (data) =>
 data
     .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number( cleanPercentageValues(d['Funding share of ODA'])), d.Country]);
 
+const symbolDataRange = (data) => {
+  const values = data.map(d => Number( cleanPercentageValues(d['Funding share of ODA'])))
+
+  return {min: Math.min(...values), max: Math.max(...values)}
+}
 
 const renderDefaultChart = (chart, data,) => {
   const option = {
@@ -73,7 +78,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#f9cdd0'
         },
         symbolSize(val) {
-          return (val[2])*2.5
+          return getScaledValue(val[2],3, 80, symbolDataRange(data).min, symbolDataRange(data).max)
         },
         emphasis: {
           itemStyle: {
@@ -94,7 +99,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          return (val[2])*2.5
+          return getScaledValue(val[2],3, 80, symbolDataRange(data).min, symbolDataRange(data).max)
         },
         emphasis: {
           itemStyle: {

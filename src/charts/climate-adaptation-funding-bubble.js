@@ -1,6 +1,6 @@
 import deepMerge from 'deepmerge';
 import fetchCSVData, { ACTIVE_BRANCH, sortedData } from '../utils/data';
-import defaultOptions, { handleResize, legendSelection } from './echarts';
+import defaultOptions, { handleResize, legendSelection, getSymbolSizeRange, getScaledValue } from './echarts';
 import { cleanPercentageValues, vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate-finance-bubble-data.csv`;
@@ -11,6 +11,7 @@ const seriesData = (data) =>
 
 
 const renderDefaultChart = (chart, data,) => {
+  const symbolDataRange = getSymbolSizeRange(data,'Adaptation Share ODA(%)' )
   const option = {
     tooltip: {
       trigger: 'item',
@@ -73,7 +74,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#f9cdd0'
         },
         symbolSize(val) {
-          return (val[2])*4.2
+          return getScaledValue(val[2],3, 80, symbolDataRange.min, symbolDataRange.max)
         },
         emphasis: {
           itemStyle: {
@@ -94,7 +95,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          return (val[2])*4.2
+          return getScaledValue(val[2],3, 80, symbolDataRange.min, symbolDataRange.max)
         },
         emphasis: {
           itemStyle: {

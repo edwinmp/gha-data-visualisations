@@ -1,6 +1,6 @@
 import deepMerge from 'deepmerge';
 import fetchCSVData, { ACTIVE_BRANCH, sortedData } from '../utils/data';
-import defaultOptions, { handleResize, legendSelection } from './echarts';
+import defaultOptions, { handleResize, legendSelection, getSymbolSizeRange, getScaledValue } from './echarts';
 import { vulnerabilityLabelMapping } from '../utils/interactiveMap';
 
 
@@ -10,8 +10,8 @@ const seriesData = (data) =>
   sortedData(data, 'Total Funding')
     .filter(item => item.Region !== '#N/A').map((d) => [Number(d.Vulnerability), d.Region, Number(d['Total Funding']), d.Country]);
 
-
 const renderDefaultChart = (chart, data,) => {
+  const symbolDataRange = getSymbolSizeRange(data,'Total Funding' )
   const option = {
     tooltip: {
       trigger: 'item',
@@ -75,7 +75,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#f9cdd0'
         },
         symbolSize(val) {
-          return val[2]/10
+          return getScaledValue(val[2],3, 80, symbolDataRange.min, symbolDataRange.max)
         },
         emphasis: {
           itemStyle: {
@@ -95,7 +95,7 @@ const renderDefaultChart = (chart, data,) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          return val[2]/10
+          return getScaledValue(val[2],3, 80, symbolDataRange.min, symbolDataRange.max)
         },
         emphasis: {
           itemStyle: {
