@@ -55,12 +55,13 @@ const renderDefaultChart = (chart, data,) => {
     series: [
       {
         type: 'scatter',
-        name:'Other ODA Recipients',
-        data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
+        name:'Protracted crisis',
+        data: seriesData(data.filter((d) => d['Crisis Class'] === 'Protracted Crisis')),
+        zlevel: 2,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#f9cdd0'
+          color: '#7e1850',
         },
         symbolSize(val) {
           return getScaledValue(val[2],8, 80, symbolDataRange.min, symbolDataRange.max)
@@ -83,7 +84,8 @@ const renderDefaultChart = (chart, data,) => {
           data: [
             {xAxis: 0.55},
             {xAxis: 0.6}
-          ]
+          ],
+          zlevel:0
         },
         markArea: {
           silent: true,
@@ -120,13 +122,13 @@ const renderDefaultChart = (chart, data,) => {
       },
       {
         type: 'scatter',
-        name:'Protracted Crisis',
-        data: seriesData(data.filter((d) => d['Crisis Class'] === 'Protracted Crisis')),
+        name:'Other ODA recipients',
+        data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
         zlevel: 1,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#7e1850',
+          color: '#f9cdd0'
         },
         symbolSize(val) {
           return getScaledValue(val[2],8, 80, symbolDataRange.min, symbolDataRange.max)
@@ -138,6 +140,52 @@ const renderDefaultChart = (chart, data,) => {
             color: '#df8000',
           },
         },
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          label: { show: false},
+          lineStyle: {
+            color: '#cac5cb',
+            type: 'solid'
+          },
+          data: [
+            {xAxis: 0.55},
+            {xAxis: 0.6}
+          ],
+          zlevel:0
+        },
+        markArea: {
+          silent: true,
+          itemStyle: {
+            color: 'transparent'
+          },
+          label: {
+            font: 'Geomanist Regular,sans-serif',
+            fontSize: 13,
+            fontWeight: 'normal',
+            color: '#7d7d7a'
+          },
+          data: [
+          [
+            {name: 'Medium',xAxis: 0.5},
+            {
+              xAxis: 0.55,
+            }
+          ],
+          [
+            {name: 'High',xAxis: 0.55},
+            {
+              xAxis: 0.6,
+            }
+          ],
+          [
+            {name: 'Very high',xAxis: 0.6},
+            {
+              xAxis: 0.7,
+            }
+          ]
+          ],
+        }
       },
     ],
   };

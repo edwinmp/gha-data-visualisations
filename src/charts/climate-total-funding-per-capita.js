@@ -52,15 +52,15 @@ const renderDefaultChart = (chart, data,) => {
       }
     },
     series: [
-
       {
         type: 'scatter',
-        name:'Other ODA Recipients',
-        data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
+        name:'Protracted crisis',
+        data: seriesData(data.filter((d) => d['Crisis Class'] === 'Protracted Crisis')),
+        zlevel: 2,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#f9cdd0'
+          color: '#7e1850',
         },
         symbolSize(val) {
           return getScaledValue(val[2],8, 80, symbolDataRange.min, symbolDataRange.max)
@@ -84,7 +84,8 @@ const renderDefaultChart = (chart, data,) => {
             {xAxis: 0.5},
             {xAxis: 0.55},
             {xAxis: 0.6}
-          ]
+          ],
+          zlevel: 0
         },
         markArea: {
           silent: true,
@@ -126,13 +127,13 @@ const renderDefaultChart = (chart, data,) => {
       },
       {
         type: 'scatter',
-        name:'Protracted Crisis',
-        data: seriesData(data.filter((d) => d['Crisis Class'] === 'Protracted Crisis')),
+        name:'Other ODA recipients',
+        data: seriesData(data.filter((d) => d['Crisis Class'] !== 'Protracted Crisis')),
         zlevel: 1,
         itemStyle: {
           opacity: 0.8,
           borderColor: 'black',
-          color: '#7e1850',
+          color: '#f9cdd0'
         },
         symbolSize(val) {
           return getScaledValue(val[2],8, 80, symbolDataRange.min, symbolDataRange.max)
@@ -156,7 +157,8 @@ const renderDefaultChart = (chart, data,) => {
             {xAxis: 0.5},
             {xAxis: 0.55},
             {xAxis: 0.6}
-          ]
+          ],
+          zlevel: 0
         },
         markArea: {
           silent: true,
