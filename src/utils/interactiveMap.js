@@ -413,21 +413,27 @@ const getColorFinance = (value) => {
   return '#E6E1E5';
 };
 
-const getColorClimateShare = (value) => {
+const getColorClimateShare = (value, adaptationValue) => {
+  let scaleValues;
+  if (adaptationValue === 'total') {
+    scaleValues = [0, 7.5, 15, 22.5, 30, 37.5];
+  } else {
+    scaleValues = [0, 7, 14, 21, 28, 35];
+  }
   const cleanValue = cleanPercentageValues(value) ? Number(cleanPercentageValues(value)) : undefined;
-  if (cleanValue >= 0 && cleanValue < 7.5) {
+  if (cleanValue >= 0 && cleanValue < scaleValues[1]) {
     return '#bcd4f0';
   }
-  if (cleanValue >= 7.5 && cleanValue < 15) {
+  if (cleanValue >= scaleValues[1] && cleanValue < scaleValues[2]) {
     return '#77adde';
   }
-  if (cleanValue >= 15 && cleanValue < 22.5) {
+  if (cleanValue >= scaleValues[2] && cleanValue < scaleValues[3]) {
     return '#5da3d9';
   }
-  if (cleanValue >= 22.5 && cleanValue < 30) {
+  if (cleanValue >= scaleValues[3] && cleanValue < scaleValues[4]) {
     return '#0089cc';
   }
-  if (cleanValue >= 30) {
+  if (cleanValue >= scaleValues[4]) {
     return '#0c457b';
   }
 

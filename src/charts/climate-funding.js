@@ -25,6 +25,7 @@ const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#0a3a64'];
 const financeLegendMapping = ['0', '0.1m', '1m', '10m', '100m', '1b', '1.5b'];
 const shareLegendMapping = [0, 7.5, 15, 22.5, 30, 37.5];
+const otherShareLegendMapping = [0, 7, 14, 21, 28, 35];
 const vulnerabilityMapping = [
   { label: 4, value: 60, text: 'Very high' },
   { label: 3, value: 55, text: 'High', min: 55, max: 60 },
@@ -101,7 +102,7 @@ const getCurrentIconColor = (data, dimension, name, adaptation) => {
           : countryData[getAdaptationActualValue(adaptation, dimension)] / 1000;
     }
 
-    return dimension === 'Total_Climate_Share' ? getColorClimateShare(value) : getColorFinance(value);
+    return dimension === 'Total_Climate_Share' ? getColorClimateShare(value, adaptation) : getColorFinance(value);
   }
 
   return '#E6E1E5';
@@ -195,6 +196,32 @@ const smallCountryMarkerData = [
   },
 ];
 
+const getClimateShareLegendText = (adaptation) => {
+  if (adaptation === 'total') {
+    return shareLegendMapping
+      .map(
+        (item, index) =>
+          `${
+            index === shareLegendMapping.length - 1
+              ? `<span> ${item} (%)</span>`
+              : `<span style="width:50px;">${item}</span>`
+          }`,
+      )
+      .join('');
+  }
+
+  return otherShareLegendMapping
+    .map(
+      (item, index) =>
+        `${
+          index === otherShareLegendMapping.length - 1
+            ? `<span> ${item} (%)</span>`
+            : `<span style="width:50px;">${item}</span>`
+        }`,
+    )
+    .join('');
+};
+
 const renderMap = (
   dimensionVariable,
   mapInstance,
@@ -238,16 +265,7 @@ const renderMap = (
     <div>
     ${
       dimensionVariable === 'Total_Climate_Share'
-        ? shareLegendMapping
-            .map(
-              (item, index) =>
-                `${
-                  index === shareLegendMapping.length - 1
-                    ? `<span> ${item} (%)</span>`
-                    : `<span style="width:50px;">${item}</span>`
-                }`,
-            )
-            .join('')
+        ? getClimateShareLegendText(adaptationValue)
         : financeLegendMapping
             .map(
               (item, index) => `
@@ -266,7 +284,7 @@ const renderMap = (
 
   const getStyleColor = (feature) => {
     if (dimensionVariable === 'Total_Climate_Share') {
-      return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue));
+      return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue), adaptationValue);
     }
 
     return colorFunction(getVariableValue(dimensionVariable, feature, adaptationValue));
