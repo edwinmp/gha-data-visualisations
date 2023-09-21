@@ -42,10 +42,10 @@ const renderDefaultChart = (chart, data,) => {
         },
         padding: [0, 0, 0, 30]
       },
-      splitNumber: 4,
-      splitLine: {
-        show: true
-      }
+      // splitNumber: 4,
+      // splitLine: {
+      //   show: true
+      // }
     },
     yAxis: {
       type: 'category',
