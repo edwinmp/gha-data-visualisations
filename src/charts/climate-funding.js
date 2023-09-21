@@ -19,7 +19,7 @@ import Select from '../components/Select';
 import RangeSlider from '../components/RangeSlider';
 import CheckboxInput from '../components/CheckboxInput';
 
-const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/world_map.geo.json`;
+const MAP_FILE_PATH = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/custom.json`;
 const DATA_URL = `https://raw.githubusercontent.com/devinit/gha-data-visualisations/${ACTIVE_BRANCH}/public/assets/data/climate_funding_data_long_format.csv`;
 const colors = ['#bcd4f0', '#77adde', '#5da3d9', '#0089cc', '#0c457b'];
 const financeColors = ['#d3e0f4', '#a3c7eb', '#77adde', '#4397d3', '#105fa3', '#0a3a64'];
@@ -85,6 +85,7 @@ const getMarkerCountryData = (data, name) => data.find((d) => d.name === name);
 
 const getCurrentIconColor = (data, dimension, name, adaptation) => {
   const countryData = getMarkerCountryData(data, name);
+
   if (countryData) {
     let value;
     if (adaptation === 'total') {
@@ -108,7 +109,8 @@ const getCurrentIconColor = (data, dimension, name, adaptation) => {
 
 const smallCountryMarkerData = [
   {
-    name: 'Solomon Islands',
+    label: 'Solomon Islands',
+    name: 'Solomon Is.',
     coordinates: [-10.575488, 161.755118],
   },
   {
@@ -124,7 +126,7 @@ const smallCountryMarkerData = [
     coordinates: [16.841028, -23.742468],
   },
   {
-    name: 'São Tomé and Príncipe',
+    name: 'São Tomé and Principe',
     coordinates: [0.384856, 6.651183],
   },
   {
@@ -140,7 +142,8 @@ const smallCountryMarkerData = [
     coordinates: [-13.494016, -172.520477],
   },
   {
-    name: 'Saint Vincent and the Grenadines',
+    label: 'Saint Vincent and the Grenadines',
+    name: 'St. Vin. and Gren.',
     coordinates: [13.348472, -61.147504],
   },
   {
@@ -173,7 +176,8 @@ const smallCountryMarkerData = [
   },
 
   {
-    name: 'Marshall Islands',
+    label: 'Marshall Islands',
+    name: 'Marshall Is.',
     coordinates: [7.583201, 168.612489],
   },
   {
@@ -185,7 +189,8 @@ const smallCountryMarkerData = [
     coordinates: [1.784491, -157.299146],
   },
   {
-    name: 'Antigua and Barbuda',
+    label: 'Antigua and Barbuda',
+    name: 'Antigua and Barb.',
     coordinates: [17.195139, -61.306447],
   },
 ];
@@ -200,7 +205,7 @@ const renderMap = (
   groupInstance,
   csvData,
   crisisValue,
-  adaptationValue
+  adaptationValue,
 ) => {
   let geojsonLayer;
 
@@ -217,7 +222,7 @@ const renderMap = (
               (color) =>
                 `<span>
       <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
-    </span>`
+    </span>`,
             )
             .join('')
         : financeColors
@@ -225,7 +230,7 @@ const renderMap = (
               (color) =>
                 `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:50px;"></i>
-        </span>`
+        </span>`,
             )
             .join('')
     }
@@ -240,14 +245,14 @@ const renderMap = (
                   index === shareLegendMapping.length - 1
                     ? `<span> ${item} (%)</span>`
                     : `<span style="width:50px;">${item}</span>`
-                }`
+                }`,
             )
             .join('')
         : financeLegendMapping
             .map(
               (item, index) => `
         <span style="width:45px;">${index === financeLegendMapping.length - 1 ? `${item} ($)` : item}</span>
-        `
+        `,
             )
             .join('')
     }
@@ -332,7 +337,7 @@ const renderMap = (
         processed,
         dimensionVariable,
         item.name,
-        adaptationValue
+        adaptationValue,
       )};' class='marker-pin'></div>`,
     });
     const marker = window.L.marker(item.coordinates, {
@@ -341,17 +346,17 @@ const renderMap = (
     if (iconData) {
       marker.bindTooltip(
         iconData[dimensionVariable]
-          ? `<div>${item.name}<br>
+          ? `<div>${item.label ? item.label : item.name}<br>
     Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
-              Number(iconData.Total_Climate_USD) !== 0
-                ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
-                : 0
-            }%)<br>
+      Number(iconData.Total_Climate_USD) !== 0
+        ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+        : 0
+    }%)<br>
     Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${
-              Number(iconData.Total_Climate_USD) !== 0
-                ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
-                : 0
-            }%)<br>
+      Number(iconData.Total_Climate_USD) !== 0
+        ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
+        : 0
+    }%)<br>
     Climate vulnerability: ${
       iconData.Vulnerability_Score_new
         ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
@@ -361,7 +366,7 @@ const renderMap = (
     </div>
     `
           : `<div>${item.name}<br> Not assessed</div>`,
-        { direction: 'top', opacity: 1 }
+        { direction: 'top', opacity: 1 },
       );
 
       marker.on('mouseover', (e) => {
@@ -374,7 +379,7 @@ const renderMap = (
           processed,
           dimensionVariable,
           item.name,
-          adaptationValue
+          adaptationValue,
         );
       });
     }
@@ -446,7 +451,7 @@ function renderClimateFundingMap() {
                   yearlyProcessedCountryNameData,
                   'countryname',
                   'value_precise',
-                  'protracted_crisis'
+                  'protracted_crisis',
                 );
                 let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                 let crisisValue;
@@ -464,7 +469,7 @@ function renderClimateFundingMap() {
                   fg,
                   data,
                   crisisValue,
-                  adaptationVariable
+                  adaptationVariable,
                 );
 
                 const onSelectDimension = (dimension) => {
@@ -480,7 +485,7 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -493,7 +498,7 @@ function renderClimateFundingMap() {
                     yearlyProcessedCountryNameData,
                     'countryname',
                     'value_precise',
-                    'protracted_crisis'
+                    'protracted_crisis',
                   );
                   finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
                   renderMap(
@@ -506,7 +511,7 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -523,7 +528,7 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -540,7 +545,7 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -557,7 +562,7 @@ function renderClimateFundingMap() {
                     fg,
                     data,
                     crisisValue,
-                    adaptationVariable
+                    adaptationVariable,
                   );
                 };
 
@@ -613,7 +618,7 @@ function renderClimateFundingMap() {
                       className="range-width vulnerability-range"
                     />
                     <CheckboxInput name="crisis" label="Highlight" onChange={onCrisisChange} />
-                  </div>
+                  </div>,
                 );
 
                 // Render reset Button

@@ -48,7 +48,7 @@ const dataBoxContent = (data) => [
     value: getCountryResponsePlan(
       data['Country_response_plan_requirements_(US$,_million)'],
       data['Country_response_plan_coverage_(%)'],
-      data['Country_response_plan_funding_(US$,_million)']
+      data['Country_response_plan_funding_(US$,_million)'],
     ),
     label: 'Country RP',
     icon: { image: responsePlan, text: 'response-plan' },
@@ -57,7 +57,7 @@ const dataBoxContent = (data) => [
     value: getRegionalResponsePlan(
       data['Regional_response_plan_requirements_(US$,_million)'],
       data['Regional_response_plan_funding_(US$,_million)'],
-      data['Regional_response_plan_coverage_(%)']
+      data['Regional_response_plan_coverage_(%)'],
     ),
     label: 'Regional RP',
     icon: { image: responsePlan, text: 'response-plan' },
@@ -86,9 +86,9 @@ const matchCountryNames = (csvData, worldData, countryCodeVariable, countryNameV
 const matchClimateCountryNames = (csvData, worldData, countryCodeVariable, countryNameVariable) => {
   const matchedData = csvData.map((stream) => {
     const streamCopy = { ...stream };
-    const countryObject = worldData.find((feature) => feature.properties.ISO_A3 === streamCopy[countryCodeVariable]);
+    const countryObject = worldData.find((feature) => feature.properties.iso_a3 === streamCopy[countryCodeVariable]);
     if (countryObject) {
-      streamCopy[countryNameVariable] = countryObject.properties.WB_NAME;
+      streamCopy[countryNameVariable] = countryObject.properties.name;
     }
 
     return streamCopy;
@@ -133,7 +133,7 @@ const dataInjectedGeoJson = (jsonData, groupedData) =>
 const climateDataInjectedGeojson = (jsonData, groupedData) =>
   jsonData.map((feature) => {
     const featureCopy = { ...feature };
-    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.WB_NAME);
+    const matchingCountryData = groupedData.find((countryData) => countryData.name === feature.properties.name);
     if (matchingCountryData) {
       featureCopy.properties = {
         ...feature.properties,
@@ -218,13 +218,13 @@ dataBox.update = function (properties, csv) {
   this.div.innerHTML = properties
     ? `<div style="padding-bottom: 0px;">${getOriginalCountryName(
         csv,
-        properties.iso_a3
+        properties.iso_a3,
       )} <button id=closeDatabox><img src=${closeIcon} alt=close height=20 width=20 ></img></button></div><div style="margin-top: 8px;"> ${dataBoxContent(
-        properties
+        properties,
       )
         .map(
           (item) =>
-            `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`
+            `<span><img src=${item.icon.image} alt=${item.icon.text} height=20 width=20 ></img><p>${item.label}: ${item.value}</p> </span>`,
         )
         .join('')}</div>`
     : '';
@@ -265,7 +265,7 @@ const highlightFeature = (e, variable, filterOptions, csvData) => {
             filterOptions.find((option) => option.name === variable).unit
           }</span></div>`
         : `<div>${getOriginalCountryName(csvData, layer.feature.properties.iso_a3)}<br> Not assessed</div>`,
-      { direction: 'top', opacity: 1 }
+      { direction: 'top', opacity: 1 },
     )
     .openTooltip();
 };
@@ -347,7 +347,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
   layer
     .bindTooltip(
       layer.feature.properties[variable]
-        ? `<div>${country || layer.feature.properties.WB_NAME}<br>
+        ? `<div>${country || layer.feature.properties.name}<br>
           Adaptation:  US$${Number(layer.feature.properties.CCA_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
@@ -373,7 +373,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
           </div>
           `
         : `<div>${country}<br> Not assessed</div>`,
-      { direction: 'top', opacity: 1 }
+      { direction: 'top', opacity: 1 },
     )
     .openTooltip();
 };
