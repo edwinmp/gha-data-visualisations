@@ -347,7 +347,7 @@ const renderMap = (
       marker.bindTooltip(
         iconData[dimensionVariable]
           ? `<div>${item.label ? item.label : item.name}<br>
-    Total finance: US$${Number(iconData.Total_Climate_USD).toFixed(1)}<br>
+    Total climate ODA: US$${Number(iconData.Total_Climate_USD).toFixed(1)}<br>
     Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
       Number(iconData.Total_Climate_USD) !== 0
         ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
@@ -432,9 +432,9 @@ function renderClimateFundingMap() {
             { value: 'Total_Climate_Share', label: '% of total ODA' },
           ];
           const adaptationFilterOptions = [
-            { value: 'total', label: 'Total climate finance' },
-            { value: 'CCA', label: 'Climate adaptation finance' },
-            { value: 'CCM', label: 'Climate mitigation finance' },
+            { value: 'total', label: 'Total climate ODA' },
+            { value: 'CCA', label: 'Climate adaptation ODA' },
+            { value: 'CCM', label: 'Climate mitigation ODA' },
           ];
 
           // Initialise Legend

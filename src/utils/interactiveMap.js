@@ -348,7 +348,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
     .bindTooltip(
       layer.feature.properties[variable]
         ? `<div>${country || layer.feature.properties.name}<br>
-          Total finance: US$${Number(layer.feature.properties.Total_Climate_USD).toFixed(1)}<br>
+          Total climate ODA: US$${Number(layer.feature.properties.Total_Climate_USD).toFixed(1)}<br>
           Adaptation:  US$${Number(layer.feature.properties.CCA_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
