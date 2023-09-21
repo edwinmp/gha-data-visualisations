@@ -348,6 +348,7 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
     .bindTooltip(
       layer.feature.properties[variable]
         ? `<div>${country || layer.feature.properties.name}<br>
+          Total finance: US$${Number(layer.feature.properties.Total_Climate_USD).toFixed(1)}<br>
           Adaptation:  US$${Number(layer.feature.properties.CCA_USD).toFixed(1)} (${
             Number(layer.feature.properties.Total_Climate_USD) !== 0
               ? (
@@ -368,6 +369,15 @@ const highlightClimateMapFeature = (e, variable, csvData, map, crisisValue) => {
             layer.feature.properties.Vulnerability_Score_new
               ? vulnerabilityLabelMapping(Number(layer.feature.properties.Vulnerability_Score_new))
               : 'Not assesed'
+          }<br>
+          Share of total ODA: ${
+            Number(layer.feature.properties.Total_ODA_USD) !== 0
+              ? `${(
+                  (Number(layer.feature.properties.Total_Climate_USD) /
+                    Number(layer.feature.properties.Total_ODA_USD)) *
+                  100
+                ).toFixed(1)}%`
+              : '0%'
           }<br>
           ${layer.feature.properties.protracted_crisis ? `In protracted crisis` : ''}
           </div>

@@ -347,6 +347,7 @@ const renderMap = (
       marker.bindTooltip(
         iconData[dimensionVariable]
           ? `<div>${item.label ? item.label : item.name}<br>
+    Total finance: US$${Number(iconData.Total_Climate_USD).toFixed(1)}<br>
     Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
       Number(iconData.Total_Climate_USD) !== 0
         ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
@@ -361,6 +362,11 @@ const renderMap = (
       iconData.Vulnerability_Score_new
         ? vulnerabilityLabelMapping(Number(iconData.Vulnerability_Score_new))
         : 'Not assesed'
+    }<br>
+    Share of total ODA: ${
+      Number(iconData.Total_ODA_USD) !== 0
+        ? `${((Number(iconData.Total_Climate_USD) / Number(iconData.Total_ODA_USD)) * 100).toFixed(1)}%`
+        : '0%'
     }<br>
     ${iconData.protracted_crisis ? `In protracted crisis` : ''}
     </div>
