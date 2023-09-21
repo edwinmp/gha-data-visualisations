@@ -269,7 +269,7 @@ const renderMap = (
         : financeLegendMapping
             .map(
               (item, index) => `
-        <span style="width:45px;">${index === financeLegendMapping.length - 1 ? `${item} ($)` : item}</span>
+        <span style="width:45px;">${index === financeLegendMapping.length - 1 ? `${item} (US$)` : item}</span>
         `,
             )
             .join('')
