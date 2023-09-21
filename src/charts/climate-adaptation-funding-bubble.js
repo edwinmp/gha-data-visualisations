@@ -94,11 +94,10 @@ const renderDefaultChart = (chart, data,) => {
             color: 'transparent'
           },
           label: {
-            font: 'Geomanist Regular,sans-serif',
+            fontFamily: 'Geomanist Regular,sans-serif',
             fontSize: 13,
             fontWeight: 'normal',
-            color: '#7d7d7a'
-          },
+            color: '#7d7d7a'},
           data: [[
             {name: 'Low',xAxis: 0.4},
             {
@@ -167,7 +166,7 @@ const renderDefaultChart = (chart, data,) => {
             color: 'transparent'
           },
           label: {
-            font: 'Geomanist Regular,sans-serif',
+            fontFamily: 'Geomanist Regular,sans-serif',
             fontSize: 13,
             fontWeight: 'normal',
             color: '#7d7d7a'

@@ -96,7 +96,7 @@ const renderDefaultChart = (chart, data,) => {
             color: 'transparent'
           },
           label: {
-            font: 'Geomanist Regular,sans-serif',
+            fontFamily: 'Geomanist Regular,sans-serif',
             fontSize: 13,
             fontWeight: 'normal',
             color: '#7d7d7a'
@@ -169,7 +169,7 @@ const renderDefaultChart = (chart, data,) => {
             color: 'transparent'
           },
           label: {
-            font: 'Geomanist Regular,sans-serif',
+            fontFamily: 'Geomanist Regular,sans-serif',
             fontSize: 13,
             fontWeight: 'normal',
             color: '#7d7d7a'
