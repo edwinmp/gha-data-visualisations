@@ -30,22 +30,11 @@ const renderDefaultChart = (chart, data,) => {
       scale: true,
       nameGap: 25,
       axisLabel: {
-        formatter(value) {
-          if (value === 0.4) {
-            return 'Low'
-          }
-          if (value === 0.7) {
-            return 'High'
-          }
-
-          return ''
-        },
-        padding: [0, 0, 0, 30]
+        show: false
       },
-      // splitNumber: 4,
-      // splitLine: {
-      //   show: true
-      // }
+      splitLine: {
+        show: false
+      }
     },
     yAxis: {
       type: 'category',
@@ -88,6 +77,57 @@ const renderDefaultChart = (chart, data,) => {
             color: '#df8000',
           },
         },
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          label: { show: false},
+          lineStyle: {
+            color: '#cac5cb',
+            type: 'solid'
+          },
+          data: [
+            {xAxis: 0.5},
+            {xAxis: 0.55},
+            {xAxis: 0.6}
+          ]
+        },
+        markArea: {
+          silent: true,
+          itemStyle: {
+            color: 'transparent'
+          },
+          label: {
+            font: 'Geomanist Regular,sans-serif',
+            fontSize: 13,
+            fontWeight: 'normal',
+            color: '#7d7d7a'
+          },
+          data: [[
+            {name: 'Low',xAxis: 0.4},
+            {
+              xAxis: 0.5,
+            }
+          ],
+          [
+            {name: 'Medium',xAxis: 0.5},
+            {
+              xAxis: 0.55,
+            }
+          ],
+          [
+            {name: 'High',xAxis: 0.55},
+            {
+              xAxis: 0.6,
+            }
+          ],
+          [
+            {name: 'Very high',xAxis: 0.6},
+            {
+              xAxis: 0.7,
+            }
+          ]
+          ],
+        }
       },
       {
         type: 'scatter',
@@ -108,6 +148,57 @@ const renderDefaultChart = (chart, data,) => {
             color: '#df8000',
           },
         },
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          label: { show: false},
+          lineStyle: {
+            color: '#cac5cb',
+            type: 'solid'
+          },
+          data: [
+            {xAxis: 0.5},
+            {xAxis: 0.55},
+            {xAxis: 0.6}
+          ]
+        },
+        markArea: {
+          silent: true,
+          itemStyle: {
+            color: 'transparent'
+          },
+          label: {
+            font: 'Geomanist Regular,sans-serif',
+            fontSize: 13,
+            fontWeight: 'normal',
+            color: '#7d7d7a'
+          },
+          data: [[
+            {name: 'Low',xAxis: 0.4},
+            {
+              xAxis: 0.5,
+            }
+          ],
+          [
+            {name: 'Medium',xAxis: 0.5},
+            {
+              xAxis: 0.55,
+            }
+          ],
+          [
+            {name: 'High',xAxis: 0.55},
+            {
+              xAxis: 0.6,
+            }
+          ],
+          [
+            {name: 'Very high',xAxis: 0.6},
+            {
+              xAxis: 0.7,
+            }
+          ]
+          ],
+        }
       },
     ],
   };
