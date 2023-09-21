@@ -55,11 +55,11 @@ const renderDefaultChart = (chart, data,) => {
       axisLabel: {
         formatter(value) {
           if (value === 'Latin America and the Caribbean') {
-            return 'LAC'
+            return 'Latin America and \n the Caribbean'
           }
 
           return value
-        }
+        },
       }
     },
     series: [
