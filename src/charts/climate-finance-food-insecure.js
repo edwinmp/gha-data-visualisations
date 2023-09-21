@@ -34,7 +34,8 @@ const renderDefaultChart = (chart, data,) => {
         show: false
       },
       axisLine: {
-        show: true
+        show: true,
+        zlevel: 0
       },
       axisTick: {
         show: false
@@ -43,6 +44,7 @@ const renderDefaultChart = (chart, data,) => {
     yAxis: {
       min: 0,
       max: 45,
+      interval: 15,
       scale: true,
       name: 'Food insecurity gap',
       nameLocation: 'center',
