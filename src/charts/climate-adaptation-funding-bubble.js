@@ -20,7 +20,7 @@ const renderDefaultChart = (chart, data,) => {
       Adaptation as % of ODA: ${(Number(params.data[2])).toFixed(1)}%
       `,
     },
-    grid: { bottom: '10%', top: '20%', left: '5%' },
+    grid: { bottom: '10%', top: '20%', left: '2%' },
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
@@ -49,7 +49,7 @@ const renderDefaultChart = (chart, data,) => {
       axisLabel: {
         formatter(value) {
           if (value === 'Latin America and the Caribbean') {
-            return 'Latin America and \n the Caribbean'
+            return 'Latin America and\nthe Caribbean'
           }
 
           return value
