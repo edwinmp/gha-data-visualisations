@@ -434,7 +434,7 @@ function renderClimateFundingMap() {
             maxZoom: 3,
             minZoom: 1,
             crs: window.L.CRS.EPSG4326,
-            center: [6.6, 20.9],
+            center: [6.6, 14.1],
             zoom: 1,
             attributionControl: false,
           });
@@ -591,7 +591,7 @@ function renderClimateFundingMap() {
                 };
 
                 const onReset = () => {
-                  map.setView([6.6, 20.9], 1);
+                  map.setView([[6.6, 14.1]], 1);
                 };
 
                 // Render filter component
@@ -612,7 +612,7 @@ function renderClimateFundingMap() {
                       classNamePrefix="climate-adaptation-select"
                       label="Select adaptation/mitigation"
                       options={adaptationFilterOptions}
-                      defaultValue={[{ value: 'total', label: 'Total climate finance' }]}
+                      defaultValue={[{ value: 'total', label: 'Total climate ODA' }]}
                       onChange={onSelectAdaptation}
                       css={{
                         minWidth: '150px',
