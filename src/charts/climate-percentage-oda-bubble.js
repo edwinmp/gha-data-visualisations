@@ -78,7 +78,13 @@ const renderDefaultChart = (chart, data) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          return getScaledValue(val[2], 8, 80, symbolDataRange(data).min, symbolDataRange(data).max);
+          return getScaledValue(
+            Math.sqrt(val[2]),
+            8,
+            120,
+            Math.sqrt(symbolDataRange(data).min),
+            Math.sqrt(symbolDataRange(data).max),
+          );
         },
         emphasis: {
           itemStyle: {
@@ -148,7 +154,13 @@ const renderDefaultChart = (chart, data) => {
           color: '#f9cdd0',
         },
         symbolSize(val) {
-          return getScaledValue(val[2], 8, 80, symbolDataRange(data).min, symbolDataRange(data).max);
+          return getScaledValue(
+            Math.sqrt(val[2]),
+            8,
+            120,
+            Math.sqrt(symbolDataRange(data).min),
+            Math.sqrt(symbolDataRange(data).max),
+          );
         },
         emphasis: {
           itemStyle: {

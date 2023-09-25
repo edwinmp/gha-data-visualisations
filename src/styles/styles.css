@@ -13,6 +13,16 @@
   background: white;
 }
 
+.dicharts--gha-total-climate-finance,
+.dicharts--gha-climate-percentage-oda,
+.dicharts--gha-climate-adaptation-funding,
+.dicharts--gha-climate-finance-food-insecure,
+.dicharts--gha-climate-funding-per-capita {
+  width: 100%;
+  min-height: 700px;
+  background: white;
+}
+
 .dicharts--gha-people-affected-by-crisis-leaflet, .dicharts--gha-climate-funding {
   z-index: 1;
 }
