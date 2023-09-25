@@ -20,7 +20,7 @@ const renderDefaultChart = (chart, data) => {
       Total climate ODA: US$${Number(params.data[2]).toFixed(1)} million
       `,
     },
-    grid: { bottom: '10%', top: '20%', left: '2%' },
+    grid: { bottom: '10%', top: '15%', left: '2%' },
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
@@ -70,7 +70,13 @@ const renderDefaultChart = (chart, data) => {
           color: '#7e1850',
         },
         symbolSize(val) {
-          return getScaledValue(val[2], 8, 80, symbolDataRange.min, symbolDataRange.max);
+          return getScaledValue(
+            Math.sqrt(val[2]),
+            8,
+            120,
+            Math.sqrt(symbolDataRange.min),
+            Math.sqrt(symbolDataRange.max),
+          );
         },
         emphasis: {
           itemStyle: {
@@ -140,7 +146,13 @@ const renderDefaultChart = (chart, data) => {
           color: '#f9cdd0',
         },
         symbolSize(val) {
-          return getScaledValue(val[2], 8, 80, symbolDataRange.min, symbolDataRange.max);
+          return getScaledValue(
+            Math.sqrt(val[2]),
+            8,
+            120,
+            Math.sqrt(symbolDataRange.min),
+            Math.sqrt(symbolDataRange.max),
+          );
         },
         emphasis: {
           itemStyle: {
