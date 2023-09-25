@@ -29,7 +29,7 @@ const renderDefaultChart = (chart, data) => {
       Food insecurity gap: ${params.data[1]}%
       `,
     },
-    grid: { bottom: '10%', top: '20%', left: '5%' },
+    grid: { bottom: '10%', top: '15%', left: '5%' },
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
