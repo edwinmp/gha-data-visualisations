@@ -76,7 +76,7 @@ const renderDefaultChart = (chart, data) => {
           return getScaledValue(
             Math.sqrt(val[2]),
             8,
-            120,
+            60,
             Math.sqrt(symbolDataRange.min),
             Math.sqrt(symbolDataRange.max),
           );
@@ -152,7 +152,7 @@ const renderDefaultChart = (chart, data) => {
           return getScaledValue(
             Math.sqrt(val[2]),
             8,
-            120,
+            60,
             Math.sqrt(symbolDataRange.min),
             Math.sqrt(symbolDataRange.max),
           );
