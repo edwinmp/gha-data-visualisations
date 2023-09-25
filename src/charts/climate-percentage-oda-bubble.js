@@ -30,7 +30,7 @@ const renderDefaultChart = (chart, data) => {
       Share of total ODA: ${Number(params.data[2]).toFixed(1)}%
       `,
     },
-    grid: { bottom: '10%', top: '20%', left: '2%' },
+    grid: { bottom: '10%', top: '15%', left: '2%' },
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
