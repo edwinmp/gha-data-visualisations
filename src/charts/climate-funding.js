@@ -365,13 +365,13 @@ const renderMap = (
       marker.bindTooltip(
         iconData[dimensionVariable]
           ? `<div>${item.label ? item.label : item.name}<br>
-    Total climate ODA: US$${Number(iconData.Total_Climate_USD).toFixed(1)}<br>
-    Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)} ( ${
+    Total climate ODA: US$${Number(iconData.Total_Climate_USD).toFixed(1)}m<br>
+    Adaptation:  US$ ${Number(iconData.CCA_USD).toFixed(1)}m ( ${
       Number(iconData.Total_Climate_USD) !== 0
         ? ((Number(iconData.CCA_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
         : 0
     }%)<br>
-    Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)} (${
+    Mitigation: US$ ${Number(iconData.CCM_USD).toFixed(1)}m (${
       Number(iconData.Total_Climate_USD) !== 0
         ? ((Number(iconData.CCM_USD) / Number(iconData.Total_Climate_USD)) * 100).toFixed(1)
         : 0
