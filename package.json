@@ -47,7 +47,7 @@
     "papaparse": "^5.4.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.0",
     "react-select": "^5.8.0"
   },
   "engines": {
