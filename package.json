@@ -40,7 +40,7 @@
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "chroma-js": "^2.6.0",
-    "core-js": "^3.37.1",
+    "core-js": "^3.38.0",
     "deepmerge": "^4.3.1",
     "i": "^0.3.7",
     "leaflet.pattern": "^0.1.0",
