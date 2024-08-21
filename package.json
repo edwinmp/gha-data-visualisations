@@ -37,7 +37,7 @@
     "src/**/*.js": "eslint --cache --fix"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "chroma-js": "^3.0.0",
     "core-js": "^3.38.1",
