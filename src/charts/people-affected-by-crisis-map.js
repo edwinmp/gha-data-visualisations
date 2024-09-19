@@ -170,9 +170,9 @@ function renderPeopleAffectedByCrisisLeaflet() {
             .then((jsonData) => {
               const geojsonData = jsonData.features;
               fetchCSVData(CSV_PATH).then((data) => {
-                const processedCountryNameData = matchCountryNames(data, geojsonData);
+                const processedCountryNameData = matchCountryNames(data, geojsonData, 'Country_ID', 'Country_name');
                 const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.Country_name)));
-                const groupedData = processedData(countries, processedCountryNameData);
+                const groupedData = processedData(countries, processedCountryNameData, 'Country_name', 'value');
 
                 const fg = window.L.featureGroup().addTo(map);
 
@@ -184,7 +184,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     return '#E6E1E5';
                   }
 
-                  return getColorDynamic(d, scaleData.minValue, scaleData.maxValue, increment, chroma);
+                  return getColorDynamic(d, scaleData.minValue, scaleData.maxValue, increment, chroma, colorArray);
                 };
 
                 const onSelectDimension = (dimension) => {
