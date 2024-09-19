@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const yearProgressMapping = [
-  { year: '2017', progress: 0 },
-  { year: '2018', progress: 25 },
-  { year: '2019', progress: 50 },
-  { year: '2020', progress: 75 },
-  { year: '2021', progress: 100 },
+  { year: '2018', progress: 0 },
+  { year: '2019', progress: 25 },
+  { year: '2020', progress: 50 },
+  { year: '2021', progress: 75 },
+  { year: '2022', progress: 100 },
 ];
 const RangeSlider = (props) => {
   const [value, setValue] = useState(props.defaultValue ? props.defaultValue : props.min);

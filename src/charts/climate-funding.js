@@ -620,12 +620,12 @@ function renderClimateFundingMap() {
                     />
                     <RangeSlider
                       label="Select a year"
-                      min="2017"
-                      max="2021"
-                      defaultValue="2021"
+                      min="2018"
+                      max="2022"
+                      defaultValue="2022"
                       step={1}
                       onChange={onSelectYear}
-                      dataList={['2017', '2018', '2019', '2020', '2021']}
+                      dataList={['2018', '2019', '2020', '2021', '2022']}
                       name="years"
                       incremental={false}
                       className={'year-slider'}
