@@ -39,7 +39,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "chroma-js": "^3.1.1",
+    "chroma-js": "^3.1.2",
     "core-js": "^3.38.1",
     "deepmerge": "^4.3.1",
     "i": "^0.3.7",
