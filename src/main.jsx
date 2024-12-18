@@ -11,6 +11,7 @@ import './styles/styles.css';
 // );
 
 // set default variables
+let chart = null;
 let map = null;
 let filterRoot = null;
 
@@ -18,9 +19,20 @@ const resetChartCanvas = () => {
   const activeChartClass = 'dicharts-handler--active';
   const dataSelectorClass = 'data-selector--wrapper';
 
+  if (chart) {
+    chart.clear();
+    chart.dispose();
+    chart = null;
+  }
+
   const activeChart = document.querySelector(`.${activeChartClass}`);
   if (activeChart) {
     activeChart.classList.remove(activeChartClass);
+  }
+
+  if (filterRoot) {
+    filterRoot.unmount();
+    filterRoot = null;
   }
 
   const dataSelector = document.querySelector(`.${dataSelectorClass}`);
@@ -69,7 +81,10 @@ showElement('dicharts--chart');
 hideElement('dicharts--map');
 let activeChart = 'gha-donors';
 import('./charts/donors').then(({ default: renderDonorsChart }) => {
-  renderDonorsChart();
+  renderDonorsChart().then((configs) => {
+    chart = configs.chart;
+    filterRoot = configs.filterRoot;
+  });
   activeChart = 'gha-donors';
 });
 
@@ -88,7 +103,10 @@ navItems.forEach((navItem) => {
           hideElement('dicharts--map');
 
           import('./charts/donors').then(({ default: renderDonorsChart }) => {
-            renderDonorsChart();
+            renderDonorsChart().then((configs) => {
+              chart = configs.chart;
+              filterRoot = configs.filterRoot;
+            });
             activeChart = 'gha-donors';
           });
         }
@@ -101,7 +119,10 @@ navItems.forEach((navItem) => {
           hideElement('dicharts--map');
 
           import('./charts/recipients.jsx').then(({ default: renderRecipientChart }) => {
-            renderRecipientChart();
+            renderRecipientChart().then((configs) => {
+              chart = configs.chart;
+              filterRoot = configs.filterRoot;
+            });
             activeChart = 'gha-recipients';
           });
         }
@@ -114,7 +135,10 @@ navItems.forEach((navItem) => {
           hideElement('dicharts--map');
 
           import('./charts/funding-channels.jsx').then(({ default: renderFundingChannelsChart }) => {
-            renderFundingChannelsChart();
+            renderFundingChannelsChart().then((configs) => {
+              chart = configs.chart;
+              filterRoot = configs.filterRoot;
+            });
             activeChart = 'gha-funding-channels';
           });
         }
@@ -161,9 +185,43 @@ navItems.forEach((navItem) => {
           hideElement('dicharts--map');
 
           import('./charts/total-climate-finance.jsx').then(({ default: renderTotalClimateFinanceChart }) => {
-            renderTotalClimateFinanceChart();
+            renderTotalClimateFinanceChart().then((configs) => {
+              chart = configs.chart;
+            });
             activeChart = 'gha-total-climate-finance';
           });
+        }
+        break;
+      case 'gha-climate-percentage-oda':
+        if (activeChart !== 'gha-climate-percentage-oda') {
+          resetChartCanvas();
+          resetMapCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
+
+          import('./charts/climate-percentage-oda-bubble.jsx').then(({ default: renderClimatePercentageOdaChart }) => {
+            renderClimatePercentageOdaChart().then((configs) => {
+              chart = configs.chart;
+            });
+            activeChart = 'gha-climate-percentage-oda';
+          });
+        }
+        break;
+      case 'gha-climate-adaptation-funding':
+        if (activeChart !== 'gha-climate-adaptation-funding') {
+          resetChartCanvas();
+          resetMapCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
+
+          import('./charts/climate-adaptation-funding-bubble.jsx').then(
+            ({ default: renderClimateAdaptationFundingChart }) => {
+              renderClimateAdaptationFundingChart().then((configs) => {
+                chart = configs.chart;
+              });
+              activeChart = 'gha-climate-adaptation-funding';
+            },
+          );
         }
         break;
       default:

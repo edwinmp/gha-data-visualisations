@@ -3,13 +3,13 @@
   "version": "2.0.0",
   "description": "A Starting Point for Creating DI's D3 Charts",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "nwb": "nwb serve-web-app --reload"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
@@ -55,9 +55,5 @@
     "react-dom": "^19.0.0",
     "react-select": "^5.9.0",
     "sass": "^1.83.0"
-  },
-  "engines": {
-    "node": ">=20",
-    "pnpm": ">=9"
   }
 }

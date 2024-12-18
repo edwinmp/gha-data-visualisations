@@ -158,69 +158,73 @@ const updateChart = (chart, data, { donors, channels, years }) => {
  * Run your code after the page has loaded
  */
 const renderFundingChannelsChart = (className = 'dicharts--chart') => {
-  window.DICharts.handler.addChart({
-    className,
-    echarts: {
-      onAdd: (chartNodes) => {
-        Array.prototype.forEach.call(chartNodes, (chartNode) => {
-          const dichart = new window.DICharts.Chart(chartNode.parentElement);
+  return new Promise((resolve) => {
+    window.DICharts.handler.addChart({
+      className,
+      echarts: {
+        onAdd: (chartNodes) => {
+          Array.prototype.forEach.call(chartNodes, (chartNode) => {
+            const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
-          fetchCSVData(DATA_URL).then((data) => {
-            const filterWrapper = addFilterWrapper(chartNode);
-            // extract unique values
-            const donors = Array.from(new Set(data.map((d) => d.Donor)));
-            const years = Array.from(new Set(data.map((d) => d.Year)));
-            const channels = sortOrgTypes(Array.from(new Set(data.map((d) => d.Series))));
-            const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
+            fetchCSVData(DATA_URL).then((data) => {
+              const filterWrapper = addFilterWrapper(chartNode);
+              // extract unique values
+              const donors = Array.from(new Set(data.map((d) => d.Donor)));
+              const years = Array.from(new Set(data.map((d) => d.Year)));
+              const channels = sortOrgTypes(Array.from(new Set(data.map((d) => d.Series))));
+              const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
 
-            // create UI elements
+              // create UI elements
 
-            const chart = window.echarts.init(chartNode);
-            renderDefaultChart(chart, cleanData(data), { years, channels });
+              const chart = window.echarts.init(chartNode);
+              renderDefaultChart(chart, cleanData(data), { years, channels });
 
-            let selectedDonors = [];
+              let selectedDonors = [];
 
-            // add dropdown event handlers
-            const onSelectDonor = (values) => {
-              if (!values.length) {
-                renderDefaultChart(chart, cleanData(data), { years, channels });
+              // add dropdown event handlers
+              const onSelectDonor = (values) => {
+                if (!values.length) {
+                  renderDefaultChart(chart, cleanData(data), { years, channels });
 
-                return;
-              }
-              // filter data to return only the selected items
-              const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
-              selectedDonors = values.map((item) => item.value);
-              updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
-            };
+                  return;
+                }
+                // filter data to return only the selected items
+                const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
+                selectedDonors = values.map((item) => item.value);
+                updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
+              };
 
-            const defaultDonor = 'All donors';
+              const defaultDonor = 'All donors';
 
-            // add dropdowns
-            const root = createRoot(filterWrapper);
-            root.render(
-              <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
-                <Select
-                  label="Select up to two donors"
-                  options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: true }))}
-                  defaultValue={[{ value: defaultDonor, label: defaultDonor, isCloseable: true }]}
-                  isMulti
-                  onChange={onSelectDonor}
-                  // singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
-                  css={{ minWidth: '200px' }}
-                  classNamePrefix="channels-chart-select"
-                  isClearable={false}
-                />
-              </ChartFilters>,
-            );
+              // add dropdowns
+              const root = createRoot(filterWrapper);
+              root.render(
+                <ChartFilters selectErrorMessage={donorSelectErrorMessage}>
+                  <Select
+                    label="Select up to two donors"
+                    options={donors.map((donor) => ({ value: donor, label: donor, isCloseable: true }))}
+                    defaultValue={[{ value: defaultDonor, label: defaultDonor, isCloseable: true }]}
+                    isMulti
+                    onChange={onSelectDonor}
+                    // singleSelectOptions={[{ value: defaultDonor, label: defaultDonor, isCloseable: false }]}
+                    css={{ minWidth: '200px' }}
+                    classNamePrefix="channels-chart-select"
+                    isClearable={false}
+                  />
+                </ChartFilters>,
+              );
 
-            dichart.hideLoading();
+              dichart.hideLoading();
 
-            // add responsiveness
-            handleResize(chart, chartNode);
+              // add responsiveness
+              handleResize(chart, chartNode);
+
+              resolve({ chart, filterRoot: root });
+            });
           });
-        });
+        },
       },
-    },
+    });
   });
 };
 

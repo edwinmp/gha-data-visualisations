@@ -224,28 +224,33 @@ const renderDefaultChart = (chart, data) => {
   return chart;
 };
 
-const renderClimateAdaptationFundingChart = () => {
-  window.DICharts.handler.addChart({
-    className: 'dicharts--gha-climate-adaptation-funding',
-    echarts: {
-      onAdd: (chartNodes) => {
-        Array.prototype.forEach.call(chartNodes, async (chartNode) => {
-          const dichart = new window.DICharts.Chart(chartNode.parentElement);
+const renderClimateAdaptationFundingChart = (className = 'dicharts--chart') => {
+  return new Promise((resolve) => {
+    window.DICharts.handler.addChart({
+      className,
+      echarts: {
+        onAdd: (chartNodes) => {
+          Array.prototype.forEach.call(chartNodes, async (chartNode) => {
+            const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
-          const data = await fetchCSVData(DATA_URL);
+            const data = await fetchCSVData(DATA_URL);
 
-          // create UI elements
+            // create UI elements
 
-          const chart = window.echarts.init(chartNode);
-          renderDefaultChart(chart, data);
+            dichart.showLoading();
+            const chart = window.echarts.init(chartNode);
+            renderDefaultChart(chart, data);
 
-          dichart.hideLoading();
+            dichart.hideLoading();
 
-          // add responsiveness
-          handleResize(chart, chartNode);
-        });
+            // add responsiveness
+            handleResize(chart, chartNode);
+
+            resolve({ chart });
+          });
+        },
       },
-    },
+    });
   });
 };
 

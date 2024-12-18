@@ -25,6 +25,7 @@ body {
   background: white;
 }
 
+.dicharts--chart.max-height,
 .dicharts--gha-total-climate-finance,
 .dicharts--gha-climate-percentage-oda,
 .dicharts--gha-climate-adaptation-funding,

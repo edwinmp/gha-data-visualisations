@@ -206,80 +206,84 @@ const updateChart = (chart, data, { donors, channels, years }) => {
  * Run your code after the page has loaded
  */
 const renderDonorsChart = (className = 'dicharts--chart') => {
-  window.DICharts.handler.addChart({
-    className,
-    echarts: {
-      onAdd: (chartNodes) => {
-        Array.prototype.forEach.call(chartNodes, (chartNode) => {
-          const dichart = new window.DICharts.Chart(chartNode.parentElement);
+  return new Promise((resolve) => {
+    window.DICharts.handler.addChart({
+      className,
+      echarts: {
+        onAdd: (chartNodes) => {
+          Array.prototype.forEach.call(chartNodes, (chartNode) => {
+            const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
-          /**
-           * ECharts - prefix all browsers global with window
-           * i.e window.echarts - echarts won't work without it
-           *
-           * const chart = window.echarts.init(chartNode);
-           */
-          fetchCSVData(DATA_URL).then((data) => {
-            const filterWrapper = addFilterWrapper(chartNode);
-            // extract unique values
-            const donors = Array.from(new Set(data.map((d) => d.Donor))).sort();
-            const years = Array.from(new Set(data.map((d) => d.Year))).sort();
-            const channels = Array.from(new Set(data.map((d) => d.Series)));
-            const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
-            // create UI elements
+            /**
+             * ECharts - prefix all browsers global with window
+             * i.e window.echarts - echarts won't work without it
+             *
+             * const chart = window.echarts.init(chartNode);
+             */
+            fetchCSVData(DATA_URL).then((data) => {
+              const filterWrapper = addFilterWrapper(chartNode);
+              // extract unique values
+              const donors = Array.from(new Set(data.map((d) => d.Donor))).sort();
+              const years = Array.from(new Set(data.map((d) => d.Year))).sort();
+              const channels = Array.from(new Set(data.map((d) => d.Series)));
+              const donorSelectErrorMessage = 'You can compare two donors. Please remove one before adding another.';
+              // create UI elements
 
-            const chart = window.echarts.init(chartNode);
-            renderDefaultChart(chart, cleanData(data), { years, channels });
+              const chart = window.echarts.init(chartNode);
+              renderDefaultChart(chart, cleanData(data), { years, channels });
 
-            let selectedDonors = [];
+              let selectedDonors = [];
 
-            // add dropdown event listeners
-            const onSelectDonor = (values) => {
-              if (!values.length) {
-                renderDefaultChart(chart, cleanData(data), { years, channels });
+              // add dropdown event listeners
+              const onSelectDonor = (values) => {
+                if (!values.length) {
+                  renderDefaultChart(chart, cleanData(data), { years, channels });
 
-                return;
-              }
-              // filter data to return only the selected items
-              const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
-              selectedDonors = values.map((item) => item.value);
-              updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
-            };
-
-            const onSelectDataType = (value) => {
-              dataType = value || dataType;
-              if (selectedDonors.length) {
-                const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
+                  return;
+                }
+                // filter data to return only the selected items
+                const filteredData = data.filter((d) => values.find((item) => item.value === d.Donor));
+                selectedDonors = values.map((item) => item.value);
                 updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
-              } else {
-                renderDefaultChart(chart, cleanData(data), { years, channels });
-              }
-            };
+              };
 
-            const defaultDonor = 'All donors';
+              const onSelectDataType = (value) => {
+                dataType = value || dataType;
+                if (selectedDonors.length) {
+                  const filteredData = data.filter((d) => selectedDonors.includes(d.Donor));
+                  updateChart(chart, filteredData, { donors: selectedDonors, channels, years });
+                } else {
+                  renderDefaultChart(chart, cleanData(data), { years, channels });
+                }
+              };
 
-            // add dropdowns
-            const root = createRoot(filterWrapper);
-            root.render(
-              <DonorChartFilters
-                selectErrorMessage={donorSelectErrorMessage}
-                donors={donors}
-                onSelectDataType={onSelectDataType}
-                onSelectDonor={onSelectDonor}
-                defaultDonor={defaultDonor}
-                defaultDataType="Volumes"
-                donorSelectErrorMessage={donorSelectErrorMessage}
-              />,
-            );
+              const defaultDonor = 'All donors';
 
-            dichart.hideLoading();
+              // add dropdowns
+              const root = createRoot(filterWrapper);
+              root.render(
+                <DonorChartFilters
+                  selectErrorMessage={donorSelectErrorMessage}
+                  donors={donors}
+                  onSelectDataType={onSelectDataType}
+                  onSelectDonor={onSelectDonor}
+                  defaultDonor={defaultDonor}
+                  defaultDataType="Volumes"
+                  donorSelectErrorMessage={donorSelectErrorMessage}
+                />,
+              );
 
-            // add responsiveness
-            handleResize(chart, chartNode);
+              dichart.hideLoading();
+
+              // add responsiveness
+              handleResize(chart, chartNode);
+
+              resolve({ chart, filterRoot: root });
+            });
           });
-        });
+        },
       },
-    },
+    });
   });
 };
 
