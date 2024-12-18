@@ -32,7 +32,7 @@ const renderMap = (
   filterOptions,
   legendInstance,
   groupInstance,
-  csvData
+  csvData,
 ) => {
   let geojsonLayer;
 
@@ -48,7 +48,7 @@ const renderMap = (
               (color) =>
                 `<span>
           <i style="background:${color};border-radius:1px;margin-right:0;width:40px;"></i>
-        </span>`
+        </span>`,
             )
             .join('')} <p style="margin-left:1px;margin-top: 4px;">${scaleData.minValue} - ${
             scaleData.maxValue
@@ -59,7 +59,7 @@ const renderMap = (
               (dataItems) =>
                 `<span><i style="background:${getColor(dataItems.score, dimensionVariable)}"></i><label>${
                   dataItems.label
-                }</label></span>`
+                }</label></span>`,
             )
             .join('');
     div.innerHTML = legendContent;
@@ -117,9 +117,9 @@ const renderMap = (
   loadLayer();
 };
 
-function renderPeopleAffectedByCrisisLeaflet() {
+function renderPeopleAffectedByCrisisLeaflet(className = 'dicharts--map') {
   window.DICharts.handler.addChart({
-    className: 'dicharts--gha-people-affected-by-crisis-leaflet',
+    className,
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
@@ -199,7 +199,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                     filterOptions,
                     legend,
                     fg,
-                    data
+                    data,
                   );
                 };
 
@@ -234,7 +234,7 @@ function renderPeopleAffectedByCrisisLeaflet() {
                   filterOptions,
                   legend,
                   fg,
-                  data
+                  data,
                 );
                 dichart.hideLoading();
               });

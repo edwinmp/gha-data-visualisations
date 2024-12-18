@@ -25,6 +25,20 @@ const resetChartCanvas = () => {
   }
 };
 
+const showElement = (className) => {
+  const element = document.querySelector(`.${className}`);
+  if (element.classList.contains('d-none')) {
+    element.classList.remove('d-none');
+  }
+};
+
+const hideElement = (className) => {
+  const element = document.querySelector(`.${className}`);
+  if (!element.classList.contains('d-none')) {
+    element.classList.add('d-none');
+  }
+};
+
 const setActiveNav = (nav) => {
   const currentActiveNav = document.querySelector('.nav-link.active');
   if (currentActiveNav) {
@@ -35,6 +49,8 @@ const setActiveNav = (nav) => {
   }
 };
 
+showElement('dicharts--chart');
+hideElement('dicharts--map');
 let activeChart = 'gha-donors';
 import('./charts/donors').then(({ default: renderDonorsChart }) => {
   renderDonorsChart();
@@ -49,6 +65,8 @@ navItems.forEach((navItem) => {
       case 'gha-donors':
         if (activeChart !== 'gha-donors') {
           resetChartCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
 
           import('./charts/donors').then(({ default: renderDonorsChart }) => {
             renderDonorsChart();
@@ -59,6 +77,8 @@ navItems.forEach((navItem) => {
       case 'gha-recipients':
         if (activeChart !== 'gha-recipients') {
           resetChartCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
 
           import('./charts/recipients.jsx').then(({ default: renderRecipientChart }) => {
             renderRecipientChart();
@@ -69,12 +89,29 @@ navItems.forEach((navItem) => {
       case 'gha-funding-channels':
         if (activeChart !== 'gha-funding-channels') {
           resetChartCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
 
           import('./charts/funding-channels.jsx').then(({ default: renderFundingChannelsChart }) => {
             renderFundingChannelsChart();
             activeChart = 'gha-funding-channels';
           });
         }
+        break;
+      case 'gha-people-affected-by-crisis':
+        if (activeChart !== 'gha-people-affected-by-crisis') {
+          resetChartCanvas(true);
+          hideElement('dicharts--chart');
+          showElement('dicharts--map');
+
+          import('./charts/people-affected-by-crisis-map.jsx').then(
+            ({ default: renderPeopleAffectedByCrisisLeaflet }) => {
+              renderPeopleAffectedByCrisisLeaflet();
+              activeChart = 'gha-people-affected-by-crisis';
+            },
+          );
+        }
+        break;
       default:
         break;
     }

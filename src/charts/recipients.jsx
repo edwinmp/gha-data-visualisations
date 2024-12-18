@@ -206,8 +206,6 @@ const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
  * Run your code after the page has loaded
  */
 const renderRecipientChart = (className = 'dicharts--chart') => {
-  console.log(className);
-
   window.DICharts.handler.addChart({
     className,
     echarts: {
