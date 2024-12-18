@@ -241,6 +241,23 @@ navItems.forEach((navItem) => {
           );
         }
         break;
+      case 'gha-climate-funding-per-capita':
+        if (activeChart !== 'gha-climate-funding-per-capita') {
+          resetChartCanvas();
+          resetMapCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
+
+          import('./charts/climate-total-funding-per-capita.jsx').then(
+            ({ default: renderClimateFundingPerCapitaChart }) => {
+              renderClimateFundingPerCapitaChart().then((configs) => {
+                chart = configs.chart;
+              });
+              activeChart = 'gha-climate-funding-per-capita';
+            },
+          );
+        }
+        break;
       default:
         break;
     }

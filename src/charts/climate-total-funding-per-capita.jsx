@@ -20,7 +20,7 @@ const renderDefaultChart = (chart, data) => {
       Climate ODA per person: US$${Number(params.data[2]).toFixed(1)}
       `,
     },
-    grid: { bottom: '10%', top: '15%', left: '2%' },
+    grid: { bottom: '10%', top: '20%', left: '2%' },
     xAxis: {
       name: 'Vulnerability level',
       nameLocation: 'center',
@@ -219,28 +219,31 @@ const renderDefaultChart = (chart, data) => {
   return chart;
 };
 
-const renderClimateFundingPerCapitaChart = () => {
-  window.DICharts.handler.addChart({
-    className: 'dicharts--gha-climate-funding-per-capita',
-    echarts: {
-      onAdd: (chartNodes) => {
-        Array.prototype.forEach.call(chartNodes, async (chartNode) => {
-          const dichart = new window.DICharts.Chart(chartNode.parentElement);
+const renderClimateFundingPerCapitaChart = (className = 'dicharts--chart') => {
+  return new Promise((resolve) => {
+    window.DICharts.handler.addChart({
+      className,
+      echarts: {
+        onAdd: (chartNodes) => {
+          Array.prototype.forEach.call(chartNodes, async (chartNode) => {
+            const dichart = new window.DICharts.Chart(chartNode.parentElement);
 
-          const data = await fetchCSVData(DATA_URL);
+            const data = await fetchCSVData(DATA_URL);
 
-          // create UI elements
+            // create UI elements
+            dichart.showLoading();
+            const chart = window.echarts.init(chartNode);
+            renderDefaultChart(chart, data);
 
-          const chart = window.echarts.init(chartNode);
-          renderDefaultChart(chart, data);
+            dichart.hideLoading();
 
-          dichart.hideLoading();
-
-          // add responsiveness
-          handleResize(chart, chartNode);
-        });
+            // add responsiveness
+            handleResize(chart, chartNode);
+            resolve({ chart });
+          });
+        },
       },
-    },
+    });
   });
 };
 
