@@ -224,6 +224,23 @@ navItems.forEach((navItem) => {
           );
         }
         break;
+      case 'gha-climate-finance-food-insecure':
+        if (activeChart !== 'gha-climate-finance-food-insecure') {
+          resetChartCanvas();
+          resetMapCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
+
+          import('./charts/climate-finance-food-insecure.jsx').then(
+            ({ default: renderClimateFinanceFoodInsecureChart }) => {
+              renderClimateFinanceFoodInsecureChart().then((configs) => {
+                chart = configs.chart;
+              });
+              activeChart = 'gha-climate-finance-food-insecure';
+            },
+          );
+        }
+        break;
       default:
         break;
     }
