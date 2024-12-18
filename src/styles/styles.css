@@ -4,6 +4,7 @@ body {
   background-color: #f3f3f3;
 }
 
+.dicharts--chart,
 .dicharts--boilerplate-chart,
 .dicharts--gha-donors,
 .dicharts--gha-recipients,
@@ -15,7 +16,7 @@ body {
 .dicharts--gha-climate-finance-food-insecure,
 .dicharts--gha-climate-funding-per-capita {
   width: 100%;
-  min-height: 450px;
+  min-height: 400px;
   background: white;
 }
 

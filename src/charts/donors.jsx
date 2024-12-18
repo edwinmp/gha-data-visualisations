@@ -205,9 +205,9 @@ const updateChart = (chart, data, { donors, channels, years }) => {
 /**
  * Run your code after the page has loaded
  */
-const renderDonorsChart = () => {
+const renderDonorsChart = (className = 'dicharts--chart') => {
   window.DICharts.handler.addChart({
-    className: 'dicharts--gha-donors',
+    className,
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {

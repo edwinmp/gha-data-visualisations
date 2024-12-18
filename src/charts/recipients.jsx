@@ -1,7 +1,7 @@
 import deepMerge from 'deepmerge';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import RecipientChartFilters from '../components/RecipientChartFilters';
+import RecipientChartFilters from '../components/RecipientChartFilters.jsx';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
@@ -118,7 +118,7 @@ const renderDefaultChart = (chart, data, recipient, { years, channels }) => {
         trigger: 'item',
         formatter: (params) =>
           `${channel}, ${params.name} <br />10 largest recipients: <strong>US$${nf.format(
-            Math.round(params.value)
+            Math.round(params.value),
           )} million</strong>`,
       },
       animation: false,
@@ -146,7 +146,7 @@ const updateChartByDonors = (chart, updatedData, { recipient, years }) => {
           emphasis: {
             focus: 'self',
           },
-        })
+        }),
       ),
       type: 'bar',
       stack: recipient,
@@ -155,14 +155,14 @@ const updateChartByDonors = (chart, updatedData, { recipient, years }) => {
         trigger: 'item',
         formatter: (params) =>
           `${donor}, ${params.name} <br/>${recipient}: <strong>US$${nf.format(
-            Math.round(params.value)
+            Math.round(params.value),
           )} million</strong>`,
       },
     }))
     .reduce((final, cur) => final.concat(cur), []);
   chart.setOption(
     { yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)), series },
-    { replaceMerge: ['series'] }
+    { replaceMerge: ['series'] },
   );
 };
 
@@ -198,20 +198,24 @@ const updateChartByOrgType = (chart, updatedData, { recipient, years }) => {
   const color = orgtypeColors;
   chart.setOption(
     { yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)), color, series },
-    { replaceMerge: ['series'] }
+    { replaceMerge: ['series'] },
   );
 };
 
 /**
  * Run your code after the page has loaded
  */
-const renderRecipientChart = () => {
+const renderRecipientChart = (className = 'dicharts--chart') => {
+  console.log(className);
+
   window.DICharts.handler.addChart({
-    className: 'dicharts--gha-recipients',
+    className,
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, async (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
+
+          console.log('recipient chart');
 
           /**
            * ECharts - prefix all browsers global with window
@@ -259,7 +263,7 @@ const renderRecipientChart = () => {
               updateChartByOrgType(
                 chart,
                 orgTypeData.filter((d) => d.Recipient === value),
-                { recipient: value, years }
+                { recipient: value, years },
               );
             }
           };
@@ -279,7 +283,7 @@ const renderRecipientChart = () => {
               updateChartByOrgType(
                 chart,
                 orgTypeData.filter((d) => d.Recipient === recipient),
-                { recipient, years }
+                { recipient, years },
               );
             }
           };
@@ -294,7 +298,7 @@ const renderRecipientChart = () => {
               onSelectBreakdown={onSelectBreakdown}
               defaultBreakdown={defaultBreakdown}
               defaultRecipient={defaultRecipient}
-            />
+            />,
           );
 
           dichart.hideLoading();
