@@ -422,109 +422,68 @@ const renderMap = (
   loadLayer();
 };
 
-function renderClimateFundingMap() {
-  window.DICharts.handler.addChart({
-    className: 'dicharts--gha-climate-funding',
-    echarts: {
-      onAdd: (chartNodes) => {
-        Array.prototype.forEach.call(chartNodes, (chartNode) => {
-          window.dataLayer = window.dataLayer || [];
-          const dichart = new window.DICharts.Chart(chartNode.parentElement);
-          const map = window.L.map(chartNode, {
-            maxZoom: 3,
-            minZoom: 1,
-            crs: window.L.CRS.EPSG4326,
-            center: [6.6, 14.1],
-            zoom: 1,
-            attributionControl: false,
-          });
-          let variable = 'Total_Climate_USD';
-          let year = '2021';
-          let vulnerability = 0;
-          let adaptationVariable = 'total';
+function renderClimateFundingMap(className = 'dicharts--map') {
+  return new Promise((resolve) => {
+    window.DICharts.handler.addChart({
+      className,
+      echarts: {
+        onAdd: (chartNodes) => {
+          Array.prototype.forEach.call(chartNodes, (chartNode) => {
+            window.dataLayer = window.dataLayer || [];
+            const dichart = new window.DICharts.Chart(chartNode.parentElement);
+            const map = window.L.map(chartNode, {
+              maxZoom: 3,
+              minZoom: 1,
+              crs: window.L.CRS.EPSG4326,
+              center: [6.6, 14.1],
+              zoom: 1,
+              attributionControl: false,
+            });
+            let variable = 'Total_Climate_USD';
+            let year = '2021';
+            let vulnerability = 0;
+            let adaptationVariable = 'total';
 
-          // Filter
-          const filterWrapper = addFilterWrapper(chartNode);
-          const filterOptions = [
-            { value: 'Total_Climate_USD', label: 'US$ millions' },
-            { value: 'Total_Climate_Share', label: '% of total ODA' },
-          ];
-          const adaptationFilterOptions = [
-            { value: 'total', label: 'Total climate ODA' },
-            { value: 'CCA', label: 'Climate adaptation ODA' },
-            { value: 'CCM', label: 'Climate mitigation ODA' },
-          ];
+            // Filter
+            const filterWrapper = addFilterWrapper(chartNode);
+            const filterOptions = [
+              { value: 'Total_Climate_USD', label: 'US$ millions' },
+              { value: 'Total_Climate_Share', label: '% of total ODA' },
+            ];
+            const adaptationFilterOptions = [
+              { value: 'total', label: 'Total climate ODA' },
+              { value: 'CCA', label: 'Climate adaptation ODA' },
+              { value: 'CCM', label: 'Climate mitigation ODA' },
+            ];
 
-          // Initialise Legend
-          const legend = window.L.control({ position: 'topright' });
-          // Initialise reset button
-          const resetButton = window.L.control({ position: 'bottomleft' });
+            // Initialise Legend
+            const legend = window.L.control({ position: 'topright' });
+            // Initialise reset button
+            const resetButton = window.L.control({ position: 'bottomleft' });
 
-          dichart.showLoading();
-          window
-            .fetch(MAP_FILE_PATH)
-            .then((response) => response.json())
-            .then((jsonData) => {
-              const geojsonData = jsonData.features;
-              fetchCSVData(DATA_URL).then((data) => {
-                const processedCountryNameData = matchClimateCountryNames(data, geojsonData, 'iso3', 'countryname');
-                let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
-                const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
-                let groupedData = processedData(
-                  countries,
-                  yearlyProcessedCountryNameData,
-                  'countryname',
-                  'value_precise',
-                  'protracted_crisis',
-                );
-                let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
-                let crisisValue;
-
-                const fg = window.L.featureGroup().addTo(map);
-
-                // Render default map
-                renderMap(
-                  variable,
-                  map,
-                  variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
-                  geojsonData,
-                  finalFilteredData,
-                  legend,
-                  fg,
-                  data,
-                  crisisValue,
-                  adaptationVariable,
-                );
-
-                const onSelectDimension = (dimension) => {
-                  variable = dimension.value ? dimension.value : variable;
-
-                  renderMap(
-                    variable,
-                    map,
-                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
-                    geojsonData,
-                    finalFilteredData,
-                    legend,
-                    fg,
-                    data,
-                    crisisValue,
-                    adaptationVariable,
-                  );
-                };
-
-                const onSelectYear = (value) => {
-                  // year = getYearFromMapping(value ? Number(value) : year);
-                  year = value || year;
-                  yearlyProcessedCountryNameData = filterDataByYear(processedCountryNameData, year);
-                  groupedData = processedData(
+            dichart.showLoading();
+            window
+              .fetch(MAP_FILE_PATH)
+              .then((response) => response.json())
+              .then((jsonData) => {
+                const geojsonData = jsonData.features;
+                fetchCSVData(DATA_URL).then((data) => {
+                  const processedCountryNameData = matchClimateCountryNames(data, geojsonData, 'iso3', 'countryname');
+                  let yearlyProcessedCountryNameData = processedCountryNameData.filter((item) => item.year === year);
+                  const countries = Array.from(new Set(processedCountryNameData.map((stream) => stream.countryname)));
+                  let groupedData = processedData(
                     countries,
                     yearlyProcessedCountryNameData,
                     'countryname',
                     'value_precise',
                     'protracted_crisis',
                   );
-                  finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
+                  let finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
+                  let crisisValue;
+
+                  const fg = window.L.featureGroup().addTo(map);
+
+                  // Render default map
                   renderMap(
                     variable,
                     map,
@@ -537,133 +496,178 @@ function renderClimateFundingMap() {
                     crisisValue,
                     adaptationVariable,
                   );
-                };
 
-                const onSelectVulnerability = (value) => {
-                  vulnerability = value ? Number(value) : vulnerability;
-                  finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
-                  renderMap(
-                    variable,
-                    map,
-                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
-                    geojsonData,
-                    finalFilteredData,
-                    legend,
-                    fg,
-                    data,
-                    crisisValue,
-                    adaptationVariable,
+                  const onSelectDimension = (dimension) => {
+                    variable = dimension.value ? dimension.value : variable;
+
+                    renderMap(
+                      variable,
+                      map,
+                      variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
+                      geojsonData,
+                      finalFilteredData,
+                      legend,
+                      fg,
+                      data,
+                      crisisValue,
+                      adaptationVariable,
+                    );
+                  };
+
+                  const onSelectYear = (value) => {
+                    // year = getYearFromMapping(value ? Number(value) : year);
+                    year = value || year;
+                    yearlyProcessedCountryNameData = filterDataByYear(processedCountryNameData, year);
+                    groupedData = processedData(
+                      countries,
+                      yearlyProcessedCountryNameData,
+                      'countryname',
+                      'value_precise',
+                      'protracted_crisis',
+                    );
+                    finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
+                    renderMap(
+                      variable,
+                      map,
+                      variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
+                      geojsonData,
+                      finalFilteredData,
+                      legend,
+                      fg,
+                      data,
+                      crisisValue,
+                      adaptationVariable,
+                    );
+                  };
+
+                  const onSelectVulnerability = (value) => {
+                    vulnerability = value ? Number(value) : vulnerability;
+                    finalFilteredData = filterByVulnerability(groupedData, getVulnerabilityValue(vulnerability));
+                    renderMap(
+                      variable,
+                      map,
+                      variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
+                      geojsonData,
+                      finalFilteredData,
+                      legend,
+                      fg,
+                      data,
+                      crisisValue,
+                      adaptationVariable,
+                    );
+                  };
+
+                  const onCrisisChange = (value) => {
+                    crisisValue = value;
+
+                    renderMap(
+                      variable,
+                      map,
+                      variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
+                      geojsonData,
+                      finalFilteredData,
+                      legend,
+                      fg,
+                      data,
+                      crisisValue,
+                      adaptationVariable,
+                    );
+                  };
+
+                  const onSelectAdaptation = (value) => {
+                    adaptationVariable = value.value ? value.value : adaptationVariable;
+
+                    renderMap(
+                      variable,
+                      map,
+                      variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
+                      geojsonData,
+                      finalFilteredData,
+                      legend,
+                      fg,
+                      data,
+                      crisisValue,
+                      adaptationVariable,
+                    );
+                  };
+
+                  const onReset = () => {
+                    map.setView([[6.6, 14.1]], 1);
+                  };
+
+                  // Render filter component
+                  const root = createRoot(filterWrapper);
+                  root.render(
+                    <div>
+                      <Select
+                        classNamePrefix="climate-chart-select"
+                        label="Select value type"
+                        options={filterOptions}
+                        defaultValue={[{ value: 'Total_Climate_USD', label: 'US$ millions' }]}
+                        onChange={onSelectDimension}
+                        css={{
+                          minWidth: '150px',
+                        }}
+                      />
+                      <Select
+                        classNamePrefix="climate-adaptation-select"
+                        label="Select adaptation/mitigation"
+                        options={adaptationFilterOptions}
+                        defaultValue={[{ value: 'total', label: 'Total climate ODA' }]}
+                        onChange={onSelectAdaptation}
+                        css={{
+                          minWidth: '150px',
+                        }}
+                      />
+                      <RangeSlider
+                        label="Select a year"
+                        min="2018"
+                        max="2022"
+                        defaultValue="2022"
+                        step={1}
+                        onChange={onSelectYear}
+                        dataList={['2018', '2019', '2020', '2021', '2022']}
+                        name="years"
+                        incremental={false}
+                        className={'year-slider'}
+                      />
+                      <RangeSlider
+                        label="Select vulnerability level"
+                        min="0"
+                        max="4"
+                        step={1}
+                        onChange={onSelectVulnerability}
+                        dataList={['All countries', 'Low', 'Medium', 'High', 'Very high']}
+                        name="vulnerability"
+                        incremental={false}
+                        className="range-width vulnerability-range"
+                      />
+                      <CheckboxInput name="crisis" label="Highlight" onChange={onCrisisChange} />
+                    </div>,
                   );
-                };
 
-                const onCrisisChange = (value) => {
-                  crisisValue = value;
+                  // Render reset Button
 
-                  renderMap(
-                    variable,
-                    map,
-                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
-                    geojsonData,
-                    finalFilteredData,
-                    legend,
-                    fg,
-                    data,
-                    crisisValue,
-                    adaptationVariable,
-                  );
-                };
+                  resetButton.onAdd = function () {
+                    const div = window.L.DomUtil.create('div');
+                    const buttonRoot = createRoot(div);
+                    buttonRoot.render(<MapResetButton onReset={onReset} />);
 
-                const onSelectAdaptation = (value) => {
-                  adaptationVariable = value.value ? value.value : adaptationVariable;
+                    return div;
+                  };
 
-                  renderMap(
-                    variable,
-                    map,
-                    variable === 'Total_Climate_Share' ? getColorClimateShare : getColorFinance,
-                    geojsonData,
-                    finalFilteredData,
-                    legend,
-                    fg,
-                    data,
-                    crisisValue,
-                    adaptationVariable,
-                  );
-                };
+                  resetButton.addTo(map);
 
-                const onReset = () => {
-                  map.setView([[6.6, 14.1]], 1);
-                };
+                  dichart.hideLoading();
 
-                // Render filter component
-                const root = createRoot(filterWrapper);
-                root.render(
-                  <div>
-                    <Select
-                      classNamePrefix="climate-chart-select"
-                      label="Select value type"
-                      options={filterOptions}
-                      defaultValue={[{ value: 'Total_Climate_USD', label: 'US$ millions' }]}
-                      onChange={onSelectDimension}
-                      css={{
-                        minWidth: '150px',
-                      }}
-                    />
-                    <Select
-                      classNamePrefix="climate-adaptation-select"
-                      label="Select adaptation/mitigation"
-                      options={adaptationFilterOptions}
-                      defaultValue={[{ value: 'total', label: 'Total climate ODA' }]}
-                      onChange={onSelectAdaptation}
-                      css={{
-                        minWidth: '150px',
-                      }}
-                    />
-                    <RangeSlider
-                      label="Select a year"
-                      min="2018"
-                      max="2022"
-                      defaultValue="2022"
-                      step={1}
-                      onChange={onSelectYear}
-                      dataList={['2018', '2019', '2020', '2021', '2022']}
-                      name="years"
-                      incremental={false}
-                      className={'year-slider'}
-                    />
-                    <RangeSlider
-                      label="Select vulnerability level"
-                      min="0"
-                      max="4"
-                      step={1}
-                      onChange={onSelectVulnerability}
-                      dataList={['All countries', 'Low', 'Medium', 'High', 'Very high']}
-                      name="vulnerability"
-                      incremental={false}
-                      className="range-width vulnerability-range"
-                    />
-                    <CheckboxInput name="crisis" label="Highlight" onChange={onCrisisChange} />
-                  </div>,
-                );
-
-                // Render reset Button
-
-                resetButton.onAdd = function () {
-                  const div = window.L.DomUtil.create('div');
-                  const buttonRoot = createRoot(div);
-                  buttonRoot.render(<MapResetButton onReset={onReset} />);
-
-                  return div;
-                };
-
-                resetButton.addTo(map);
-
-                dichart.hideLoading();
-              });
-            })
-            .catch((error) => console.log(error));
-        });
+                  resolve({ map, filterRoot: root });
+                });
+              })
+              .catch((error) => console.log(error));
+          });
+        },
       },
-    },
+    });
   });
 }
 

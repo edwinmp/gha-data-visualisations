@@ -137,6 +137,24 @@ navItems.forEach((navItem) => {
           );
         }
         break;
+      case 'gha-climate-funding':
+        if (activeChart !== 'gha-climate-funding') {
+          resetChartCanvas(true);
+          hideElement('dicharts--chart');
+          showElement('dicharts--map');
+          resetMapCanvas();
+
+          import('./charts/climate-funding.jsx').then(({ default: renderClimateFundingMap }) => {
+            renderClimateFundingMap().then((configs) => {
+              console.log(configs);
+
+              map = configs.map;
+              filterRoot = configs.filterRoot;
+            });
+            activeChart = 'gha-climate-funding';
+          });
+        }
+        break;
       default:
         break;
     }
