@@ -4,6 +4,10 @@ body {
   background-color: #f3f3f3;
 }
 
+.section {
+  margin-top: 3em;
+}
+
 .dicharts--chart,
 .dicharts--boilerplate-chart,
 .dicharts--gha-donors,

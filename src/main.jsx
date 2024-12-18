@@ -5,6 +5,7 @@ import './styles/styles.css';
 // import App from './App.jsx';
 import renderDonorsChart from './charts/donors';
 import renderRecipientChart from './charts/recipients.jsx';
+import renderFundingChannelsChart from './charts/funding-channels.jsx';
 
 // createRoot(document.getElementById('root')).render(
 //   <StrictMode>
@@ -53,13 +54,18 @@ navItems.forEach((navItem) => {
         }
         break;
       case 'gha-recipients':
-        renderRecipientChart();
         if (activeChart !== 'gha-recipients') {
           resetChartCanvas();
           renderRecipientChart();
           activeChart = 'gha-recipients';
         }
         break;
+      case 'gha-funding-channels':
+        if (activeChart !== 'gha-funding-channels') {
+          resetChartCanvas();
+          renderFundingChannelsChart();
+          activeChart = 'gha-funding-channels';
+        }
       default:
         break;
     }

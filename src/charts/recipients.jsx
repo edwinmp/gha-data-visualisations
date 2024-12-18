@@ -214,9 +214,6 @@ const renderRecipientChart = (className = 'dicharts--chart') => {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, async (chartNode) => {
           const dichart = new window.DICharts.Chart(chartNode.parentElement);
-
-          console.log('recipient chart');
-
           /**
            * ECharts - prefix all browsers global with window
            * i.e window.echarts - echarts won't work without it

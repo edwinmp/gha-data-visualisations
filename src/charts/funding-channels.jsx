@@ -87,15 +87,15 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
         trigger: 'item',
         formatter: (params) => {
           const item = data.find(
-            (d) => d.Series === channel && d.Donor === 'All donors' && `${d.Year}` === params.name
+            (d) => d.Series === channel && d.Donor === 'All donors' && `${d.Year}` === params.name,
           );
 
           return `All donors, ${params.name} <br />${channel}: <strong>${Number(params.value, 10).toFixed(
-            2
+            2,
           )}%</strong> (US$${toDollars(
             cleanValue(item['US$ millions, constant 2020 prices']),
             'decimal',
-            'never'
+            'never',
           )} million)`;
         },
       },
@@ -129,7 +129,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
           trigger: 'item',
           formatter: (params) => {
             const item = cleanedData.find(
-              (d) => d.Series === channel && d.Donor === donor && `${d.Year}` === params.name
+              (d) => d.Series === channel && d.Donor === donor && `${d.Year}` === params.name,
             );
             const value = `<strong>${item.value}%</strong>`;
 
@@ -148,7 +148,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
           fontSize: 16,
         },
         cursor: 'auto',
-      }))
+      })),
     )
     .reduce((final, cur) => final.concat(cur), []);
   chart.setOption({ series }, { replaceMerge: ['series'] });
@@ -157,9 +157,9 @@ const updateChart = (chart, data, { donors, channels, years }) => {
 /**
  * Run your code after the page has loaded
  */
-const renderFundingChannelsChart = () => {
+const renderFundingChannelsChart = (className = 'dicharts--chart') => {
   window.DICharts.handler.addChart({
-    className: 'dicharts--boilerplate-chart',
+    className,
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, (chartNode) => {
@@ -210,7 +210,7 @@ const renderFundingChannelsChart = () => {
                   classNamePrefix="channels-chart-select"
                   isClearable={false}
                 />
-              </ChartFilters>
+              </ChartFilters>,
             );
 
             dichart.hideLoading();
