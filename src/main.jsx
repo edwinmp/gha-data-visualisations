@@ -10,6 +10,10 @@ import './styles/styles.css';
 //   </StrictMode>,
 // );
 
+// set default variables
+let map = null;
+let filterRoot = null;
+
 const resetChartCanvas = () => {
   const activeChartClass = 'dicharts-handler--active';
   const dataSelectorClass = 'data-selector--wrapper';
@@ -22,6 +26,17 @@ const resetChartCanvas = () => {
   const dataSelector = document.querySelector(`.${dataSelectorClass}`);
   if (dataSelector) {
     dataSelector.remove();
+  }
+};
+
+const resetMapCanvas = () => {
+  if (map) {
+    map.remove();
+    map = null;
+  }
+  if (filterRoot) {
+    filterRoot.unmount();
+    filterRoot = null;
   }
 };
 
@@ -49,6 +64,7 @@ const setActiveNav = (nav) => {
   }
 };
 
+// Initial default chart
 showElement('dicharts--chart');
 hideElement('dicharts--map');
 let activeChart = 'gha-donors';
@@ -56,6 +72,8 @@ import('./charts/donors').then(({ default: renderDonorsChart }) => {
   renderDonorsChart();
   activeChart = 'gha-donors';
 });
+
+// Event listener for navigation items
 const navItems = document.querySelectorAll('.nav-item .nav-link');
 navItems.forEach((navItem) => {
   navItem.addEventListener('click', (event) => {
@@ -65,6 +83,7 @@ navItems.forEach((navItem) => {
       case 'gha-donors':
         if (activeChart !== 'gha-donors') {
           resetChartCanvas();
+          resetMapCanvas();
           showElement('dicharts--chart');
           hideElement('dicharts--map');
 
@@ -77,6 +96,7 @@ navItems.forEach((navItem) => {
       case 'gha-recipients':
         if (activeChart !== 'gha-recipients') {
           resetChartCanvas();
+          resetMapCanvas();
           showElement('dicharts--chart');
           hideElement('dicharts--map');
 
@@ -89,6 +109,7 @@ navItems.forEach((navItem) => {
       case 'gha-funding-channels':
         if (activeChart !== 'gha-funding-channels') {
           resetChartCanvas();
+          resetMapCanvas();
           showElement('dicharts--chart');
           hideElement('dicharts--map');
 
@@ -103,10 +124,14 @@ navItems.forEach((navItem) => {
           resetChartCanvas(true);
           hideElement('dicharts--chart');
           showElement('dicharts--map');
+          resetMapCanvas();
 
           import('./charts/people-affected-by-crisis-map.jsx').then(
             ({ default: renderPeopleAffectedByCrisisLeaflet }) => {
-              renderPeopleAffectedByCrisisLeaflet();
+              renderPeopleAffectedByCrisisLeaflet().then((configs) => {
+                map = configs.map;
+                filterRoot = configs.filterRoot;
+              });
               activeChart = 'gha-people-affected-by-crisis';
             },
           );
