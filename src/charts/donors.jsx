@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/react';
 import deepMerge from 'deepmerge';
 import { createRoot } from 'react-dom/client';
-import DonorChartFilters from '../components/DonorChartFilters';
+import DonorChartFilters from '../components/DonorChartFilters.jsx';
 import fetchCSVData, { ACTIVE_BRANCH } from '../utils/data';
 import { addFilterWrapper } from '../widgets/filters';
 import defaultOptions, { getYAxisNamePositionFromSeries, handleResize, legendSelection } from './echarts';
@@ -114,7 +114,7 @@ const renderDefaultChart = (chart, data, { years, channels }) => {
               d.Series === channel &&
               d.Donor === 'All donors' &&
               `${d.Year}` === params.name &&
-              d.Display === dataTypeMapping[dataType]
+              d.Display === dataTypeMapping[dataType],
           );
           const updatedOrgType = channel.includes('Multilateral HA')
             ? channel.replace('Multilateral HA', 'Multilateral Humanitarian Assistance')
@@ -166,7 +166,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
                 d.Series === channel &&
                 d.Donor === donor &&
                 `${d.Year}` === params.name &&
-                d.Display === dataTypeMapping[dataType]
+                d.Display === dataTypeMapping[dataType],
             );
             const value =
               dataType === 'Volumes'
@@ -190,7 +190,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
           fontSize: 16,
         },
         cursor: 'auto',
-      }))
+      })),
     )
     .reduce((final, cur) => final.concat(cur), []);
   chart.setOption(
@@ -198,7 +198,7 @@ const updateChart = (chart, data, { donors, channels, years }) => {
       yAxis: getYaxisValue(getYAxisNamePositionFromSeries(series)),
       series,
     },
-    { replaceMerge: ['series'] }
+    { replaceMerge: ['series'] },
   );
 };
 
@@ -269,7 +269,7 @@ const renderDonorsChart = () => {
                 defaultDonor={defaultDonor}
                 defaultDataType="Volumes"
                 donorSelectErrorMessage={donorSelectErrorMessage}
-              />
+              />,
             );
 
             dichart.hideLoading();
