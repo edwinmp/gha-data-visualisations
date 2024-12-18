@@ -146,12 +146,23 @@ navItems.forEach((navItem) => {
 
           import('./charts/climate-funding.jsx').then(({ default: renderClimateFundingMap }) => {
             renderClimateFundingMap().then((configs) => {
-              console.log(configs);
-
               map = configs.map;
               filterRoot = configs.filterRoot;
             });
             activeChart = 'gha-climate-funding';
+          });
+        }
+        break;
+      case 'gha-total-climate-finance':
+        if (activeChart !== 'gha-total-climate-finance') {
+          resetChartCanvas();
+          resetMapCanvas();
+          showElement('dicharts--chart');
+          hideElement('dicharts--map');
+
+          import('./charts/total-climate-finance.jsx').then(({ default: renderTotalClimateFinanceChart }) => {
+            renderTotalClimateFinanceChart();
+            activeChart = 'gha-total-climate-finance';
           });
         }
         break;

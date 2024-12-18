@@ -221,9 +221,9 @@ const renderDefaultChart = (chart, data) => {
   return chart;
 };
 
-const renderTotalClimateFinanceChart = () => {
+const renderTotalClimateFinanceChart = (className = 'dicharts--chart') => {
   window.DICharts.handler.addChart({
-    className: 'dicharts--gha-total-climate-finance',
+    className,
     echarts: {
       onAdd: (chartNodes) => {
         Array.prototype.forEach.call(chartNodes, async (chartNode) => {
@@ -233,6 +233,7 @@ const renderTotalClimateFinanceChart = () => {
 
           // create UI elements
 
+          dichart.showLoading();
           const chart = window.echarts.init(chartNode);
           renderDefaultChart(chart, data);
 
