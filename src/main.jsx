@@ -3,9 +3,6 @@
 import './styles/scss/styles.scss';
 import './styles/styles.css';
 // import App from './App.jsx';
-import renderDonorsChart from './charts/donors';
-import renderRecipientChart from './charts/recipients.jsx';
-import renderFundingChannelsChart from './charts/funding-channels.jsx';
 
 // createRoot(document.getElementById('root')).render(
 //   <StrictMode>
@@ -38,8 +35,11 @@ const setActiveNav = (nav) => {
   }
 };
 
-renderDonorsChart();
 let activeChart = 'gha-donors';
+import('./charts/donors').then(({ default: renderDonorsChart }) => {
+  renderDonorsChart();
+  activeChart = 'gha-donors';
+});
 const navItems = document.querySelectorAll('.nav-item .nav-link');
 navItems.forEach((navItem) => {
   navItem.addEventListener('click', (event) => {
@@ -49,22 +49,31 @@ navItems.forEach((navItem) => {
       case 'gha-donors':
         if (activeChart !== 'gha-donors') {
           resetChartCanvas();
-          renderDonorsChart();
-          activeChart = 'gha-donors';
+
+          import('./charts/donors').then(({ default: renderDonorsChart }) => {
+            renderDonorsChart();
+            activeChart = 'gha-donors';
+          });
         }
         break;
       case 'gha-recipients':
         if (activeChart !== 'gha-recipients') {
           resetChartCanvas();
-          renderRecipientChart();
-          activeChart = 'gha-recipients';
+
+          import('./charts/recipients.jsx').then(({ default: renderRecipientChart }) => {
+            renderRecipientChart();
+            activeChart = 'gha-recipients';
+          });
         }
         break;
       case 'gha-funding-channels':
         if (activeChart !== 'gha-funding-channels') {
           resetChartCanvas();
-          renderFundingChannelsChart();
-          activeChart = 'gha-funding-channels';
+
+          import('./charts/funding-channels.jsx').then(({ default: renderFundingChannelsChart }) => {
+            renderFundingChannelsChart();
+            activeChart = 'gha-funding-channels';
+          });
         }
       default:
         break;
