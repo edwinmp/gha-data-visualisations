@@ -20,30 +20,90 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div class="ui-base h-100">
+    <div id="root" style="display: none;"></div>
+    <main id="pagecontent" class="pagecontent -nofocus d-flex flex-nowrap" role="main" tabindex="-1">
+      <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark fs-5" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+          <span class="fs-2 ms-5">GHA Charts</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link active ms-5 my-3" aria-current="page">
+              GHA Donors
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Recipients
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Funding Channels
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              People Affected by Crisis
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Climate Funding
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Total Climate Finance
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Climate Percentage ODA
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Adaptation Funding
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Climate Finance Food Insecurity
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white ms-5 my-2">
+              GHA Climate Funding Per Capita
+            </a>
+          </li>
+        </ul>
+      </div>
 
-  <div class="ui-base">
-    <main id="pagecontent" class="pagecontent -nofocus" role="main" tabindex="-1">
-      <section class="section">
-        <div class="row row--narrow">
-          <div class="chart-container chart-container--full">
-            <div class="charts__chart">
-              <!-- CODE TO COPY STARTS HERE {% endcomment %} -->
-              <div class="dicharts--gha-donors"></div>
-              <!-- CODE TO COPY ENDS HERE {% endcomment %} -->
+      <div id="di-charts" class="d-flex flex-column" style="width: 100%;">
+        <section class="section" data-chart="gha-donors">
+          <div class="row">
+            <div class="chart-container chart-container--full">
+              <div class="charts__chart">
+                <!-- CODE TO COPY STARTS HERE {% endcomment %} -->
+                <div class="dicharts--gha-donors"></div>
+                <!-- CODE TO COPY ENDS HERE {% endcomment %} -->
 
-              <div class="chart-loading">
-                <div class="chart-loading__block">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
+                <div class="chart-loading">
+                  <div class="chart-loading__block">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   </div>
 
